@@ -1,0 +1,94 @@
+/*全局reset 起*/
+body,
+ul,
+li,
+p,
+h1,
+h2,
+h3,
+h4,
+dl,
+dd,
+form,
+input,
+textarea,
+select {
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-size: 14px;
+  font-family: "微软雅黑";
+  line-height: 1;
+}
+ul,
+li {
+  list-style: none;
+}
+i {
+  font-style: normal;
+}
+img {
+  border: none;
+}
+a {
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+a:hover {
+  text-decoration: none;
+}
+.clearfix:before,.clearfix:after{ 
+    content:""; 
+    display:table; 
+} 
+.clearfix:after{clear:both;} 
+.clearfix{ 
+    *zoom:1;/*IE/7/6*/
+}
+.fl{float: left !important;}
+.fr{float: right !important;}
+.mr{margin-right: 10px}
+/*全局reset 终*/
+html,body,#app{
+  height: 100%;
+}
+.el-header{
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #999;
+}
+/* element-ui样式修改 */
+/* .el-aside{
+  background-color: #344B76;
+} */
+.el-main{
+  position: relative;
+}
+.sidebar-menu .el-menu-item:hover, .sidebar-menu .el-menu-item.is-active, .sidebar-menu .el-menu-item:focus, .sidebar-menu .el-submenu__title:hover, .sidebar-menu .el-submenu__title.is-active, .sidebar-menu .el-submenu__title:focus {
+  color: #fff;
+  background-color: #627CAF;
+}
+/* .el-menu-item, .el-submenu__title{
+  color: #fff;
+  background-color: #344B76;
+} */
+.definewth .el-select{
+  width: 100% !important;
+}
+.definewth .mselect{
+  width: 114px!important;
+}
+.submitBtn .el-form-item__content{
+  text-align: center !important;
+  margin:20px 0 0 0 !important;
+}
+.inputSelectClass {
+  width:200px
+}
+.inputSelectClass2 {
+  width:190px
+}
