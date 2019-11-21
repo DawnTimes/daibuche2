@@ -1,0 +1,84 @@
+// 风格颜色
+$btnColor: #5784FC;
+$borderColor: #3973E7;
+$menuColor: #E8F0FF;
+
+// 字体颜色font color
+$fc1: #757373;
+$fc2: #D42027;
+$fc3: #5083E9;
+
+//背景 color
+$bgColor: #F8F8F9;
+
+
+//1px边框
+@mixin setTopLine($c: #E2E2E2, $type: solid) {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 1px; /*no*/
+  border-top: 1px $type $c; /*no*/
+  color: $c;
+  transform-origin: 0 0;
+}
+
+@mixin setBottomLine($c: #E2E2E2, $type: solid) {
+  content: " ";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 1px; /*no*/
+  border-bottom: 1px $type $c; /*no*/
+  color: $c;
+  transform-origin: 0 100%;
+}
+
+//文字
+@mixin ellipsis($w:auto) {
+  width: $w;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+
+@mixin ellipsisLn($line) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+}
+
+@mixin text_wrap() {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+@mixin hyphens() {
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+@mixin bgImg(){
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: $bgGrey;
+}
+
+//去除浮动
+@mixin clearFloat(){
+  &:after {
+    content: ' ';
+    visibility: hidden;
+    height: 0;
+    clear: both;
+    display: block;
+  }
+}

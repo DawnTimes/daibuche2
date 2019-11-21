@@ -1,0 +1,76 @@
+{
+    "totalCount": 13,
+    "tableData": [
+        {
+            "area_code": "大中华",
+            "is_limit_licence": "是",
+            "is_galc_company": "奇石公司",
+            "social_credit_code": "111",
+            "licence_name": "333",
+            "lessor": "44",
+            "legal_representative": "6565",
+            "legal_telephone": "12584",
+            "contact_person": "石兴",
+            "contact_person_telephone": "12584566984",
+            "bank_account_name": "石头",
+            "bank_account_no": "254",
+            "billing_address": "大中华集团16楼",
+            "billing_telephone": "15444",
+            "status": "12"     
+        },
+        {
+            "area_code": "大中华",
+            "is_limit_licence": "是",
+            "is_galc_company": "奇石公司",
+            "social_credit_code": "111",
+            "licence_name": "333",
+            "lessor": "44",
+            "legal_representative": "6565",
+            "legal_telephone": "12584",
+            "contact_person": "石兴",
+            "contact_person_telephone": "12584566984",
+            "bank_account_name": "石头",
+            "bank_account_no": "254",
+            "billing_address": "大中华集团16楼",
+            "billing_telephone": "15444",
+            "status": "12"     
+        },
+        {
+            "area_code": "大中华",
+            "is_limit_licence": "是",
+            "is_galc_company": "奇石公司",
+            "social_credit_code": "111",
+            "licence_name": "333",
+            "lessor": "44",
+            "legal_representative": "6565",
+            "legal_telephone": "12584",
+            "contact_person": "石兴",
+            "contact_person_telephone": "12584566984",
+            "bank_account_name": "石头",
+            "bank_account_no": "254",
+            "billing_address": "大中华集团16楼",
+            "billing_telephone": "15444",
+            "status": "12"     
+        },
+        {
+            "area_code": "大中华",
+            "is_limit_licence": "是",
+            "is_galc_company": "奇石公司",
+            "social_credit_code": "111",
+            "licence_name": "333",
+            "lessor": "44",
+            "legal_representative": "6565",
+            "legal_telephone": "12584",
+            "contact_person": "石兴",
+            "contact_person_telephone": "12584566984",
+            "bank_account_name": "石头",
+            "bank_account_no": "254",
+            "billing_address": "大中华集团16楼",
+            "billing_telephone": "15444",
+            "status": "12"     
+        }
+    ]
+}
+
+
+
