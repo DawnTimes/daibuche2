@@ -49,7 +49,7 @@
       <el-col :span="8">
         <div class="grid-content bg-purple-light">
           <el-form-item label="经销商代码" prop="agentCode2">
-            <el-input v-model="form.agentCode2"></el-input>
+            <el-input v-model="form.agentCode2"  @input="change($event)"></el-input>
           </el-form-item>
         </div>
       </el-col>
