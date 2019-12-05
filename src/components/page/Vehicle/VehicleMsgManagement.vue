@@ -155,6 +155,8 @@ export default {
 
   data() {
     return {
+
+      temDataForSearch:{},
       tempRow: {},
       agentFullNameViewForSearch: [],
       agentCodeArray: [],   
@@ -253,6 +255,8 @@ export default {
         })
     },
     EditInfoSubmit(data) {
+
+
         let addUrl = common.addOrUpdateCarUrl
         data.operationType = '2'
         console.log('hehe')
@@ -262,7 +266,12 @@ export default {
             if (res.em === 'Success!') {
                 this.$message({message: "操作成功!",type: "success",duration: 1500})
                 // this.tableData=res.data
-                this.getCarInfo({turnPageBeginPos: 1, turnPageShowNum: 10})
+                // this.getCarInfo({turnPageBeginPos: 1, turnPageShowNum: 10})
+
+              console.log(this.temDataForSearch)
+              console.log(this.agentFullNameViewForSearch)
+              console.log(this.agentCodeArray)
+                this.SearchInfoSubmit(this.temDataForSearch, this.agentFullNameViewForSearch, this.agentCodeArray)
                 this.showCarInfo = false                    
             }else {
                 this.$alert('添加失败，请联系管理员!', '提示', {confirmButtonText: '确定'})
@@ -270,6 +279,7 @@ export default {
           })
     },
     SearchInfoSubmit(data, agentFullNameViewForSearch, agentCodeArray) {
+        this.temDataForSearch = data 
         this.agentFullNameViewForSearch = agentFullNameViewForSearch
         this.agentCodeArray = agentCodeArray
         Object.assign(this.sonData, data)
@@ -368,7 +378,7 @@ export default {
     handleClick(row) {
       this.showCarInfo = true;
       this.showSearch = "编辑";
-      // this.currentMsg = row;
+      //this.currentMsg = row;
 
       Object.assign(this.tempRow, row)
       

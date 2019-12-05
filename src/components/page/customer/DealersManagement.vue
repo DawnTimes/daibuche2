@@ -5,16 +5,27 @@
         <i class="iconfont iconkehuguanli"></i>经销商信息管理
       </span> -->
       <el-form :inline="true" :model="params" class="demo-form-inline">
-        <el-form-item label="经销商">
-          <el-input class="inputSelectClass" v-model="params.agentName" placeholder="经销商" size="small"></el-input>
+        <el-form-item label="经销商名称">
+          <el-input class="inputSelectClass" v-model="params.agentName" placeholder="经销商名称" size="small"></el-input>
         </el-form-item>
+        <!--
         <el-form-item label="社会统一信用代码">
           <el-input class="inputSelectClass" v-model="params.socialCreditCode" placeholder="社会统一信用代码" size="small"></el-input>
+        </el-form-item>
+        -->
+        <el-form-item label="经销店编码">
+          <el-input class="inputSelectClass" v-model="params.agentCode2" placeholder="经销店编码" size="small"></el-input>
         </el-form-item>
         <el-form-item label="状态">
             <el-select class="inputSelectClass" v-model="params.status" placeholder="状态" size="small" clearable>
               <el-option label="有效" value="Y"></el-option>
               <el-option label="无效" value="N"></el-option>
+            </el-select>          
+        </el-form-item>
+        <el-form-item label="是否商贸店">
+            <el-select class="inputSelectClass" v-model="params.isGacShop" placeholder="是否商贸店" size="small" clearable>
+              <el-option label="是" value="Y"></el-option>
+              <el-option label="否" value="N"></el-option>
             </el-select>          
         </el-form-item>
         <el-form-item>
@@ -367,7 +378,9 @@ export default {
       params: {
         agentName: "",
         socialCreditCode: "",
+        agentCode2: "",
         status:"",
+        isGacShop: "",
         turnPageBeginPos: 1, // 开始是数据的序号，后台需要
         turnPageShowNum: 10,  // 每页展示的条数
       },
