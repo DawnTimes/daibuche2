@@ -68,13 +68,15 @@
       <el-table-column prop="serviceManagerTelephone" label="服务经理联系电话" width="150" :show-overflow-tooltip='true' resizable></el-table-column>
       <el-table-column prop="status" label="状态" width="50" :show-overflow-tooltip='true' resizable></el-table-column>
       <el-table-column prop="mailingAddress" label="邮寄地址" width="500" :show-overflow-tooltip='true' resizable></el-table-column>
-      <el-table-column label="操作" width="200">
-        <template slot-scope="scope">
-          <!-- <el-button size="mini">查看</el-button> -->
-          <el-button size="mini" @click="editAgent(scope.$index, scope.row)" v-show="rolePermission.agentEdit">修改</el-button>
-        </template>
+      
 
+      <el-table-column fixed="right" label="操作" width="50"  v-show='rolePermission.editCar'>
+        <template slot-scope="scope">
+          <el-button @click="editAgent(scope.row)" type="text" size="small">编辑</el-button>
+        </template>
       </el-table-column>
+
+
       <!-- <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
@@ -104,39 +106,64 @@
           ></i>
         </header>
         <div class="main-body controlDivClass">
-          <el-form ref="form" :model="divParams" label-width="140px">
+          <el-form ref="divParams" :model="divParams" label-width="140px">
             <el-row>
               <el-col :span="24">
                 <div class="grid-content bg-purple">
-                  <el-form-item label="经销商代码">
-                    <el-input v-model="divParams.agentCode"></el-input>
+                  <el-form-item label="经销商代码"
+                    prop="agentCode2"
+                    :rules="[
+                    { required: true, message: '经销商代码不能为空'}
+                    ]"
+                  >
+                    <el-input v-model="divParams.agentCode2"></el-input>
                   </el-form-item>
                 </div>
               </el-col>
               <el-col :span="24">
                 <div class="grid-content bg-purple">
-                  <el-form-item label="经销商简称">
+                  <el-form-item label="经销商简称"
+                    prop="agentShortName"
+                    :rules="[
+                    { required: true, message: '经销商简称不能为空'}
+                    ]"
+                  >
                     <el-input v-model="divParams.agentShortName"></el-input>
                   </el-form-item>
                 </div>
               </el-col>
               <el-col :span="24">
                 <div class="grid-content bg-purple">
-                  <el-form-item label="经销店名称">
+                  <el-form-item label="经销店名称"
+                    prop="agentFullName"
+                    :rules="[
+                    { required: true, message: '经销店名称不能为空'}
+                    ]"
+                  >
                     <el-input v-model="divParams.agentFullName"></el-input>
                   </el-form-item>
                 </div>
               </el-col>
               <el-col :span="24">
                 <div class="grid-content bg-purple">
-                  <el-form-item label="社会统一信用代码">
+                  <el-form-item label="社会统一信用代码"
+                    prop="socialCreditCode"
+                    :rules="[
+                    { required: true, message: '社会统一信用代码不能为空'}
+                    ]"
+                  >
                     <el-input v-model="divParams.socialCreditCode"></el-input>
                   </el-form-item>
                 </div>
               </el-col>
               <el-col :span="24">
                 <div class="grid-content bg-purple">
-                  <el-form-item label="是否商贸店">
+                  <el-form-item label="是否商贸店"
+                    prop="isGacShop"
+                    :rules="[
+                    { required: true, message: '是否商贸店不能为空'}
+                    ]"
+                  >
                     <el-select
                       v-model="divParams.isGacShop"
                       style="width:100%"
@@ -149,24 +176,130 @@
                   </el-form-item>
                 </div>
               </el-col>
+              
               <el-col :span="24">
                 <div class="grid-content bg-purple">
-                  <el-form-item label="邮寄地址">
-                    <el-input v-model="divParams.mailingAddress"></el-input>
-                  </el-form-item>
-                </div>
-              </el-col>
-              <el-col :span="24">
-                <div class="grid-content bg-purple">
-                  <el-form-item label="注册地址">
+                  <el-form-item label="注册地址"
+                    prop="registerAddress"
+                    :rules="[
+                    { required: true, message: '注册地址不能为空'}
+                    ]"
+                  >
                     <el-input v-model="divParams.registerAddress"></el-input>
                   </el-form-item>
                 </div>
               </el-col>
+              
+
               <el-col :span="24">
                 <div class="grid-content bg-purple">
-                  <el-form-item label="纳税人类型">
-                    <el-input v-model="divParams.taxPaverType"></el-input>
+                  <el-form-item label="纳税人类型"
+                    prop="taxPayerType"
+                    :rules="[
+                    { required: true, message: '纳税人类型不能为空'}
+                    ]"
+                  >
+                    <el-select
+                      v-model="divParams.taxPayerType"
+                      style="width:100%"
+                      clearable
+                    >
+                      <!-- AT--自动/MT--手动 -->
+                      <el-option label="一般纳税人" value="0"></el-option>
+                      <el-option label="小规模纳税人" value="1"></el-option>
+                      <el-option label="个人" value="2"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </div>
+              </el-col>
+<el-col :span="24">
+                <div class="grid-content bg-purple">
+                  <el-form-item label="状态"
+                    prop="status"
+                    :rules="[
+                    { required: true, message: '状态不能为空'}
+                    ]"
+                  >
+                    <el-select
+                      v-model="divParams.status"
+                      style="width:100%"
+                      clearable
+                    >
+                      <!-- AT--自动/MT--手动 -->
+                      <el-option label="有效" value="Y"></el-option>
+                      <el-option label="无效" value="N"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </div>
+              </el-col>
+              <el-col :span="24">
+                <div class="grid-content bg-purple">
+                  <el-form-item label="所属地区"
+                    prop="areaCode"
+                    :rules="[
+                    { required: true, message: '区域不能为空'}
+                    ]"
+                  >
+                      <el-select v-model="divParams.areaCode" placeholder="所属地区" style="width:100%" @change="areaChange">
+                        <el-option label="台湾" value="007"></el-option>
+                        <el-option label="华北" value="003"></el-option>
+                        <el-option label="华中" value="006"></el-option>
+                        <el-option label="华东" value="004"></el-option>
+                        <el-option label="东北" value="002"></el-option>
+                        <el-option label="华南" value="005"></el-option>
+                        <el-option label="西部" value="009"></el-option>
+                        <el-option label="香港" value="008"></el-option>
+                        <el-option label="澳门" value="001"></el-option>
+                      </el-select>               
+                  </el-form-item>
+                </div>
+              </el-col>
+              <el-col :span="24">
+                <div class="grid-content bg-purple-light">
+                  <el-form-item label="省份"
+                    prop="provinceCode"
+                    :rules="[
+                    { required: true, message: '省份不能为空'}
+                    ]"
+                  >
+                    <el-select
+                      v-model="divParams.provinceCode"
+                      style="width:100%"
+                      @change="provinceChange"
+                    >
+                    <el-option
+                      v-for="item in provinceList"
+                      :key="item.provinceCode"
+                      :label="item.provinceName"
+                      :value="item.provinceCode"
+                    ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </div>
+              </el-col>
+              <el-col :span="24">
+                <div class="grid-content bg-purple-light">
+                  <el-form-item label="城市"
+                    prop="cityCode"
+                    :rules="[
+                    { required: true, message: '城市不能为空'}
+                    ]"
+                  >
+                    <el-select v-model="divParams.cityCode" style="width:100%" @change="selectDisposeCode">
+                      <el-option
+                        v-for="item in cityList"
+                        :key="item.cityCode"
+                        :label="item.cityName"
+                        :value="item.cityCode"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </div>
+              </el-col>
+              <el-col :span="24">
+                <div class="grid-content bg-purple">
+                  <el-form-item label="邮寄地址">
+                    <el-input v-model="divParams.mailingAddress"></el-input>
                   </el-form-item>
                 </div>
               </el-col>
@@ -254,72 +387,7 @@
                   </el-form-item>
                 </div>
               </el-col>
-              <el-col :span="24">
-                <div class="grid-content bg-purple">
-                  <el-form-item label="状态">
-                    <el-select
-                      v-model="divParams.status"
-                      style="width:100%"
-                      clearable
-                    >
-                      <!-- AT--自动/MT--手动 -->
-                      <el-option label="有效" value="Y"></el-option>
-                      <el-option label="无效" value="N"></el-option>
-                    </el-select>
-                  </el-form-item>
-                </div>
-              </el-col>
-              <el-col :span="24">
-                <div class="grid-content bg-purple">
-                  <el-form-item label="所属地区">
-                      <el-select v-model="divParams.areaCode" placeholder="所属地区" style="width:100%" @change="areaChange">
-                        <el-option label="台湾" value="007"></el-option>
-                        <el-option label="华北" value="003"></el-option>
-                        <el-option label="华中" value="006"></el-option>
-                        <el-option label="华东" value="004"></el-option>
-                        <el-option label="东北" value="002"></el-option>
-                        <el-option label="华南" value="005"></el-option>
-                        <el-option label="西部" value="009"></el-option>
-                        <el-option label="香港" value="008"></el-option>
-                        <el-option label="澳门" value="001"></el-option>
-                      </el-select>               
-                  </el-form-item>
-                </div>
-              </el-col>
-              <el-col :span="24">
-                <div class="grid-content bg-purple-light">
-                  <el-form-item label="省份">
-                    <el-select
-                      v-model="divParams.provinceCode"
-                      style="width:100%"
-                      @change="provinceChange"
-                    >
-                    <el-option
-                      v-for="item in provinceList"
-                      :key="item.provinceCode"
-                      :label="item.provinceName"
-                      :value="item.provinceCode"
-                    ></el-option>
-                    </el-select>
-                  </el-form-item>
-                </div>
-              </el-col>
-              <el-col :span="24">
-                <div class="grid-content bg-purple-light">
-                  <el-form-item label="城市">
-                    <el-select v-model="divParams.cityCode" style="width:100%" 
-            @change="selectDisposeCode">
-                      <el-option
-                        v-for="item in cityList"
-                        :key="item.cityCode"
-                        :label="item.cityName"
-                        :value="item.cityCode"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-                </div>
-              </el-col>  
-                                  
+              
             </el-row>
             <el-form-item>
               <el-button type="primary" @click="onSubmit">提交</el-button>
@@ -334,6 +402,7 @@
 <script>
 import axios from "@/common/axios.js"
 import common from "@/common/common.js";
+import { mapState, mapMutations } from 'vuex';
 export default {
   data() {
     return {
@@ -345,13 +414,16 @@ export default {
       provinceList: [],
       cityList: [],      
       divParams:{
-        agentCode: "",
+        ssss: "",
+        operationUser: "",
+        operationType: "1",
+        agentCode2: "",
         agentShortName: "",
         agentFullName: "",
         socialCreditCode: "",
         isGacShop: "",
         mailingAddress: "",
-        taxPaverType: "",
+        taxPayerType: "",
         billingAddress: "",
         billingTelephone: "",
         bankAccountName: "",
@@ -388,9 +460,15 @@ export default {
         agentName: "",
         socialCreditCode: "",
         status:"",
-      }
+      },
+      
     };
   },
+  computed: {
+      ...mapState(['userId'])
+    },
+
+
   methods: {
     
  selectDisposeCode(){
@@ -417,6 +495,7 @@ export default {
         })      
     },    
     initData() {
+      this.divParams.operationUser = this.userId;
       let url = common.agentListUrl
       axios.post(url, this.params).then(res => {
         if (res.em === 'Success!') {
@@ -537,26 +616,27 @@ export default {
       return index + order + 1
     },
     onSubmit() {
-      let url = common.addOrUpdateAgentUrl
-      axios2.post(url, this.divParams).then(res => {
-        console.log(res)
-        if (res.data.status === 'SUCCEED') {
-          let _this = this
-          _this.$message({message: "操作成功!",type: "success",duration: 1500})
-          showAddAgent: false
-        } else {
-          this.$alert('添加失败，请联系管理员!', '提示', {confirmButtonText: '确定'})
+      this.$refs['divParams'].validate((valid) => {
+        if (valid) {
+          let url = common.addOrUpdateAgentUrl2
+          axios.post(url, this.divParams).then(res => {
+            if (res.em === 'Success!') {
+              this.$message({message: "操作成功!",type: "success",duration: 1500})
+              this.showAddAgent = false
+            }else {
+                this.$alert('添加失败，请联系管理员!', '提示', {confirmButtonText: '确定'})
+            }                                                                            
+      })
+
         }
-      }).catch(error => {
-        if (error.message.includes('ORA-00001')) {
-          this.$alert('用户名必须唯一，请重新填写!', '提示', {confirmButtonText: '确定'})
-        }
-      }) 
+
+      })
+
     }
   },
 
   created() {
-    debugger
+    
     this.initData();
   },
   mounted(){
