@@ -696,7 +696,7 @@
               
             </el-row>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit">提交</el-button>
+              <el-button type="primary" @click="editSubmit">提交</el-button>
               <el-button @click="closeWindow">取消</el-button>
             </el-form-item>
           </el-form>
@@ -755,8 +755,9 @@ export default {
         cityCode: "",
       },
       divEditParams:{
+        agentId: "",
         operationUser: "",
-        operationType: "1",
+        operationType: "2",
         agentCode2: "",
         agentShortName: "",
         agentFullName: "",
@@ -836,8 +837,10 @@ export default {
         })      
     },    
     areaEditChange(areaCode) {
+      
       this.divEditParams.provinceCode = "";
       this.divEditParams.cityCode = "";
+      
       // 给省份 赋值
         let url = common.findProviInfoUrl
         axios.post(url, {areaCode:areaCode}).then(res => {
@@ -940,6 +943,43 @@ export default {
         }
       })
     },
+    initData3() {
+      if (this.divEditParams.areaCode) {
+        this.areaEditChange()
+        this.provinceEditChange()
+        this.selectDisposeCode()
+      }
+
+      if (this.divEditParams.isGacShop) {
+        if (this.divEditParams.isGacShop === '是') {
+          this.divEditParams.isGacShop = 'Y'
+        } 
+        if (this.divEditParams.isGacShop === '否') {
+          this.divEditParams.isGacShop = 'N'
+        } 
+      }
+      if (this.divEditParams.status) {
+        if (this.divEditParams.status === '有效') {
+          this.divEditParams.status = 'Y'
+        } 
+        if (this.divEditParams.status === '无效') {
+          this.divEditParams.status = 'N'
+        } 
+      }
+
+      // 0一般纳税人/1小规模纳税人/2个人
+      if (this.divEditParams.taxPayerType) {
+        if (this.divEditParams.taxPayerType === '一般纳税人') {
+          this.divEditParams.taxPayerType = '0'
+        } 
+        if (this.divEditParams.taxPayerType === '小规模纳税人') {
+          this.divEditParams.taxPayerType = '1'
+        } 
+        if (this.divEditParams.taxPayerType === '个人') {
+          this.divEditParams.taxPayerType = '2'
+        } 
+      }            
+    },
     handleSizeChange(pageSize) {
       this.currentPage = 1
       this.params.turnPageBeginPos = 1
@@ -964,19 +1004,14 @@ export default {
     },
     editInfo(row) {
       this.showEditAgent = true;
+      this.divEditParams.agentId = row.agentId;
       this.divEditParams.agentCode2 = row.agentCode;
       this.divEditParams.agentShortName = row.agentShortName;
       this.divEditParams.agentFullName = row.agentFullName;
       this.divEditParams.isGacShop = row.isGacShop;
       this.divEditParams.socialCreditCode = row.socialCreditCode;
-
-
-
       this.divEditParams.operationUser = row.operationUser;
       this.divEditParams.operationType = "2";
-      
-            
-            
       this.divEditParams.mailingAddress = row.mailingAddress;
       this.divEditParams.taxPayerType = row.taxPayerType;
       this.divEditParams.billingAddress = row.billingAddress;
@@ -994,6 +1029,7 @@ export default {
       this.divEditParams.status = row.status;
       this.divEditParams.registerAddress = row.registerAddress;
       this.divEditParams.areaCode = row.areaName;
+      // this.divEditParams.areaCode = item.provinceCode;
       this.divEditParams.provinceCode = row.provinceName;
       this.divEditParams.cityCode = row.cityName;
 
@@ -1023,6 +1059,25 @@ export default {
               this.showAddAgent = false
             }else {
                 this.$alert('添加失败，请联系管理员!', '提示', {confirmButtonText: '确定'})
+            }                                                                            
+      })
+
+        }
+
+      })
+
+    },
+    editSubmit() {
+      this.$refs['divEditParams'].validate((valid) => {
+        if (valid) {
+          let url = common.addOrUpdateAgentUrl2
+          //this.initData3()
+          axios.post(url, this.divEditParams).then(res => {
+            if (res.em === 'Success!') {
+              this.$message({message: "操作成功!",type: "success",duration: 1500})
+              this.showAddAgent = false
+            }else {
+                this.$alert('编辑失败，请联系管理员!', '提示', {confirmButtonText: '确定'})
             }                                                                            
       })
 
