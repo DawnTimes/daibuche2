@@ -43,7 +43,8 @@
         <el-table-column prop="inAgentName" label="调入经销商"  :show-overflow-tooltip='true'></el-table-column>
         <el-table-column prop="frameNumber" label="车架号"  :show-overflow-tooltip='true'></el-table-column>
         <el-table-column prop="engineNumber" label="发动机号码" :show-overflow-tooltip='true'></el-table-column>
-        <el-table-column prop="adjustStatusView" label="调剂状态" :show-overflow-tooltip='true'></el-table-column>
+        <el-table-column prop="adjustType" label="调剂类型" :show-overflow-tooltip='true'></el-table-column>
+				<el-table-column prop="adjustStatusView" label="调剂状态" :show-overflow-tooltip='true'></el-table-column>
         <el-table-column prop="plateNumber" label="车牌"  :show-overflow-tooltip='true'></el-table-column>
         <el-table-column prop="atmt" label="手动/自动" :show-overflow-tooltip='true'></el-table-column>
         <el-table-column prop="carSeriesName" label="车系" :show-overflow-tooltip='true' ></el-table-column>
@@ -135,6 +136,14 @@ export default {
             if (obj.createTime) {
               obj.createTime = obj.createTime.substr(0, 19)
             }
+						
+						if (obj.adjustType) {
+						  if (obj.adjustType === '1') {
+						    obj.adjustType = '处置流程'
+						  } else {
+						    obj.adjustType = '调剂流程'
+						  }
+						}
             if (obj.adjustStatus) {
               if (obj.adjustStatus === '2') {
                 obj.adjustStatusView = '已确认调剂'

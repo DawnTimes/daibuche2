@@ -22,7 +22,7 @@
         v-show= 'rolePermission.exportCar'
       >批量导出车辆信息</el-button>
     </el-row>
-    <el-table :data="tableData" stripe style="width: 100%" size="medium" :height="GLOBAL.height" border :header-cell-style="{
+    <el-table :data="tableData" :row-class-name="tableRowClassName" style="width: 100%" size="medium" :height="GLOBAL.height" border :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  
     'background':'#627CAF',    
@@ -59,6 +59,7 @@
       <el-table-column prop="compulsoryInsuranceNo" label="交强险保单号"  width="110"  :show-overflow-tooltip='true'  resizable></el-table-column>
       <el-table-column prop="compulsoryInsuranceEndDate" label="交强险到期日"  width="110"  :show-overflow-tooltip='true'  resizable></el-table-column>
       <el-table-column prop="rentState" label="租金状态"  :show-overflow-tooltip='true'  resizable></el-table-column>
+			<el-table-column prop="carStatus" label="处置状态" width="90" :show-overflow-tooltip='true'  align="right" resizable></el-table-column>
       <el-table-column prop="note" label="备注"  :show-overflow-tooltip='true'  resizable></el-table-column>
       <el-table-column fixed="right" label="操作" width="50">
         <template slot-scope="scope">
@@ -218,6 +219,12 @@ export default {
      }, 1000);  
   },
   methods: {
+		tableRowClassName(row) {
+			if (row.row.carStatus == "已处置" || row.row.carStatus == "Y") {
+				return 'info-row';
+			}
+			return '';
+		},
     indexMethod(index) {
       let order = this.pageSize * (this.currentPage - 1)
       return index + order + 1
@@ -351,7 +358,15 @@ export default {
                 if (obj.rentState === '3') {
                   obj.rentState = '待财务负责人审核'
                 } 
-              }          
+              }      
+							if (obj.carStatus) {
+									    if (obj.carStatus === "Y") {
+									        obj.carStatus = '已处置'
+									    } 
+									    if (obj.carStatus === "N") {
+									        obj.carStatus = '未处置'
+									    } 
+									}  
               if (obj.leaseWay) {
                 // LEASE-直租/BACK-LEASE-回租/OPERATING-LEASE - 经租
                 if (obj.leaseWay === 'LEASE' || obj.leaseWay === '1') {
@@ -492,6 +507,14 @@ export default {
                   obj.rentState = '待财务负责人审核'
                 } 
               }          
+							if (obj.carStatus) {
+									    if (obj.carStatus === "Y") {
+									        obj.carStatus = '已处置'
+									    } 
+									    if (obj.carStatus === "N") {
+									        obj.carStatus = '未处置'
+									    } 
+									}  
               if (obj.leaseWay) {
                 // LEASE-直租/BACK-LEASE-回租/OPERATING-LEASE - 经租
                 if (obj.leaseWay === 'LEASE' || obj.leaseWay === '1') {
@@ -513,7 +536,11 @@ export default {
   }
 };
 </script>
-
+<style>
+	.el-table .info-row {
+		background: #e4e4e4;
+	}
+</style>
 <style scoped>
 .car-management-header{
   width: 100%;

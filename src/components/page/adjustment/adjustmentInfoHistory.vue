@@ -67,7 +67,7 @@
       <!-- 调剂任务编号、车架号、牌照商、出租方、租赁方式、车牌、上牌地、主机厂匹配车型、调出经销商、调入经销商、调剂时间、合同生效时间、调剂状态 -->
       <el-table-column prop="adjustTaskNo" label="调剂任务编号" width="150" fixed :show-overflow-tooltip='true' resizable align="right"></el-table-column>
       <el-table-column prop="frameNumber" label="车架号" width="200" :show-overflow-tooltip='true' resizable></el-table-column>
-      <el-table-column prop="licenceName" label="牌照商" width="250" :show-overflow-tooltip='true' resizable></el-table-column>
+      <el-table-column prop="adjustType" label="调剂类型" :show-overflow-tooltip='true'></el-table-column>      <el-table-column prop="licenceName" label="牌照商" width="250" :show-overflow-tooltip='true' resizable></el-table-column>
       <el-table-column prop="lessor" label="出租方" width="250" :show-overflow-tooltip='true' resizable></el-table-column>
       <el-table-column prop="outAgentName" label="调出经销商" width="120" :show-overflow-tooltip='true' resizable></el-table-column>
       <el-table-column prop="inAgentName" label="调入经销商" width="120" :show-overflow-tooltip='true' resizable></el-table-column>
@@ -175,6 +175,13 @@ export default {
                     obj.adjustStatuView = '调剂已确认'
                 }                  
               }
+							if (obj.adjustType) {
+							  if (obj.adjustType === '1') {
+							    obj.adjustType = '处置流程'
+							  } else {
+							    obj.adjustType = '调剂流程'
+							  }
+							}
               if (obj.leaseWay) {
                 // LEASE-直租/BACK-LEASE-回租/OPERATING-LEASE - 经租
                 if (obj.leaseWay === 'LEASE') {
