@@ -65,7 +65,7 @@
         </el-table-column>        
       </el-table>
     <div class="return_btn">
-      <el-button @click="doAdjust" type="primary" v-if="rolePermission.sureAdjust">确认调剂</el-button>
+      <el-button @click="doAdjust" type="primary" v-if="rolePermission.sureAdjust" :loading="loadingStatus">确认调剂</el-button>
       <!-- <el-button @click="canCelAdjust" type="primary">取消调剂</el-button> -->
           <router-link to="/AdjustmentInfo">
               <el-button type="primary" style="margin-left:2%">返回</el-button>
@@ -102,7 +102,8 @@ export default {
       carList: {
         agentId: this.$route.query.type.agentId,
         carAdjustDetail: []
-      }
+      },
+      loadingStatus: false,
     };
   },
   updated(){
@@ -163,6 +164,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          this.loadingStatus = true;
            axios.post(url, {"agentId": this.$route.query.type.agentId}).then(res => {
         if (res.em === "Success!") {
           this.hidden = true
@@ -173,6 +175,7 @@ export default {
             icon: "iconchenggong-",
             btncontant: "确定"
           };
+          this.loadingStatus = false;
         } else {
           this.hidden = true
           this.msgBox = {
@@ -182,10 +185,11 @@ export default {
             icon: "iconshibai",
             btncontant: "确定"
           };
+          this.loadingStatus = false;
         }
       });
         }).catch(() => {
-                  
+          this.loadingStatus = false;        
         });
 
      
