@@ -1,3 +1,11 @@
+/*
+ * @Author: 廖亿晓
+ * @Date: 2020-07-14 16:16:47
+ * @LastEditTime: 2020-08-10 10:42:52
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: \webcode2\build\webpack.dev.conf.js
+ */
 'use strict'
 const utils = require('./utils')
 const webpack = require('webpack')
@@ -9,6 +17,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -48,6 +57,19 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': require('../config/dev.env')
     }),
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: {
+          warnings: false,
+          drop_debugger: true,  //去掉debugger
+          drop_console: true,  // 去掉console
+          pure_funcs: ['console.log'] // 移除console
+        }
+      },
+      sourceMap: config.build.productionSourceMap,
+      parallel: true
+    }),
+
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
     new webpack.NoEmitOnErrorsPlugin(),

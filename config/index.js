@@ -1,3 +1,11 @@
+/*
+ * @Author: 廖亿晓
+ * @Date: 2020-07-14 16:16:47
+ * @LastEditTime: 2020-08-10 10:22:35
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: \webcode2\config\index.js
+ */
 'use strict'
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
