@@ -18,7 +18,7 @@
                   <img id="imgIdentifyingCode"  alt="点击更换" title="点击更换" style="cursor: pointer"/>
                 </div>                 
              </div> -->
-             <button class="btn" @click="login()" id="tlogin">登录</button>
+             <el-button class="btn" @click="login()" id="tlogin" :loading="loginLoading">登录</el-button>
         </div>
        
     </div>
@@ -32,6 +32,7 @@ import axios2 from "@/common/axios.js"
 export default {
   data () {
     return {
+      loginLoading: false,
       loginForm: {
         userName: '',
         password: '',
@@ -65,14 +66,17 @@ export default {
       formData.append('authtype', 'pc')
       formData.append('validCode', this.loginForm.yzm)
       formData.append('currentBusinessCode', '1234321')
-      let url = common.loginUrl
+      let url = common.loginUrl;
+      this.loginLoading = true;
       axios.post(url, formData).then(res => {
-        console.log(res)
+        // console.log(res)
         if (res.data.ec === '1002') {
+            this.loginLoading = false;
             this.$alert(res.data.em, '登录失败', {confirmButtonText: '确定'})
             // 错误之后刷新一下验证码
             this.getIdentifyingCode()
         } else {
+          this.loginLoading = false;
           // 把角色的值存进去
           let roles = []
           res.data.roles.forEach((obj, index) => {
@@ -85,6 +89,8 @@ export default {
           this.setPersonName(res.data.session_customerNameCN)
           this.$router.push('/common')
         }
+      }).catch(() => {
+        this.loginLoading = false;
       })      
 
     },

@@ -341,6 +341,8 @@
 <script>
 	import axios from "@/common/axios.js";
 	import common from "@/common/common.js";
+	// import { dateDisabled } from "@/common/dateDisabled.js";
+	// import date from "@/common/dateDisabled.js";
 	export default {
 		data() {
 			return {
@@ -356,9 +358,20 @@
 							day = "0" + day;
 						}
 						var dateTime = year + "-" + month + "-" + day;
+						// console.log(dateTime);
 						var d = new Date(dateTime.replace(/\-/, "/ "));
+						// console.log(d.getDate());
 						var nd = new Date(d.getTime() + 24 * 60 * 60 * 1000); //next day 
+						// 只能选每月的 4 号 和 19 号
+						// if(d.getDate() == 4 || d.getDate() == 19) {
+						// 	return false
+						// } else {
+						// 	return true
+						// }
 						return (d.getMonth() == nd.getMonth())
+						// return (d.getDate() != 4)
+						// return dateDisabled(inputDate);
+						// return date.dateDisabled(inputDate);
 					}
 				},
 				rolePermission: {
