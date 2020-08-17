@@ -1,3 +1,11 @@
+/*
+ * @Author: 廖亿晓
+ * @Date: 2020-07-14 16:16:47
+ * @LastEditTime: 2020-08-10 15:08:10
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: \webcode2\build\webpack.base.conf.js
+ */
 'use strict'
 const path = require('path')
 const utils = require('./utils')
@@ -65,11 +73,11 @@ module.exports = {
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       },
-      {
-        test: /\.scss$/,
-        loaders: ['style','css']
+      // {
+      //   test: /\.scss$/,
+      //   loaders: ['style','css', 'sass']
         
-      }
+      // }
     ]
   },
   node: {

@@ -1,0 +1,40 @@
+@import './reset.scss';
+@import './global.css';
+
+
+.page-layer {
+  padding-top: 20px;
+  text-align: right;
+}
+
+.hearderBox {
+  padding: 20px 0 0 20px;
+}
+
+.greenStatus {
+  color: #67C23A;
+}
+
+.redStatus {
+  color: #F56C6C;
+}
+
+.blueColor {
+  color: #409EFF;
+}
+
+.yellowColor {
+  color: #E6A23C;
+}
+
+.skyblueColor {
+  color: #22d1ef;
+}
+
+.gutter {
+  background: #627CAF !important;
+}
+
+.el-table__fixed-right-patch {
+  background: #627CAF !important;
+}

@@ -26,7 +26,7 @@ export const dateDisabled = (inputDate) => {
   // console.log(nd);
   // console.log(d.getDate() != 4);
   // debugger
-  if(d.getDate() == 4 || d.getDate() == 19) {
+  if (d.getDate() == 4 || d.getDate() == 19) {
     return false
   } else {
     return true

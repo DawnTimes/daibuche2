@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-08-10 10:42:52
+ * @LastEditTime: 2020-08-11 09:48:32
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\build\webpack.dev.conf.js
@@ -57,18 +57,18 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': require('../config/dev.env')
     }),
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        compress: {
-          warnings: false,
-          drop_debugger: true,  //去掉debugger
-          drop_console: true,  // 去掉console
-          pure_funcs: ['console.log'] // 移除console
-        }
-      },
-      sourceMap: config.build.productionSourceMap,
-      parallel: true
-    }),
+    // new UglifyJsPlugin({   // 开发环境先注释掉，不然每次执行 npm run dev 都会卡在91%比较久
+    //   uglifyOptions: {
+    //     compress: {
+    //       warnings: false,
+    //       drop_debugger: true,  //去掉debugger
+    //       drop_console: true,  // 去掉console
+    //       pure_funcs: ['console.log'] // 移除console
+    //     }
+    //   },
+    //   sourceMap: config.build.productionSourceMap,
+    //   parallel: true
+    // }),
 
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
