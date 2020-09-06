@@ -1,3 +1,11 @@
+<!--
+ * @Author: 廖亿晓
+ * @Date: 2020-07-14 16:16:47
+ * @LastEditTime: 2020-09-03 18:08:11
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: \webcode2\src\views\layouts\components\Aside.vue
+-->
 <template>
   <div class="aside">
     <el-menu class="sidebar-menu" :router="true" :default-active="currMenu" :unique-opened="true">
@@ -5,23 +13,23 @@
         <el-menu-item
           v-if="!menuItem.spread"
           :key="menuItem.id"
-          :index="menuItem.path"
-          :route="menuItem.path"
+          :index="menuItem.path ? menuItem.path : ''"
+          :route="menuItem.path ? menuItem.path : ''"
           :class="[menuItem.path === currMenu ? 'is-active':'']"
         >
           <i class="icon iconfont mr" :class="menuItem.icon"></i>
           {{menuItem.name}}
         </el-menu-item>
-        <el-submenu v-else :index="menuItem.path" :key="menuItem.id">
+        <el-submenu v-else :index="menuItem.path ? menuItem.path : ''" :key="menuItem.id">
           <span slot="title" class="title">
             <i class="icon iconfont mr" :class="menuItem.icon"></i>
             {{menuItem.name}}
           </span>
           <el-menu-item
-            :index="item.path"
+            :index="item.path ? item.path : ''"
             v-for="item in menuItem.children"
             :key="item.id"
-            :route="item.path"
+            :route="item.path ? item.path : ''"
             :class="[item.path === currMenu? 'is-active':'']"
           >{{item.name}}</el-menu-item>
         </el-submenu>
@@ -49,19 +57,25 @@ export default {
     this.getPath();
   },
   watch: {
+    // 监听,当路由发生变化的时候执行
     $route: 'getPath',
   },
   methods: {
     ...mapMutations(['setAsideInfo', 'setAsideInfoIds']),
+    // 监听路由的变化，激活当前路由
     getPath() {
+      // console.log(this.$route);
       let str = this.$route.path.split('/')[1];
-      console.log(str);
+      // console.log(str);
       if (str.length === 0) {
         this.currMenu = '/';
       } else {
         this.currMenu = '/' + str;
       }
+      console.log(this.currMenu);
     },
+
+    // 获取菜单
     initData() {
       let url = '';
       if (this.userId === 'admin') {
@@ -78,7 +92,6 @@ export default {
     },
   },
   created() {
-    console.log('201909160952');
     this.initData();
     bus.$on('changeAside', () => {
       this.initData();
@@ -87,5 +100,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.aside .el-submenu .el-menu-item {
+  height: 44px;
+  line-height: 44px;
+}
+
+.aside .el-submenu .el-submenu__title {
+  height: 52px;
+  line-height: 52px;
+}
 </style>

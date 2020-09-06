@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-08-14 18:15:15
+ * @LastEditTime: 2020-09-04 13:56:53
  * @LastEditors: your name
  * @Description: 核销弹框
  * @FilePath: \webcode2\src\views\verification\components\writeOffDialog.vue
@@ -13,8 +13,9 @@
       :close-on-click-modal="false"
       title="核销"
       :visible.sync="writeOffFormVisible"
+      :destroy-on-close="true"
     >
-      <el-form :model="writeOffForm" label-width="90px" size="medium">
+      <el-form :model="writeOffForm" label-width="110px" size="medium">
         <el-row :gutter="0">
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
             <el-form-item label="银行单据号">
@@ -22,15 +23,15 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-            <el-form-item label="经销店">
+            <el-form-item label="经销店/牌照商">
               <el-input v-model="writeOffForm.name" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+          <!-- <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
             <el-form-item label="牌照商">
               <el-input v-model="writeOffForm.name" disabled></el-input>
             </el-form-item>
-          </el-col>
+          </el-col> -->
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
             <el-form-item label="合同编号">
               <el-input v-model="writeOffForm.name" disabled></el-input>
@@ -53,7 +54,7 @@
             <!-- <el-form-item label="车辆数量">
           <el-input v-model="writeOffForm.name" disabled></el-input>
             </el-form-item>-->
-            <el-form-item label="代付标志" v-show="!$formAtReadonly('modifyTime', formReadonly.hide)">
+            <el-form-item label="代付标志" v-show="writeOffForm.radio == 1">
               <el-input
                 v-model="writeOffForm.name"
                 type="textarea"

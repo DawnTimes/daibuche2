@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-08-13 16:31:12
+ * @LastEditTime: 2020-09-04 17:43:12
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeRentUpdate.vue
@@ -46,7 +46,7 @@ export default {
         status: 'Y',
       },
       formReadonly: {
-        hide: [],
+        hide: ['idCode', 'city', 'Licence', 'cancelBtn1', 'cancelBtn3'],
         readonly: [],
       },
       status: {

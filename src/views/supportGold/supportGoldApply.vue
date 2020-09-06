@@ -1,0 +1,341 @@
+<!--
+ * @Author: 廖亿晓
+ * @Date: 2020-08-17 16:49:12
+ * @LastEditTime: 2020-09-04 11:41:45
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
+-->
+
+<template>
+  <div class="supportGoldApply">
+    <div class="hearderBox">
+      <el-form
+        :inline="true"
+        :model="formData"
+        class="demo-form-inline"
+        label-width="90px"
+        size="small"
+        ref="ruleForm"
+      >
+        <el-form-item label="支援金月份:" prop="systemName">
+          <el-date-picker
+            v-model="formData.value1"
+            type="month"
+            value-format="yyyy-MM"
+            placeholder="选择月份"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="期数:" prop="interfaceName">
+          <el-input maxlength="50" v-model="formData.interfaceName" clearable placeholder></el-input>
+        </el-form-item>
+        <el-form-item label="批次号:" prop="systemName">
+          <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
+        </el-form-item>
+        <el-form-item label="审批状态:" prop="interfaceName">
+          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
+            <el-option
+              v-for="item in appravolStatus"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="queryForm">查询</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleCreate" v-show="rightControl.add" >申请支援金</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+
+    <div class="table">
+      <el-table
+        :data="tableData"
+        border
+        stripe
+        :max-height="tableHeight"
+        ref="table"
+        style="width: 100%"
+        :cell-style="{'text-align': 'center', 'height': '40px'}"
+        :header-cell-style="{
+        'text-align':'center',
+        'font-weight':'bold',  
+        'background':'#627CAF',    
+        'color': '#fff',
+      }"
+      >
+        <el-table-column
+          width="50"
+          align="center"
+          label="序号"
+          type="index"
+          :index="indexMethod"
+          fixed
+        ></el-table-column>
+        <el-table-column align="center" prop="month" label="支援金月份" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="期数" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="批次号" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="batch" label="批次" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="店数" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="车辆数" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="审批状态" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="申请人" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="申请时间" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="支付状态" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="支付登记时间" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" label="操作" width="180" fixed="right">
+          <template slot-scope="scope">
+            <el-button type="primary" size="mini" @click="handleRegister(scope.row)" v-show="rightControl.register">登记</el-button>
+            <el-button size="mini" @click="handleDetail(scope.row)" v-show="rightControl.detail">详情</el-button>
+            <!-- <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button> -->
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+    <div class="page-layer">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pageNum"
+        :page-sizes="[10, 20, 50, 100, 200]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      ></el-pagination>
+    </div>
+
+    <confirmBox
+      v-if="showDeleteBox"
+      :msgConfirBox="deleteInfoText"
+      v-on:submitForm="deleteSubmit"
+      v-on:cancelbox="cancelBack"
+    ></confirmBox>
+
+    <!-- 登记弹框 -->
+    <register-dialog
+      ref="registerDialog"
+      :registerForm="registerForm"
+      :loading="status.loading"
+      @formDataSubmit="formDataSubmit"
+    ></register-dialog>
+  </div>
+</template>
+
+<script>
+import _ from 'lodash';
+import axios from '@/common/axios.js';
+import common from '@/common/common.js';
+import confirmBox from '@/components/confirmBox'; // 删除弹框
+import registerDialog from './components/registerDialog'; // 登记弹框
+
+import { mapState } from 'vuex';
+import moment from 'moment';
+
+export default {
+  name: '',
+  props: {},
+  components: {
+    confirmBox,
+    registerDialog,
+  },
+  data() {
+    return {
+      pageSize: 10,
+      pageNum: 1,
+      total: 0,
+      formData: {},
+
+      tableData: [{ batch: '第一批', month:'2020-08' }, { batch: '第二批', month:'2020-08'}],
+      tableHeight: 100,
+      appravolStatus: [],
+
+      // 删除提示文本
+      deleteInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认删除该租金修改任务？',
+        consecond: '警告：删除后不可恢复！',
+      },
+      // 删除框显示
+      showDeleteBox: false,
+      // 删除的系统ID
+      deleteId: null,
+
+      registerForm: {
+        currentTime: '',
+        userId: '',
+        id: '',
+      },
+      status: {
+        loading: false,
+      },
+
+      // 按钮权限
+      rightArray: [9621, 9622, 9623],
+      rightControl: {
+        add: false,
+        register: false,
+        detail: false,
+      },
+    };
+  },
+  computed: {
+    ...mapState({
+      userId: (store) => store.userId,
+    }),
+    // ...mapState('menu', {
+    //   userId: store => store.userId
+    // }),
+  },
+  watch: {},
+  created() {
+    // 判断权限
+    this.rightArray.forEach((item, index, array) => {
+      common.checkRolePermission(
+        item,
+        this.$store.state.asideInfoIds,
+        Object.keys(this.rightControl)[index],
+        this.rightControl
+      );
+    });
+    
+    this.$nextTick(function () {
+      this.tableHeight =
+        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+
+      // 监听窗口大小变化
+      let self = this;
+      window.onresize = function () {
+        self.tableHeight =
+          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+      };
+    });
+    //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
+    //50表示你想要调整的表格距离底部的高度（你可以自己随意调整），因为我们一般都有放分页组件的，所以需要给它留一个高度
+  },
+
+  // 添加组件内的导航钩子，在跳转路由前，将监听窗口大小变化的函数清空
+  beforeRouteLeave(to, from, next) {
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+    // this.tableHeight = 500
+    window.onresize = function () {
+      // console.log('离开了')
+    };
+    next();
+  },
+
+  mounted() {
+    // moment().format('YYYY-MM-DD HH:mm:ss')
+  },
+  methods: {
+    // 查询
+    queryForm() {},
+
+    // 重置
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+
+    // 申请支援金
+    handleCreate() {
+      this.$router.push({
+        path: '/createSupportGoldApply',
+      });
+    },
+
+    // 自定义列接口索引
+    indexMethod(index) {
+      let order = this.pageSize * (this.pageNum - 1);
+      return index + order + 1;
+    },
+
+    // 分页
+    handleSizeChange(val) {
+      this.pageNum = 1;
+      this.formData.pageNum = 1;
+      this.pageSize = val;
+      this.formData.pageSize = val;
+    },
+    handleCurrentChange(val) {
+      this.pageNum = val;
+      this.formData.pageNum = (val - 1) * this.pageSize + 1;
+    },
+
+    // 详情
+    handleDetail(row) {
+      this.$router.push({
+        path: '/supportGoldDetail',
+        query: {
+          month: row.month,
+          batch: row.batch,
+        },
+      })
+    },
+
+    // 删除
+    handleDelete(row) {
+      this.showDeleteBox = true;
+      this.deleteId = row.id;
+    },
+
+    // 删除提交
+    deleteSubmit() {
+      // const url = common.systemDeleteUrl;
+      // const data = {
+      //   id: this.deleteId
+      // };
+      // axios.post(url, data).then(res => {
+      //   if (res.code === '0') {
+      //     this.$notify.success({
+      //       title: '温馨提示！',
+      //       message: '删除成功！'
+      //     });
+      //     this.showDeleteBox = false;
+      //     this.getSystemListData();
+      //   } else {
+      //     this.$notify.error({
+      //       title: '温馨提示！',
+      //       message: '删除失败！'
+      //     });
+      //   }
+      // });
+    },
+
+    // 取消删除
+    cancelBack() {
+      this.showDeleteBox = false;
+    },
+
+    // 登记弹窗
+    handleRegister(row) {
+      this.registerForm.currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
+      this.registerForm.userId = this.userId;
+      this.registerForm.id = row.id;
+      this.$refs.registerDialog.isShow(true);
+    },
+
+    // 登记确定
+    formDataSubmit() {
+      this.$refs.registerDialog.isShow(false);
+    },
+  },
+  filters: {
+    function() {},
+  },
+};
+</script>
+
+<style scoped lang="scss">
+.supportGoldApply {
+}
+</style>

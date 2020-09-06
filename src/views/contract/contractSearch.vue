@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div>
-      <el-form :inline="true" :model="params" class="demo-form-inline" label-width="120px">
+      <el-form :inline="true" :model="params" class="demo-form-inline" label-width="100px">
         <el-form-item label="经销商简称">
           <el-input
             class="inputSelectClass"
@@ -96,7 +96,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" size="mini">搜索</el-button>
+          <el-button type="primary" @click="onSubmit" size="mini">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -105,6 +105,7 @@
       style=" margin-top:10px"
       stripe
       border
+      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  

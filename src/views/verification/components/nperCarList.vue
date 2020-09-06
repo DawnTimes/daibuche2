@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-08-14 18:32:08
+ * @LastEditTime: 2020-08-20 16:54:31
  * @LastEditors: your name
  * @Description: 查询期数下所有车辆
  * @FilePath: \webcode2\src\views\verification\components\nperCarList.vue
@@ -32,18 +32,19 @@
       }"
         >
           <el-table-column width="50" align="center" label="序号" type="index" fixed></el-table-column>
-          <el-table-column align="center" prop="" label="经销店名称" show-overflow-tooltip width="100"></el-table-column>         
-          <el-table-column align="center" prop label="牌照商名称" show-overflow-tooltip width="120"></el-table-column>
-          <el-table-column align="center" prop="id" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
-          <el-table-column align="center" prop label="期数" show-overflow-tooltip width="80"></el-table-column>
-          <el-table-column align="center" prop label="车型" show-overflow-tooltip width="100"></el-table-column>
-          <el-table-column align="center" prop label="车架号" show-overflow-tooltip width="100"></el-table-column>
-          <el-table-column align="center" prop label="车牌号" show-overflow-tooltip width="100"></el-table-column>
-          <!-- <el-table-column align="center" prop label="发动机号" show-overflow-tooltip width="100"></el-table-column> -->
-          <el-table-column align="center" prop label="上牌地" show-overflow-tooltip width="100"></el-table-column>
-          <el-table-column align="center" prop label="是否限牌" show-overflow-tooltip width="100"></el-table-column>
+          <!-- <el-table-column align="center" prop="" label="经销店/牌照商" show-overflow-tooltip width="150"></el-table-column>          -->
+          <el-table-column align="center" prop="" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
+          <el-table-column align="center" prop label="期数" show-overflow-tooltip></el-table-column>
+          <el-table-column align="center" prop label="车型" show-overflow-tooltip></el-table-column>
+          <el-table-column align="center" prop="id" label="车架号" show-overflow-tooltip></el-table-column>
+          <el-table-column align="center" prop label="车牌号" show-overflow-tooltip></el-table-column>
+          <el-table-column align="center" prop label="发动机号" show-overflow-tooltip></el-table-column>
+          <el-table-column align="center" prop label="上牌地" show-overflow-tooltip></el-table-column>
+          <el-table-column align="center" prop label="是否限牌" show-overflow-tooltip></el-table-column>
+          <el-table-column align="center" prop label="租赁方式" show-overflow-tooltip></el-table-column>
+          <!-- <el-table-column align="center" prop label="是否广汽租赁" show-overflow-tooltip width="110"></el-table-column> -->
 
-          <el-table-column align="center" prop label="核销状态" show-overflow-tooltip width="100">
+          <!-- <el-table-column align="center" prop label="核销状态" show-overflow-tooltip width="100">
             <template slot-scope="scope">
               <span
                 :class="{greenStatus: scope.row.approvalStatus == '', redStatus: scope.row.approvalStatus == '', blueColor: scope.row.approvalStatus == '',
@@ -53,15 +54,15 @@
           </el-table-column>
           <el-table-column align="center" prop label="核销人" show-overflow-tooltip width="100"></el-table-column>
           <el-table-column align="center" prop label="核销时间" show-overflow-tooltip width="100"></el-table-column>
-          <el-table-column align="center" prop label="银行单据号" show-overflow-tooltip width="120"></el-table-column>
-          <el-table-column align="center" prop label="支付日" show-overflow-tooltip width="100"></el-table-column>
+          <el-table-column align="center" prop label="银行单据号" show-overflow-tooltip width="120"></el-table-column> -->
+          <el-table-column align="center" prop label="支付日" show-overflow-tooltip></el-table-column>
 
-          <el-table-column align="center" prop label="应收金额" show-overflow-tooltip width="100"></el-table-column>
-          <el-table-column align="center" prop label="应收本金" show-overflow-tooltip width="100"></el-table-column>
-          <el-table-column align="center" prop label="应收利息" show-overflow-tooltip width="100"></el-table-column>
+          <el-table-column align="center" prop label="应收金额" show-overflow-tooltip></el-table-column>
+          <el-table-column align="center" prop label="应收本金" show-overflow-tooltip></el-table-column>
+          <el-table-column align="center" prop label="应收利息" show-overflow-tooltip></el-table-column>
           <el-table-column align="center" prop label="应收管理费" show-overflow-tooltip width="120"></el-table-column>
           <el-table-column align="center" prop label="应收手续费" show-overflow-tooltip width="120"></el-table-column>
-          <el-table-column align="center" prop label="已收金额" show-overflow-tooltip width="100"></el-table-column>
+          <!-- <el-table-column align="center" prop label="已收金额" show-overflow-tooltip width="100"></el-table-column>
           <el-table-column align="center" prop label="已收本金" show-overflow-tooltip width="100"></el-table-column>
           <el-table-column align="center" prop label="已收利息" show-overflow-tooltip width="100"></el-table-column>
           <el-table-column align="center" prop label="已收管理费" show-overflow-tooltip width="120"></el-table-column>
@@ -71,7 +72,7 @@
           <el-table-column align="center" prop label="未收利息" show-overflow-tooltip width="100"></el-table-column>
           <el-table-column align="center" prop label="未收管理费" show-overflow-tooltip width="120"></el-table-column>
           <el-table-column align="center" prop label="未收手续费" show-overflow-tooltip width="120"></el-table-column>
-          <el-table-column align="center" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+          <el-table-column align="center" prop="remark" label="备注" show-overflow-tooltip></el-table-column> -->
         </el-table>
       </div>
       <div slot="footer" class="dialog-footer">
@@ -93,7 +94,7 @@ export default {
   components: {},
   data() {
     return {
-      tableData: [{ id: '0001' }],
+      tableData: [{ id: '0001' }, { id: '0002' }],
 
       // 数据字典
       dictTemp: [],

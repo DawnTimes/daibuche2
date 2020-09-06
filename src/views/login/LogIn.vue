@@ -4,7 +4,7 @@
     <div class="box">
       <img src="~@/assets/images/logo1.png" />
       <p class="title">代步车运营管理系统</p>
-      <div class="other">
+      <!-- <div class="other">
         <input
           type="text"
           id="uname"
@@ -13,6 +13,7 @@
           placeholder="请输入账号"
         />
         <i class="icon iconfont iconyonghuming"></i>
+        <i class="icon iconfont icon-yonghuming"></i>
       </div>
       <div class="other">
         <input
@@ -23,14 +24,51 @@
           placeholder="请输入密码"
         />
         <i class="icon iconfont iconmima"></i>
-      </div>
+        <i class="icon iconfont icon-ziyuanxhdpi"></i>
+      </div>-->
       <!-- <div class="other">
                  <input type="text" class="yzm fl" v-model="loginForm.yzm" placeholder="请输入验证码"/>
                 <div class="pic fr" @click="getIdentifyingCode">
                   <img id="imgIdentifyingCode"  alt="点击更换" title="点击更换" style="cursor: pointer"/>
                 </div>                 
       </div>-->
-      <el-button class="btn" @click="login()" id="tlogin" :loading="loginLoading">登录</el-button>
+      <!-- <el-button class="btn" @click="loginSubmit()" id="tlogin" :loading="loginLoading">登录</el-button> -->
+
+      <el-form
+        :model="loginForm"
+        ref="loginForm"
+        :rules="rules"
+        class="demo-ruleForm"
+        size="medium"
+      >
+        <el-form-item prop="userName">
+          <el-input
+            v-model="loginForm.userName"
+            maxlength="30"
+            prefix-icon="iconfont icon-yonghuming"
+            placeholder="请输入账号"
+            @keyup.enter.native="loginSubmit('loginForm')"
+          ></el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input
+            type="password"
+            v-model="loginForm.password"
+            maxlength="30"
+            prefix-icon="iconfont icon-ziyuanxhdpi"
+            placeholder="请输入密码"
+            @keyup.enter.native="loginSubmit('loginForm')"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            type="primary"
+            @click="loginSubmit('loginForm')"
+            :loading="loginLoading"
+            style="width: 100%;"
+          >提交</el-button>
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
@@ -38,8 +76,8 @@
 <script>
 import { mapMutations } from 'vuex';
 import common from '@/common/common.js';
-import axios from 'axios';
-import axios2 from '@/common/axios.js';
+// import axios from 'axios';
+import axios from '@/common/axios.js';
 export default {
   data() {
     return {
@@ -48,12 +86,21 @@ export default {
         userName: '',
         password: '',
         yzm: '',
+        deviceID: '',
       },
       // userToken:""
       deviceID: '',
+
+      rules: {
+        userName: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+      },
     };
   },
   created() {
+    // 进入登录时清除掉原有的tabs导航标签
+    sessionStorage.removeItem('tagsArr');
+
     document.addEventListener('keydown', this.whenKeyDown);
   },
 
@@ -64,48 +111,76 @@ export default {
     ...mapMutations(['changeLogin', 'setRoles', 'setUserId', 'setPersonName']),
     whenKeyDown(event) {
       if (event.keyCode === 13) {
-        this.login();
+        this.loginSubmit();
       }
     },
-    login() {
-      let formData = new FormData();
-      formData.append('userName', this.loginForm.userName);
-      formData.append('password', this.loginForm.password);
-      formData.append('client', 'client1');
-      formData.append('client-secret', '123456');
-      formData.append('deviceID', this.loginForm.deviceID);
-      formData.append('authtype', 'pc');
-      formData.append('validCode', this.loginForm.yzm);
-      formData.append('currentBusinessCode', '1234321');
-      let url = common.loginUrl;
-      this.loginLoading = true;
-      axios
-        .post(url, formData)
-        .then((res) => {
-          // console.log(res)
-          if (res.data.ec === '1002') {
-            this.loginLoading = false;
-            this.$alert(res.data.em, '登录失败', { confirmButtonText: '确定' });
-            // 错误之后刷新一下验证码
-            this.getIdentifyingCode();
-          } else {
-            this.loginLoading = false;
-            // 把角色的值存进去
-            let roles = [];
-            res.data.roles.forEach((obj, index) => {
-              roles.push(obj.roleName);
-            });
-            roles = roles.join();
+    loginSubmit(formName) {
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          let formData = new FormData();
+          formData.append('userName', this.loginForm.userName);
+          formData.append('password', this.loginForm.password);
+          formData.append('client', 'client1');
+          formData.append('client-secret', '123456');
+          formData.append('deviceID', this.loginForm.deviceID);
+          formData.append('authtype', 'pc');
+          formData.append('validCode', this.loginForm.yzm);
+          formData.append('currentBusinessCode', '1234321');
+          let url = common.loginUrl;
+          this.loginLoading = true;
+          axios
+            .post(url, formData)
+            .then((res) => {
+              // console.log(res);
+              if (res.ec === '1002') {
+                this.loginLoading = false;
+                this.$notify.error({
+                  title: '温馨提示',
+                  message: '登录失败，请重新登录！',
+                  duration: 3000,
+                });
+                // 错误之后刷新一下验证码
+                // this.getIdentifyingCode();
+              } else if (res.ec === 'H00766') {
+                this.loginLoading = false;
+                this.$notify.error({
+                  title: '温馨提示',
+                  message: '登录失败，用户名或密码错误，请重新登录！',
+                  duration: 3000,
+                });
+              } else {
+                this.$notify.success({
+                  title: '温馨提示',
+                  message: '登录成功！',
+                  duration: 1500,
+                });
+                this.loginLoading = false;
+                // 把角色的值存进去
+                let roles = [];
+                if (res.roles) {
+                  res.roles.forEach((obj, index) => {
+                    roles.push(obj.roleName);
+                  });
+                }
+                roles = roles.join();
 
-            this.setRoles(roles);
-            this.setUserId(res.data.userId);
-            this.setPersonName(res.data.session_customerNameCN);
-            this.$router.push('/common');
-          }
-        })
-        .catch(() => {
-          this.loginLoading = false;
-        });
+                this.setRoles(roles);
+                this.setUserId(res.userId);
+                this.setPersonName(res.session_customerNameCN);
+
+                this.$router.push('/common');
+              }
+            })
+            .catch((err) => {
+              this.loginLoading = false;
+              this.$notify.error({
+                title: '温馨提示',
+                message: '登录失败，请重新登录！',
+                duration: 3000,
+              });
+            });
+        }
+      });
     },
     getIdentifyingCode() {
       this.loginForm.deviceID = common.guid();
@@ -193,8 +268,8 @@ export default {
         width: 35%;
         height: 40px;
       }
-      .iconyonghuming,
-      .iconmima {
+      .icon-yonghuming,
+      .icon-ziyuanxhdpi {
         left: 10px;
         position: absolute;
         top: 12px;

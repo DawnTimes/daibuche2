@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-08-14 11:46:26
+ * @LastEditTime: 2020-08-17 10:52:42
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\baseInformationDetailModule.vue
@@ -146,7 +146,7 @@
       </el-row>
     </div>
 
-    <el-row :gutter="10">
+    <!-- <el-row :gutter="10">
       <el-col :xs="24" :sm="22" :md="20" :lg="18" :xl="14">
         <div style="padding: 20px 0 20px 0; text-align: center">
           <el-button @click="handleGoToBack()" size="medium">返 回</el-button>
@@ -158,7 +158,7 @@
           >去审批</el-button>
         </div>
       </el-col>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 
@@ -171,6 +171,12 @@ import { queryDict } from '@/api/index.js';
 export default {
   name: '',
   props: {
+    baseInfoForm: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
     formReadonly: {
       type: Object,
       default: () => {

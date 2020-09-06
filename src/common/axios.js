@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-08-10 15:42:35
+ * @LastEditTime: 2020-09-01 16:07:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\common\axios.js
@@ -64,7 +64,7 @@ export default {
           resolve(res.data);
         })
         .catch(err => {
-          reject(err.data)
+          reject(err)
         })
     });
   },

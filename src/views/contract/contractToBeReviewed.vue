@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="userPage">
-      <el-form :inline="true" :model="params" class="demo-form-inline">
+      <el-form :inline="true" :model="params" class="demo-form-inline" label-width="80px">
         <el-form-item label="合同编号">
           <el-input
             class="inputSelectClass2"
@@ -41,7 +41,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" size="mini">搜索</el-button>
+          <el-button type="primary" @click="onSubmit" size="mini">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -50,6 +50,7 @@
       style="width: 100%"
       stripe
       border
+      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  
@@ -495,7 +496,7 @@ export default {
   }
 } */
 .el-form-item {
-  margin: 0;
+  // margin: 0;
 }
 .paginationClass {
   margin: 1% 1% 0 0;

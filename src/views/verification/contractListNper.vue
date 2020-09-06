@@ -1,36 +1,61 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-08-14 18:26:54
+ * @LastEditTime: 2020-08-27 16:32:09
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
 -->
 <template>
   <div class="contractListNper">
+    <div class="baseInfo">
+      <el-row :gutter="10">
+        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
+          <span>银行单据号：</span>
+          <span>{{ baseFrom.id }}</span>
+        </el-col>
+        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
+          <span>收款金额：</span>
+          <span>{{ baseFrom.inMoney }} 元</span>
+        </el-col>
+        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
+          <span>已核金额：</span>
+          <span>{{ baseFrom.outMoney }} 元</span>
+        </el-col>
+        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
+          <span>未核金额：</span>
+          <span>{{ baseFrom.balance }} 元</span>
+        </el-col>
+        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
+          <span>退款金额：</span>
+          <span>{{ baseFrom.balance }} 元</span>
+        </el-col>
+      </el-row>
+    </div>
+
     <div class="hearderBox">
       <el-form
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="100px"
+        label-width="110px"
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="经销店名称:" prop="systemName">
-          <el-input maxlength="30" clearable v-model="formData.systemName" placeholder=""></el-input>
+        <el-form-item label="经销店/牌照商:" prop="systemName">
+          <el-input maxlength="30" clearable v-model="formData.systemName" placeholder></el-input>
         </el-form-item>
-        <el-form-item label="牌照商名称:" prop="systemName">
+        <!-- <el-form-item label="牌照商名称:" prop="systemName">
           <el-input maxlength="30" clearable v-model="formData.systemName" placeholder=""></el-input>
-        </el-form-item>
+        </el-form-item>-->
 
         <el-form-item>
           <el-button type="primary" @click="queryForm">查询</el-button>
         </el-form-item>
         <!-- <el-form-item>
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item> -->
-        <el-form-item label="">
+        </el-form-item>-->
+        <el-form-item label>
           <el-button @click="backButton" plain>返回</el-button>
         </el-form-item>
       </el-form>
@@ -51,63 +76,57 @@
         'color': '#fff',
       }"
       >
-        <el-table-column
-          width="50"
-          align="center"
-          label="序号"
-          type="index"
-          fixed
-        ></el-table-column>
+        <el-table-column width="50" align="center" label="序号" type="index" fixed></el-table-column>
         <el-table-column align="center" prop="id" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="经销店名称" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="牌照商名称" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="上牌地" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="是否限牌" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="期数" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="车辆数量" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="支付日" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="租赁方式" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="核销状态" show-overflow-tooltip width="100">
+        <el-table-column align="center" prop label="经销店/牌照商" show-overflow-tooltip width="120"></el-table-column>
+        <!-- <el-table-column align="center" prop="" label="牌照商名称" show-overflow-tooltip width="120"></el-table-column> -->
+        <el-table-column align="center" prop label="上牌地" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="是否限牌" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="是否广汽租赁" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop="qishu" label="期数" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="车辆数量" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <el-link type="primary" @click="queryCar(scope.row)">77</el-link>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop label="支付日" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="租赁方式" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="核销状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span
-            :class="{greenStatus: scope.row.approvalStatus == '', redStatus: scope.row.approvalStatus == '', blueColor: scope.row.approvalStatus == '',
+              :class="{greenStatus: scope.row.approvalStatus == '', redStatus: scope.row.approvalStatus == '', blueColor: scope.row.approvalStatus == '',
             yellowColor: scope.row.approvalStatus == ''}"
             >{{ formatStatus(scope.row.approvalStatus, dictTemp) }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="" label="支援金状态" show-overflow-tooltip width="100">
+        <el-table-column align="center" prop label="支援金状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span
-            :class="{greenStatus: scope.row.approvalStatus == '', redStatus: scope.row.approvalStatus == '', blueColor: scope.row.approvalStatus == '',
+              :class="{greenStatus: scope.row.approvalStatus == '', redStatus: scope.row.approvalStatus == '', blueColor: scope.row.approvalStatus == '',
             yellowColor: scope.row.approvalStatus == ''}"
             >{{ formatStatus(scope.row.approvalStatus, dictTemp) }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="" label="应收金额" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="应收本金" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="应收利息" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="应收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="应收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="已收金额" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="已收本金" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="已收利息" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="已收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="已收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="未收金额" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="未收本金" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="未收利息" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="未收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="未收手续费" show-overflow-tooltip width="120"></el-table-column>  
+        <el-table-column align="center" prop label="应收金额" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="应收本金" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="应收利息" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="应收管理费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="应收手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="已收金额" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="已收本金" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="已收利息" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="已收管理费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="已收手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="未收金额" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="未收本金" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="未收利息" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="未收管理费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="未收手续费" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column align="center" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column
-          align="center"
-          label="操作"
-          width="200"
-          fixed="right"
-        >
+        <el-table-column align="center" label="操作" width="150" fixed="right">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="handleWriteOff(scope.row)">核销</el-button>
-            <el-button size="mini" plain @click="handleNper(scope.row)">车辆清单</el-button>
+            <!-- <el-button size="mini" plain @click="queryCar(scope.row)">车辆清单</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -126,8 +145,14 @@
       ></el-pagination>
     </div>
 
-    <writeOff-dialog ref="writeOffDialog" :writeOffForm="writeOffForm" :loading='status.loading' v-on:formDataSubmit="formDataSubmit"></writeOff-dialog>
-    <nperCarList ref="nperCarListDialog" ></nperCarList>
+    <writeOff-dialog
+      ref="writeOffDialog"
+      :writeOffForm="writeOffForm"
+      :loading="status.loading"
+      v-on:formDataSubmit="formDataSubmit"
+    ></writeOff-dialog>
+    
+    <nperCarList ref="nperCarListDialog"></nperCarList>
   </div>
 </template>
 
@@ -142,24 +167,28 @@ import nperCarList from './components/nperCarList';
 
 export default {
   name: '',
-  props: {
-
-  },
+  props: {},
   components: {
     writeOffDialog,
     nperCarList,
   },
   data() {
     return {
+      baseFrom: {
+        id: '0000001',
+        inMoney: 10000,
+        outMoney: 5888,
+        balance: 4112,
+      },
       pageSize: 10,
       pageNum: 1,
       total: 0,
-      formData: {
-        
-      },
+      formData: {},
       tableData: [
-        {id: '111', }
-      ],
+        { id: '111', qishu: '16期' },
+        { id: '111', qishu: '17期' },
+        { id: '116', qishu: '18期' }
+        ],
 
       // 数据字典
       dictTemp: [],
@@ -168,43 +197,38 @@ export default {
       writeOffForm: {},
       status: {
         loading: false,
-      }
+      },
     };
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
+  computed: {},
+  watch: {},
   created() {
-    
     this.$nextTick(function () {
-      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
-      
+      this.tableHeight =
+        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+
       // 监听窗口大小变化
       let self = this;
-      window.onresize = function() {
-        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 120;
-      }
-    })
+      window.onresize = function () {
+        self.tableHeight =
+          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+      };
+    });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
     //50表示你想要调整的表格距离底部的高度（你可以自己随意调整），因为我们一般都有放分页组件的，所以需要给它留一个高度
   },
 
   // 添加组件内的导航钩子，在跳转路由前，将监听窗口大小变化的函数清空
-  beforeRouteLeave (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     // 导航离开该组件的对应路由时调用
     // 可以访问组件实例 `this`
     // this.tableHeight = 500
-    window.onresize = function() {
+    window.onresize = function () {
       // console.log('离开了')
-    }
-    next()
+    };
+    next();
   },
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
     // 查询
     queryForm() {},
@@ -218,7 +242,7 @@ export default {
     backButton() {
       this.$router.push({
         path: '/bankWaterList',
-      })
+      });
     },
 
     // 获取状态数据字典
@@ -230,22 +254,19 @@ export default {
       queryDict(data).then((res) => {
         if (res.code === '0') {
           const arrData = res.data.dictList;
-          
         }
-        
-      })
+      });
     },
 
     // 格式化状态
-    formatStatus(type, dictTemp = []) {      
+    formatStatus(type, dictTemp = []) {
       let columnValueDesc = '';
       dictTemp.forEach((v) => {
-        if ( type === v.columnValueCode) {
-          return columnValueDesc = v.columnValueDesc
+        if (type === v.columnValueCode) {
+          return (columnValueDesc = v.columnValueDesc);
         }
-      })
+      });
       return columnValueDesc;
-          
     },
 
     // 分页
@@ -270,7 +291,7 @@ export default {
     },
 
     // 车辆清单
-    handleNper(row) {
+    queryCar(row) {
       // this.$router.push({
       //   path: '/nperCarList',
       // });
@@ -283,17 +304,25 @@ export default {
     },
   },
   filters: {
-    function() {
-
-    },
+    function() {},
   },
 };
 </script>
 
 <style scoped lang="scss">
-  .contractListNper {
-    .backButton {
-      padding: 20px;
+.contractListNper {
+  .backButton {
+    padding: 20px;
+  }
+
+  .baseInfo {
+    padding: 20px 0 20px 20px;
+    border-bottom: 1px solid #eee;
+
+    span {
+      line-height: 40px;
+      font-weight: bold;
     }
   }
+}
 </style>

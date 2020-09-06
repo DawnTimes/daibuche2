@@ -51,7 +51,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="mini" @click="onSearch" style="width:80px">搜索</el-button>
+          <el-button type="primary" size="mini" @click="onSearch" style="width:80px">查询</el-button>
         </el-form-item>
       </el-form>
       <el-row type="flex" class="row-bg" justify="end" style="margin-bottom:10px">
@@ -76,6 +76,7 @@
       type="index"
       border
       :height="GLOBAL.height"
+      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  
@@ -237,7 +238,7 @@
         resizable
       ></el-table-column>
 
-      <el-table-column fixed="right" label="操作" width="50">
+      <el-table-column fixed="right" label="操作" width="80">
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -1402,6 +1403,6 @@ header .icon-right {
 
 .controlDivClass {
   height: 400px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 </style>

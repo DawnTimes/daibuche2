@@ -46,6 +46,8 @@ export default {
   // 数据字典
   queryDictUrl: '/dataDict/queryDict.do',
 
+  bankWaterDownUrl: '/bankStatemntExcel/exportBankStatement',
+
   // 验证码
   guid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

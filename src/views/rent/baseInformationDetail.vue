@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-08-14 11:46:41
+ * @LastEditTime: 2020-08-17 13:49:43
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\baseInformationDetail.vue
@@ -19,6 +19,14 @@
             :fatherPath="fatherPath"
             v-on:formDataSubmit="handleFormDataSubmit"
           ></baseInformationDetail-module>
+
+          <el-row :gutter="10">
+            <el-col :xs="24" :sm="22" :md="20" :lg="18" :xl="14">
+              <div style="padding: 20px 0 20px 0; text-align: center">
+                <el-button @click="handleGoToBack()" size="medium">返 回</el-button>
+              </div>
+            </el-col>
+          </el-row>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -71,6 +79,13 @@ export default {
   mounted() {},
   methods: {
     handleFormDataSubmit() {},
+
+    // 返回
+    handleGoToBack() {
+      this.$router.push({
+        path: this.fatherPath,
+      });
+    },
   },
   filters: {
     function() {},
@@ -79,7 +94,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .baseInformationDetail {
-    
-  }
+.baseInformationDetail {
+}
 </style>

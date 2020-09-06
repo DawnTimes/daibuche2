@@ -1,3 +1,11 @@
+<!--
+ * @Author: 廖亿晓
+ * @Date: 2020-07-14 16:16:47
+ * @LastEditTime: 2020-09-01 15:17:24
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: \webcode2\src\components\dropDown.vue
+-->
 <template>
   <el-dropdown @command="handleCommand">
     <span class="el-dropdown-link dropspan" style="color:#FFF">
@@ -29,21 +37,48 @@ export default {
     this.userName = this.personName;
   },
   methods: {
+    ...mapMutations({
+      setRoles: 'setRoles',
+      setUserId: 'setUserId',
+      setPersonName: 'setPersonName',
+      setAsideInfoIds: 'setAsideInfoIds',
+      setAsideInfo: 'setAsideInfo'
+    }),
+    
     handleCommand(command) {
       if (command === 'logout') {
         // 退出
-        // 清除信息
-        let url = common.logoutUrl;
-        axios.post(url, {}).then((res) => {
-          if (res.ec === '0') {
-            // 退出成功
-            this.$router.push('/');
-          } else {
-            this.$alert('退出失败，请联系管理员', '提示！', {
-              confirmButtonText: '确定',
+        this.$confirm('是否确定退出登录?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          .then(() => {
+            // 清除信息
+            let url = common.logoutUrl;
+            axios.post(url, {}).then(res => {
+              if (res.ec === '0') {
+                // 退出成功
+                this.$router.push('/');
+                // 清除sessionStorage 和 vuex 的sessionStorage, 避免切换用户获取菜单失败时，依然保留上个用户的菜单数据
+                  sessionStorage.clear();
+                  this.setRoles(null);
+                  this.setUserId(null);
+                  this.setPersonName(null);
+                  this.setAsideInfoIds(null);
+                  this.setAsideInfo(null);
+              } else {
+                // this.$alert("退出失败，请联系管理员", "提示！", {
+                //   confirmButtonText: "确定"
+                // });
+                this.$notify.error({
+                  title: '温馨提示！',
+                  message: '退出失败，请联系管理员!'
+                });
+              }
             });
-          }
-        });
+          })
+          .catch(() => {});
       }
       if (command === 'updatePassword') {
         this.$router.push({

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-08-14 17:51:13
+ * @LastEditTime: 2020-09-03 17:51:39
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -18,29 +18,29 @@
         ref="ruleForm"
       >
         <el-form-item label="银行单据号:" prop="systemName">
-          <el-input maxlength="30" v-model="formData.systemName" placeholder=""></el-input>
+          <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="汇款名称:" prop="interfaceName">
-          <el-input maxlength="50" v-model="formData.interfaceName" placeholder=""></el-input>
+          <el-input maxlength="50" v-model="formData.interfaceName" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="汇款账号:" prop="systemCode">
-          <el-input maxlength="30" v-model="formData.systemCode" placeholder=""></el-input>
+          <el-input maxlength="30" v-model="formData.systemCode" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="收款名称:" prop="systemName">
-          <el-input maxlength="30" v-model="formData.systemName" placeholder=""></el-input>
+          <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="收款账号:" prop="systemName">
-          <el-input maxlength="30" v-model="formData.systemName" placeholder=""></el-input>
+          <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
         </el-form-item>
-        
+
         <el-form-item label="核销状态:" prop="systemName">
-          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 200px">
+          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in appravolStatus"
               :key="item.value"
               :label="item.label"
-              :value="item.value">
-            </el-option>
+              :value="item.value"
+            ></el-option>
           </el-select>
         </el-form-item>
 
@@ -51,8 +51,8 @@
             value-format="yyyy-MM-dd"
             range-separator="至"
             start-placeholder="开始日期"
-            end-placeholder="结束日期">
-          </el-date-picker>
+            end-placeholder="结束日期"
+          ></el-date-picker>
         </el-form-item>
 
         <el-form-item>
@@ -62,10 +62,10 @@
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
         <el-form-item label=" ">
-          <el-button type="primary" @click="importButton">导入银行流水单</el-button>
+          <el-button type="primary" @click="importButton" v-show="rightControl.import">导入银行流水单</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="exportButton">导出银行流水单</el-button>
+          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出银行流水单</el-button>
         </el-form-item>
         <el-form-item>
           <el-button
@@ -73,7 +73,7 @@
             type="primary"
             round
             @click="addBankWater"
-            v-show="bankPermission.add"
+            v-show="rightControl.add"
           >新增银行流水单</el-button>
         </el-form-item>
       </el-form>
@@ -103,49 +103,64 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="" label="交易时间" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column align="center" prop label="交易时间" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column align="center" prop="id" label="银行单据号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="收款金额" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="收款名称" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="收款账号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="收款开户行" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="汇款名称" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="汇款账号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="摘要" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="是否代付" show-overflow-tooltip>
+        <el-table-column align="center" prop label="收款金额" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="收款名称" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="收款账号" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="收款开户行" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column align="center" prop label="汇款名称" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="汇款账号" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="摘要" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="是否代付" show-overflow-tooltip>
           <template slot-scope="scope">
             <span
               :class="[scope.row.status == 'Y' ? 'greenStatus' : 'redStatus']"
             >{{ formatStatus(scope.row.status, paidTemp) }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="" label="代付标志" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="项目类别" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="是否虚拟收款" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop label="代付标志" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="项目类别" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="是否虚拟收款" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column align="center" prop="status" label="核销状态" show-overflow-tooltip>
           <!-- <template slot-scope="scope">
             <span
             :class="{greenStatus: scope.row.approvalStatus == '', redStatus: scope.row.approvalStatus == '', blueColor: scope.row.approvalStatus == '',
             yellowColor: scope.row.approvalStatus == ''}"
             >{{ formatStatus(scope.row.approvalStatus, paidTemp) }}</span>
-          </template> -->
+          </template>-->
         </el-table-column>
-        <el-table-column align="center" prop="" label="已核销额" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="未核销额" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="退款金额" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="新台账标志" show-overflow-tooltip width="100"></el-table-column>       
+        <el-table-column align="center" prop label="已核销额" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="未核销额" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="退款金额" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop label="新台账标志" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column align="center" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column
-          align="center"
-          label="操作"
-          width="250"
-          fixed="right"
-        >
+        <el-table-column align="center" label="操作" width="250" fixed="right">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="handleContract(scope.row)" v-show="bankPermission.edit && scope.row.status == '未核销'">核销</el-button>
-            <el-button size="mini" plain @click="handleDetail(scope.row)" v-show="bankPermission.detail && scope.row.status == '全部核销'">核销详情</el-button>
-            <el-button size="mini" type="warning" @click="handleRefund(scope.row)" v-show="bankPermission.edit && scope.row.status == '未核销'">退款</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.row)" v-show="bankPermission.delete && scope.row.status == '未核销'">删除</el-button>
+            <el-button
+              size="mini"
+              type="primary"
+              @click="handleContract(scope.row)"
+              v-show="rightControl.writeOff && scope.row.status == '未核销'"
+            >核销</el-button>
+            <el-button
+              size="mini"
+              plain
+              @click="handleDetail(scope.row)"
+              v-show="rightControl.detail && scope.row.status == '全部核销'"
+            >核销详情</el-button>
+            <el-button
+              size="mini"
+              type="warning"
+              @click="handleRefund(scope.row)"
+              v-show="rightControl.refund && scope.row.status == '未核销'"
+            >退款</el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.row)"
+              v-show="rightControl.delete && scope.row.status == '未核销'"
+            >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -163,7 +178,13 @@
       ></el-pagination>
     </div>
 
-    <refund-dialog ref="refundDialog" :refundForm="refundForm" :loading='status.loading' v-on:formDataSubmit="formDataSubmit"></refund-dialog>
+    <!-- // 退款 -->
+    <refund-dialog
+      ref="refundDialog"
+      :refundForm="refundForm"
+      :loading="status.loading"
+      v-on:formDataSubmit="formDataSubmit"
+    ></refund-dialog>
 
     <confirmBox
       v-if="showDeleteBox"
@@ -171,6 +192,9 @@
       v-on:submitForm="deleteSubmit"
       v-on:cancelbox="cancelBack"
     ></confirmBox>
+
+    <!-- // 导入银行流水单 -->
+    <upload-dialog ref="uploadDialog"></upload-dialog>
   </div>
 </template>
 
@@ -182,6 +206,7 @@ import common from '@/common/common.js';
 
 import refundDialog from './components/refundDialog'; // 退款弹框
 import confirmBox from '@/components/confirmBox';  // 删除弹框
+import uploadDialog from '@/components/uploadDialog';  // 上传弹框
 
 export default {
   name: '',
@@ -191,6 +216,7 @@ export default {
   components: {
     refundDialog,
     confirmBox,
+    uploadDialog,
   },
   data() {
     return {
@@ -215,13 +241,6 @@ export default {
         },
       ],
 
-      // 按钮权限控制
-      bankPermission: {
-        add: true,
-        edit: true,
-        detail: true,
-        delete: true,
-      },
       tableData: [
         { id: 123456, status: '未核销'},
         { id: 123456, status: '全部核销'},
@@ -237,7 +256,7 @@ export default {
 
       // 删除提示文本
       deleteInfoText: {
-        icon: 'icontixing',
+        icon: 'icon-jinggao',
         confirst: '确认删除该银行流水？',
         consecond: '警告：删除后不可恢复！'
       },
@@ -245,6 +264,18 @@ export default {
       showDeleteBox: false,
       // 删除的系统ID
       deleteId: null,
+
+      // 按钮权限
+      rightArray: [9711, 9712, 9713, 9714, 9715, 9716, 9717],
+      rightControl: {
+        add: false,
+        import: false,
+        export: false,
+        writeOff: false,
+        refund: false,
+        delete: false,
+        detail: false,
+      },
     };
   },
   computed: {
@@ -254,7 +285,16 @@ export default {
 
   },
   created() {
-    
+    // 判断权限
+    this.rightArray.forEach((item, index, array) => {
+      common.checkRolePermission(
+        item,
+        this.$store.state.asideInfoIds,
+        Object.keys(this.rightControl)[index],
+        this.rightControl
+      );
+    });
+
     this.$nextTick(function () {
       this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
       
@@ -305,10 +345,12 @@ export default {
     },
 
     // 导入银行流水单
-    importButton() {},
+    importButton() {
+      this.$refs.uploadDialog.isShow(true);
+    },
 
     // 导出银行流水单
-    exportButton() {},
+    // exportButton() {},
 
     // 分页
     handleSizeChange(val) {
@@ -347,6 +389,48 @@ export default {
       })
       return columnValueDesc;
           
+    },
+
+    // 数据导出下载文件
+    exportButton() {
+      const params = {
+        
+      };
+      const url = common.bankWaterDownUrl;
+      axios.get(url, params, {
+        responseType: 'arraybuffer'
+      })
+        .then(res => {
+          const filename = res.filename || '银行流水单.xlsx';
+          this.fileDownload(res, filename);
+        })
+        .catch(() => {
+          this.$message.error('导出错误！请重新导出');
+        });
+    },
+
+    fileDownload(data, fileName) {
+      const blob = new Blob([data], {
+        type: 'application/octet-stream'
+      });
+      const filename = fileName;
+      if (typeof window.navigator.msSaveBlob !== 'undefined') {
+        window.navigator.msSaveBlob(blob, filename);
+      } else {
+        const blobURL = window.URL.createObjectURL(blob);
+        // 通过创建a标签下载
+        const tempLink = document.createElement('a');
+        tempLink.style.display = 'none';
+        tempLink.href = blobURL;
+        tempLink.setAttribute('download', filename);
+        if (typeof tempLink.download === 'undefined') {
+          tempLink.setAttribute('target', '_blank');
+        }
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+        window.URL.revokeObjectURL(blobURL); // 释放内存
+      }
     },
 
     // 核销
@@ -415,6 +499,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 </style>
 

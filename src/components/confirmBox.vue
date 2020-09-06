@@ -1,3 +1,11 @@
+<!--
+ * @Author: 廖亿晓
+ * @Date: 2020-07-14 16:16:47
+ * @LastEditTime: 2020-08-19 15:23:43
+ * @LastEditors: your name
+ * @Description: 删除弹窗
+ * @FilePath: \webcode2\src\components\confirmBox.vue
+-->
 <template>
   <div class="mshbox">
     <div class="msgbox_contant">
@@ -68,7 +76,7 @@ export default {
   color: #3973e7;
 }
 .mshbox .msgbox_contant .iconshibai,
-.mshbox .msgbox_contant .icontixing {
+.mshbox .msgbox_contant .icon-jinggao {
   color: #fda800;
 }
 .mshbox .msgbox_contant p {

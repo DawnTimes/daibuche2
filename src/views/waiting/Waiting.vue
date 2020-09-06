@@ -6,15 +6,36 @@
              <dt>租金待审批</dt>
             <dd>您有<span>5</span>条租金单待审批</dd>
       </a>-->
-      <a @click="$router.push('./contractApproveMain')" v-if="haveTodo">
+      <a @click="$router.push('/contractApproveMain')" v-if="haveTodo">
         <dt>合同待审批</dt>
         <dd>
           您有
           <span>{{num}}</span>条合同待审批
         </dd>
       </a>
+      <a @click="$router.push('/rentApprovalList')" v-if="rentShow">
+        <dt>租金修改待审批</dt>
+        <dd>
+          您有
+          <span>{{num}}</span>条租金修改待审批
+        </dd>
+      </a>
+      <a @click="$router.push('/supportGoldApprovalList')" v-if="goldShow">
+        <dt>支援金待审批</dt>
+        <dd>
+          您有
+          <span>{{num}}</span>条支援金申请待审批
+        </dd>
+      </a>
+      <a @click="$router.push('/invoiceNoticeList')" v-if="invoiceShow">
+        <dt>开票通知</dt>
+        <dd>
+          您有
+          <span>{{num}}</span>条开票通知
+        </dd>
+      </a>
 
-      <p v-if="!haveTodo">无待办事项</p>
+      <p v-if="!haveTodo && !rentShow && !goldShow && !invoiceShow">无待办事项</p>
       <!-- <a href="">
              <dt>开票通知单</dt>
             <dd>您有<span>5</span>条开票通知单待审批</dd>
@@ -35,6 +56,9 @@ export default {
     return {
       num: '',
       haveTodo: false,
+      rentShow: true,
+      goldShow: true,
+      invoiceShow: true,
       params: {
         turnPageBeginPos: '0',
         turnPageShowNum: '10',

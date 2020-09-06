@@ -35,6 +35,7 @@
       style="width: 100%"
       type="index"
       border
+      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  
@@ -278,7 +279,7 @@ export default {
   justify-content: space-between;
 }
 .userPage span {
-  color: #666;
+  color: #000;
   font-size: 18px;
   line-height: 30px;
 }

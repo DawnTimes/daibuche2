@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-08-10 15:32:45
+ * @LastEditTime: 2020-09-03 10:48:12
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\main.js
@@ -16,7 +16,8 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // import './assets/css/global.css'
 import './assets/css/index.scss';
-import './assets/fonts/iconfont.css'
+// import './assets/fonts/iconfont.css';
+import './assets/fonts2/iconfont.css';
 import store from './store'
 import global_ from './common/media' //引用文件
 import "babel-polyfill"

@@ -1,8 +1,8 @@
 ﻿<template>
   <div class="main">
     <!-- <div style="margin:10px 0"> -->
-    <!-- 搜索条件：车架号、牌照商、出租方、租赁方式、调剂时间（起、至） -->
-    <el-form :inline="true" :model="params" class="demo-form-inline" label-width="120px">
+    <!-- 查询条件：车架号、牌照商、出租方、租赁方式、调剂时间（起、至） -->
+    <el-form :inline="true" :model="params" class="demo-form-inline" label-width="100px" size="small">
       <el-form-item label="车架号">
         <el-input
           class="inputSelectClass"
@@ -29,23 +29,6 @@
           <el-option label="经租" value="OPERATING-LEASE"></el-option>
         </el-select>
       </el-form-item>
-      <!-- <el-form-item label="调剂时间(起)">
-            <el-date-picker format="yyyy-MM-dd" type="date" value-format='yyyy-MM-dd' placeholder="选择日期" v-model="params.createTimeBegin" style="width: 100%;" size="small"></el-date-picker>         
-      </el-form-item>-->
-      <el-form-item label="调剂时间">
-        <el-date-picker
-          style="width:525px;"
-          @change="timeChage"
-          size="small"
-          v-model="createTime"
-          type="datetimerange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          unlink-panels
-          value-format="yyyy-MM-dd HH:mm:ss"
-        ></el-date-picker>
-      </el-form-item>
       <el-form-item label="调出经销商">
         <el-input
           class="inputSelectClass"
@@ -62,8 +45,25 @@
           size="small"
         ></el-input>
       </el-form-item>
+      <!-- <el-form-item label="调剂时间(起)">
+            <el-date-picker format="yyyy-MM-dd" type="date" value-format='yyyy-MM-dd' placeholder="选择日期" v-model="params.createTimeBegin" style="width: 100%;" size="small"></el-date-picker>         
+      </el-form-item>-->
+      <el-form-item label="调剂时间">
+        <el-date-picker
+          @change="timeChage"
+          size="small"
+          v-model="createTime"
+          type="datetimerange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          unlink-panels
+          value-format="yyyy-MM-dd HH:mm:ss"
+        ></el-date-picker>
+      </el-form-item>
+      
       <el-form-item>
-        <el-button type="primary" @click="onSubmit" size="mini">搜索</el-button>
+        <el-button type="primary" @click="onSubmit" size="mini">查询</el-button>
       </el-form-item>
     </el-form>
     <!-- <el-form :inline="true" :model="params" class="demo-form-inline">
@@ -71,7 +71,7 @@
               <el-date-picker format="yyyy-MM-dd" value-format='yyyy-MM-dd' type="date" placeholder="选择日期" v-model="params.createTimeEnd" style="width: 100%;" size="small"></el-date-picker>         
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit" size="mini">搜索</el-button>
+            <el-button type="primary" @click="onSubmit" size="mini">查询</el-button>
           </el-form-item>        
     </el-form>-->
     <!-- </div>         -->
@@ -80,6 +80,7 @@
       style="width: 100%"
       stripe
       border
+      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  
@@ -376,7 +377,7 @@ export default {
 <style lang="scss" scoped>
 .main {
   background: #fff;
-  padding: 0;
+  padding: 20px 0 0 20px
 }
 .userPage {
   overflow: hidden;
@@ -406,6 +407,6 @@ export default {
   text-align: right;
 }
 .el-form-item {
-  margin: 0;
+  // margin: 0;
 }
 </style>

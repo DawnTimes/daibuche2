@@ -1,16 +1,16 @@
 <template>
   <div class="main">
     <div class="userPage">
-      <header class="car-management-header">角 色 管 理</header>
-      <el-form :inline="true" :model="params" class="demo-form-inline fl">
+      <!-- <header class="car-management-header">角 色 管 理</header> -->
+      <el-form :inline="true" label-width="80px" :model="params" class="demo-form-inline fl" size="small">
         <el-form-item label="角色名称">
-          <el-input v-model="params.roleName" placeholder="角色名称" size="small"></el-input>
+          <el-input v-model="params.roleName" placeholder="角色名称"></el-input>
         </el-form-item>
         <el-form-item label="角色代码">
-          <el-input v-model="params.roleCode" placeholder="角色代码" size="small"></el-input>
+          <el-input v-model="params.roleCode" placeholder="角色代码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" size="mini">搜索</el-button>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
         </el-form-item>
       </el-form>
       <el-row type="flex" class="row-bg fr" justify="end">
@@ -30,6 +30,7 @@
       stripe
       :height="GLOBAL.height"
       border
+      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  
@@ -54,7 +55,7 @@
       <el-table-column fixed="right" label="操作" width="300" resizable>
         <template slot-scope="scope">
           <!-- <el-button size="mini" @click="roledetail()">查看</el-button> -->
-          <el-button size="mini" @click="editRole(scope.row)" v-show="rolePermission.roleEdit">修改</el-button>
+          <el-button size="mini" type="primary" @click="editRole(scope.row)" v-show="rolePermission.roleEdit">修改</el-button>
           <el-button
             size="mini"
             @click="setAuth(scope.row)"
@@ -123,7 +124,7 @@ export default {
         roleCode: '',
       },
       msgConfirBox: {
-        icon: 'icontixing',
+        icon: 'icon-jinggao',
         confirst: '确认删除该角色',
         consecond: '删除后不可恢复',
       },
@@ -191,10 +192,10 @@ export default {
       Object.assign(this.realParams, this.params);
     },
     handleEdit(index, row) {
-      console.log(index, row);
+      // console.log(index, row);
     },
     handleDelete(index, row) {
-      console.log(index, row);
+      // console.log(index, row);
     },
     adduser() {
       this.$router.push({
@@ -202,6 +203,7 @@ export default {
       });
     },
     editRole(rowData) {
+      // console.log(rowData);
       this.$router.push({ path: '/editrole', query: rowData });
     },
     setAuth(rowData) {
@@ -271,7 +273,7 @@ export default {
   justify-content: space-between;
 }
 .el-row {
-  margin-top: 8px;
+  margin-top: 10px;
   padding-right: 40px;
   .el-button.is-round {
     padding: 12px 40px;
@@ -282,7 +284,7 @@ export default {
   text-align: right;
 }
 .el-form-item {
-  margin: 10px 0;
+  margin: 15px 0;
 }
 
 // .el-form-item {

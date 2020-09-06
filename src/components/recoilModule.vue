@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-08-13 09:21:04
+ * @LastEditTime: 2020-08-19 16:06:36
  * @LastEditors: your name
  * @Description: 反冲弹框
  * @FilePath: \webcode2\src\components\recoilModule.vue
@@ -9,8 +9,11 @@
 <template>
   <div class="recoilDialog">
     <el-dialog width="30%" :close-on-click-modal='false' title="反冲" :visible.sync="recoilFormVisible">
-      <el-form :model="recoilForm" label-width="90px" size="medium">
+      <el-form :model="recoilForm" label-width="110px" size="medium">
         <el-form-item label="银行单据号">
+          <el-input v-model="recoilForm.id" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="经销店/牌照商">
           <el-input v-model="recoilForm.name" disabled></el-input>
         </el-form-item>
         <el-form-item label="合同编号">
@@ -22,8 +25,11 @@
         <el-form-item label="车架号">
           <el-input v-model="recoilForm.name" disabled></el-input>
         </el-form-item>
+        <el-form-item label="反冲金额">
+          <el-input v-model="recoilForm.name" disabled></el-input>
+        </el-form-item>
         <el-form-item label="备注">
-          <el-input v-model="recoilForm.name" type="textarea" :autosize="{ minRows: 3, maxRows: 4}"></el-input>
+          <el-input v-model="recoilForm.name" max="300" type="textarea" :autosize="{ minRows: 3, maxRows: 4}"></el-input>
         </el-form-item>
         
       </el-form>
@@ -104,7 +110,7 @@ export default {
     }
 
     .el-dialog__body {
-      padding: 20px 20px 10px 10px;
+      padding: 0px 20px 0px 10px;
     }
   }
 

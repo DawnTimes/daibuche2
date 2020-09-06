@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-08-10 14:03:28
+ * @LastEditTime: 2020-09-01 10:44:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\layouts\Common.vue
@@ -16,7 +16,10 @@
         <Aside></Aside>
       </el-aside>
       <el-main>
-        <router-view />
+        <Tags></Tags>
+        <keep-alive include="addOrganization, addBankWater">
+          <router-view />
+        </keep-alive>
       </el-main>
     </el-container>
   </div>
@@ -25,10 +28,13 @@
 <script>
 import Header from './components/Header';
 import Aside from './components/Aside';
+import Tags from './components/tags';
+
 export default {
   components: {
     Header,
     Aside,
+    Tags,
   },
   data() {
     return {

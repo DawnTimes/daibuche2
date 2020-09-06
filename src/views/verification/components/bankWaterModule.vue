@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-08-14 17:48:04
+ * @LastEditTime: 2020-09-02 17:39:05
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -53,21 +53,6 @@
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
-                label="收款名称"
-                prop="systemName"
-                v-show="!$formAtReadonly('systemName', formReadonly.hide)"
-                class="form-item"
-              >
-                <el-input
-                  v-model="formData.systemName"
-                  maxlength="30"
-                  placeholder=""
-                  :disabled="$formAtReadonly('systemName', formReadonly.readonly)"
-                ></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
-              <el-form-item
                 label="收款账号"
                 prop="username"
                 v-show="!$formAtReadonly('username', formReadonly.hide)"
@@ -81,6 +66,22 @@
                 ></el-input>
               </el-form-item>
             </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="收款名称"
+                prop="systemName"
+                v-show="!$formAtReadonly('systemName', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.systemName"
+                  maxlength="30"
+                  placeholder=""
+                  :disabled="$formAtReadonly('systemName', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            
 
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
@@ -232,6 +233,10 @@ export default {
         return {}
       }
     },
+    // rowClick: {
+    //   type: Function,
+    //   default: function() {}
+    // },
   },
   components: {},
   data() {
@@ -289,7 +294,9 @@ export default {
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    if (this.$formAtReadonly('*', this.formReadonly.readonly)) this.rules = {};
+  },
   methods: {
     // 确定
     handleSubmit(formName) {

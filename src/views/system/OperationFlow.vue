@@ -6,7 +6,7 @@
         :model="formInline"
         class="demo-form-inline fr"
         id="form"
-        label-width="100px"
+        label-width="80px"
       >
         <el-form-item label="操作菜单">
           <el-input
@@ -42,7 +42,7 @@
         </el-form-item>
         <el-form-item label="操作时间">
           <el-date-picker
-            style="width:515px"
+            style="width:495px"
             @change="timeChange"
             size="small"
             v-model="value3"
@@ -63,7 +63,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" size="mini">搜索</el-button>
+          <el-button type="primary" @click="onSubmit" size="mini">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -73,6 +73,7 @@
       style="width: 100%"
       stripe
       :height="GLOBAL.height"
+      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  
@@ -84,7 +85,7 @@
         fixed
         type="index"
         label="序号"
-        width="100"
+        width="60"
         :index="indexMethod"
         resizable
         align="center"

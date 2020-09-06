@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-08-14 13:46:21
+ * @LastEditTime: 2020-09-04 10:48:38
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -24,7 +24,7 @@
           <el-input maxlength="50" v-model="formData.interfaceName" placeholder=""></el-input>
         </el-form-item>
         <el-form-item label="审批状态:" prop="interfaceName">
-          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 200px">
+          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in appravolStatus"
               :key="item.value"
@@ -34,7 +34,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="是否限牌:" prop="interfaceName">
-          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 200px">
+          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in limitStatus"
               :key="item.value"
@@ -78,16 +78,16 @@
           fixed
         ></el-table-column>
         <el-table-column align="center" prop="id" label="任务编号" show-overflow-tooltip fixed="left"></el-table-column>
-        <el-table-column align="center" prop="" label="车型代码" show-overflow-tooltip></el-table-column>
+        <!-- <el-table-column align="center" prop="" label="车型代码" show-overflow-tooltip></el-table-column> -->
         <el-table-column align="center" prop="" label="车型名称" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="是否限牌" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="" label="品牌" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="" label="车系" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="" label="是否限牌" show-overflow-tooltip></el-table-column>        
         <el-table-column align="center" prop="" label="生效年月" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="" label="牌照商" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="城市" show-overflow-tooltip width="60"></el-table-column>
-        <el-table-column align="center" prop="" label="数量" show-overflow-tooltip width="60"></el-table-column>
-        <el-table-column align="center" prop="" label="审批状态" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="" label="城市" show-overflow-tooltip width="70"></el-table-column>
+        <el-table-column align="center" prop="" label="数量" show-overflow-tooltip width="70"></el-table-column>
+        <el-table-column align="center" prop="status" label="审批状态" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column align="center" prop="" label="新月租金" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="" label="新月牌照费" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column align="center" prop="" label="新月租金合计" show-overflow-tooltip width="110"></el-table-column>
@@ -102,9 +102,9 @@
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-button size="mini" @click="handleDetail(scope.row)">详情</el-button>
-            <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+            <el-button type="primary" size="mini" @click="handleEdit(scope.row)" v-show="rightControl.edit">编辑</el-button>
+            <el-button size="mini" @click="handleDetail(scope.row)" v-show="rightControl.detail">详情</el-button>
+            <el-button type="danger" size="mini" @click="handleDelete(scope.row)" v-show="rightControl.delete">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -155,7 +155,7 @@ export default {
       },
 
       tableData: [
-        { id: 123456 },
+        { id: 123456, status: '待会记审批' },
       ],
       tableHeight: 100,
       appravolStatus: [],
@@ -166,7 +166,7 @@ export default {
 
       // 删除提示文本
       deleteInfoText: {
-        icon: 'icontixing',
+        icon: 'icon-jinggao',
         confirst: '确认删除该租金修改任务？',
         consecond: '警告：删除后不可恢复！'
       },
@@ -174,6 +174,14 @@ export default {
       showDeleteBox: false,
       // 删除的系统ID
       deleteId: null,
+
+      // 按钮权限
+      rightArray: [9531, 9532, 9533],
+      rightControl: {
+        edit: false,
+        detail: false,
+        delete: false,
+      },
     };
   },
   computed: {
@@ -183,6 +191,16 @@ export default {
 
   },
   created() {
+    // 判断权限
+    this.rightArray.forEach((item, index, array) => {
+      common.checkRolePermission(
+        item,
+        this.$store.state.asideInfoIds,
+        Object.keys(this.rightControl)[index],
+        this.rightControl
+      );
+    });
+
     this.$nextTick(function () {
       this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
       
@@ -240,7 +258,7 @@ export default {
     // 修改
     handleEdit(row) {
       this.$router.push({
-        path: '/limitCarTypeRentUpdate'
+        path: '/editRent'
       })
     },
 

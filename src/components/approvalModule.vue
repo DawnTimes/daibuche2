@@ -2,15 +2,15 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 18:11:48
- * @LastEditTime: 2020-08-14 13:41:38
+ * @LastEditTime: 2020-08-20 09:35:28
  * @LastEditors: your name
  * @Description: 
- * @FilePath: \webcode2\src\components\approvalMoudel.vue
+ * @FilePath: \webcode2\src\components\approvalModule.vue
  * @可以输入预定的版权声明、个性签名、空行等
  -->
 
 <template>
-  <div class="approvalMoudel">
+  <div class="approvalModule">
     <el-row :gutter="10">
       <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="16">
         <el-form
@@ -50,21 +50,6 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="审批人:"
-                prop="verson"
-                v-show="!$formAtReadonly('verson', formReadonly.hide)"
-                class="form-item"
-              >
-                <el-input
-                  v-model="formData.approvalUser"
-                  maxlength="30"
-                  :disabled="$formAtReadonly('verson', formReadonly.readonly)"
-                ></el-input>
-              </el-form-item>
-            </el-col>
-
-            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
-              <el-form-item
-                label="审批时间:"
                 prop="approvalUser"
                 v-show="!$formAtReadonly('approvalUser', formReadonly.hide)"
                 class="form-item"
@@ -73,6 +58,21 @@
                   v-model="formData.approvalUser"
                   maxlength="30"
                   :disabled="$formAtReadonly('approvalUser', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="审批时间:"
+                prop="approvalUser"
+                v-show="!$formAtReadonly('approvalTime', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.approvalTime"
+                  maxlength="30"
+                  :disabled="$formAtReadonly('approvalTime', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -126,7 +126,7 @@ import moment from 'moment';
 import { queryDict } from '@/api/index.js';
 
 export default {
-  name: 'approvalMoudel',
+  name: 'approvalModule',
   props: {
     formData: {
       type: Object,
@@ -143,6 +143,10 @@ export default {
     loading: {
       type: Boolean,
       default: false,
+    },
+    fatherPath: {
+      type: String,
+      default: '',
     },
   },
   components: {},
@@ -175,7 +179,7 @@ export default {
   computed: {},
   watch: {},
   created() {
-    this.getDictStatus('approval_operation', 'UNIFY_INTERFACE_APPROVAL');
+    // this.getDictStatus('approval_operation', 'UNIFY_INTERFACE_APPROVAL');
     // this.getSystemOptions();
     // console.log(moment().format('YYYY-MM-DD HH:mm:ss'));
   },
@@ -233,7 +237,7 @@ export default {
     // 取消
     handleGoToBack() {
       this.$router.push({
-        path: '/approvalList',
+        path: this.fatherPath,
       });
     },
 
@@ -255,7 +259,7 @@ export default {
 </script>
 
 <style lang="scss">
-.approvalMoudel {
+.approvalModule {
   // padding-top: 40px;
 }
 </style>

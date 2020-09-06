@@ -1,47 +1,52 @@
+<!--
+ * @Author: 廖亿晓
+ * @Date: 2020-07-14 16:16:48
+ * @LastEditTime: 2020-09-03 13:48:42
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: \webcode2\src\views\system\EditRole.vue
+-->
 <template>
   <div class="addmain">
     <p class="title">修改角色</p>
-    <el-form
-      :model="numberValidateForm"
-      ref="numberValidateForm"
-      label-width="120px"
-      class="demo-ruleForm"
-    >
-      <el-form-item
-        class="fl"
-        label="角色名称"
-        prop="roleName"
-        :rules="[{ required: true, message: '角色名称不能为空'}]"
-      >
-        <el-input v-model="numberValidateForm.roleName" auto-complete="off" disabled="disabled"></el-input>
-      </el-form-item>
-      <el-form-item
-        class="fr"
-        label="角色代码"
-        prop="roleCode"
-        :rules="[{ required: true, message: '角色代码不能为空'}]"
-      >
-        <el-input v-model="numberValidateForm.roleCode" auto-complete="off" disabled="disabled"></el-input>
-      </el-form-item>
-      <el-form-item
-        class="fl"
-        label="角色描述"
-        prop="roleDesc"
-        :rules="[{ required: true, message: '角色描述不能为空'}]"
-      >
-        <el-input v-model="numberValidateForm.roleDesc" auto-complete="off"></el-input>
-      </el-form-item>
-      <!-- <el-form-item class="fr" label="所属部门" prop="deptName" :rules="[{ required: true, message: '所属部门不能为空'}]">
-        <el-input v-model="numberValidateForm.deptName" auto-complete="off"></el-input>
-      </el-form-item>-->
-      <div style="clear:both"></div>
-      <el-form-item class="btnitem">
-        <el-button type="primary" @click="comfirmbtn">确定</el-button>
-        <router-link to="/authlist">
-          <el-button type="primary" style="margin-left:2%">返回</el-button>
-        </router-link>
-      </el-form-item>
-    </el-form>
+    <el-row :gutter="10">
+      <el-col :xs="24" :sm="24" :md="22" :lg="20" :xl="16">
+        <el-form
+          :model="numberValidateForm"
+          ref="numberValidateForm"
+          label-width="100px"
+          class="demo-ruleForm"
+          :rules="rules"
+        >
+          <el-row :gutter="0">
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item label="角色代码" prop="roleCode">
+                <el-input v-model="numberValidateForm.roleCode" auto-complete="off" disabled></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item label="角色名称" prop="roleName">
+                <el-input v-model="numberValidateForm.roleName" auto-complete="off" disabled></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item label="角色描述" prop="roleDesc">
+                <el-input v-model="numberValidateForm.roleDesc" auto-complete="off"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
+              <!-- <div style="clear:both"></div> -->
+              <el-form-item class="btnitem">
+                <el-button type="primary" @click="comfirmbtn" :loading="loading">确定</el-button>
+                <router-link to="/authlist">
+                  <el-button style="margin-left:2%" plain>返回</el-button>
+                </router-link>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script>
@@ -56,6 +61,18 @@ export default {
         roleCode: '',
         roleDesc: '',
       },
+      loading: false,
+      rules: {
+        roleName: [
+          { required: true, message: '角色名称不能为空', trigger: 'blur' },
+        ],
+        roleCode: [
+          { required: true, message: '角色代码不能为空', trigger: 'blur' },
+        ],
+        roleDesc: [
+          { required: true, message: '角色描述不能为空', trigger: 'blur' },
+        ],
+      },
     };
   },
   methods: {
@@ -64,6 +81,7 @@ export default {
         if (valid) {
           // 验证通过
           let url = common.roleUrl;
+          this.loading = true;
           axios.put(url, this.numberValidateForm).then((res) => {
             if (res.status === 'SUCCEED') {
               let _this = this;
@@ -72,17 +90,20 @@ export default {
                 type: 'success',
                 duration: 1500,
               });
+              this.loading = false;
               setTimeout(function () {
                 _this.$router.push({ path: '/authlist' });
               }, 1500);
             } else {
+              this.loading = false;
               this.$alert('修改失败，请联系管理员!', '提示', {
                 confirmButtonText: '确定',
               });
             }
+          }).catch((err) => {
+            this.loading = false;
           });
         } else {
-          console.log('error submit!!');
           return false;
         }
       });
@@ -90,7 +111,7 @@ export default {
   },
   created() {
     // 数据回显
-    console.log(this.$route.query);
+    // console.log(this.$route.query);
     this.numberValidateForm = this.$route.query;
   },
 };
@@ -105,7 +126,7 @@ export default {
   width: 100%;
 }
 .addmain .el-form-item {
-  width: 34%;
+  /* width: 34%; */
 }
 .addmain .title {
   height: 60px;

@@ -1,3 +1,11 @@
+<!--
+ * @Author: 廖亿晓
+ * @Date: 2020-07-14 16:16:47
+ * @LastEditTime: 2020-08-19 15:23:54
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: \webcode2\src\components\msgBox.vue
+-->
 <template>
   <div class="mshbox">
     <div class="msgbox_contant">

@@ -1,16 +1,16 @@
 <template>
   <div class="main">
     <div class="userPage">
-      <header class="car-management-header">用 户 管 理</header>
-      <el-form :inline="true" :model="params" class="demo-form-inline">
+      <!-- <header class="car-management-header">用 户 管 理</header> -->
+      <el-form :inline="true" :model="params" label-width="80px" class="demo-form-inline" size="small">
         <el-form-item label="登录名">
-          <el-input v-model="params.username" placeholder="登录名" size="small"></el-input>
+          <el-input v-model="params.username" placeholder="登录名"></el-input>
         </el-form-item>
         <el-form-item label="姓名">
-          <el-input v-model="params.label" placeholder="姓名" size="small"></el-input>
+          <el-input v-model="params.label" placeholder="姓名"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" size="mini">搜索</el-button>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
         </el-form-item>
       </el-form>
 
@@ -31,6 +31,7 @@
       stripe
       :height="GLOBAL.height"
       border
+      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  
@@ -62,6 +63,7 @@
             size="mini"
             @click="edituser(scope.$index, scope.row)"
             v-show="rolePermission.userEdit"
+            type="primary"
           >修改</el-button>
           <el-button
             size="mini"
@@ -125,7 +127,7 @@ export default {
         label: '',
       },
       msgConfirBox: {
-        icon: 'icontixing',
+        icon: 'icon-jinggao',
         confirst: '确认删除该用户',
         consecond: '删除后不可恢复',
       },
@@ -183,7 +185,7 @@ export default {
           }
         });
         this.tableData = temp;
-        console.log(this.tableData);
+        // console.log(this.tableData);
 
         this.totalCount = parseInt(res.total);
       });
@@ -222,7 +224,7 @@ export default {
           }
         });
         this.tableData = temp;
-        console.log(this.tableData);
+        // console.log(this.tableData);
 
         this.totalCount = parseInt(res.total);
       });
@@ -282,7 +284,7 @@ export default {
       this.$router.push({
         path: '/editusermanage',
         query: {
-          row: row,
+          row: JSON.stringify(row),
         },
       });
     },
@@ -328,6 +330,6 @@ export default {
   text-align: right;
 }
 .el-form-item {
-  margin: 15px 0 10px 0;
+  margin: 15px 0;
 }
 </style>

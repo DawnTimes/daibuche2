@@ -1,7 +1,7 @@
 ﻿<template>
   <div>
     <div class="userPage">
-      <header class="car-management-header">车 辆 调 剂</header>
+      <!-- <header class="car-management-header">车 辆 调 剂</header> -->
       <span>
         <!-- <i class="iconfont iconkehuguanli"></i>车辆调剂 -->
       </span>
@@ -20,7 +20,7 @@
         <el-row type="flex" class="row-bg" justify="end">
           <!-- @click="doAdjust" v-show="rolePermission.PreAdjust" -->
           <el-button icon="el-icon-search" type="primary" plain round @click="dispasal">预处置</el-button>
-          <el-button icon="el-icon-search" type="primary" plain round @click="searchCarType">搜索</el-button>
+          <el-button icon="el-icon-search" type="primary" plain round @click="searchCarType">查询</el-button>
           <el-button
             icon="el-icon-search"
             type="primary"
@@ -48,6 +48,7 @@
 			'background':'#627CAF',    
 			'color': '#fff',
 			}"
+      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :height="GLOBAL.height"
       size="medium"
       :data="tableData"
@@ -241,7 +242,7 @@
             <el-button type="text" size="small">查看详情</el-button>
           </router-link>
         </template>
-      </el-table-column>-->
+      </el-table-column> -->
     </el-table>
     <el-pagination
       background
@@ -639,7 +640,7 @@ export default {
       pageSize: 10, //    每页的数据
       tableData: [],
       showSearchText: '',
-      showModel1: false, //搜索窗
+      showModel1: false, //查询窗
       showModel2: false, //预调剂窗
       showModel3: false, //预处置窗口
       checkedList: [],
@@ -1109,7 +1110,7 @@ export default {
     searchCarType() {
       this.params = this.crudParams;
       this.carModelDisable = false;
-      this.showSearchText = '搜索车辆调剂';
+      this.showSearchText = '查询车辆调剂';
       this.showModel1 = true;
 
       // 给省份 赋值
@@ -1221,7 +1222,7 @@ export default {
       this.agentFullNameView = '';
       this.inAgentId = '';
 
-      console.log(JSON.stringify(this.multipleSelection));
+      // console.log(JSON.stringify(this.multipleSelection));
       //进入预调剂
       // 先校验数据
       if (this.multipleSelection.length > 0) {

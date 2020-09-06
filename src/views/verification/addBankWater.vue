@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:58:16
- * @LastEditTime: 2020-08-11 17:36:33
+ * @LastEditTime: 2020-09-01 11:09:39
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\addBankWater.vue
@@ -73,6 +73,10 @@ export default {
       //       title: '温馨提示！',
       //       message: '新增成功！'
       //     });
+
+      // Object.assign(this.formData, {
+      //   status: 'Y',
+      // });
 
       //     setTimeout(() => {
       //       this.$router.push({

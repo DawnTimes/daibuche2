@@ -4,9 +4,9 @@
       <span class="icon iconfont iconcheliangguanli"></span>车型管理
     </header>-->
 
-    <header class="car-management-header">车 辆 类 型 管 理</header>
+    <!-- <header class="car-management-header">车 辆 类 型 管 理</header> -->
     <el-row type="flex" class="row-bg" justify="end">
-      <el-button icon="el-icon-search" type="primary" plain round @click="searchCarType">搜索</el-button>
+      <el-button icon="el-icon-search" type="primary" plain round @click="searchCarType">查询</el-button>
       <!-- <el-button icon="el-icon-plus" type="primary" plain round @click="addCarTypeInfo" v-if="showAddButton">增加车型信息</el-button> -->
       <el-button
         icon="el-icon-plus"
@@ -24,6 +24,7 @@
       size="medium"
       border
       :height="GLOBAL.height"
+      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  
@@ -364,7 +365,7 @@ export default {
         Object.assign(this.realParams, this.params);
       }
 
-      console.log(this.realParams);
+      // console.log(this.realParams);
     },
     getCarTypeInfo() {
       // 可能是增、删、改
@@ -453,14 +454,14 @@ export default {
     },
 
     searchCarType() {
-      // 当一打开搜索框的时候，赋值
+      // 当一打开查询框的时候，赋值
       this.params.carBrand = this.crudParams.carBrandSearch;
       this.params.carSeries = this.crudParams.carSeriesSearch;
       this.params.carModel = this.crudParams.carModelSearch;
       this.params.carModelName = this.crudParams.carModelNameSearch;
 
       this.carModelDisable = false;
-      this.showSearchText = '搜索车型';
+      this.showSearchText = '查询车型';
       this.params.operation = '3';
       this.showCarTypeSearch = true;
     },

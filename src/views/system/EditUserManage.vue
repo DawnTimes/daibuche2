@@ -1,102 +1,64 @@
 <template>
   <div class="addmain">
     <p class="title">编辑客户</p>
-    <el-form
-      :model="numberValidateForm"
-      ref="numberValidateForm"
-      label-width="120px"
-      class="demo-ruleForm"
-      :validate-on-rule-change="false"
-    >
-      <el-form-item
-        class="fr"
-        label="用户名"
-        prop="username"
-        :rules="[
-            { required: true, message: '用户名不能为空'}
-            ]"
-      >
-        <el-input
-          type="age"
-          v-model="numberValidateForm.username"
-          auto-complete="off"
-          disabled="disabled"
-        ></el-input>
-      </el-form-item>
-      <el-form-item
-        class="fl"
-        label="姓名"
-        prop="label"
-        :rules="[
-            { required: true, message: '姓名不能为空'}
-            ]"
-      >
-        <el-input type="age" v-model="numberValidateForm.label" auto-complete="off"></el-input>
-      </el-form-item>
-
-      <!-- <el-form-item class="fr"
-            label="手机号"
-            prop="phone"
-            :rules="[
-            { required: true, message: '手机号不能为空'},
-            ]"
+    <el-row :gutter="10">
+      <el-col :xs="24" :sm="24" :md="22" :lg="20" :xl="16">
+        <el-form
+          :model="numberValidateForm"
+          ref="numberValidateForm"
+          label-width="100px"
+          class="demo-ruleForm"
+          :rules="rules"
         >
-            <el-input type="age" v-model="numberValidateForm.phone" auto-complete="off"></el-input>
-      </el-form-item>-->
-      <!-- <el-form-item class="fl"
-            label="所属部门"
-            prop="deptName"
-            :rules="[
-            { required: true, message: '所属部门不能为空'}
-            ]"
-        >
-        <el-select v-model="numberValidateForm.deptName" placeholder="请选择部门" multiple>
-            <el-option
-            v-for="item in options2"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id">
-            </el-option>
-        </el-select>        
-      </el-form-item>-->
-      <el-form-item
-        class="fl"
-        label="角色"
-        prop="role"
-        :rules="[
-            { required: true, message: '角色不能为空'}
-            ]"
-      >
-        <el-select v-model="numberValidateForm.role" placeholder="请选择角色" multiple clearable>
-          <el-option
-            v-for="item in options"
-            :key="item.roleId"
-            :label="item.roleName"
-            :value="item.roleId"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        class="fr"
-        label="状态"
-        prop="delFlag"
-        :rules="[
-            { required: true, message: '状态不能为空'}
-            ]"
-      >
-        <el-select v-model="numberValidateForm.delFlag" placeholder="请选择状态" clearable>
-          <el-option label="有效" value="0"></el-option>
-          <el-option label="无效" value="1"></el-option>
-        </el-select>
-      </el-form-item>
-      <div style="clear:both"></div>
-      <el-form-item class="btnitem">
-        <el-button type="primary" @click="comfirmbtn">确定</el-button>
-        <router-link to="/uermanage">
-          <el-button type="primary" style="margin-left:2%">返回</el-button>
-        </router-link>
-      </el-form-item>
-    </el-form>
+          <el-row :gutter="0">
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item label="登录名" prop="username">
+                <el-input type="age" v-model="numberValidateForm.username" auto-complete="off"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item label="姓名" prop="label">
+                <el-input type="age" v-model="numberValidateForm.label" auto-complete="off"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item label="角色" prop="role">
+                <el-select v-model="numberValidateForm.role" placeholder="请选择角色" multiple clearable>
+                  <el-option
+                    v-for="item in options"
+                    :key="item.roleId"
+                    :label="item.roleName"
+                    :value="item.roleId"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item label="状态" prop="delFlag">
+                <el-select
+                  v-model="numberValidateForm.delFlag"
+                  placeholder="请选择状态"
+                  clearable
+                  value="0"
+                >
+                  <el-option label="有效" value="0"></el-option>
+                  <el-option label="无效" value="1"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
+              <!-- <div style="clear:both"></div> -->
+              <el-form-item class="btnitem">
+                <el-button type="primary" @click="comfirmbtn" :loading="loading">确定</el-button>
+                <router-link to="/uermanage">
+                  <el-button style="margin-left:2%" plain>返回</el-button>
+                </router-link>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script>
@@ -116,6 +78,15 @@ export default {
         role: [],
         delFlag: '',
       },
+      loading: false,
+      rules: {
+        username: [
+          { required: true, message: '登录名不能为空', trigger: 'blur' },
+        ],
+        label: [{ required: true, message: '姓名不能为空', trigger: 'blur' }],
+        role: [{ required: true, message: '角色不能为空', trigger: 'change' }],
+        delFlag: [{ required: true, message: '状态不能为空', trigger: 'blur' }],
+      },
     };
   },
   methods: {
@@ -126,8 +97,9 @@ export default {
           // 提交数据
           //   增加：/user Post请求
           let url = common.userUrl;
+          this.loading = true;
           axios.put(url, this.numberValidateForm).then((res) => {
-            console.log(res);
+            // console.log(res);
             if (res.status === 'SUCCEED') {
               let _this = this;
               _this.$message({
@@ -135,17 +107,20 @@ export default {
                 type: 'success',
                 duration: 1500,
               });
+              this.loading = false;
               setTimeout(function () {
                 _this.$router.push({ path: '/uermanage' });
               }, 1500);
             } else {
+              this.loading = false;
               this.$alert('操作失败，请联系管理员!', '提示', {
                 confirmButtonText: '确定',
               });
             }
+          }).catch((err) => {
+            this.loading = false;
           });
         } else {
-          console.log('error submit!!');
           return false;
         }
       });
@@ -157,19 +132,19 @@ export default {
         })  */
 
       axios.get(common.allRoleUrl, {}).then((res) => {
-        console.log(this.$route.query.row);
         this.options = res;
-        this.numberValidateForm.username = this.$route.query.row.username;
-        this.numberValidateForm.label = this.$route.query.row.label;
-        this.numberValidateForm.phone = this.$route.query.row.phone;
-        this.numberValidateForm.delFlag = this.$route.query.row.delFlag;
-        this.numberValidateForm.role = this.$route.query.row.roleId;
-        this.numberValidateForm.userId = this.$route.query.row.userId;
       });
     },
   },
 
   created() {
+    const params = JSON.parse(this.$route.query.row);
+    this.numberValidateForm.username = params.username;
+    this.numberValidateForm.label = params.label;
+    this.numberValidateForm.phone = params.phone;
+    this.numberValidateForm.delFlag = params.delFlag;
+    this.numberValidateForm.role = params.roleId;
+    this.numberValidateForm.userId = params.userId;
     this.getDropDownData();
   },
 };
@@ -184,7 +159,7 @@ export default {
   width: 100%;
 }
 .addmain .el-form-item {
-  width: 34%;
+  /* width: 34%; */
 }
 .addmain .title {
   height: 60px;

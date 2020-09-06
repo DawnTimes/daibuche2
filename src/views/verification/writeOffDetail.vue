@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-08-14 14:45:57
+ * @LastEditTime: 2020-08-21 11:50:56
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
@@ -18,10 +18,10 @@
         ref="ruleForm"
       >
         <el-form-item label="合同编号:" prop="systemName">
-          <el-input maxlength="30" v-model="formData.systemName" placeholder=""></el-input>
+          <el-input maxlength="30" v-model="formData.systemName" clearable placeholder=""></el-input>
         </el-form-item>
         <el-form-item label="期数:" prop="interfaceName">
-          <el-input maxlength="50" v-model="formData.interfaceName" placeholder=""></el-input>
+          <el-input maxlength="50" v-model="formData.interfaceName" clearable placeholder=""></el-input>
         </el-form-item>
 
         <el-form-item>
@@ -61,14 +61,15 @@
           fixed
         ></el-table-column>
         <el-table-column align="center" prop="id" label="银行单据号" show-overflow-tooltip width="120" fixed="left"></el-table-column>
-        <el-table-column align="center" prop="" label="经销店" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="牌照商" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop="" label="经销店/牌照商" show-overflow-tooltip width="120"></el-table-column>
+        <!-- <el-table-column align="center" prop="" label="牌照商" show-overflow-tooltip width="120"></el-table-column> -->
         <el-table-column align="center" prop="" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column align="center" prop="" label="车型" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column align="center" prop="" label="车架号" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column align="center" prop="" label="车牌号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="发动机号" show-overflow-tooltip width="100"></el-table-column>
+        <!-- <el-table-column align="center" prop="" label="发动机号" show-overflow-tooltip width="100"></el-table-column> -->
         <el-table-column align="center" prop="" label="是否限牌" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop="" label="是否广汽租赁" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column align="center" prop="" label="上牌地" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column align="center" prop="" label="租赁方式" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column align="center" prop="" label="期数" show-overflow-tooltip width="100"></el-table-column>        
@@ -82,6 +83,9 @@
         </el-table-column>
         <el-table-column align="center" prop="" label="核销人" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="" label="核销时间" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop="" label="支援金状态" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop="" label="反冲状态" show-overflow-tooltip></el-table-column>
+
         <el-table-column align="center" prop="" label="应收金额" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column align="center" prop="" label="应收本金" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column align="center" prop="" label="应收利息" show-overflow-tooltip width="120"></el-table-column>
@@ -98,8 +102,6 @@
         <el-table-column align="center" prop="" label="未收管理费" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column align="center" prop="" label="未收手续费" show-overflow-tooltip width="120"></el-table-column>
 
-        <el-table-column align="center" prop="" label="支援金状态" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="反冲状态" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="remark" label="备注" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column
           align="center"
@@ -176,7 +178,9 @@ export default {
       paidTemp: [],
 
       // 反冲
-      recoilForm: {},
+      recoilForm: {
+        id: '123456'
+      },
       status: {
         loading: false,
       },

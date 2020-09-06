@@ -1,5 +1,6 @@
 @import './reset.scss';
 @import './global.css';
+@import './media.scss';
 
 
 .page-layer {
@@ -37,4 +38,12 @@
 
 .el-table__fixed-right-patch {
   background: #627CAF !important;
+}
+
+
+.tipText {
+  font-size: 14px;
+  color: #666;
+  font-weight: bold;
+  padding: 10px 0 0 20px;
 }

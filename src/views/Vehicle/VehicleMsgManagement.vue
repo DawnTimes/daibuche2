@@ -1,8 +1,8 @@
 <template>
   <div>
-    <header class="car-management-header">车 辆 信 息 管 理</header>
+    <!-- <header class="car-management-header">车 辆 信 息 管 理</header> -->
     <el-row type="flex" class="row-bg" justify="end">
-      <el-button icon="el-icon-search" type="primary" plain round @click="searchCarInfo">搜索</el-button>
+      <el-button icon="el-icon-search" type="primary" plain round @click="searchCarInfo">查询</el-button>
       <!-- <el-button icon="el-icon-plus" type="primary" plain round @click="addCarInfo" v-show= 'rolePermission.addCar'>增加车辆信息</el-button> -->
       <!-- <el-button
         icon="el-icon-upload2"
@@ -27,6 +27,7 @@
       size="medium"
       :height="GLOBAL.height"
       border
+      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  
@@ -202,7 +203,7 @@
         resizable
       ></el-table-column>
       <el-table-column prop="note" label="备注" :show-overflow-tooltip="true" resizable></el-table-column>
-      <el-table-column fixed="right" label="操作" width="50">
+      <el-table-column fixed="right" label="操作" width="80">
         <template slot-scope="scope">
           <el-button
             @click="handleClick(scope.row)"
@@ -595,9 +596,9 @@ export default {
     },
     searchCarInfo() {
       Object.assign(this.currentMsg, this.searchParams);
-      console.log(this.currentMsg);
+      // console.log(this.currentMsg);
       this.showCarInfo = true;
-      this.showSearch = '搜索';
+      this.showSearch = '查询';
       this.msgType = 'search';
 
       // this.currentMsg = this.searchParams;

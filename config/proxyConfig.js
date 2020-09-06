@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 17:04:44
- * @LastEditTime: 2020-08-10 15:50:46
+ * @LastEditTime: 2020-08-21 14:55:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\config\proxyConfig.js
@@ -17,6 +17,7 @@
 
 let yun = 'http://192.166.87.121:8888'; // 通过网关访问 开发
 // let yun = 'http://192.166.14.125:8888'; // 通过网关访问 测试
+// let yun = 'http://192.166.80.2:8888'; // 
 
 module.exports = {
   proxy: {

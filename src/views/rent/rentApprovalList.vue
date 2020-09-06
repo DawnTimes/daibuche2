@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-08-14 18:00:25
+ * @LastEditTime: 2020-09-04 09:29:55
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalList.vue
@@ -24,7 +24,7 @@
           <el-input maxlength="50" v-model="formData.interfaceName" placeholder=""></el-input>
         </el-form-item>
         <el-form-item label="是否限牌:" prop="interfaceName">
-          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 200px">
+          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in limitStatus"
               :key="item.value"
@@ -89,6 +89,7 @@
           fixed="right"
         >
           <template slot-scope="scope">
+            <!-- <el-button type="primary" size="mini" @click="handleApproval(scope.row)" v-show="rightControl.approval">审批</el-button> -->
             <el-button type="primary" size="mini" @click="handleApproval(scope.row)">审批</el-button>
           </template>
         </el-table-column>
@@ -142,6 +143,11 @@ export default {
         { value: 'N', label: '否' },
       ],
 
+      // 按钮权限
+      rightArray: [9541, 9542], // 会计初审、财务终审
+      rightControl: {
+        approval: false,
+      },
 
     };
   },
@@ -152,6 +158,16 @@ export default {
 
   },
   created() {
+    // 判断权限
+    this.rightArray.forEach((item, index, array) => {
+      common.checkRolePermission(
+        item,
+        this.$store.state.asideInfoIds,
+        Object.keys(this.rightControl)[index],
+        this.rightControl
+      );
+    });
+
     this.$nextTick(function () {
       this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
       
@@ -209,7 +225,7 @@ export default {
     // 修改
     handleApproval(row) {
       this.$router.push({
-        path: '/baseInformationDetail'
+        path: '/rentApprovalOperation'
       })
     },
 

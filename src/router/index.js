@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-08-14 17:56:56
+ * @LastEditTime: 2020-09-04 10:52:02
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\router\index.js
@@ -61,10 +61,66 @@ const limitCarTypeRentUpdate = resolve => require(['@/views/rent/limitCarTypeRen
 const unlimitCarTypeRentUpdate = resolve => require(['@/views/rent/unlimitCarTypeRentUpdate'], resolve);
 // 租金申请列表
 const rentApplyList = resolve => require(['@/views/rent/rentApplyList'], resolve);
+// 租金申请编辑
+const editRent = resolve => require(['@/views/rent/editRent'], resolve);
 // 租金修改详情
 const baseInformationDetail = resolve => require(['@/views/rent/baseInformationDetail'], resolve);
 // 租金审批
 const rentApprovalList = resolve => require(['@/views/rent/rentApprovalList'], resolve);
+// 租金审批提交
+const rentApprovalOperation = resolve => require(['@/views/rent/rentApprovalOperation'], resolve);
+// 租金修改历史记录
+const rentAppytHistory = resolve => require(['@/views/rent/rentAppytHistory'], resolve);
+
+// 核销查询
+// 经销店核销查询下
+const dealershipWriteOffQuery = resolve => require(['@/views/writeOffQuery/dealershipWriteOffQuery'], resolve);
+// 车辆核销查询下
+const carWriteOffQuery = resolve => require(['@/views/writeOffQuery/carWriteOffQuery'], resolve);
+
+// 台账
+// 经销店台账
+const dealershipBook = resolve => require(['@/views/standingBook/dealershipBook'], resolve);
+// 车辆台账
+const carBook = resolve => require(['@/views/standingBook/carBook'], resolve);
+
+// 支援金
+// 支援金申请列表
+const supportGoldApply = resolve => require(['@/views/supportGold/supportGoldApply'], resolve);
+// 支援金申请
+const createSupportGoldApply = resolve => require(['@/views/supportGold/createSupportGoldApply'], resolve);
+// 支援金总清单
+const supportGoldTotalList = resolve => require(['@/views/supportGold/supportGoldTotalList'], resolve);
+// 支援金审批
+const supportGoldApprovalList = resolve => require(['@/views/supportGold/supportGoldApprovalList'], resolve);
+// 支援金审批操作
+const supportGoldApprovaled = resolve => require(['@/views/supportGold/supportGoldApprovaled'], resolve);
+// 支援金详情
+const supportGoldDetail = resolve => require(['@/views/supportGold/supportGoldDetail'], resolve);
+// 历史记录
+const supportGoldHistory = resolve => require(['@/views/supportGold/supportGoldHistory'], resolve);
+
+// 开票
+// 开票明细
+const invoiceNoticeList = resolve => require(['@/views/invoiceNotice/invoiceNoticeList'], resolve);
+// 开票通知单
+const invoiceNoticeLetter = resolve => require(['@/views/invoiceNotice/invoiceNoticeLetter'], resolve);
+// 不开票通明细
+const unInvoiceNoticeList = resolve => require(['@/views/invoiceNotice/unInvoiceNoticeList'], resolve);
+
+// 逾期催收
+// 逾期记录
+const overduceCollectionList = resolve => require(['@/views/overdueCollection/overduceCollectionList'], resolve);
+// 记录录入
+const collectionRecord = resolve => require(['@/views/overdueCollection/collectionRecord'], resolve);
+
+// 新增牌照商
+const addOrganization = resolve => require(['@/views/customer/addOrganization'], resolve);
+// 牌照商编辑
+const editOrganization = resolve => require(['@/views/customer/editOrganization'], resolve);
+
+// 账户管理
+const bankAccountList = resolve => require(['@/views/bankAccount/bankAccountList'], resolve);
 
 Vue.use(Router)
 const router = new Router({
@@ -80,150 +136,200 @@ const router = new Router({
       name: 'Common',
       component: Common,
       redirect: '/waiting',
-      meta: {},
+      meta: {
+        
+      },
       children: [{
           path: '/uermanage',
           name: 'UserManage',
           component: UserManage,
-          meta: {}
+          meta: {
+            title: '用户管理',
+          }
         },
         {
           path: '/dealersManagement',
           name: 'dealersManagement',
           component: dealersManagement,
-          meta: {}
+          meta: {
+            title: '经销商信息管理',
+          }
         },
         {
           path: '/rentManagement',
           name: 'rentManagement',
           component: rentManagement,
-          meta: {}
+          meta: {
+            title: '牌照商信息管理',
+          }
         },
         {
           path: '/VehicleMsgManagement',
           name: 'VehicleMsgManagement',
           component: VehicleMsgManagement,
-          meta: {}
+          meta: {
+            title: '车辆信息管理',
+          }
         },
         {
           path: '/carTypeManagement',
           name: 'carTypeManagement',
           component: carTypeManagement,
-          meta: {}
+          meta: {
+            title: '车辆类型管理',
+          }
         },
         {
           path: '/addusermanage',
           name: 'AddUserManage',
           component: AddUserManage,
-          meta: {}
+          meta: {
+            title: '新增用户',
+          }
         },
         {
           path: '/VehicleAdjust',
           name: 'VehicleAdjust',
           component: VehicleAdjust,
-          meta: {}
+          meta: {
+            title: '车辆调剂',
+          }
         },
         {
           path: '/PreAdjust',
           name: 'PreAdjust',
           component: PreAdjust,
-          meta: {}
+          meta: {
+            title: '预调剂'
+          }
         },
         {
           path: '/AdjustmentInfo',
           name: 'AdjustmentInfo',
           component: AdjustmentInfo,
-          meta: {}
+          meta: {
+            title: '调剂确认'
+          }
         },
         {
           path: '/AdjustmentSure',
           name: 'AdjustmentSure',
           component: AdjustmentSure,
-          meta: {}
+          meta: {
+            title: '调剂确认提交'
+          }
         },
         {
           path: '/TaskDetail',
           name: 'TaskDetail',
           component: TaskDetail,
-          meta: {}
+          meta: {
+            title: '调剂任务明细'
+          }
         },
         {
           path: '/VehicleDetail',
           name: 'VehicleDetail',
           component: VehicleDetail,
-          meta: {}
+          meta: {
+            title: '调剂任务明细'
+          }
         },
         {
           path: '/authlist',
           name: 'AuthList',
           component: AuthList,
-          meta: {}
+          meta: {
+            title: '角色管理'
+          }
         },
         {
           path: '/addrole',
           name: 'AddRole',
           component: AddRole,
-          meta: {}
+          meta: {
+            title: '新增角色'
+          }
         },
         {
           path: '/editrole',
           name: 'EditRole',
           component: EditRole,
-          meta: {}
+          meta: {
+            title: '角色编辑'
+          }
         },
         {
           path: '/auth',
           name: 'auth',
           component: auth,
-          meta: {}
+          meta: {
+            title: '权限设定'
+          }
         },
         {
           path: '/roledetail',
           name: 'RoleDetail',
           component: RoleDetail,
-          meta: {}
+          meta: {
+            title: '角色详情'
+          }
         },
         {
           path: '/operationflow',
           name: 'OperationFlow',
           component: OperationFlow,
-          meta: {}
+          meta: {
+            title: '操作流水查询'
+          }
         },
         {
           path: '/waiting',
           name: 'Waiting',
           component: Waiting,
-          meta: {}
+          meta: {
+            title: '待办事项',
+          }
         },
         {
           path: '/editusermanage',
           name: 'EditUserManage',
           component: EditUserManage,
-          meta: {}
+          meta: {
+            title: '用户编辑'
+          }
         },
         {
           path: '/editPassword',
           name: 'editPassword',
           component: editPassword,
-          meta: {}
+          meta: {
+            title: '修改密码'
+          }
         },
         {
           path: '/contractApproveMain',
           name: 'contractApproveMain',
           component: contractApproveMain,
-          meta: {}
+          meta: {
+            title: '合同审批'
+          }
         },
         {
           path: '/contractSearchMain',
           name: 'contractSearchMain',
           component: contractSearchMain,
-          meta: {}
+          meta: {
+            title: '合同查询'
+          }
         },
         {
           path: '/adjustmentInfoHistory',
           name: 'adjustmentInfoHistory',
           component: adjustmentInfoHistory,
-          meta: {}
+          meta: {
+            title: '调剂历史'
+          }
         },
         
         // 财务核销
@@ -282,7 +388,7 @@ const router = new Router({
           name: 'limitCarTypeList',
           component: limitCarTypeList,
           meta: {
-            title: '限牌车型列表'
+            title: '限牌车型'
           }
         },
         {
@@ -306,7 +412,7 @@ const router = new Router({
           name: 'unlimitCarTypeList',
           component: unlimitCarTypeList,
           meta: {
-            title: '非限牌车型列表'
+            title: '非限牌车型'
           }
         },
         {
@@ -314,7 +420,15 @@ const router = new Router({
           name: 'rentApplyList',
           component: rentApplyList,
           meta: {
-            title: '租金申请'
+            title: '租金修改申请'
+          }
+        },
+        {
+          path: '/editRent',
+          name: 'editRent',
+          component: editRent,
+          meta: {
+            title: '租金编辑'
           }
         },
         {
@@ -330,7 +444,190 @@ const router = new Router({
           name: 'rentApprovalList',
           component: rentApprovalList,
           meta: {
-            title: '租金审批'
+            title: '租金修改审批'
+          }
+        },
+        {
+          path: '/rentApprovalOperation',
+          name: 'rentApprovalOperation',
+          component: rentApprovalOperation,
+          meta: {
+            title: '租金审批提交'
+          }
+        },
+        {
+          path: '/rentAppytHistory',
+          name: 'rentAppytHistory',
+          component: rentAppytHistory,
+          meta: {
+            title: '租金修改历史'
+          }
+        },
+
+        // 核销查询
+        {
+          path: '/dealershipWriteOffQuery',
+          name: 'dealershipWriteOffQuery',
+          component: dealershipWriteOffQuery,
+          meta: {
+            title: '经销店核销查询'
+          }
+        },
+        {
+          path: '/carWriteOffQuery',
+          name: 'carWriteOffQuery',
+          component: carWriteOffQuery,
+          meta: {
+            title: '车辆核销查询'
+          }
+        },
+
+        // 台账
+        {
+          path: '/dealershipBook',
+          name: 'dealershipBook',
+          component: dealershipBook,
+          meta: {
+            title: '经销店台账'
+          }
+        },
+        {
+          path: '/carBook',
+          name: 'carBook',
+          component: carBook,
+          meta: {
+            title: '车辆台账'
+          }
+        },
+
+        // 支援金
+        {
+          path: '/supportGoldApply',
+          name: 'supportGoldApply',
+          component: supportGoldApply,
+          meta: {
+            title: '支援金申请列表'
+          }
+        },
+        {
+          path: '/createSupportGoldApply',
+          name: 'createSupportGoldApply',
+          component: createSupportGoldApply,
+          meta: {
+            title: '申请支援金'
+          }
+        },
+        {
+          path: '/supportGoldTotalList',
+          name: 'supportGoldTotalList',
+          component: supportGoldTotalList,
+          meta: {
+            title: '支援金清单'
+          }
+        },
+        {
+          path: '/supportGoldApprovalList',
+          name: 'supportGoldApprovalList',
+          component: supportGoldApprovalList,
+          meta: {
+            title: '支援金审批'
+          }
+        },
+        {
+          path: '/supportGoldApprovaled',
+          name: 'supportGoldApprovaled',
+          component: supportGoldApprovaled,
+          meta: {
+            title: '支援金审批提交'
+          }
+        },
+        {
+          path: '/supportGoldDetail',
+          name: 'supportGoldDetail',
+          component: supportGoldDetail,
+          meta: {
+            title: '支援金详情'
+          }
+        },
+        {
+          path: '/supportGoldHistory',
+          name: 'supportGoldHistory',
+          component: supportGoldHistory,
+          meta: {
+            title: '支援金历史记录'
+          }
+        },
+
+        //开票
+        {
+          path: '/invoiceNoticeList',
+          name: 'invoiceNoticeList',
+          component: invoiceNoticeList,
+          meta: {
+            title: '开票明细'
+          }
+        },
+        {
+          path: '/invoiceNoticeLetter',
+          name: 'invoiceNoticeLetter',
+          component: invoiceNoticeLetter,
+          meta: {
+            title: '开票通知单'
+          }
+        },
+        {
+          path: '/unInvoiceNoticeList',
+          name: 'unInvoiceNoticeList',
+          component: unInvoiceNoticeList,
+          meta: {
+            title: '无需开票明细'
+          }
+        },
+
+        // 逾期催收
+        {
+          path: '/overduceCollectionList',
+          name: 'overduceCollectionList',
+          component: overduceCollectionList,
+          meta: {
+            title: '逾期记录'
+          }
+        },
+        {
+          path: '/collectionRecord',
+          name: 'collectionRecord',
+          component: collectionRecord,
+          meta: {
+            title: '电催记录录入'
+          }
+        },
+
+        // 新增牌照商
+        {
+          path: '/addOrganization',
+          name: 'addOrganization',
+          component: addOrganization,
+          meta: {
+            title: '新增牌照商'
+          }
+        },
+        // 牌照商编辑
+        {
+          path: '/editOrganization',
+          name: 'editOrganization',
+          component: editOrganization,
+          meta: {
+            title: '牌照商编辑'
+          }
+        },
+
+        // 账户管理
+        {
+          path: '/bankAccountList',
+          name: 'bankAccountList',
+          component: bankAccountList,
+          meta: {
+            title: '账户管理'
           }
         },
       ]

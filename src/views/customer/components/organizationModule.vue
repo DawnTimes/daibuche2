@@ -1,0 +1,714 @@
+<!--
+ * @Author: 廖亿晓
+ * @Date: 2020-08-25 16:55:26
+ * @LastEditTime: 2020-08-27 10:59:28
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
+-->
+
+
+<template>
+  <div class="organizationModule">
+    <el-row :gutter="10">
+      <el-col :xs="24" :sm="24" :md="22" :lg="20" :xl="16">
+        <el-form
+          :model="formData"
+          ref="formData"
+          label-width="140px"
+          class="demo-ruleForm"
+          :rules="rules"
+          status-icon
+        >
+          <el-row :gutter="0">
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="牌照商代码"
+                prop="licenceCode"
+                v-show="!$formAtReadonly('licenceCode', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.licenceCode"
+                  maxlength="20"
+                  placeholder
+                  :disabled="$formAtReadonly('licenceCode', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="牌照商名称"
+                prop="licenceName"
+                v-show="!$formAtReadonly('licenceName', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.licenceName"
+                  maxlength="30"
+                  placeholder
+                  :disabled="$formAtReadonly('licenceName', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="是否限牌"
+                prop="isLimitLicence"
+                v-show="!$formAtReadonly('isLimitLicence', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-radio-group
+                  v-model="formData.isLimitLicence"
+                  :disabled="$formAtReadonly('isLimitLicence', formReadonly.readonly)"
+                >
+                  <el-radio label="Y">是</el-radio>
+                  <el-radio label="N">否</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="是否广汽租赁"
+                prop="isGalcCompany"
+                v-show="!$formAtReadonly('isGalcCompany', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-radio-group
+                  v-model="formData.isGalcCompany"
+                  :disabled="$formAtReadonly('isGalcCompany', formReadonly.readonly)"
+                >
+                  <el-radio :label="1">是</el-radio>
+                  <el-radio :label="2">否</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="出租方"
+                prop="lessor"
+                v-show="!$formAtReadonly('lessor', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.lessor"
+                  maxlength="30"
+                  placeholder
+                  :disabled="$formAtReadonly('lessor', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="社会统一信用代码"
+                prop="socialCreditCode"
+                v-show="!$formAtReadonly('socialCreditCode', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.socialCreditCode"
+                  maxlength="30"
+                  placeholder
+                  :disabled="$formAtReadonly('socialCreditCode', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="法人"
+                prop="legalRepresentative"
+                v-show="!$formAtReadonly('legalRepresentative', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.legalRepresentative"
+                  maxlength="20"
+                  placeholder
+                  :disabled="$formAtReadonly('legalRepresentative', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="法人电话"
+                prop="legalTelephone"
+                v-show="!$formAtReadonly('legalTelephone', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.legalTelephone"
+                  maxlength="11"
+                  placeholder
+                  :disabled="$formAtReadonly('legalTelephone', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="联系人"
+                prop="contactPerson"
+                v-show="!$formAtReadonly('contactPerson', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.contactPerson"
+                  maxlength="20"
+                  placeholder
+                  :disabled="$formAtReadonly('contactPerson', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="联系人电话"
+                prop="contactPersonTelephone"
+                v-show="!$formAtReadonly('contactPersonTelephone', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.contactPersonTelephone"
+                  maxlength="11"
+                  placeholder
+                  :disabled="$formAtReadonly('contactPersonTelephone', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="区域"
+                prop="areaCode"
+                v-show="!$formAtReadonly('areaCode', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-select
+                  v-model="formData.areaCode"
+                  style="width: 100%"
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  @change="changeArea"
+                  :disabled="$formAtReadonly('areaCode', formReadonly.readonly)"
+                >
+                  <el-option
+                    v-for="item in areaArr"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="省份"
+                prop="provinceCode"
+                v-show="!$formAtReadonly('provinceCode', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-select
+                  v-model="formData.provinceCode"
+                  style="width: 100%"
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  @change="changeProvice"
+                  :disabled="$formAtReadonly('provinceCode', formReadonly.readonly)"
+                >
+                  <el-option
+                    v-for="item in provinceArr"
+                    :key="item.provinceCode"
+                    :label="item.provinceName"
+                    :value="item.provinceCode"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="城市"
+                prop="cityCode"
+                v-show="!$formAtReadonly('cityCode', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-select
+                  v-model="formData.cityCode"
+                  style="width: 100%"
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  @change="changeCity"
+                  :disabled="$formAtReadonly('cityCode', formReadonly.readonly)"
+                >
+                  <el-option
+                    v-for="item in cityArr"
+                    :key="item.cityCode"
+                    :label="item.cityName"
+                    :value="item.cityCode"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="状态"
+                prop="status"
+                v-show="!$formAtReadonly('status', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-radio-group
+                  v-model="formData.status"
+                  :disabled="$formAtReadonly('status', formReadonly.readonly)"
+                >
+                  <el-radio label="Y">有效</el-radio>
+                  <el-radio label="N">无效</el-radio>
+                </el-radio-group>
+
+                <!-- <el-select v-model="formData.status" clearable placeholder="请选择">
+                  <el-option
+                    v-for="item in this.$options.filters.status([])"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select> -->
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="开户银行账号"
+                prop="bankAccountNo"
+                v-show="!$formAtReadonly('bankAccountNo', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.bankAccountNo"
+                  maxlength="30"
+                  :disabled="$formAtReadonly('bankAccountNo', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="开户银行名称"
+                prop="bankAccountName"
+                v-show="!$formAtReadonly('bankAccountName', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.bankAccountName"
+                  maxlength="30"
+                  :disabled="$formAtReadonly('bankAccountName', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="开票电话"
+                prop="billingTelephone"
+                v-show="!$formAtReadonly('billingTelephone', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.billingTelephone"
+                  maxlength="11"
+                  :disabled="$formAtReadonly('billingTelephone', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
+              <el-form-item
+                label="开票地址"
+                prop="billingAddress"
+                v-show="!$formAtReadonly('billingAddress', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.billingAddress"
+                  type="textarea"
+                  maxlength="100"
+                  :autosize="{ minRows: 3, maxRows: 3}"
+                  :disabled="$formAtReadonly('billingAddress', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
+              <el-form-item
+                label="注册地址"
+                prop="registerAddress"
+                v-show="!$formAtReadonly('registerAddress', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.registerAddress"
+                  type="textarea"
+                  maxlength="100"
+                  :autosize="{ minRows: 3, maxRows: 3}"
+                  :disabled="$formAtReadonly('registerAddress', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
+              <el-form-item
+                label="备注"
+                prop
+                v-show="!$formAtReadonly('remark', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.remark"
+                  type="textarea"
+                  maxlength="300"
+                  :autosize="{ minRows: 3, maxRows: 5}"
+                  :disabled="$formAtReadonly('remark', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </el-col>
+    </el-row>
+    <el-row :gutter="10">
+      <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="16">
+        <div style="padding: 20px 0 20px 0; text-align: center">
+          <el-button @click="handleGoToBack()">取 消</el-button>
+          <el-button
+            v-show="!$formAtReadonly('saveBtn', formReadonly.hide)"
+            type="primary"
+            @click="handleSubmit('formData')"
+            :loading="loading"
+          >确 定</el-button>
+        </div>
+      </el-col>
+    </el-row>
+  </div>
+</template>
+
+<script>
+import axios from '@/common/axios.js';
+import common from '@/common/common.js';
+
+export default {
+  name: 'organizationModule',
+  props: {
+    formData: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    formReadonly: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+  },
+  components: {},
+  data() {
+    // 匹配银行卡号
+    const checkBankCode = (rule, value, callback) => {
+      const reg = /^([1-9]{1})[0-9]+$/;
+      if (!value) {
+        return callback(new Error('银行账号不能为空'));
+      }
+      if (!reg.test(value)) {
+        callback(new Error('银行账号格式错误'));
+      } else {
+        callback();
+      }
+    };
+
+    // 验证手机号码1
+    const checkPhone = (rule, value, callback) => {
+      if (value && value !== '') {
+        const phoneReg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
+        if (!phoneReg.test(value)) {
+          callback(new Error('请输入正确的11位手机号码'));
+        } else {
+          callback();
+        }
+      } else {
+        callback(new Error('手机号码不能为空'));
+      }
+    };
+
+    // 验证手机号码2
+    const checkPhone2 = (rule, value, callback) => {
+      if (value && value !== '') {
+        const phoneReg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
+        if (!phoneReg.test(value)) {
+          callback(new Error('请输入正确的11位手机号码'));
+        } else {
+          callback();
+        }
+      } else {
+        callback();
+      }
+    };
+
+    return {
+      areaArr: [
+        { label: '澳门', value: '001' },
+        { label: '东北', value: '002' },
+        { label: '华北', value: '003' },
+        { label: '华东', value: '004' },
+        { label: '华南', value: '005' },
+        { label: '华中', value: '006' },
+        { label: '台湾', value: '007' },
+        { label: '香港', value: '008' },
+        { label: '西部', value: '009' },
+      ],
+      areaCode: '',
+      provinceArr: [],
+      proviceCode: '',
+      cityArr: [],
+      cityCode: '',
+      rules: {
+        licenceCode: [
+          {
+            required: true,
+            message: '牌照商代码不能为空',
+            trigger: 'blur',
+          },
+        ],
+        licenceName: [
+          {
+            required: true,
+            message: '牌照商名称不能为空',
+            trigger: 'blur',
+          },
+        ],
+        lessor: [
+          {
+            required: true,
+            message: '出租方不能为空',
+            trigger: 'blur',
+          },
+        ],
+        socialCreditCode: [
+          {
+            required: true,
+            message: '社会统一信用代码不能为空',
+            trigger: 'blur',
+          },
+        ],
+        // contactPerson: [
+        //   {
+        //     required: true,
+        //     message: '联系人不能为空',
+        //     trigger: 'blur'
+        //   }
+        // ],
+        bankAccountName: [
+          {
+            required: true,
+            message: '开户银行名称不能为空',
+            trigger: 'blur',
+          },
+        ],
+        // billingAddress: [
+        //   {
+        //     required: true,
+        //     message: '开票地址不能为空',
+        //     trigger: 'blur'
+        //   }
+        // ],
+        status: [
+          {
+            required: true,
+            message: '状态不能为空',
+            trigger: 'change',
+          },
+        ],
+        isLimitLicence: [
+          {
+            required: true,
+            message: '请选择是否限牌',
+            trigger: 'change',
+          },
+        ],
+        isGalcCompany: [
+          {
+            required: true,
+            message: '请选择是否广汽租赁',
+            trigger: 'change',
+          },
+        ],
+        provinceCode: [
+          {
+            required: true,
+            message: '省份不能为空',
+            trigger: 'blur',
+          },
+        ],
+        areaCode: [
+          {
+            required: true,
+            message: '区域不能为空',
+            trigger: 'blur',
+          },
+        ],
+        cityCode: [
+          {
+            required: true,
+            message: '城市不能为空',
+            trigger: 'blur',
+          },
+        ],
+        registerAddress: [
+          {
+            required: true,
+            message: '注册地址不能为空',
+            trigger: 'blur',
+          },
+        ],
+        bankAccountNo: [
+          {
+            required: true,
+            validator: checkBankCode,
+            trigger: 'blur',
+          },
+        ],
+        legalTelephone: [
+          {
+            required: false,
+            validator: checkPhone2,
+            trigger: 'blur',
+          },
+        ],
+        contactPersonTelephone: [
+          {
+            required: false,
+            validator: checkPhone2,
+            trigger: 'blur',
+          },
+        ],
+        billingTelephone: [
+          {
+            required: false,
+            validator: checkPhone2,
+            trigger: 'blur',
+          },
+        ],
+      },
+    };
+  },
+  computed: {},
+  watch: {},
+  created() {},
+  mounted() {
+    if (this.$formAtReadonly('*', this.formReadonly.readonly)) this.rules = {};
+  },
+  methods: {
+    // 选择区域
+    changeArea(val) {
+      this.formData.provinceCode = '';
+      this.formData.cityCode = '';
+      this.provinceArr = [];
+      this.cityArr = [];
+      this.areaCode = val;
+      const params = {
+        areaCode: val,
+      };
+      this.getprovinceData(params);
+    },
+    // 选择区域后获取省份
+    getprovinceData(params) {
+      let url = common.findProviInfoUrl;
+      axios.post(url, params).then((res) => {
+        if (res.em == 'Success!') {
+          const data = res.data.provinceList;
+          this.provinceArr = data;
+        }
+      });
+    },
+    // 选择省份
+    changeProvice(val) {
+      if (this.areaCode) {
+        this.formData.cityCode = '';
+        this.cityArr = [];
+        this.proviceCode = val;
+        const params = {
+          provinceCode: val,
+        };
+        this.getCityData(params);
+      } else {
+        this.$notify.warning({
+          title: '温馨提示',
+          message: '请先选择区域',
+        });
+      }
+    },
+
+    // 选择省份后获取城市
+    getCityData(params) {
+      let url = common.findCityInfoUrl;
+      axios.post(url, params).then((res) => {
+        if (res.em == 'Success!') {
+          const data = res.data.cityList;
+          this.cityArr = data;
+        }
+      });
+    },
+
+    // 选择城市
+    changeCity(val) {
+      if (!this.proviceCode) {
+        this.$notify.warning({
+          title: '温馨提示',
+          message: '请先选择省份',
+        });
+      } else {
+        // this.formData.cityCode = val;
+        // this.$set(this.formData, 'cityCode', val);
+      }
+    },
+
+    // 确定
+    handleSubmit(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (!valid) {
+          this.$notify.warning({
+            title: '温馨提示',
+            message: '请正确填写表单',
+          });
+          return;
+        }
+
+        // 防止重复提交
+        if (this.loading === false) {
+          this.handleEmitData();
+        }
+      });
+    },
+
+    // 组件通讯
+    handleEmitData() {
+      this.$emit('formDataSubmit', {
+        data: this.formData,
+      });
+    },
+
+    // 取消
+    handleGoToBack() {
+      this.$router.push({
+        path: '/rentManagement',
+      });
+    },
+  },
+  filters: {
+    function() {},
+  },
+};
+</script>
+
+<style scoped lang="scss">
+</style>

@@ -4,8 +4,8 @@
       <!-- <span> -->
       <!-- <i class="iconfont iconkehuguanli"></i>调剂确认 -->
       <!-- </span> -->
-      <header class="car-management-header">调 剂 确 认</header>
-      <el-form :inline="true" :model="params" class="demo-form-inline fr">
+      <!-- <header class="car-management-header">调 剂 确 认</header> -->
+      <el-form :inline="true" :model="params" class="demo-form-inline" label-width="100px">
         <!-- <el-form-item class="page-form-item" label="经销商名称">
           <el-select v-model="agentFullNameViewForSearch" placeholder="请选择经销商" multiple @remove-tag="removeTag" style="width:600px">
             <el-option value="" label="" style="height:200px;overflow: auto;background-color:#fff">
@@ -25,7 +25,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" size="mini" @click="onSearch">搜索</el-button>
+          <el-button type="primary" size="mini" @click="onSearch">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -37,6 +37,7 @@
       style="width: 100%"
       type="index"
       border
+      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  
@@ -53,7 +54,7 @@
             <el-button type="text" size="small">{{scope.row.agentShortName}}</el-button>
           </router-link>
         </template>
-      </el-table-column>-->
+      </el-table-column> -->
       <!-- 经销商-调剂后车辆数-调剂前车辆数-调入车辆数-调出车辆数-调剂状态 -->
       <!-- 调剂后车辆数 新车辆数量
       调剂前车辆数 原车辆数量-->

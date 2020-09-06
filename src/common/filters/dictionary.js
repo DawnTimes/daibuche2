@@ -35,13 +35,23 @@ const Dictionary = {
     },
   ],
 
-  // 状态
+  // 有效无效状态
   status: [{
       label: '有效',
       value: 'Y'
     },
     {
       label: '无效',
+      value: 'N'
+    },
+  ],
+  // 是否状态
+  flagValue: [{
+      label: '是',
+      value: 'Y'
+    },
+    {
+      label: '否',
       value: 'N'
     },
   ],

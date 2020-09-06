@@ -1,35 +1,51 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-08-13 09:22:36
+ * @LastEditTime: 2020-09-04 13:59:23
  * @LastEditors: your name
- * @Description: 核销弹框
+ * @Description: 退款弹框
  * @FilePath: \webcode2\src\views\verification\components\refundDialog.vue
 -->
 <template>
   <div class="refundDialog">
-    <el-dialog width="30%" :close-on-click-modal='false' title="退款" :visible.sync="refundFormVisible">
-      <el-form :model="refundForm" label-width="100px" size="medium">
-        <el-form-item label="银行单据号">
+    <el-dialog
+      width="30%"
+      :close-on-click-modal="false"
+      title="退款"
+      :visible.sync="refundFormVisible"
+      :destroy-on-close="true"
+    >
+      <el-form
+        :model="refundForm"
+        ref="refundForm"
+        :rules="rules"
+        label-width="100px"
+        size="medium"
+      >
+        <el-form-item label="银行单据号" prop>
           <el-input v-model="refundForm.name" disabled></el-input>
         </el-form-item>
-        <el-form-item label="对方账户名称">
+        <el-form-item label="汇款名称" prop>
           <el-input v-model="refundForm.name" disabled></el-input>
         </el-form-item>
-        <el-form-item label="对方账户">
+        <el-form-item label="汇款账号" prop>
           <el-input v-model="refundForm.name" disabled></el-input>
         </el-form-item>
-        <el-form-item label="退款金额">
-          <el-input v-model="refundForm.name"></el-input>
+        <el-form-item label="退款金额" prop="bankAccountNo">
+          <el-input v-model="refundForm.bankAccountNo"></el-input>
         </el-form-item>
         <el-form-item label="备注">
           <el-input v-model="refundForm.name" type="textarea" :autosize="{ minRows: 3, maxRows: 4}"></el-input>
         </el-form-item>
-        
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="refundFormVisible = false" size="medium" plain>取 消</el-button>
-        <el-button type="primary" @click="refundSubmit" :loading="loading" size="medium">退 款</el-button>
+        <el-button
+          type="primary"
+          @click="refundSubmit('refundForm')"
+          :loading="loading"
+          size="medium"
+        >退 款</el-button>
       </div>
     </el-dialog>
   </div>
@@ -42,7 +58,7 @@ export default {
     refundForm: {
       type: Object,
       default: () => {
-        return {}
+        return {};
       },
     },
     // 不要在props定义弹框的显示，不然取消、关闭的时候不会报错，在data里定义，然后利用父组件调用子组件函数的方法显示弹框
@@ -57,8 +73,43 @@ export default {
   },
   components: {},
   data() {
+    // 验证数字且最多2位小数
+    const checkNumber = (rule, value, callback) => {
+      const reg = /^\d+(\.\d{1,2})?$/;
+      if (!value) {
+        return callback(new Error('退款金额不能为空'));
+      }
+      if (!reg.test(value)) {
+        callback(new Error('退款金额格式错误'));
+      } else {
+        callback();
+      }
+    };
     return {
       refundFormVisible: false,
+      rules: {
+        bankAccountName: [
+          {
+            required: true,
+            message: '账户名称不能为空',
+            trigger: 'blur',
+          },
+        ],
+        bankAccountAddr: [
+          {
+            required: true,
+            message: '开户行不能为空',
+            trigger: 'blur',
+          },
+        ],
+        bankAccountNo: [
+          {
+            required: true,
+            validator: checkNumber,
+            trigger: 'blur',
+          },
+        ],
+      },
     };
   },
   computed: {},
@@ -67,18 +118,24 @@ export default {
   mounted() {},
   methods: {
     // 核销提交
-    refundSubmit() {
-      // 防止重复提交
-      if(this.loading === false) {
-        this.handleEmitData();
-      }
+    refundSubmit(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // 防止重复提交
+          if (this.loading === false) {
+            this.handleEmitData();
+          }
+        } else {
+          return false;
+        }
+      });
     },
 
     // 组件通讯
     handleEmitData() {
       this.$emit('formDataSubmit', {
         data: this.refundForm,
-      })
+      });
     },
 
     // 关闭
@@ -89,7 +146,7 @@ export default {
     // 利用父组件调用子组件的函数传参来显示弹框
     isShow(isVisible) {
       this.refundFormVisible = isVisible;
-    }
+    },
   },
   filters: {
     function() {},
@@ -98,14 +155,13 @@ export default {
 </script>
 
 <style lang="scss">
-  .refundDialog {
-    .dialog-footer {
-      text-align: center;
-    }
-
-    .el-dialog__body {
-      padding: 20px 20px 10px 10px;
-    }
+.refundDialog {
+  .dialog-footer {
+    text-align: center;
   }
 
+  .el-dialog__body {
+    padding: 0px 20px 0px 10px;
+  }
+}
 </style>

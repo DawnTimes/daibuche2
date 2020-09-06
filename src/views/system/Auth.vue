@@ -14,9 +14,9 @@
       ></el-tree>
     </div>
     <div class="return_btn">
-      <el-button @click="doSure" type="primary">确定</el-button>
+      <el-button @click="doSure" type="primary" :loading="loading">确定</el-button>
       <router-link to="/authlist">
-        <el-button type="primary" style="margin-left:2%">返回</el-button>
+        <el-button style="margin-left:2%" plain>返回</el-button>
       </router-link>
     </div>
   </div>
@@ -39,6 +39,7 @@ export default {
         children: 'children',
         label: 'label',
       },
+      loading: false,
     };
   },
 
@@ -55,9 +56,12 @@ export default {
       params.roleId = this.$route.query.roleId;
       params.menuIds = ids;
 
+      this.loading = true;
+
       let url = common.roleMenuUpdUrl;
       axios.put(url, params).then((res) => {
         if (res.status === 'SUCCEED') {
+          this.loading = false;
           let _this = this;
           _this.$message({
             message: '操作成功!',
@@ -71,10 +75,13 @@ export default {
             _this.$router.push({ path: '/authlist' });
           }, 1500);
         } else {
+          this.loading = false;
           this.$alert('操作失败，请联系管理员!', '提示', {
             confirmButtonText: '确定',
           });
         }
+      }).catch(() => {
+        this.loading = false;
       });
     },
     recursionData(data) {
@@ -90,10 +97,10 @@ export default {
     },
     setSelectData() {
       this.$nextTick(function () {
-        console.log(this.data4);
+        // console.log(this.data4);
 
         this.recursionData(this.data4);
-        console.log(this.selectDataArray);
+        // console.log(this.selectDataArray);
         this.$refs.roleTree.setCheckedNodes(this.selectDataArray);
       });
     },
@@ -133,7 +140,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style>
 .auth .title {
   height: 40px;
   line-height: 40px;
@@ -144,5 +151,13 @@ export default {
 }
 .return_btn {
   text-align: center;
+}
+
+.auth .el-tree {
+  font-size: 14px;
+}
+
+.auth .el-tree-node__content > .el-checkbox {
+  margin-right: 5px;
 }
 </style>

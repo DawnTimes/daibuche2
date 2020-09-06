@@ -4,9 +4,16 @@
       <!-- <span>
         <i class="iconfont iconkehuguanli"></i>出租人信息管理
       </span>-->
-      <div>
-        <el-form :inline="true" :model="params" class="demo-form-inline" label-width="130px">
-          <el-form-item label="所属地区">
+      <div class="hearderBox">
+        <el-form
+          :inline="true"
+          :model="params"
+          class="demo-form-inline"
+          label-width="124px"
+          size="small"
+          ref="params"
+        >
+          <el-form-item label="所属地区" prop="areaCode">
             <el-select
               class="inputSelectClass"
               v-model="params.areaCode"
@@ -25,7 +32,7 @@
               <el-option label="澳门" value="001"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="牌照商">
+          <el-form-item label="牌照商" prop="licenceName">
             <el-input
               class="inputSelectClass"
               v-model="params.licenceName"
@@ -33,7 +40,7 @@
               size="small"
             ></el-input>
           </el-form-item>
-          <el-form-item label="状态">
+          <el-form-item label="状态" prop="status">
             <el-select
               class="inputSelectClass"
               v-model="params.status"
@@ -45,7 +52,7 @@
               <el-option label="无效" value="N"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="出租方">
+          <el-form-item label="出租方" prop="lessor">
             <el-input
               class="inputSelectClass"
               v-model="params.lessor"
@@ -53,7 +60,7 @@
               size="small"
             ></el-input>
           </el-form-item>
-          <el-form-item label="社会统一信用代码">
+          <el-form-item label="社会统一信用代码" prop="socialCreditCode">
             <el-input
               class="inputSelectClass"
               v-model="params.socialCreditCode"
@@ -62,7 +69,13 @@
             ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="mini" @click="onSearch">搜索</el-button>
+            <el-button type="primary" @click="onSearch">查询</el-button>
+            <el-button type="primary" @click="resetForm('params')">重置</el-button>
+          </el-form-item>
+          <el-form-item label=" ">
+            <el-button icon="el-icon-plus" type="primary" @click="addInfo">新增牌照商</el-button>
+            <el-button icon="el-icon-upload2" type="primary" @click="importButton">导入</el-button>
+            <el-button icon="el-icon-download" type="primary" @click="batchesDownload">导出</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -74,18 +87,19 @@
     </el-row>-->
     <el-table
       size="medium"
+      ref="table"
       :data="tableData"
       stripe
       style="width: 100%"
-      type="index"
       border
-      :height="GLOBAL.height"
+      :max-height="tableHeight"
+      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
-    'text-align':'center',
-    'font-weight':'bold',  
-    'background':'#627CAF',    
-    'color': '#fff',
-}"
+        'text-align':'center',
+        'font-weight':'bold',  
+        'background':'#627CAF',    
+        'color': '#fff',
+    }"
     >
       >
       <el-table-column
@@ -114,6 +128,28 @@
         resizable
       ></el-table-column>
       <el-table-column
+        prop="isLimitLicence"
+        label="是否限牌"
+        width="100"
+        :show-overflow-tooltip="true"
+        resizable
+      >
+        <template slot-scope="scope">
+          <span>{{ scope.row.isLimitLicence | flagValue }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="isGalcCompany"
+        label="租赁公司"
+        width="100"
+        :show-overflow-tooltip="true"
+        resizable
+      >
+        <template slot-scope="scope">
+          <span>{{ scope.row.isLimitLicence | flagValue }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="lessor"
         label="出租方"
         width="250"
@@ -127,22 +163,7 @@
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
-      <el-table-column
-        fixed
-        prop="isLimitLicence"
-        label="是否限牌"
-        width="100"
-        :show-overflow-tooltip="true"
-        resizable
-      ></el-table-column>
-      <el-table-column
-        fixed
-        prop="isGalcCompany"
-        label="租赁公司"
-        width="100"
-        :show-overflow-tooltip="true"
-        resizable
-      ></el-table-column>
+
       <el-table-column
         prop="legalRepresentative"
         label="法定代表人"
@@ -199,7 +220,11 @@
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
-      <el-table-column prop="status" label="状态" width="80" :show-overflow-tooltip="true" resizable></el-table-column>
+      <el-table-column prop="status" label="状态" width="80" :show-overflow-tooltip="true" resizable>
+        <template slot-scope="scope">
+          <span>{{ scope.row.isLimitLicence | status }}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="areaName"
         label="地区"
@@ -228,12 +253,12 @@
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
-      <!-- <el-table-column fixed="right" label="操作" width="100">
+      <el-table-column fixed="right" label="操作" width="80">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button type="text" size="small" style="color:#F00">删除</el-button>
+          <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
+          <!-- <el-button type="text" size="small" style="color:#F00">删除</el-button> -->
         </template>
-      </el-table-column>-->
+      </el-table-column>
     </el-table>
     <el-pagination
       background
@@ -241,17 +266,25 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[10, 50, 100, 500]"
+      :page-sizes="[10, 20, 50, 100, 500]"
       :page-size="pageSize"
-      layout="prev, pager, next, sizes, jumper"
+      layout="total, prev, pager, next, sizes, jumper"
       :total="totalCount"
     ></el-pagination>
+
+    <!-- // 导入 -->
+    <upload-dialog ref="uploadDialog"></upload-dialog>
   </div>
 </template>
 <script>
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+import uploadDialog from '@/components/uploadDialog'; // 上传弹框
+
 export default {
+  components: {
+    uploadDialog,
+  },
   data() {
     return {
       totalCount: 0,
@@ -274,106 +307,67 @@ export default {
         lessor: '',
         socialCreditCode: '',
       },
+      tableHeight: 100,
     };
   },
   methods: {
+    // 重置
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+
     initData() {
+      this.tableData = [];
+      const params = {
+        areaName: this.params.areaName,
+        licenceName: this.params.licenceName,
+        status: this.params.status,
+        lessor: this.params.lessor,
+        socialCreditCode: this.params.socialCreditCode,
+        turnPageBeginPos: this.params.turnPageBeginPos, // 开始是数据的序号，后台需要
+        turnPageShowNum: this.params.turnPageShowNum, // 每页展示的条数
+      };
       let url = common.licenceListUrl;
-      axios.post(url, this.params).then((res) => {
+      axios.post(url, params).then((res) => {
         if (res.em === 'Success!') {
           this.tableData = res.data.licenceList;
-          // isLimitLicence  isGalcCompany(是否商贸店) status
-          this.tableData.forEach((obj, index) => {
-            if (obj.isGalcCompany) {
-              if (obj.isGalcCompany === 'Y') {
-                obj.isGalcCompany = '是';
-              }
-              if (obj.isGalcCompany === 'N') {
-                obj.isGalcCompany = '否';
-              }
-            }
-            if (obj.status) {
-              if (obj.status === 'Y') {
-                obj.status = '有效';
-              }
-              if (obj.status === 'N') {
-                obj.status = '无效';
-              }
-            }
-            if (obj.isLimitLicence) {
-              if (obj.isLimitLicence === 'Y') {
-                obj.isLimitLicence = '是';
-              }
-              if (obj.isLimitLicence === 'N') {
-                obj.isLimitLicence = '否';
-              }
-            }
-          });
           this.totalCount = parseInt(res.data.turnPageTotalNum);
         }
       });
     },
-    initData2() {
-      this.realParams.turnPageBeginPos = this.params.turnPageBeginPos;
-      this.realParams.turnPageShowNum = this.params.turnPageShowNum;
-      let url = common.licenceListUrl;
-      axios.post(url, this.realParams).then((res) => {
-        if (res.em === 'Success!') {
-          this.tableData = res.data.licenceList;
-          this.tableData.forEach((obj, index) => {
-            if (obj.isGalcCompany) {
-              if (obj.isGalcCompany === 'Y') {
-                obj.isGalcCompany = '是';
-              }
-              if (obj.isGalcCompany === 'N') {
-                obj.isGalcCompany = '否';
-              }
-            }
-            if (obj.status) {
-              if (obj.status === 'Y') {
-                obj.status = '有效';
-              }
-              if (obj.status === 'N') {
-                obj.status = '无效';
-              }
-            }
-            if (obj.isLimitLicence) {
-              if (obj.isLimitLicence === 'Y') {
-                obj.isLimitLicence = '是';
-              }
-              if (obj.isLimitLicence === 'N') {
-                obj.isLimitLicence = '否';
-              }
-            }
-          });
-          this.totalCount = parseInt(res.data.turnPageTotalNum);
-        }
-      });
-    },
+
+    // 分页
     handleSizeChange(pageSize) {
       this.currentPage = 1;
       this.params.turnPageBeginPos = 1;
       this.pageSize = pageSize;
       this.params.turnPageShowNum = pageSize;
 
-      this.initData2();
+      this.initData();
     },
     handleCurrentChange(currentPage) {
       this.currentPage = currentPage;
       this.params.turnPageBeginPos = (currentPage - 1) * this.pageSize + 1;
-      this.initData2();
+      this.initData();
     },
+
+    // 查询
     onSearch() {
       this.params.turnPageBeginPos = 1;
       this.currentPage = 1;
       this.initData();
-      Object.assign(this.realParams, this.params);
     },
+
+    // 新增
     addInfo() {
-      console.log('addInfo!');
+      this.$router.push({
+        path: '/addOrganization',
+      });
     },
-    batchesimport() {
-      console.log('batchesimport!');
+
+    // 导入
+    importButton() {
+      this.$refs.uploadDialog.isShow(true);
     },
     batchesDownload() {
       console.log('batchesDownload!');
@@ -382,9 +376,45 @@ export default {
       let order = this.pageSize * (this.currentPage - 1);
       return index + order + 1;
     },
+
+    // 编辑
+    handleEdit(row) {
+      this.$router.push({
+        path: '/editOrganization',
+        query: {
+          licenceCode: row.licenceCode,
+        },
+      });
+    },
   },
+
   created() {
     this.initData();
+
+    this.$nextTick(function () {
+      this.tableHeight =
+        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+
+      // 监听窗口大小变化
+      let self = this;
+      window.onresize = function () {
+        self.tableHeight =
+          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+      };
+    });
+    //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
+    //50表示你想要调整的表格距离底部的高度（你可以自己随意调整），因为我们一般都有放分页组件的，所以需要给它留一个高度
+  },
+
+  // 添加组件内的导航钩子，在跳转路由前，将监听窗口大小变化的函数清空
+  beforeRouteLeave(to, from, next) {
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+    // this.tableHeight = 500
+    window.onresize = function () {
+      // console.log('离开了')
+    };
+    next();
   },
   mounted() {
     setTimeout(function () {
@@ -435,7 +465,7 @@ export default {
   border-radius: 20px;
   padding: 10px 35px;
 }
-.el-form-item {
+/* .el-form-item {
   margin: 0;
-}
+} */
 </style>

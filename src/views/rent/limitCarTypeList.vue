@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-08-13 14:09:49
+ * @LastEditTime: 2020-09-03 15:36:56
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeList.vue
@@ -60,7 +60,7 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="id" label="车型代码" show-overflow-tooltip fixed="left"></el-table-column>
+        <el-table-column align="center" prop="id" label="车型代码" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="" label="车型名称" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="" label="品牌" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="" label="车系" show-overflow-tooltip></el-table-column>
@@ -69,7 +69,7 @@
         <el-table-column align="center" prop="" label="数量" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="" label="月租金" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="" label="月牌照费" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="月租金合计" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="" label="月租金合计" show-overflow-tooltip width="120"></el-table-column>
         <!-- <el-table-column align="center" prop="" label="尾款" show-overflow-tooltip></el-table-column> -->
         <el-table-column
           align="center"
@@ -78,7 +78,7 @@
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">租金修改</el-button>
+            <el-button type="primary" size="mini" @click="handleUpdate(scope.row)" v-show="rightControl.edit">租金修改</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -126,6 +126,11 @@ export default {
       ],
       tableHeight: 100,
 
+      rightArray: [9511],
+      rightControl: {
+        edit: false,
+      },
+
     };
   },
   computed: {
@@ -135,6 +140,16 @@ export default {
 
   },
   created() {
+    // 判断权限
+    this.rightArray.forEach((item, index, array) => {
+      common.checkRolePermission(
+        item,
+        this.$store.state.asideInfoIds,
+        Object.keys(this.rightControl)[index],
+        this.rightControl
+      );
+    });
+
     this.$nextTick(function () {
       this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
       
