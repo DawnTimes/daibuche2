@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 18:11:48
- * @LastEditTime: 2020-08-20 09:35:28
+ * @LastEditTime: 2020-09-10 17:57:02
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\components\approvalModule.vue
@@ -38,11 +38,17 @@
                   @change="handleChange"
                 >
                   <el-option
+                    v-for="item in approvalOptions"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                  <!-- <el-option
                     v-for="item in dictOperationTemp"
                     :key="item.columnValueCode"
                     :label="item.columnValueDesc"
                     :value="item.columnValueCode"
-                  ></el-option>
+                  ></el-option> -->
                 </el-select>
               </el-form-item>
             </el-col>
@@ -50,14 +56,14 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="审批人:"
-                prop="approvalUser"
-                v-show="!$formAtReadonly('approvalUser', formReadonly.hide)"
+                prop="approvalPerson"
+                v-show="!$formAtReadonly('approvalPerson', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.approvalUser"
+                  v-model="formData.approvalPerson"
                   maxlength="30"
-                  :disabled="$formAtReadonly('approvalUser', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('approvalPerson', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -65,7 +71,7 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="审批时间:"
-                prop="approvalUser"
+                prop="approvalTime"
                 v-show="!$formAtReadonly('approvalTime', formReadonly.hide)"
                 class="form-item"
               >
@@ -102,7 +108,8 @@
     <el-row :gutter="10">
       <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="16">
         <div style="padding: 20px 0 20px 0; text-align: center">
-          <el-button size="medium" @click="handleGoToBack()">取 消</el-button>
+          <el-button size="medium" @click="handleGoToBack1()" v-show="!$formAtReadonly('cancelBtn1', formReadonly.hide)">取 消</el-button>
+          <el-button size="medium" @click="handleGoToBack2()" v-show="!$formAtReadonly('cancelBtn2', formReadonly.hide)">取 消</el-button>
           <el-button size="medium" type="primary" plain @click="prevStep">上一步</el-button>
           <el-button
             v-show="!$formAtReadonly('saveBtn', formReadonly.hide)"
@@ -224,20 +231,26 @@ export default {
     handleEmitData() {
       const params = {
         approvalOperation: this.formData.approvalOperation, // 审批操作
-        verson: this.formData.verson, // 版本
-        approvalUser: this.formData.approvalUser, // 创建人
+        approvalPerson: this.formData.approvalPerson, // 审批人
         id: this.formData.id || null, // id
         approvalOpinion: this.formData.approvalOpinion || null, // 审批意见
+        type: this.formData.type || null, // 
       };
       this.$emit('formDataSubmit', {
         data: params,
       });
     },
 
-    // 取消
-    handleGoToBack() {
+    // 取消1
+    handleGoToBack1() {
       this.$router.push({
-        path: this.fatherPath,
+        path: '/rentApprovalList',
+      });
+    },
+    // 取消2
+    handleGoToBack2() {
+      this.$router.push({
+        path: '/supportGoldApprovalList',
       });
     },
 

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-04 09:29:55
+ * @LastEditTime: 2020-09-10 17:07:38
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalList.vue
@@ -17,16 +17,16 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="任务编号:" prop="systemName">
+        <!-- <el-form-item label="任务编号:" prop="systemName">
           <el-input maxlength="30" v-model="formData.systemName" placeholder=""></el-input>
+        </el-form-item> -->
+        <el-form-item label="车型代码:" prop="modelCode">
+          <el-input maxlength="50" v-model="formData.modelCode" placeholder=""></el-input>
         </el-form-item>
-        <el-form-item label="车型名称:" prop="interfaceName">
-          <el-input maxlength="50" v-model="formData.interfaceName" placeholder=""></el-input>
-        </el-form-item>
-        <el-form-item label="是否限牌:" prop="interfaceName">
-          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
+        <el-form-item label="是否限牌:" prop="isLimitLicence">
+          <el-select v-model="formData.isLimitLicence" clearable placeholder="请选择" style="width: 100%">
             <el-option
-              v-for="item in limitStatus"
+              v-for="item in this.$options.filters.flagValue([])"
               :key="item.value"
               :label="item.label"
               :value="item.value">
@@ -67,20 +67,36 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="id" label="任务编号" show-overflow-tooltip fixed="left"></el-table-column>
-        <!-- <el-table-column align="center" prop="" label="车型代码" show-overflow-tooltip></el-table-column> -->
-        <el-table-column align="center" prop="" label="车型名称" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="是否限牌" show-overflow-tooltip></el-table-column>
-        <!-- <el-table-column align="center" prop="" label="品牌" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="车系" show-overflow-tooltip></el-table-column> -->
+        <el-table-column align="center" prop="modId" label="id编号" show-overflow-tooltip fixed="left"></el-table-column>
+        <el-table-column align="center" prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
+          <template slot-scope="scope">
+          <span :class="{ blueColor: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue }}</span>
+        </template>
+        </el-table-column>
+        <!-- <el-table-column align="center" prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="seriesName" label="车系" show-overflow-tooltip></el-table-column> -->
         <el-table-column align="center" prop="" label="生效年月" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="牌照商" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="城市" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="数量" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="审批状态" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="修改人" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="修改时间" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="licenceName" label="牌照商" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="num" label="数量" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="approvalStatus" label="审批状态" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span
+            :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '2' ,
+            skyblueColor: scope.row.approvalStatus == '3',
+            yellowColor: scope.row.approvalStatus == '1'}"
+            >{{ scope.row.approvalStatus | approvalStatus }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="modifier" label="修改人" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="modifiedTime" label="修改时间" show-overflow-tooltip width="160">
+          <template slot-scope="scope">
+            <span>{{ scope.row.modifiedTime | timeFormatTemp }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
 
         <el-table-column
           align="center"
@@ -115,6 +131,7 @@
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+import { mapState } from 'vuex';
 
 export default {
   name: '',
@@ -130,7 +147,12 @@ export default {
       pageNum: 1,
       total: 0,
       formData: {
-        
+        cityCode: '',
+        isLimitLicence: '',
+        licenceCode: '',
+        modelCode: '',
+        pageSize: 10,
+        pageNum: 1,
       },
 
       tableData: [
@@ -138,10 +160,6 @@ export default {
       ],
       tableHeight: 100,
       appravolStatus: [],
-      limitStatus: [
-        { value: 'Y', label: '是' },
-        { value: 'N', label: '否' },
-      ],
 
       // 按钮权限
       rightArray: [9541, 9542], // 会计初审、财务终审
@@ -149,10 +167,15 @@ export default {
         approval: false,
       },
 
+      userApprovalType: '',
+
     };
   },
   computed: {
-
+    ...mapState({
+      asideInfoIds: store => store.asideInfoIds,
+    }),
+    
   },
   watch: {
 
@@ -193,15 +216,21 @@ export default {
   },
   
   mounted() {
-
+    this.getRentApprovalListData();
   },
   methods: {
     // 查询
-    queryForm() {},
+    queryForm() {
+      // 重置当前页
+      this.pageNum = 1;
+      this.formData.pageNum = 1;
+      this.getRentApprovalListData()
+    },
 
     // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.getRentApprovalListData()
     },
 
     // 自定义列接口索引
@@ -210,22 +239,58 @@ export default {
       return index + order + 1;
     },
 
+    // 获取分页数据
+    getRentApprovalListData() {
+      if (this.asideInfoIds) {
+        this.asideInfoIds.some((val) => {
+          // if (val == 9541) this.userApprovalType = '1';
+          // if (val == 9542) this.userApprovalType = '2';
+           return val == 9541 && (this.userApprovalType = '1') || val == 9542 && (this.userApprovalType = '2')
+        })
+      }
+      // console.log(this.userApprovalType);
+
+      const params = {
+        cityCode: this.formData.cityCode,
+        licenceCode: this.formData.licenceCode,
+        modelCode: this.formData.modelCode,
+        isLimitLicence: this.formData.isLimitLicence,
+        type: this.userApprovalType,
+        turnPageBeginPos: this.formData.pageNum,
+        turnPageShowNum: this.formData.pageSize,
+      };
+      const url = common.rentApprovalUrl;
+      axios.post(url, params).then((res) => {
+        if (res.em === 'Success!') {
+          const data = res.data;
+          this.tableData = data.rentModList;
+          this.total = data.turnPageTotalNum * 1;
+        }
+      });
+    },
+
     // 分页
     handleSizeChange(val) {
       this.pageNum = 1;
       this.formData.pageNum = 1;
       this.pageSize = val;
       this.formData.pageSize = val;
+      this.getRentApprovalListData()
     },
     handleCurrentChange(val) {
       this.pageNum = val;
       this.formData.pageNum = (val - 1) * this.pageSize + 1;
+      this.getRentApprovalListData()
     },
 
     // 修改
     handleApproval(row) {
       this.$router.push({
-        path: '/rentApprovalOperation'
+        path: '/rentApprovalOperation',
+        query: {
+          id: row.modId,
+          type: this.userApprovalType,
+        },
       })
     },
 

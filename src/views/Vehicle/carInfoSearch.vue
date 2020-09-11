@@ -223,6 +223,7 @@ export default {
 
     // 懒加载，加载树
     loadNode(node, resolve) {
+      console.log(node);
       if (node.level === 0) {
         // 查询区域
         let url = common.findAreaInfoUrl;

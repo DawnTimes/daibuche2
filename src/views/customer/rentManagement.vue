@@ -369,8 +369,9 @@ export default {
     importButton() {
       this.$refs.uploadDialog.isShow(true);
     },
+    // 导出
     batchesDownload() {
-      console.log('batchesDownload!');
+      // console.log('batchesDownload!');
     },
     indexMethod(index) {
       let order = this.pageSize * (this.currentPage - 1);

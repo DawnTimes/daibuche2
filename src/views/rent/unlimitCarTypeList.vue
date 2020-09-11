@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-03 17:23:30
+ * @LastEditTime: 2020-09-09 17:21:18
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeList.vue
@@ -17,8 +17,8 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="车型名称:" prop="systemName">
-          <el-input maxlength="30" v-model="formData.systemName" placeholder=""></el-input>
+        <el-form-item label="车型名称:" prop="modelName">
+          <el-input maxlength="30" v-model="formData.modelName" placeholder=""></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="queryForm">查询</el-button>
@@ -53,12 +53,16 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="id" label="车型代码" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="车型名称" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="品牌" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="车系" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="数量" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="月租金" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="num" label="数量" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="monthlyRent" label="月租金" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.monthlyRent}} 元</span>
+          </template>
+        </el-table-column>
         <!-- <el-table-column align="center" prop="" label="月租金合计" show-overflow-tooltip></el-table-column> -->
         <!-- <el-table-column align="center" prop="" label="尾款" show-overflow-tooltip></el-table-column> -->
         <el-table-column
@@ -108,7 +112,12 @@ export default {
       pageNum: 1,
       total: 0,
       formData: {
-        
+        brandName: '',
+        modelCode: '',
+        modelName: '',
+        seriesName: '',
+        pageSize: 10,
+        pageNum: 1,
       },
 
       tableData: [
@@ -129,6 +138,8 @@ export default {
 
   },
   created() {
+    this.getUnLimitCarTypeList();
+
     // 判断权限
     this.rightArray.forEach((item, index, array) => {
       common.checkRolePermission(
@@ -168,11 +179,17 @@ export default {
   },
   methods: {
     // 查询
-    queryForm() {},
+    queryForm() {
+      // 重置当前页
+      this.pageNum = 1;
+      this.formData.pageNum = 1;
+      this.getUnLimitCarTypeList();
+    },
 
     // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.getUnLimitCarTypeList();
     },
 
     // 自定义列接口索引
@@ -181,22 +198,47 @@ export default {
       return index + order + 1;
     },
 
+    // 获取非限牌车型列表
+    getUnLimitCarTypeList() {
+      const params = {
+        brandName: this.formData.brandName,
+        modelName: this.formData.modelName,
+        seriesName: this.formData.seriesName,
+        modelCode: this.formData.modelCode,
+        turnPageBeginPos: this.formData.pageNum,
+        turnPageShowNum: this.formData.pageSize,
+      };
+      const url = common.queryNotLimitCarListUrl;
+      axios.post(url, params).then((res) => {
+        if (res.em === 'Success!') {
+          const data = res.data;
+          this.tableData = data.notLimitList;
+          this.total = data.turnPageTotalNum * 1;
+        }
+      })
+    },
+
     // 分页
     handleSizeChange(val) {
       this.pageNum = 1;
       this.formData.pageNum = 1;
       this.pageSize = val;
       this.formData.pageSize = val;
+      this.getUnLimitCarTypeList();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
       this.formData.pageNum = (val - 1) * this.pageSize + 1;
+      this.getUnLimitCarTypeList();
     },
 
     // 修改
     handleUpdate(row) {
       this.$router.push({
-        path: '/unlimitCarTypeRentUpdate'
+        path: '/unlimitCarTypeRentUpdate',
+        query: {
+          row: JSON.stringify(row)
+        },
       })
     },
 

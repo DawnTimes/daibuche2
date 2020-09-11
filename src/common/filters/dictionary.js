@@ -69,20 +69,24 @@ const Dictionary = {
 
   // 审批状态
   approvalStatus: [{
-      label: '待提交',
-      value: 'toBeSubmit'
+      label: '生成租金',
+      value: '1'
     },
     {
-      label: '待审批',
-      value: 'waitApproval'
+      label: '待会计审批',
+      value: '2'
     },
     {
-      label: '审批拒绝',
-      value: 'refuse'
+      label: '待财务负责人审批',
+      value: '3'
     },
     {
       label: '审批通过',
-      value: 'approved'
+      value: '4'
+    },
+    {
+      label: '审批拒绝',
+      value: '5'
     },
   ],
 
@@ -110,16 +114,24 @@ const Dictionary = {
     return data;
   },
   // 格式化时间 YYYY-MM-DD HH:mm:ss
+  // timeFormatTemp(data) {
+  //   if (data) {
+  //     const time = new Date(data);
+  //     const year = time.getFullYear();
+  //     const month = time.getMonth() + 1;
+  //     const day = time.getDate();
+  //     const hour = time.getHours();
+  //     const minute = time.getMinutes();
+  //     const second = time.getSeconds();
+  //     return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  //   }
+
+  //   return data;
+  // },
+  // 格式化时间 YYYY-MM-DD HH:mm:ss
   timeFormatTemp(data) {
     if (data) {
-      const time = new Date(data);
-      const year = time.getFullYear();
-      const month = time.getMonth() + 1;
-      const day = time.getDate();
-      const hour = time.getHours();
-      const minute = time.getMinutes();
-      const second = time.getSeconds();
-      return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+      return moment(data).format('YYYY-MM-DD HH:mm:ss')
     }
 
     return data;

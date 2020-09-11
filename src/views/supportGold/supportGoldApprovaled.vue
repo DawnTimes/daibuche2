@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-08-20 14:55:46
+ * @LastEditTime: 2020-09-10 17:57:22
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovaled.vue
@@ -86,7 +86,7 @@ export default {
         approvalTime: '',
       },
       formReadonly: {
-        hide: [],
+        hide: ['cancelBtn1'],
         readonly: ['approvalUser', 'approvalTime'],
       },
       status: {

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-08-17 10:52:42
+ * @LastEditTime: 2020-09-10 15:30:15
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\baseInformationDetailModule.vue
@@ -10,96 +10,103 @@
   <div class="baseInformationDetailModule">
     <div class="baseInfor">
       <el-row :gutter="0">
-        <el-col :xs="24" :sm="24" :md="20" :lg="20" :xl="16">
+        <el-col :xs="24" :sm="24" :md="22" :lg="20" :xl="16">
           <el-row :gutter="0">
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
-                <span>任务编号：</span>
-                <span>00001</span>
+                <span>id编号：</span>
+                <span>{{ baseInfoForm.id }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>车型代码：</span>
-                <span>S899</span>
+                <span>{{ baseInfoForm.modelCode }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>车型名称：</span>
-                <span>某某</span>
+                <el-tooltip :content="baseInfoForm.modelName" placement="top-start" effect="light">
+                  <span>{{ baseInfoForm.modelName }}</span>
+                </el-tooltip>
+                
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>品牌：</span>
-                <span>传祺</span>
+                <el-tooltip :content="baseInfoForm.brandName" placement="top-start" effect="light">
+                  <span>{{ baseInfoForm.brandName }}</span>
+                </el-tooltip>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>车系：</span>
-                <span>8系</span>
+                <span>{{ baseInfoForm.seriesName }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>数量：</span>
-                <span>155</span>
+                <span>{{ baseInfoForm.num }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>是否限牌：</span>
-                <span>是</span>
+                <span>{{ baseInfoForm.isLimitLicence | flagValue }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-              <div class="tempBox">
+              <div class="tempBox" v-show="!$formAtReadonly('cityName', formReadonly.hide)">
                 <span>城市：</span>
-                <span>广州</span>
+                <span>{{ baseInfoForm.cityName }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-              <div class="tempBox">
+              <div class="tempBox" v-show="!$formAtReadonly('licenceCode', formReadonly.hide)">
                 <span>牌照商：</span>
-                <span>广汽租赁</span>
+                <el-tooltip :content="baseInfoForm.licenceCode" placement="top-start" effect="light">
+                  <span>{{ baseInfoForm.licenceCode }}</span>
+                </el-tooltip>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>原月租金：</span>
-                <span>3888元</span>
+                <span>{{ baseInfoForm.monthlyRent }} 元</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-              <div class="tempBox">
+              <div class="tempBox" v-show="!$formAtReadonly('rentLicenceFee', formReadonly.hide)">
                 <span>原牌照费：</span>
-                <span>3888元</span>
+                <span>{{ baseInfoForm.rentLicenceFee }} 元</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-              <div class="tempBox">
+              <div class="tempBox" v-show="!$formAtReadonly('totalMonthlyRent', formReadonly.hide)">
                 <span>原月租金合计：</span>
-                <span>6888元</span>
+                <span>{{ baseInfoForm.totalMonthlyRent }} 元</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>新月租金：</span>
-                <span>4888元</span>
+                <span>{{ baseInfoForm.newMonthlyRent }} 元</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-              <div class="tempBox">
+              <div class="tempBox" v-show="!$formAtReadonly('newLicenceFee', formReadonly.hide)">
                 <span>新牌照费：</span>
-                <span>4888元</span>
+                <span>{{ baseInfoForm.newLicenceFee }} 元</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-              <div class="tempBox">
+              <div class="tempBox" v-show="!$formAtReadonly('newtotalMonthlyRent', formReadonly.hide)">
                 <span>新月租金合计：</span>
-                <span>8888元</span>
+                <span>{{ baseInfoForm.newtotalMonthlyRent }} 元</span>
               </div>
             </el-col>
           </el-row>
@@ -111,35 +118,45 @@
       <el-row :gutter="0">
         <el-col :xs="24" :sm="22" :md="20" :lg="18" :xl="14">
           <el-timeline>
-            <el-timeline-item class="text_statr" timestamp="发起修改" placement="top" icon="el-icon-more" type="primary">
+            <!-- <el-timeline-item class="text_statr" timestamp="发起修改" placement="top" icon="el-icon-more" type="primary">
               <el-card>
                 <h4>
-                  <span>修改时间：2020-08-09 12:12:12</span>
-                  <span>修改人：admin</span>
+                  <span>修改时间：{{ baseInfoForm.modifiedTime | timeFormatTemp }}</span>
+                  <span>修改人：{{ baseInfoForm.modifier }}</span>
                 </h4>
-                <p>备注：王小虎 提交于 2018/4/12 20:46</p>
+                <p>备注：{{ baseInfoForm.remark }}</p>
               </el-card>
-            </el-timeline-item>
+            </el-timeline-item> -->
             <el-timeline-item
-              :timestamp="formatStatus(value.appprovalOperation, dictOperationTemp)"
+              :timestamp="formatUser(value.curStatus, userTemp)"
               :color="value.color"
               :icon="value.icon"
               :type="value.type"
-              :class="{ 'text_success': value.appprovalOperation == 'approved', 'text_error': value.appprovalOperation == 'refuse' }"
+              :class="{ 'text_success': value.approvalOperation == 'Y', 'text_error': value.approvalOperation == 'N' }"
               placement="top"
-              v-for="( value, index) in approvalProcessData"
+              v-for="( value, index) in baseInfoForm.rentApprovalList"
               :key="index"
             >
               <el-card>
                 <h4>
-                  <span>审批时间：{{ value.approvalTime }}</span>
-                  <span>审批人：{{ value.approvalUser }}</span>
+                  <span>{{ index === 0 ? '修改时间' : '审批时间' }}：{{ value.approvalTime | timeFormatTemp }}</span>
+                  <span>{{ index === 0 ? '修改人' : '审批人' }}：{{ value.approvalPerson }}</span>
+                </h4>
+                <p>
+                  <span>{{ index === 0 ? '备注' : '审批意见' }}：</span>
+                  <span>{{ value.approvalOpinion }}</span>                  
+                </p>
+              </el-card>
+              <!-- <el-card>
+                <h4>
+                  <span>审批时间：{{ value.approvalTime | timeFormatTemp }}</span>
+                  <span>审批人：{{ value.approvalPerson }}</span>
                 </h4>
                 <p>
                   <span>审批意见：</span>
                   <span>{{ value.approvalOpinion }}</span>                  
                 </p>
-              </el-card>
+              </el-card> -->
             </el-timeline-item>
           </el-timeline>
         </el-col>
@@ -215,7 +232,7 @@ export default {
       dictOperationTemp: [
         {
           columnName: 'approval_Status',
-          columnValueCode: 'approved',
+          columnValueCode: 'Y',
           columnValueDesc: '审批通过',
           createTime: '2020-04-27 00:00:00.0',
           tabName: 'UNIFY_SYSTEM_INTERFACE',
@@ -223,16 +240,35 @@ export default {
         {
           columnName: 'approval_Status',
           columnValueCode: 'refuse',
-          columnValueDesc: '审批拒绝',
+          columnValueDesc: 'N',
           createTime: '2020-04-27 00:00:00.0',
           tabName: 'UNIFY_SYSTEM_INTERFACE',
         },
+      ],
+
+      userTemp: [
+        { value: '1', lable: '发起修改' },
+        { value: '2', lable: '待会计审批' },
+        { value: '3', lable: '待财务负责人审批' },
+        { value: '4', lable: '生效' },
+        { value: '5', lable: '审批拒绝' },
       ],
     };
   },
   computed: {},
   watch: {},
   created() {
+    // this.$nextTick(function () {
+    //   this.tableHeight =
+    //     window.innerHeight - this.$refs.refSpan.$el.offsetWidth;
+
+    //   // 监听窗口大小变化
+    //   let self = this;
+    //   window.onresize = function () {
+    //     self.tableHeight =
+    //       window.innerHeight - self.$refs.refSpan.$el.offsetWidth;
+    //   };
+    // });
     // this.getDictStatus('approval_operation', 'UNIFY_INTERFACE_APPROVAL');
   },
   mounted() {},
@@ -262,6 +298,16 @@ export default {
       return columnValueDesc;
     },
 
+    formatUser(val, userTemp = []) {
+      let lable = '';
+      userTemp.forEach((v) => {
+        if (val === v.value) {
+          return (lable = v.lable);
+        }
+      })
+      return lable;
+    },
+
     // 去审批
     handleGoToApproval() {
       
@@ -286,10 +332,12 @@ export default {
     padding: 10px 0 10px 10px;
     border-bottom: 1px solid #eee;
     .tempBox {
+      position: relative;
       height: 36px;
       color: #000;
       font-weight: bold;
       font-size: 16px;
+      width: 100%;
 
       :nth-child(1) {
         display: inline-block;
@@ -297,6 +345,15 @@ export default {
         text-align: right;
         // text-align: justify; // 两端对齐
         // text-align-last: justify;
+      }
+      :nth-child(2) {
+        position: absolute;
+        left: auto;
+        top: auto;
+        width: calc(100% - 120px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }

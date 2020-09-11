@@ -29,7 +29,8 @@
     <el-table
       :data="tableData"
       stripe
-      :height="GLOBAL.height"
+      :max-height="tableHeight"
+      ref="table"
       border
       :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
@@ -48,14 +49,14 @@
         width="100"
         align="center"
       ></el-table-column>
-      <el-table-column prop="username" label="登录名" resizable></el-table-column>
-      <el-table-column prop="label" label="姓名" resizable></el-table-column>
-      <!-- <el-table-column prop="phone" label="手机号码" resizable></el-table-column> -->
+      <el-table-column prop="username" label="登录名" resizable show-overflow-tooltip></el-table-column>
+      <el-table-column prop="label" label="姓名" resizable show-overflow-tooltip></el-table-column>
+      <!-- <el-table-column prop="phone" label="手机号码" resizable show-overflow-tooltip></el-table-column> -->
       <!-- <el-table-column prop="deptName" label="所属部门"></el-table-column> -->
-      <el-table-column prop="roleName" label="角色" resizable></el-table-column>
+      <el-table-column prop="roleName" label="角色" resizable show-overflow-tooltip></el-table-column>
       <!-- 1无效 0有效 -->
-      <el-table-column prop="delFlagView" label="状态" resizable></el-table-column>
-      <el-table-column prop="createTime" label="创建时间" resizable></el-table-column>
+      <el-table-column prop="delFlagView" label="状态" resizable show-overflow-tooltip></el-table-column>
+      <el-table-column prop="createTime" label="创建时间" resizable show-overflow-tooltip></el-table-column>
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <!-- <el-button size="mini">查看</el-button> -->
@@ -131,11 +132,39 @@ export default {
         confirst: '确认删除该用户',
         consecond: '删除后不可恢复',
       },
+
+      tableHeight: 100,
     };
   },
   created() {
     this.initData();
+
+    this.$nextTick(function () {
+      this.tableHeight =
+        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+
+      // 监听窗口大小变化
+      let self = this;
+      window.onresize = function () {
+        self.tableHeight =
+          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+      };
+    });
+    //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
+    //50表示你想要调整的表格距离底部的高度（你可以自己随意调整），因为我们一般都有放分页组件的，所以需要给它留一个高度
   },
+
+  // 添加组件内的导航钩子，在跳转路由前，将监听窗口大小变化的函数清空
+  beforeRouteLeave(to, from, next) {
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+    // this.tableHeight = 500
+    window.onresize = function () {
+      // console.log('离开了')
+    };
+    next();
+  },
+
   mounted() {
     let that = this;
 

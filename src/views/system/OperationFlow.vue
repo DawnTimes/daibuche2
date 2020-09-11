@@ -72,7 +72,8 @@
       :data="tableData"
       style="width: 100%"
       stripe
-      :height="GLOBAL.height"
+      :max-height="tableHeight"
+      ref="table"
       :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
@@ -90,12 +91,12 @@
         resizable
         align="center"
       ></el-table-column>
-      <el-table-column prop="operationMenu" label="操作菜单" width resizable></el-table-column>
-      <el-table-column prop="operationUser" label="操作人" width resizable></el-table-column>
-      <el-table-column prop="operationType" label="操作类型" width resizable></el-table-column>
-      <el-table-column prop="operationTime" label="操作时间" width resizable></el-table-column>
-      <el-table-column prop="operationResult" label="操作结果" width resizable></el-table-column>
-      <el-table-column prop="operationContent" label="操作内容" width resizable></el-table-column>
+      <el-table-column prop="operationMenu" label="操作菜单" width resizable show-overflow-tooltip></el-table-column>
+      <el-table-column prop="operationUser" label="操作人" width resizable show-overflow-tooltip></el-table-column>
+      <el-table-column prop="operationType" label="操作类型" width resizable show-overflow-tooltip></el-table-column>
+      <el-table-column prop="operationTime" label="操作时间" width resizable show-overflow-tooltip></el-table-column>
+      <el-table-column prop="operationResult" label="操作结果" width resizable show-overflow-tooltip></el-table-column>
+      <el-table-column prop="operationContent" label="操作内容" width resizable show-overflow-tooltip></el-table-column>
     </el-table>
     <el-pagination
       background
@@ -141,11 +142,39 @@ export default {
         operationTimeto: '',
       },
       value3: [],
+
+      tableHeight: 100,
     };
   },
   created() {
     this.initData();
+
+    this.$nextTick(function () {
+      this.tableHeight =
+        window.innerHeight - this.$refs.table.$el.offsetTop - 140;
+
+      // 监听窗口大小变化
+      let self = this;
+      window.onresize = function () {
+        self.tableHeight =
+          window.innerHeight - self.$refs.table.$el.offsetTop - 140;
+      };
+    });
+    //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
+    //50表示你想要调整的表格距离底部的高度（你可以自己随意调整），因为我们一般都有放分页组件的，所以需要给它留一个高度
   },
+
+  // 添加组件内的导航钩子，在跳转路由前，将监听窗口大小变化的函数清空
+  beforeRouteLeave(to, from, next) {
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+    // this.tableHeight = 500
+    window.onresize = function () {
+      // console.log('离开了')
+    };
+    next();
+  },
+
   methods: {
     timeChange(data) {
       if (data == null) {

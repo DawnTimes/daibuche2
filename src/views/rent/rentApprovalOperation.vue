@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-08-20 09:35:53
+ * @LastEditTime: 2020-09-10 17:55:26
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalOperation.vue
@@ -14,6 +14,7 @@
         <el-tab-pane class="title" name="first" label="基本信息">
           <baseInformationDetail-module
             :baseInfoForm="baseInfoForm"
+            :formReadonly="formReadonly"
           ></baseInformationDetail-module>
 
           <el-row :gutter="10">
@@ -50,6 +51,8 @@ import approvalModule from '@/components/approvalModule';
 
 import moment from 'moment';
 
+import _ from 'lodash';
+
 export default {
   name: 'rentApprovalOperation',
   props: {},
@@ -59,6 +62,7 @@ export default {
   },
   data() {
     return {
+      id: '',
       formTemp: {
         activeName: 'first',
       },
@@ -67,12 +71,16 @@ export default {
       },
       formData: {
         status: 'Y',
-        approvalUser: '',
+        approvalPerson: '',
         approvalTime: '',
+        type: '',
+        approvalOperation: '',
+        approvalOpinion: '',
+        id: '',
       },
       formReadonly: {
-        hide: [],
-        readonly: ['approvalUser', 'approvalTime'],
+        hide: ['cancelBtn2'],
+        readonly: ['approvalPerson', 'approvalTime'],
       },
       status: {
         loading: false,
@@ -87,8 +95,15 @@ export default {
   },
   watch: {},
   created() {
-    this.formData.approvalUser = this.userId;
+    this.formData.approvalPerson = this.userId;
     this.formData.approvalTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+    const query = this.$route.query;
+
+    this.id = query.id;
+    this.formData.type = query.type;
+    this.formData.id = query.id;
+     this.getBaseInforDetail();
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -98,7 +113,85 @@ export default {
   },
   mounted() {},
   methods: {
-    handleFormDataSubmit() {},
+    // 获取基本信息详情
+    getBaseInforDetail() {
+      const params = {
+        id: this.id,
+      };
+      const url = common.queryRentDetailByIdUrl;
+      axios.post(url, params).then((res) => {
+        if (res.em === 'Success!') {
+          const data = res.data;
+          this.baseInfoForm = data;
+          if (!_.isEmpty(this.baseInfoForm.rentApprovalList)) {
+            this.baseInfoForm.rentApprovalList.forEach((val) => {
+              val.color = '';
+              val.icon = '';
+              // if (val.approvalOperation === 'Y') {
+              //   val.color = '#0bbd87';
+              //   val.icon = 'el-icon-check';
+              // } else {
+              //   val.color = '#F56C6C';
+              //   val.icon = 'el-icon-close';
+              // }
+              if (val.curStatus === '1' || val.curStatus === '2' || val.curStatus === '3') {
+                val.color = '#409EFF';
+                val.icon = 'el-icon-more';
+              } else if (val.curStatus === '4') {
+                val.color = '#0bbd87';
+                val.icon = 'el-icon-check';
+              } else if(val.curStatus === '5') {
+                val.color = '#F56C6C';
+                val.icon = 'el-icon-close';
+              }
+              
+            })
+          }
+          // this.baseInfoForm.rentApprovalList.splice(0, 1); 
+          // 判断是否限牌
+          if (this.baseInfoForm.isLimitLicence === 'N') {
+            this.formReadonly.hide.push('cityName', 'licenceCode', 'newLicenceFee', 'newtotalMonthlyRent', 'rentLicenceFee', 'totalMonthlyRent')
+          } else {
+            this.baseInfoForm.totalMonthlyRent = this.baseInfoForm.monthlyRent * 1 + this.baseInfoForm.rentLicenceFee * 1 + '';
+          }
+        }
+      })
+    },
+
+
+    handleFormDataSubmit(obj) {
+      const data = obj.data;
+      const url = common.rentApprovalOperationUrl;
+      this.status.loading = true;
+
+      axios.post(url, data).then((res) => {
+        if (res.ec === '0') {
+          this.status.loading = false;
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '提交成功！'
+          });
+
+          setTimeout(() => {
+            this.$router.push({
+              path: '/rentApprovalList'
+            });
+          }, 1000);
+        } else {
+          this.status.loading = false;
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '提交失败!'
+          });
+        }
+      }).catch((err) => {
+        this.status.loading = false;
+        this.$notify.error({
+          title: '温馨提示！',
+          message: err ? err.em : '提交失败，请联系管理员!',
+        });
+      })
+    },
 
     // 上一步
     prevStep(obj) {

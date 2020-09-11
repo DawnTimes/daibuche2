@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 10:31:50
- * @LastEditTime: 2020-09-04 17:40:56
+ * @LastEditTime: 2020-09-10 18:18:13
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\rentUpdateModule.vue
@@ -22,48 +22,108 @@
           <el-row :gutter="0">
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
-                label="任务编号"
+                label="id编号"
                 prop
-                v-show="!$formAtReadonly('idCode', formReadonly.hide)"
+                v-show="!$formAtReadonly('id', formReadonly.hide)"
                 class="form-item"
               >
-                <el-input v-model="formData.id" maxlength="30" placeholder :disabled="true"></el-input>
+                <el-input v-model="formData.id" placeholder :disabled="true"></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="车型代码"
                 prop
-                v-show="!$formAtReadonly('systemCode', formReadonly.hide)"
+                v-show="!$formAtReadonly('modelCode', formReadonly.hide)"
                 class="form-item"
               >
-                <el-input v-model="formData.id" maxlength="30" placeholder :disabled="true"></el-input>
+                <el-input v-model="formData.modelCode" placeholder :disabled="true"></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="车型名称"
                 prop
-                v-show="!$formAtReadonly('systemCode', formReadonly.hide)"
+                v-show="!$formAtReadonly('modelName', formReadonly.hide)"
                 class="form-item"
               >
-                <el-input v-model="formData.id" maxlength="30" placeholder :disabled="true"></el-input>
+                <el-input v-model="formData.modelName" placeholder :disabled="true"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="品牌"
+                prop
+                v-show="!$formAtReadonly('brandName', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input v-model="formData.brandName" placeholder :disabled="true"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="车系"
+                prop
+                v-show="!$formAtReadonly('seriesName', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input v-model="formData.seriesName" placeholder :disabled="true"></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="数量"
                 prop
-                v-show="!$formAtReadonly('systemCode', formReadonly.hide)"
+                v-show="!$formAtReadonly('num', formReadonly.hide)"
                 class="form-item"
               >
-                <el-input v-model="formData.number" maxlength="4" placeholder :disabled="true"></el-input>
+                <el-input v-model="formData.num" placeholder :disabled="true"></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
+                label="城市"
+                prop="cityName"
+                v-show="!$formAtReadonly('cityName', formReadonly.hide)"
+                class="form-item"
+              >
+              <el-input v-model="formData.cityName" placeholder :disabled="true"></el-input>
+                <!-- <el-select v-model="formData.cityCode" filterable clearable placeholder="请选择">
+                  <el-option
+                    v-for="item in cityOptions"
+                    :key="item.cityCode"
+                    :label="item.cityName"
+                    :value="item.cityCode"
+                    :disabled="$formAtReadonly('cityCode', formReadonly.readonly)"
+                  ></el-option>
+                </el-select> -->
+
+                <!-- <el-cascader v-model="formData.value" filterable :options="areaArr" :props="props" style="width: 100%"></el-cascader> -->
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="牌照商"
+                prop="licenceName"
+                v-show="!$formAtReadonly('licenceName', formReadonly.hide)"
+                class="form-item"
+              >
+              <el-input v-model="formData.licenceName" placeholder :disabled="true"></el-input>
+                <!-- <el-select v-model="formData.licenceCode" filterable clearable placeholder="请选择">
+                  <el-option
+                    v-for="item in cityOptions"
+                    :key="item.licenceCode"
+                    :label="item.licenceName"
+                    :value="item.licenceCode"
+                    :disabled="$formAtReadonly('licenceCode', formReadonly.readonly)"
+                  ></el-option>
+                </el-select> -->
+              </el-form-item>
+            </el-col>
+            <!-- <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
                 label="生效年月"
-                prop="effectiveMonth"
+                prop=""
                 v-show="!$formAtReadonly('effectiveMonth', formReadonly.hide)"
                 class="form-item"
               >
@@ -75,74 +135,38 @@
                   placeholder="选择月份"
                 ></el-date-picker>
               </el-form-item>
-            </el-col>
+            </el-col> -->
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="是否限牌"
-                prop="systemName"
-                v-show="!$formAtReadonly('systemName', formReadonly.hide)"
+                prop="isLimitLicence"
+                v-show="!$formAtReadonly('isLimitLicence', formReadonly.hide)"
                 class="form-item"
               >
                 <el-radio-group
-                  v-model="formData.radio"
-                  :disabled="$formAtReadonly('', formReadonly.readonly)"
+                  v-model="formData.isLimitLicence"
+                  disabled
                 >
-                  <el-radio :label="1">是</el-radio>
-                  <el-radio :label="2">否</el-radio>
+                  <el-radio label="Y">是</el-radio>
+                  <el-radio label="N">否</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
-            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
-              <el-form-item
-                label="城市"
-                prop="city"
-                v-if="!$formAtReadonly('city', formReadonly.hide)"
-                class="form-item"
-              >
-                <!-- <el-select v-model="formData.city" filterable clearable placeholder="请选择">
-                  <el-option
-                    v-for="item in cityOptions"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                    :disabled="$formAtReadonly('city', formReadonly.readonly)"
-                  ></el-option>
-                </el-select>-->
-
-                <el-cascader v-model="formData.value" filterable :options="areaArr" :props="props" style="width: 100%"></el-cascader>
-              </el-form-item>
-            </el-col>
-            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
-              <el-form-item
-                label="牌照商"
-                prop="Licence"
-                v-if="!$formAtReadonly('Licence', formReadonly.hide)"
-                class="form-item"
-              >
-                <el-select v-model="formData.Licence" filterable clearable placeholder="请选择">
-                  <el-option
-                    v-for="item in cityOptions"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                    :disabled="$formAtReadonly('Licence', formReadonly.readonly)"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-
+            
+          </el-row>
+          <el-row :gutter="0">
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="原月租金"
-                prop="money"
-                v-show="!$formAtReadonly('port', formReadonly.hide)"
+                prop="monthlyRent"
+                v-show="!$formAtReadonly('monthlyRent', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.money"
+                  v-model="formData.monthlyRent"
                   maxlength="15"
-                  placeholder="请输入数字且最多保留两位小数"
-                  :disabled="$formAtReadonly('port', formReadonly.readonly)"
+                  placeholder=""
+                  disabled
                 ></el-input>
                 <span style="text-align: center; display: inline-block; width: 26px">元</span>
               </el-form-item>
@@ -150,15 +174,15 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="原月牌照费"
-                prop="money"
-                v-show="!$formAtReadonly('port', formReadonly.hide)"
+                prop="rentLicenceFee"
+                v-show="!$formAtReadonly('rentLicenceFee', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.money"
+                  v-model="formData.rentLicenceFee"
                   maxlength="15"
-                  placeholder="请输入数字且最多保留两位小数"
-                  :disabled="$formAtReadonly('port', formReadonly.readonly)"
+                  placeholder=""
+                  disabled
                 ></el-input>
                 <span style="text-align: center; display: inline-block; width: 26px">元</span>
               </el-form-item>
@@ -166,49 +190,33 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="原月租金合计"
-                prop="money"
-                v-show="!$formAtReadonly('port', formReadonly.hide)"
+                prop="totalMonthlyRent"
+                v-show="!$formAtReadonly('totalMonthlyRent', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.money"
+                  v-model="formData.totalMonthlyRent"
                   maxlength="15"
-                  placeholder="请输入数字且最多保留两位小数"
-                  :disabled="$formAtReadonly('port', formReadonly.readonly)"
+                  placeholder=""
+                  disabled
                 ></el-input>
                 <span style="text-align: center; display: inline-block; width: 26px">元</span>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row :gutter="0">
-            <!-- <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
-              <el-form-item
-                label="原尾款"
-                prop="money"
-                v-show="!$formAtReadonly('port', formReadonly.hide)"
-                class="form-item"
-              >
-                <el-input
-                  v-model="formData.money"
-                  maxlength="15"
-                  placeholder="请输入数字且最多保留两位小数"
-                  :disabled="$formAtReadonly('port', formReadonly.readonly)"
-                ></el-input>
-                <span style="text-align: center; display: inline-block; width: 26px">元</span>
-              </el-form-item>
-            </el-col>-->
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="新月租金"
-                prop="money"
-                v-show="!$formAtReadonly('port', formReadonly.hide)"
+                prop="newMonthlyRent"
+                v-show="!$formAtReadonly('newMonthlyRent', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.money"
+                  v-model="formData.newMonthlyRent"
                   maxlength="15"
                   placeholder="请输入数字且最多保留两位小数"
-                  :disabled="$formAtReadonly('port', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('newMonthlyRent', formReadonly.readonly)"
                 ></el-input>
                 <span style="text-align: center; display: inline-block; width: 26px">元</span>
               </el-form-item>
@@ -216,15 +224,15 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="新月牌照费"
-                prop="money"
-                v-show="!$formAtReadonly('port', formReadonly.hide)"
+                prop="newLicenceFee"
+                v-if="!$formAtReadonly('newLicenceFee', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.money"
+                  v-model="formData.newLicenceFee"
                   maxlength="15"
                   placeholder="请输入数字且最多保留两位小数"
-                  :disabled="$formAtReadonly('port', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('newLicenceFee', formReadonly.readonly)"
                 ></el-input>
                 <span style="text-align: center; display: inline-block; width: 26px">元</span>
               </el-form-item>
@@ -232,49 +240,33 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="新月租金合计"
-                prop="money"
-                v-show="!$formAtReadonly('port', formReadonly.hide)"
+                prop="newtotalMonthlyRent"
+                v-show="!$formAtReadonly('newtotalMonthlyRent', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.money"
+                  v-model="formData.newtotalMonthlyRent"
                   maxlength="15"
-                  placeholder="请输入数字且最多保留两位小数"
-                  :disabled="$formAtReadonly('port', formReadonly.readonly)"
+                  placeholder=""
+                  disabled
                 ></el-input>
                 <span style="text-align: center; display: inline-block; width: 26px">元</span>
               </el-form-item>
             </el-col>
-            <!-- <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
-              <el-form-item
-                label="新尾款"
-                prop="money"
-                v-show="!$formAtReadonly('port', formReadonly.hide)"
-                class="form-item"
-              >
-                <el-input
-                  v-model="formData.money"
-                  maxlength="15"
-                  placeholder="请输入数字且最多保留两位小数"
-                  :disabled="$formAtReadonly('port', formReadonly.readonly)"
-                ></el-input>
-                <span style="text-align: center; display: inline-block; width: 26px">元</span>
-              </el-form-item>
-            </el-col>-->
             <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
               <el-form-item
                 label="备注"
                 prop
-                v-show="!$formAtReadonly('createTime', formReadonly.hide)"
+                v-show="!$formAtReadonly('remark', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.createTime"
+                  v-model="formData.remark"
                   style="width: calc(100% - 32px)"
                   type="textarea"
                   maxlength="300"
                   :autosize="{ minRows: 3, maxRows: 5}"
-                  :disabled="$formAtReadonly('createTime', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('remark', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -292,7 +284,7 @@
             v-show="!$formAtReadonly('saveBtn', formReadonly.hide)"
             type="primary"
             size="medium"
-            @click="handleSubmit('formData')"
+            @click="handleSave('formData')"
             :loading="loading"
           >保 存</el-button>
           <el-button
@@ -309,8 +301,6 @@
 </template>
 
 <script>
-let id = 0;
-
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 
@@ -340,40 +330,15 @@ export default {
   },
   components: {},
   data() {
-    // 匹配银行卡号
-    const checkBankCode = (rule, value, callback) => {
-      const reg = /^([1-9]{1})[0-9]+$/;
-      if (!value) {
-        return callback(new Error('银行账号不能为空'));
-      }
-      if (!reg.test(value)) {
-        callback(new Error('银行账号格式错误'));
-      } else {
-        callback();
-      }
-    };
 
     // 验证数字且最多2位小数
     const checkNumber = (rule, value, callback) => {
       const reg = /^\d+(\.\d{1,2})?$/;
       if (!value) {
-        return callback(new Error('收款金额不能为空'));
+        return callback(new Error('金额不能为空'));
       }
       if (!reg.test(value)) {
-        callback(new Error('收款金额格式错误'));
-      } else {
-        callback();
-      }
-    };
-
-    // 匹配由数字和26个英文字母组成的字符串
-    const checkCode = (rule, value, callback) => {
-      const reg = /^[a-zA-Z0-9]+$/;
-      if (!value) {
-        return callback(new Error('银行单据号不能为空'));
-      }
-      if (!reg.test(value)) {
-        callback(new Error('银行单据号格式错误'));
+        callback(new Error('金额格式错误，最多保留两位小数'));
       } else {
         callback();
       }
@@ -382,7 +347,14 @@ export default {
     return {
       cityOptions: [],
       rules: {
-        money: [
+        newMonthlyRent: [
+          {
+            required: true,
+            validator: checkNumber,
+            trigger: 'blur',
+          },
+        ],
+        newLicenceFee: [
           {
             required: true,
             validator: checkNumber,
@@ -396,64 +368,33 @@ export default {
             trigger: ['blur', 'change'],
           },
         ],
-        city: [
-          {
-            required: true,
-            message: '城市不能为空',
-            trigger: ['blur', 'change'],
-          },
-        ],
-        Licence: [
-          {
-            required: true,
-            message: '牌照商不能为空',
-            trigger: ['blur', 'change'],
-          },
-        ],
       },
 
-      areaArr: [
-        { label: '澳门', value: '001' },
-        { label: '东北', value: '002' },
-        { label: '华北', value: '003' },
-        { label: '华东', value: '004' },
-        { label: '华南', value: '005' },
-        { label: '华中', value: '006' },
-        { label: '台湾', value: '007' },
-        { label: '香港', value: '008' },
-        { label: '西部', value: '009' },
-      ],
-
-      cascaderProps: {
-        lazy: true,
-        lazyLoad(node, resolve) {
-          console.log(node, resolve);
-          
-          const { level } = node;
-          console.log(Array.from({ length: level + 1 }));
-          setTimeout(() => {
-            console.log(Array.from({ length: level + 1 }));
-            const nodes = Array.from({ length: level + 1 }).map((item) => ({
-              value: ++id,
-              label: `选项${id}`,
-              leaf: level >= 2,
-            }));
-            console.log(nodes);
-            // 通过调用resolve将子节点数据返回，通知组件数据加载完成
-            resolve(nodes);
-          }, 100);
-        },
-      },
-
-      props: {
-        value: 'value',
-        label: 'label',
-        children: 'children',
-      },
     };
   },
   computed: {},
-  watch: {},
+  watch: {
+    // 监听新租金的变化 计算月租金合计
+    'formData.newMonthlyRent'(newVal, oldVal) {
+      if (this.formData.isLimitLicence === 'Y') {
+        this.formData.newtotalMonthlyRent = newVal * 1 + this.formData.newLicenceFee * 1 + '';
+      }
+      if (this.formData.isLimitLicence === 'N') {
+        this.formData.newtotalMonthlyRent = newVal;
+      }
+      
+    },
+    // 监听新牌照费的变化 计算月租金合计
+    'formData.newLicenceFee'(newVal, oldVal) {
+      if (this.formData.isLimitLicence === 'Y') {
+        this.formData.newtotalMonthlyRent = newVal * 1 + this.formData.newMonthlyRent * 1 + '';
+      }
+      if (this.formData.isLimitLicence === 'N') {
+        this.formData.newtotalMonthlyRent = newVal;
+      }
+      
+    },
+  },
   created() {
     // this.areaArr.forEach((item, index) => {
     //   item.children = [];
@@ -512,7 +453,26 @@ export default {
       });
     },
 
-    // 确定
+    // 保存
+    handleSave(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (!valid) {
+          this.$notify.warning({
+            title: '温馨提示',
+            message: '请正确填写表单',
+          });
+          return;
+        }
+
+        // 防止重复提交
+        if (this.loading === false) {
+          this.formData.approvalStatus = '1'; // 保存的状态
+          this.handleEmitData();
+        }
+      });
+    },
+
+    // 提交
     handleSubmit(formName) {
       this.$refs[formName].validate((valid) => {
         if (!valid) {
@@ -525,6 +485,7 @@ export default {
 
         // 防止重复提交
         if (this.loading === false) {
+          this.formData.approvalStatus = '2'; // 提交的状态
           this.handleEmitData();
         }
       });

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-09-04 11:41:45
+ * @LastEditTime: 2020-09-10 14:20:15
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -26,9 +26,9 @@
             placeholder="选择月份"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="期数:" prop="interfaceName">
+        <!-- <el-form-item label="期数:" prop="interfaceName">
           <el-input maxlength="50" v-model="formData.interfaceName" clearable placeholder></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="批次号:" prop="systemName">
           <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
         </el-form-item>
@@ -80,7 +80,7 @@
           fixed
         ></el-table-column>
         <el-table-column align="center" prop="month" label="支援金月份" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="期数" show-overflow-tooltip></el-table-column>
+        <!-- <el-table-column align="center" prop label="期数" show-overflow-tooltip></el-table-column> -->
         <el-table-column align="center" prop label="批次号" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="batch" label="批次" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop label="店数" show-overflow-tooltip></el-table-column>

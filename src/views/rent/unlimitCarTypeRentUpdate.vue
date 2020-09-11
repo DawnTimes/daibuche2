@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-09-04 17:43:12
+ * @LastEditTime: 2020-09-09 17:40:11
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeRentUpdate.vue
@@ -29,7 +29,7 @@
 import rentUpdateModule from './components/rentUpdateModule';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
-// import { mapState } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'unlimitCarTypeRentUpdate',
@@ -43,10 +43,22 @@ export default {
         label: 'info',
       },
       formData: {
-        status: 'Y',
+        isLimitLicence: 'N',
+        modelCode: '',
+        modelName: '',
+        monthlyRent: '',
+        totalMonthlyRent: '',
+        seriesName: '',
+        num: '',
+        approvalStatus: '1',
+        newMonthlyRent: '',
+        newtotalMonthlyRent: '',
+        brandName: '',
+        modifier: '',
+        remark: '',
       },
       formReadonly: {
-        hide: ['idCode', 'city', 'Licence', 'cancelBtn1', 'cancelBtn3'],
+        hide: ['id', 'cityName', 'licenceName', 'rentLicenceFee', 'totalMonthlyRent', 'newLicenceFee', 'newtotalMonthlyRent', 'cancelBtn1', 'cancelBtn3'],
         readonly: [],
       },
       status: {
@@ -56,12 +68,18 @@ export default {
     };
   },
   computed: {
-    // ...mapState('menu', {
-    //   userId: store => store.userId
-    // }),
+    ...mapState({
+      userId: store => store.userId
+    }),
   },
   watch: {},
-  created() {},
+  created() {
+    const query = JSON.parse(this.$route.query.row);
+    Object.assign(this.formData, query);
+    this.formData.modifier = this.userId;
+    console.log(query);
+    console.log(this.formData);
+  },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       // 通过 `vm` 访问组件实例
@@ -70,43 +88,57 @@ export default {
   },
   mounted() {},
   methods: {
-    // 新增提交
+    // 提交
     handleFormDataSubmit(object) {
       const data = object.data;
+      delete data.rowId;
+      // delete data.licenceName;
+      // delete data.cityName;
       this.status.loading = true;
-      // const url = common.systemAddUrl;
+      const url = common.rentSubmitUrl;
 
-      // axios.post(url, data).then(res => {
-      //   if (res.code === '0') {
-      //     this.$notify.success({
-      //       title: '温馨提示！',
-      //       message: '新增成功！'
-      //     });
+      axios.post(url, data).then(res => {
+        if (res.ec === '0') {
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '修改成功！'
+          });
 
-      //     setTimeout(() => {
-      //       this.$router.push({
-      //         path: '/systemList'
-      //       });
-      //     }, 1000);
-      //     this.status.loading = false;
-      //     this.formData = {
-      //       status: 'Y',
-      //       createUser: this.userId
-      //     }
-      //   } else {
-      //     this.status.loading = false;
-      //     this.$notify.error({
-      //       title: '温馨提示！',
-      //       message: res.msg || '新增失败!'
-      //     });
-      //   }
-      // }).catch(err => {
-      //   this.status.loading = false;
-      //   this.$notify.error({
-      //     title: '温馨提示！',
-      //     message: err ? err.em : '新增失败，请联系管理员!',
-      //   });
-      // });
+          setTimeout(() => {
+            this.$router.push({
+              path: '/unlimitCarTypeList'
+            });
+          }, 1000);
+          this.status.loading = false;
+          Object.assign(this.formData, {
+            isLimitLicence: 'Y',
+            modelCode: '',
+            modelName: '',
+            monthlyRent: '',
+            totalMonthlyRent: '',
+            seriesName: '',
+            num: '',
+            approvalStatus: '1',
+            newMonthlyRent: '',
+            newtotalMonthlyRent: '',
+            brandName: '',
+            modifier: this.userId,
+            remark: '',
+          });
+        } else {
+          this.status.loading = false;
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '修改失败!'
+          });
+        }
+      }).catch(err => {
+        this.status.loading = false;
+        this.$notify.error({
+          title: '温馨提示！',
+          message: err ? err.em : '修改失败，请联系管理员!',
+        });
+      });
     },
   },
   filters: {

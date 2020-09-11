@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-03 17:38:04
+ * @LastEditTime: 2020-09-10 18:27:26
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentAppytHistory.vue
@@ -17,16 +17,16 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="任务编号:" prop="systemName">
+        <!-- <el-form-item label="任务编号:" prop="systemName">
           <el-input maxlength="30" v-model="formData.systemName" placeholder=""></el-input>
+        </el-form-item> -->
+        <el-form-item label="车型代码:" prop="modelCode">
+          <el-input maxlength="50" v-model="formData.modelCode" placeholder=""></el-input>
         </el-form-item>
-        <el-form-item label="车型名称:" prop="interfaceName">
-          <el-input maxlength="50" v-model="formData.interfaceName" placeholder=""></el-input>
-        </el-form-item>
-        <el-form-item label="是否限牌:" prop="interfaceName">
-          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
+        <el-form-item label="是否限牌:" prop="isLimitLicence">
+          <el-select v-model="formData.isLimitLicence" clearable placeholder="请选择" style="width: 100%">
             <el-option
-              v-for="item in limitStatus"
+              v-for="item in this.$options.filters.flagValue([])"
               :key="item.value"
               :label="item.label"
               :value="item.value">
@@ -67,24 +67,66 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="id" label="任务编号" show-overflow-tooltip fixed="left"></el-table-column>
-        <!-- <el-table-column align="center" prop="" label="车型代码" show-overflow-tooltip></el-table-column> -->
-        <el-table-column align="center" prop="" label="车型名称" show-overflow-tooltip></el-table-column>        
-        <el-table-column align="center" prop="" label="品牌" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="车系" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="是否限牌" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="生效年月" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="牌照商" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="城市" show-overflow-tooltip width="70"></el-table-column>
-        <el-table-column align="center" prop="" label="数量" show-overflow-tooltip width="70"></el-table-column>
-        <el-table-column align="center" prop="" label="审批状态" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="新月租金" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="新月牌照费" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="新月租金合计" show-overflow-tooltip width="110"></el-table-column>
-        <el-table-column align="center" prop="" label="原月租金" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="原月牌照费" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="原月租金合计" show-overflow-tooltip width="110"></el-table-column>
-        <!-- <el-table-column align="center" prop="" label="尾款" show-overflow-tooltip></el-table-column> -->
+        <!-- <el-table-column align="center" prop="modId" label="任务id" show-overflow-tooltip></el-table-column> -->
+        <el-table-column align="center" prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="modelName" label="车型名称" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column align="center" prop="brandName" label="品牌" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column align="center" prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
+          <template slot-scope="scope">
+          <span :class="{ blueColor: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue }}</span>
+        </template>
+        </el-table-column>        
+        <el-table-column align="center" prop="" label="生效年月" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column align="center" prop="licenceCode" label="牌照商" show-overflow-tooltip width="180"></el-table-column>
+        <el-table-column align="center" prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="num" label="数量" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="approvalStatus" label="审批状态" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span
+            :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '2' ,
+            skyblueColor: scope.row.approvalStatus == '3',
+            yellowColor: scope.row.approvalStatus == '1'}"
+            >{{ scope.row.approvalStatus | approvalStatus }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="newMonthlyRent" label="新月租金" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.newMonthlyRent }} 元</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="newLicenceFee" label="新月牌照费" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.newLicenceFee && scope.row.newLicenceFee != '0' ? scope.row.newLicenceFee + '元' : scope.row.newLicenceFee }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="newtotalMonthlyRent" label="新月租金合计" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.newtotalMonthlyRent }} 元</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="monthlyRent" label="原月租金" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.monthlyRent }} 元</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="rentLicenceFee" label="原月牌照费" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.rentLicenceFee && scope.row.rentLicenceFee != '0' ? scope.row.rentLicenceFee + '元' : scope.row.rentLicenceFee }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="totalMonthlyRent" label="原月租金合计" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.monthlyRent * 1 + scope.row.rentLicenceFee * 1 }} 元</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="modifier" label="修改人" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" prop="modifiedTime" label="修改时间" show-overflow-tooltip width="160">
+          <template slot-scope="scope">
+            <span>{{ scope.row.modifiedTime | timeFormatTemp }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="remark" label="备注" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column
           align="center"
           label="操作"
@@ -92,7 +134,7 @@
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="handleDetail(scope.row)" v-show="rightControl.detail">详情</el-button>
+            <el-button size="mini" plain @click="handleDetail(scope.row)" v-show="rightControl.detail">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -117,6 +159,7 @@
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+import eventBus from '@/common/eventBus.js';
 
 export default {
   name: '',
@@ -132,18 +175,17 @@ export default {
       pageNum: 1,
       total: 0,
       formData: {
-        
+        cityCode: '',
+        isLimitLicence: '',
+        licenceCode: '',
+        modelCode: '',
+        pageSize: 10,
+        pageNum: 1,
       },
 
-      tableData: [
-        { id: 123456 },
-      ],
+      tableData: [],
       tableHeight: 100,
-      appravolStatus: [],
-      limitStatus: [
-        { value: 'Y', label: '是' },
-        { value: 'N', label: '否' },
-      ],
+
       // 按钮权限
       rightArray: [9551],
       rightControl: {
@@ -159,6 +201,8 @@ export default {
 
   },
   created() {
+    this.getRentApplyListData();
+    
     // 判断权限
     this.rightArray.forEach((item, index, array) => {
       common.checkRolePermission(
@@ -198,11 +242,17 @@ export default {
   },
   methods: {
     // 查询
-    queryForm() {},
+    queryForm() {
+      // 重置当前页
+      this.pageNum = 1;
+      this.formData.pageNum = 1;
+      this.getRentApplyListData();
+    },
 
     // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.getRentApplyListData();
     },
 
     // 自定义列接口索引
@@ -211,22 +261,51 @@ export default {
       return index + order + 1;
     },
 
+    // 获取分页数据
+    getRentApplyListData() {
+      const params = {
+        cityCode: this.formData.cityCode,
+        licenceCode: this.formData.licenceCode,
+        modelCode: this.formData.modelCode,
+        isLimitLicence: this.formData.isLimitLicence,
+        state: '1',
+        turnPageBeginPos: this.formData.pageNum,
+        turnPageShowNum: this.formData.pageSize,
+      };
+      const url = common.queryRentHisUrl;
+      axios.post(url, params).then((res) => {
+        if (res.em === 'Success!') {
+          const data = res.data;
+          this.tableData = data.rentModList;
+          this.total = data.turnPageTotalNum * 1;
+        }
+      });
+    },
+
     // 分页
     handleSizeChange(val) {
       this.pageNum = 1;
       this.formData.pageNum = 1;
       this.pageSize = val;
       this.formData.pageSize = val;
+      this.getRentApplyListData();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
       this.formData.pageNum = (val - 1) * this.pageSize + 1;
+      this.getRentApplyListData();
     },
 
     // 详情
     handleDetail(row) {
+      eventBus.$emit('sendFatherPath', {
+        path: this.$route.path,
+      });
       this.$router.push({
-        path: '/baseInformationDetail'
+        path: '/baseInformationDetail',
+        query: {
+          id: row.modId,
+        },
       })
     },
     

@@ -4,7 +4,7 @@
       <!-- <span>
         <i class="iconfont iconkehuguanli"></i>经销商信息管理
       </span>-->
-      <el-form :inline="true" :model="params" class="demo-form-inline">
+      <el-form :inline="true" :model="params" class="demo-form-inline" label-width="90px">
         <el-form-item label="经销商名称">
           <el-input
             class="inputSelectClass"

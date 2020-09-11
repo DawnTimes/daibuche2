@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-09-04 17:43:01
+ * @LastEditTime: 2020-09-09 18:18:51
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\editRent.vue
@@ -29,7 +29,7 @@
 import rentUpdateModule from './components/rentUpdateModule';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
-// import { mapState } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'editRent',
@@ -43,10 +43,29 @@ export default {
         label: 'info',
       },
       formData: {
-        status: 'Y',
+        modId: '',
+        isLimitLicence: 'Y',
+        modelCode: '',
+        modelName: '',
+        licenceCode: '',
+        licenceName: '',
+        cityCode: '',
+        cityName: '',
+        monthlyRent: '',
+        rentLicenceFee: '',
+        totalMonthlyRent: '',
+        seriesName: '',
+        num: '',
+        approvalStatus: '1',
+        newLicenceFee: '',
+        newMonthlyRent: '',
+        newtotalMonthlyRent: '',
+        brandName: '',
+        modifier: '',
+        remark: '',
       },
       formReadonly: {
-        hide: ['saveBtn', 'cancelBtn1', 'cancelBtn2'],
+        hide: ['id', 'saveBtn', 'cancelBtn1', 'cancelBtn2'],
         readonly: [],
       },
       status: {
@@ -56,57 +75,96 @@ export default {
     };
   },
   computed: {
-    // ...mapState('menu', {
-    //   userId: store => store.userId
-    // }),
+    ...mapState({
+      userId: store => store.userId
+    }),
   },
   watch: {},
-  created() {},
+  created() {
+    const query = JSON.parse(this.$route.query.row);
+    Object.assign(this.formData, query);
+    this.formData.modifier = this.userId;
+    this.formData.id = query.modId;
+    this.formData.licenceCode = query.licenceName;
+    this.formData.licenceName = query.licenceCode;
+    console.log(query);
+    console.log(this.formData);
+  },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       // 通过 `vm` 访问组件实例
       vm.fatherPath = from.path;
     });
   },
-  mounted() {},
+  mounted() {
+    // 判断是否是限牌的，隐藏城市、牌照商等信息
+    if (this.formData.isLimitLicence === 'N') {
+      this.formData.totalMonthlyRent = this.formData.monthlyRent;
+      this.formReadonly.hide.push('licenceName', 'cityName', 'rentLicenceFee', 'newLicenceFee', 'totalMonthlyRent', 'newtotalMonthlyRent')
+    }
+
+    if (this.formData.isLimitLicence === 'Y') {
+      this.formData.totalMonthlyRent = this.formData.monthlyRent * 1 + this.formData.rentLicenceFee * 1 + '';
+    }
+  },
   methods: {
-    // 新增提交
+    // 提交
     handleFormDataSubmit(object) {
       const data = object.data;
+      // delete data.licenceName;
+      // delete data.cityName;
       this.status.loading = true;
-      // const url = common.systemAddUrl;
+      const url = common.updateRentUrl;
 
-      // axios.post(url, data).then(res => {
-      //   if (res.code === '0') {
-      //     this.$notify.success({
-      //       title: '温馨提示！',
-      //       message: '新增成功！'
-      //     });
+      axios.post(url, data).then(res => {
+        if (res.ec === '0') {
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '编辑成功！'
+          });
 
-      //     setTimeout(() => {
-      //       this.$router.push({
-      //         path: '/systemList'
-      //       });
-      //     }, 1000);
-      //     this.status.loading = false;
-      //     this.formData = {
-      //       status: 'Y',
-      //       createUser: this.userId
-      //     }
-      //   } else {
-      //     this.status.loading = false;
-      //     this.$notify.error({
-      //       title: '温馨提示！',
-      //       message: res.msg || '新增失败!'
-      //     });
-      //   }
-      // }).catch(err => {
-      //   this.status.loading = false;
-      //   this.$notify.error({
-      //     title: '温馨提示！',
-      //     message: err ? err.em : '新增失败，请联系管理员!',
-      //   });
-      // });
+          setTimeout(() => {
+            this.$router.push({
+              path: '/rentApplyList'
+            });
+          }, 1000);
+          this.status.loading = false;
+          Object.assign(this.formData, {
+            modId: '',
+            isLimitLicence: 'Y',
+            modelCode: '',
+            modelName: '',
+            licenceCode: '',
+            licenceName: '',
+            cityCode: '',
+            cityName: '',
+            monthlyRent: '',
+            rentLicenceFee: '',
+            totalMonthlyRent: '',
+            seriesName: '',
+            num: '',
+            approvalStatus: '1',
+            newLicenceFee: '',
+            newMonthlyRent: '',
+            newtotalMonthlyRent: '',
+            brandName: '',
+            modifier: this.userId,
+            remark: '',
+          });
+        } else {
+          this.status.loading = false;
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '编辑失败!'
+          });
+        }
+      }).catch(err => {
+        this.status.loading = false;
+        this.$notify.error({
+          title: '温馨提示！',
+          message: err ? err.em : '编辑失败，请联系管理员!',
+        });
+      });
     },
   },
   filters: {
