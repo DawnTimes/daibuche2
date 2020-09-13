@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-09-02 17:39:05
+ * @LastEditTime: 2020-09-11 17:56:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -22,16 +22,16 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="交易时间"
-                prop
-                v-show="!$formAtReadonly('id', formReadonly.hide)"
+                prop="tradeDate"
+                v-show="!$formAtReadonly('tradeDate', formReadonly.hide)"
                 class="form-item"
               >
                 <el-date-picker
-                  v-model="formData.value1"
-                  type="date"
-                  value-format="yyyy-MM-dd"
+                  v-model="formData.tradeDate"
+                  type="datetime"
+                  value-format="yyyy-MM-dd HH:mm:ss"
                   style="width: 100%"
-                  :disabled="$formAtReadonly('', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('tradeDate', formReadonly.readonly)"
                   placeholder="选择日期">
                 </el-date-picker>
               </el-form-item>
@@ -39,45 +39,45 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="银行单据号"
-                prop="systemCode"
-                v-show="!$formAtReadonly('systemCode', formReadonly.hide)"
+                prop="serialNumber"
+                v-show="!$formAtReadonly('serialNumber', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.systemCode"
+                  v-model="formData.serialNumber"
                   maxlength="30"
                   placeholder=""
-                  :disabled="$formAtReadonly('systemCode', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('serialNumber', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="收款账号"
-                prop="username"
-                v-show="!$formAtReadonly('username', formReadonly.hide)"
+                prop="bankAccountNo"
+                v-show="!$formAtReadonly('bankAccountNo', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.username"
+                  v-model="formData.bankAccountNo"
                   maxlength="30"
                   placeholder=""
-                  :disabled="$formAtReadonly('username', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('bankAccountNo', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="收款名称"
-                prop="systemName"
-                v-show="!$formAtReadonly('systemName', formReadonly.hide)"
+                prop="companyName"
+                v-show="!$formAtReadonly('companyName', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.systemName"
+                  v-model="formData.companyName"
                   maxlength="30"
                   placeholder=""
-                  :disabled="$formAtReadonly('systemName', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('companyName', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -86,31 +86,31 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="收款开户行"
-                prop="ipaddr"
-                v-show="!$formAtReadonly('ipaddr', formReadonly.hide)"
+                prop="bankAccountName"
+                v-show="!$formAtReadonly('bankAccountName', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.ipaddr"
+                  v-model="formData.bankAccountName"
                   maxlength="30"
                   placeholder=""
-                  :disabled="$formAtReadonly('ipaddr', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('bankAccountName', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="收款金额"
-                prop="money"
-                v-show="!$formAtReadonly('port', formReadonly.hide)"
+                prop="income"
+                v-show="!$formAtReadonly('income', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
                   style="width: calc(100% - 32px)"
-                  v-model="formData.money"
+                  v-model="formData.income"
                   maxlength="15"
                   placeholder="请输入数字且最多保留两位小数"
-                  :disabled="$formAtReadonly('port', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('income', formReadonly.readonly)"
                 ></el-input>
                 <span style="text-align: center; display: inline-block; width: 26px">元</span>
               </el-form-item>
@@ -118,15 +118,15 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="汇款名称"
-                prop="sch"
-                v-show="!$formAtReadonly('sch', formReadonly.hide)"
+                prop="sideAccountName"
+                v-show="!$formAtReadonly('sideAccountName', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.sch"
+                  v-model="formData.sideAccountName"
                   maxlength="30"
                   placeholder=""
-                  :disabled="$formAtReadonly('sch', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('sideAccountName', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -134,64 +134,64 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="汇款账号"
-                prop
-                v-show="!$formAtReadonly('createUser', formReadonly.hide)"
+                prop="sideAccount"
+                v-show="!$formAtReadonly('sideAccount', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.createUser"
+                  v-model="formData.sideAccount"
                   maxlength="30"
-                  :disabled="$formAtReadonly('createUser', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('sideAccount', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
             
-            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+            <!-- <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="是否虚拟收款"
                 prop
-                v-show="!$formAtReadonly('modifyTime', formReadonly.hide)"
+                v-show="!$formAtReadonly('', formReadonly.hide)"
                 class="form-item"
               >
-                <el-radio-group v-model="formData.radio" :disabled="$formAtReadonly('createTime', formReadonly.readonly)">
+                <el-radio-group v-model="formData.radio" :disabled="$formAtReadonly('', formReadonly.readonly)">
                   <el-radio :label="1">是</el-radio>
                   <el-radio :label="2">否</el-radio>
                 </el-radio-group>
               </el-form-item>
-            </el-col>
+            </el-col> -->
 
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+            <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
               <el-form-item
                 label="摘要"
                 prop
-                v-show="!$formAtReadonly('createTime', formReadonly.hide)"
+                v-show="!$formAtReadonly('abstract', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.createTime"
+                  v-model="formData.abstract"
                   type="textarea"
                   maxlength="300"
                   :autosize="{ minRows: 3, maxRows: 5}"
-                  :disabled="$formAtReadonly('createTime', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('abstract', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
-            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+            <!-- <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
               <el-form-item
                 label="备注"
                 prop
-                v-show="!$formAtReadonly('createTime', formReadonly.hide)"
+                v-show="!$formAtReadonly('remark', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.createTime"
+                  v-model="formData.remark"
                   type="textarea"
                   maxlength="300"
                   :autosize="{ minRows: 3, maxRows: 5}"
-                  :disabled="$formAtReadonly('createTime', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('remark', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
-            </el-col>
+            </el-col> -->
           </el-row>
         </el-form>
       </el-col>
@@ -270,10 +270,10 @@ export default {
     const checkCode = (rule, value, callback) => {
       const reg = /^[a-zA-Z0-9]+$/;
       if (!value) {
-        return callback(new Error('银行单据号不能为空'));
+        return callback(new Error('银行流水单据号不能为空'));
       }
       if (!reg.test(value)) {
-        callback(new Error('银行单据号格式错误'));
+        callback(new Error('银行流水单据号格式错误：只能是数字、字母'));
       } else {
         callback();
       }
@@ -281,11 +281,60 @@ export default {
 
     return {
       rules: {
-        money: [
+        income: [
           { 
             required: true,
             validator: checkNumber,
             trigger: 'blur'
+          }
+        ],
+        tradeDate: [
+          { 
+            required: true,
+            message: '请选择交易时间',
+            trigger: ['blur', 'change'],
+          }
+        ],
+        serialNumber: [
+          { 
+            required: true,
+            validator: checkCode,
+            trigger: 'blur',
+          }
+        ],
+        bankAccountNo: [
+          { 
+            required: true,
+            validator: checkBankCode,
+            trigger: 'blur',
+          }
+        ],
+        companyName: [
+          { 
+            required: true,
+            message: '请输入收款名称',
+            trigger: ['blur', 'change'],
+          }
+        ],
+        bankAccountName: [
+          { 
+            required: true,
+            message: '请输入收款开户行',
+            trigger: ['blur', 'change'],
+          }
+        ],
+        sideAccount: [
+          { 
+            required: true,
+            validator: checkBankCode,
+            trigger: 'blur',
+          }
+        ],
+        sideAccountName: [
+          { 
+            required: true,
+            message: '请输入汇款名称',
+            trigger: 'blur',
           }
         ],
       },

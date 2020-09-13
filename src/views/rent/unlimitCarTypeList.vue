@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-09 17:21:18
+ * @LastEditTime: 2020-09-11 16:14:30
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeList.vue
@@ -37,7 +37,6 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -53,20 +52,19 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="num" label="数量" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="monthlyRent" label="月租金" show-overflow-tooltip>
+        <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="monthlyRent" label="月租金" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.monthlyRent}} 元</span>
           </template>
         </el-table-column>
-        <!-- <el-table-column align="center" prop="" label="月租金合计" show-overflow-tooltip></el-table-column> -->
-        <!-- <el-table-column align="center" prop="" label="尾款" show-overflow-tooltip></el-table-column> -->
+        <!-- <el-table-column prop="" label="月租金合计" show-overflow-tooltip></el-table-column> -->
+        <!-- <el-table-column prop="" label="尾款" show-overflow-tooltip></el-table-column> -->
         <el-table-column
-          align="center"
           label="操作"
           width="150"
           fixed="right"
@@ -210,7 +208,7 @@ export default {
       };
       const url = common.queryNotLimitCarListUrl;
       axios.post(url, params).then((res) => {
-        if (res.em === 'Success!') {
+        if (res.ec === '0') {
           const data = res.data;
           this.tableData = data.notLimitList;
           this.total = data.turnPageTotalNum * 1;

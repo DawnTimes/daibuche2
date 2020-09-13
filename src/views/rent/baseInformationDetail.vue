@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-09-10 18:46:00
+ * @LastEditTime: 2020-09-11 11:15:28
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\baseInformationDetail.vue
@@ -65,16 +65,11 @@ export default {
   },
   watch: {},
   created() {
+    // this.getSend();
     this.id = this.$route.query.id;
     this.getBaseInforDetail();
-
-    // 避免多次绑定触发事件，在每次调用方法前先解绑事件( bus.$off )，然后在重新绑定( bus.$on )
-    eventBus.$off('sendFatherPath');
-    eventBus.$on('sendFatherPath', (data) => {
-      // console.log(data);
-      this.fatherPath = data.path;
-      console.log(this.fatherPath);
-    });
+    
+    
   },
   // beforeRouteEnter(to, from, next) {
   //   next((vm) => {
@@ -82,13 +77,22 @@ export default {
   //     vm.fatherPath = from.path;
   //   });
   // },
-  mounted() {},
+  mounted() {
+        
+  },
 
   // destroyed: function() {
   //   eventBus.$off('sendFatherPath');
   // },
 
   methods: {
+    // getSend() {
+    //   // 避免多次绑定触发事件，在每次调用方法前先解绑事件( bus.$off )，然后在重新绑定( bus.$on )
+    //   eventBus.$off('sendFatherPath');
+    //   eventBus.$on('sendFatherPath', (path) => {
+    //     this.fatherPath = path;
+    //   });
+    // },
     // 获取基本信息详情
     getBaseInforDetail() {
       const params = {
@@ -149,9 +153,10 @@ export default {
 
     // 返回
     handleGoToBack() {
-      console.log(this.fatherPath);
+      const path = sessionStorage.getItem('rentDeatilPath');
+      console.log(path);
       this.$router.push({
-        path: this.fatherPath,
+        path: path,
       });
     },
   },

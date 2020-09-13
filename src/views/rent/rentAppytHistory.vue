@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-10 18:27:26
+ * @LastEditTime: 2020-09-11 16:14:20
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentAppytHistory.vue
@@ -51,7 +51,6 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -67,21 +66,21 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <!-- <el-table-column align="center" prop="modId" label="任务id" show-overflow-tooltip></el-table-column> -->
-        <el-table-column align="center" prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="modelName" label="车型名称" show-overflow-tooltip width="150"></el-table-column>
-        <el-table-column align="center" prop="brandName" label="品牌" show-overflow-tooltip width="150"></el-table-column>
-        <el-table-column align="center" prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
+        <!-- <el-table-column prop="modId" label="任务id" show-overflow-tooltip></el-table-column> -->
+        <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="brandName" label="品牌" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
           <template slot-scope="scope">
           <span :class="{ blueColor: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue }}</span>
         </template>
         </el-table-column>        
-        <el-table-column align="center" prop="" label="生效年月" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="licenceCode" label="牌照商" show-overflow-tooltip width="180"></el-table-column>
-        <el-table-column align="center" prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="num" label="数量" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="approvalStatus" label="审批状态" show-overflow-tooltip width="120">
+        <el-table-column prop="" label="生效年月" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="licenceCode" label="牌照商" show-overflow-tooltip width="180"></el-table-column>
+        <el-table-column prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span
             :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '2' ,
@@ -90,45 +89,44 @@
             >{{ scope.row.approvalStatus | approvalStatus }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="newMonthlyRent" label="新月租金" show-overflow-tooltip>
+        <el-table-column prop="newMonthlyRent" label="新月租金" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.newMonthlyRent }} 元</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="newLicenceFee" label="新月牌照费" show-overflow-tooltip width="100">
+        <el-table-column prop="newLicenceFee" label="新月牌照费" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.newLicenceFee && scope.row.newLicenceFee != '0' ? scope.row.newLicenceFee + '元' : scope.row.newLicenceFee }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="newtotalMonthlyRent" label="新月租金合计" show-overflow-tooltip width="120">
+        <el-table-column prop="newtotalMonthlyRent" label="新月租金合计" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.newtotalMonthlyRent }} 元</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="monthlyRent" label="原月租金" show-overflow-tooltip>
+        <el-table-column prop="monthlyRent" label="原月租金" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.monthlyRent }} 元</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="rentLicenceFee" label="原月牌照费" show-overflow-tooltip width="100">
+        <el-table-column prop="rentLicenceFee" label="原月牌照费" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.rentLicenceFee && scope.row.rentLicenceFee != '0' ? scope.row.rentLicenceFee + '元' : scope.row.rentLicenceFee }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="totalMonthlyRent" label="原月租金合计" show-overflow-tooltip width="120">
+        <el-table-column prop="totalMonthlyRent" label="原月租金合计" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.monthlyRent * 1 + scope.row.rentLicenceFee * 1 }} 元</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="modifier" label="修改人" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="modifiedTime" label="修改时间" show-overflow-tooltip width="160">
+        <el-table-column prop="modifier" label="修改人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="modifiedTime" label="修改时间" show-overflow-tooltip width="160">
           <template slot-scope="scope">
             <span>{{ scope.row.modifiedTime | timeFormatTemp }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="remark" label="备注" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column
-          align="center"
           label="操作"
           width="150"
           fixed="right"
@@ -274,7 +272,7 @@ export default {
       };
       const url = common.queryRentHisUrl;
       axios.post(url, params).then((res) => {
-        if (res.em === 'Success!') {
+        if (res.ec === '0') {
           const data = res.data;
           this.tableData = data.rentModList;
           this.total = data.turnPageTotalNum * 1;
@@ -298,9 +296,8 @@ export default {
 
     // 详情
     handleDetail(row) {
-      eventBus.$emit('sendFatherPath', {
-        path: this.$route.path,
-      });
+      // eventBus.$emit('sendFatherPath', this.$route.path);
+      sessionStorage.setItem('rentDeatilPath', this.$route.path);
       this.$router.push({
         path: '/baseInformationDetail',
         query: {

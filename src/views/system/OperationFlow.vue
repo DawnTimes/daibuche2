@@ -74,7 +74,6 @@
       stripe
       :max-height="tableHeight"
       ref="table"
-      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  

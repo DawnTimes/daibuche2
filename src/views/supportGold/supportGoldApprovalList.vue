@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-09-04 09:30:05
+ * @LastEditTime: 2020-09-11 14:06:03
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -67,7 +67,7 @@
           fixed
         ></el-table-column>
         <el-table-column align="center" prop="month" label="支援金月份" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="期数" show-overflow-tooltip></el-table-column>
+        <!-- <el-table-column align="center" prop="" label="期数" show-overflow-tooltip></el-table-column> -->
         <el-table-column align="center" prop="" label="批次号" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" prop="batch" label="批次" show-overflow-tooltip></el-table-column>
         

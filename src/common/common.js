@@ -107,7 +107,13 @@ export default {
   rentApprovalUrl: '/rentApproval.do',
   // 租金审批操作
   rentApprovalOperationUrl: '/rentApprovalOperation.do',
-  
+  // 租金修改待办统计
+  rentModificationSumUrl: '/rentModificationSum.do',
+
+  // 查询银行流水单列表
+  queryBankStatementUrl: '/queryBankStatement.do',
+  // 新增银行流水单
+  addBankStatementUrl: '/addBankStatement.do',
 
   // 验证码
   guid() {
@@ -167,5 +173,13 @@ export default {
         }
       }
     })
-  }
+  },
+
+  // 查询租金、支援金的审批流程 type
+  queryApprovalFlow(flowId, array = [], param, type) {
+    array.some((val) => {
+      return val == flowId && (type = param)
+    })
+    return type
+  },
 }

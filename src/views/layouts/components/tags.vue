@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-28 15:58:57
- * @LastEditTime: 2020-09-01 10:18:53
+ * @LastEditTime: 2020-09-11 17:59:27
  * @LastEditors: your name
  * @Description: 导航标签
  * @FilePath: \webcode2\src\views\layouts\components\tags.vue
@@ -18,7 +18,7 @@
       >
         <router-link :to="item.fullPath" class="tags_li_title">{{ item.title }}</router-link>
         <span>
-          <i class="el-icon-close" @click="colseTags(index)"></i>
+          <i class="el-icon-close" style="cursor: pointer;" @click="colseTags(index)"></i>
         </span>
       </li>
     </ul>

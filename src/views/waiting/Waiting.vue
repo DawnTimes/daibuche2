@@ -10,28 +10,28 @@
         <dt>合同待审批</dt>
         <dd>
           您有
-          <span>{{num}}</span>条合同待审批
+          <span>{{num}}</span> 条合同待审批
         </dd>
       </a>
       <a @click="$router.push('/rentApprovalList')" v-if="rentShow">
         <dt>租金修改待审批</dt>
         <dd>
           您有
-          <span>{{num}}</span>条租金修改待审批
+          <span>{{ rentNumbers }}</span> 条租金修改待审批
         </dd>
       </a>
       <a @click="$router.push('/supportGoldApprovalList')" v-if="goldShow">
         <dt>支援金待审批</dt>
         <dd>
           您有
-          <span>{{num}}</span>条支援金申请待审批
+          <span>{{ goldNumbers }}</span> 条支援金申请待审批
         </dd>
       </a>
       <a @click="$router.push('/invoiceNoticeList')" v-if="invoiceShow">
         <dt>开票通知</dt>
         <dd>
           您有
-          <span>{{num}}</span>条开票通知
+          <span>{{ invoiceNumbers }}</span> 条开票通知
         </dd>
       </a>
 
@@ -55,6 +55,9 @@ export default {
   data() {
     return {
       num: '',
+      rentNumbers: 0, // 租金审批数量
+      goldNumbers: 0, // 支援金审批数量
+      invoiceNumbers: 0, // 通知单审批数量
       haveTodo: false,
       rentShow: true,
       goldShow: true,
@@ -81,6 +84,8 @@ export default {
     }
     axios.get(url, { roles: this.roles }).then((res) => {
       that.initData(res.ids);
+      this.rentWaitingTotal(res.ids);
+
       res.ids.forEach(function (val, index) {
         if (val == 161) {
           that.haveTodo = true;
@@ -102,6 +107,21 @@ export default {
         this.num = data;
       });
     },
+
+    // 租金修改待办统计
+    rentWaitingTotal(idsArr) {
+      let type = '';
+      type = common.queryApprovalFlow(9541, idsArr, '1', type);
+      const url = common.rentModificationSumUrl;
+      const params = {
+        type: type,
+      }
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          this.rentNumbers = res.data.num; 
+        }
+      })
+    }
   },
 };
 </script>

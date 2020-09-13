@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-09-10 17:55:26
+ * @LastEditTime: 2020-09-11 16:14:56
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalOperation.vue
@@ -120,7 +120,7 @@ export default {
       };
       const url = common.queryRentDetailByIdUrl;
       axios.post(url, params).then((res) => {
-        if (res.em === 'Success!') {
+        if (res.ec === '0') {
           const data = res.data;
           this.baseInfoForm = data;
           if (!_.isEmpty(this.baseInfoForm.rentApprovalList)) {

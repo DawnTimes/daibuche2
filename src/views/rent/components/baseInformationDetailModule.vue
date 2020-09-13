@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-09-10 15:30:15
+ * @LastEditTime: 2020-09-11 13:56:42
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\baseInformationDetailModule.vue
@@ -247,7 +247,7 @@ export default {
       ],
 
       userTemp: [
-        { value: '1', lable: '发起修改' },
+        { value: '1', lable: '生成租金' },
         { value: '2', lable: '待会计审批' },
         { value: '3', lable: '待财务负责人审批' },
         { value: '4', lable: '生效' },

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:58:16
- * @LastEditTime: 2020-09-01 11:09:39
+ * @LastEditTime: 2020-09-11 17:32:46
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\addBankWater.vue
@@ -41,7 +41,15 @@ export default {
         label: 'info',
       },
       formData: {
-        status: 'Y',
+        abstract: '',
+        bankAccountName: '',
+        bankAccountNo: '',
+        companyName: '',
+        income: '',
+        serialNumber: '',
+        sideAccount: '',
+        sideAccountName: '',
+        tradeDate: '',
       },
       formReadonly: {
         hide: [],
@@ -65,43 +73,48 @@ export default {
     handleFormDataSubmit(object) {
       const data = object.data;
       this.status.loading = true;
-      // const url = common.systemAddUrl;
+      const url = common.addBankStatementUrl;
 
-      // axios.post(url, data).then(res => {
-      //   if (res.code === '0') {
-      //     this.$notify.success({
-      //       title: '温馨提示！',
-      //       message: '新增成功！'
-      //     });
+      axios.post(url, data).then(res => {
+        if (res.ec === '0') {
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '新增成功！'
+          });
 
-      // Object.assign(this.formData, {
-      //   status: 'Y',
-      // });
+        Object.assign(this.formData, {
+          abstract: '',
+          bankAccountName: '',
+          bankAccountNo: '',
+          companyName: '',
+          income: '',
+          serialNumber: '',
+          sideAccount: '',
+          sideAccountName: '',
+          tradeDate: '',
+        });
 
-      //     setTimeout(() => {
-      //       this.$router.push({
-      //         path: '/systemList'
-      //       });
-      //     }, 1000);
-      //     this.status.loading = false;
-      //     this.formData = {
-      //       status: 'Y',
-      //       createUser: this.userId
-      //     }
-      //   } else {
-      //     this.status.loading = false;
-      //     this.$notify.error({
-      //       title: '温馨提示！',
-      //       message: res.msg || '新增失败!'
-      //     });
-      //   }
-      // }).catch(err => {
-      //   this.status.loading = false;
-      //   this.$notify.error({
-      //     title: '温馨提示！',
-      //     message: err ? err.em : '新增失败，请联系管理员!',
-      //   });
-      // });
+          setTimeout(() => {
+            this.$router.push({
+              path: '/bankWaterList'
+            });
+          }, 1000);
+          this.status.loading = false;
+
+        } else {
+          this.status.loading = false;
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '新增失败!'
+          });
+        }
+      }).catch(err => {
+        this.status.loading = false;
+        this.$notify.error({
+          title: '温馨提示！',
+          message: err ? err.em : '新增失败，请联系管理员!',
+        });
+      });
     },
   },
   filters: {

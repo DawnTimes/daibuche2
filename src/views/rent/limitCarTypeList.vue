@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-09 16:01:55
+ * @LastEditTime: 2020-09-11 16:13:53
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeList.vue
@@ -58,12 +58,12 @@
     <div class="table">
       <el-table
         :data="tableData"
+        v-loading="tableLoading"
         border
         stripe
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -79,25 +79,24 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="licenceName" label="牌照商" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="num" label="数量" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="monthlyRent" label="月租金" show-overflow-tooltip>
+        <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="licenceName" label="牌照商" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="monthlyRent" label="月租金" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.monthlyRent}} 元</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="rentLicenceFee" label="月牌照费" show-overflow-tooltip>
+        <el-table-column prop="rentLicenceFee" label="月牌照费" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.rentLicenceFee}} 元</span>
           </template>
         </el-table-column>
         <el-table-column
-          align="center"
           prop="totalMonthlyRent"
           label="月租金合计"
           show-overflow-tooltip
@@ -107,8 +106,8 @@
             <span>{{ scope.row.totalMonthlyRent}} 元</span>
           </template>
         </el-table-column>
-        <!-- <el-table-column align="center" prop="" label="尾款" show-overflow-tooltip></el-table-column> -->
-        <el-table-column align="center" label="操作" width="150" fixed="right">
+        <!-- <el-table-column prop="" label="尾款" show-overflow-tooltip></el-table-column> -->
+        <el-table-column label="操作" width="150" fixed="right">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -184,6 +183,7 @@ export default {
         isLeaf: 'leaf',
       },
       licenceOptions: [],
+      tableLoading: false,
     };
   },
   computed: {},
@@ -424,7 +424,7 @@ export default {
       const url = common.licenceListUrl;
 
       axios.post(url, params).then((res) => {
-        if (res.em === 'Success!') {
+        if (res.ec === '0') {
           const data = res.data;
           this.licenceOptions = data.licenceList;
         }
@@ -463,12 +463,19 @@ export default {
         turnPageShowNum: this.formData.pageSize,
       };
       const url = common.queryLimitCarListUrl;
+      this.tableLoading = true;
+
       axios.post(url, params).then((res) => {
         if (res.em === 'Success!') {
           const data = res.data;
           this.tableData = data.rentLimitList;
           this.total = data.turnPageTotalNum * 1;
-        }
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
+        } 
+      }).catch(() => {
+        this.tableLoading = false;
       });
     },
 

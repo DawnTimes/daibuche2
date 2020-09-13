@@ -31,7 +31,6 @@
       :max-height="tableHeight"
       ref="table"
       border
-      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  
@@ -53,7 +52,7 @@
       <el-table-column prop="roleDesc" label="角色描述" resizable show-overflow-tooltip></el-table-column>
       <!-- <el-table-column prop="deptName" label="所属部门"></el-table-column> -->
       <el-table-column prop="createTime" label="创建时间" resizable show-overflow-tooltip></el-table-column>
-      <el-table-column fixed="right" label="操作" width="300" resizable show-overflow-tooltip>
+      <el-table-column fixed="right" label="操作" align="center" width="300" resizable show-overflow-tooltip>
         <template slot-scope="scope">
           <!-- <el-button size="mini" @click="roledetail()">查看</el-button> -->
           <el-button size="mini" type="primary" @click="editRole(scope.row)" v-show="rolePermission.roleEdit">修改</el-button>

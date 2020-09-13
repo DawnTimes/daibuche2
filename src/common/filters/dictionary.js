@@ -81,7 +81,7 @@ const Dictionary = {
       value: '3'
     },
     {
-      label: '审批通过',
+      label: '生效',
       value: '4'
     },
     {

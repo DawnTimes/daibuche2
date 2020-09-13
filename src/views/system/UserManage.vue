@@ -32,7 +32,6 @@
       :max-height="tableHeight"
       ref="table"
       border
-      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  
@@ -57,7 +56,7 @@
       <!-- 1无效 0有效 -->
       <el-table-column prop="delFlagView" label="状态" resizable show-overflow-tooltip></el-table-column>
       <el-table-column prop="createTime" label="创建时间" resizable show-overflow-tooltip></el-table-column>
-      <el-table-column label="操作" width="200">
+      <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
           <!-- <el-button size="mini">查看</el-button> -->
           <el-button

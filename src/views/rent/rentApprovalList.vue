@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-10 17:07:38
+ * @LastEditTime: 2020-09-11 16:14:08
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalList.vue
@@ -51,7 +51,6 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -67,21 +66,21 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="modId" label="id编号" show-overflow-tooltip fixed="left"></el-table-column>
-        <el-table-column align="center" prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
+        <el-table-column prop="modId" label="id编号" show-overflow-tooltip fixed="left"></el-table-column>
+        <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
           <template slot-scope="scope">
           <span :class="{ blueColor: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue }}</span>
         </template>
         </el-table-column>
-        <!-- <el-table-column align="center" prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="seriesName" label="车系" show-overflow-tooltip></el-table-column> -->
-        <el-table-column align="center" prop="" label="生效年月" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="licenceName" label="牌照商" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="num" label="数量" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="approvalStatus" label="审批状态" show-overflow-tooltip>
+        <!-- <el-table-column prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="seriesName" label="车系" show-overflow-tooltip></el-table-column> -->
+        <el-table-column prop="" label="生效年月" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="licenceName" label="牌照商" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip>
           <template slot-scope="scope">
             <span
             :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '2' ,
@@ -90,16 +89,15 @@
             >{{ scope.row.approvalStatus | approvalStatus }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="modifier" label="修改人" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="modifiedTime" label="修改时间" show-overflow-tooltip width="160">
+        <el-table-column prop="modifier" label="修改人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="modifiedTime" label="修改时间" show-overflow-tooltip width="160">
           <template slot-scope="scope">
             <span>{{ scope.row.modifiedTime | timeFormatTemp }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
 
         <el-table-column
-          align="center"
           label="操作"
           width="150"
           fixed="right"
@@ -241,13 +239,16 @@ export default {
 
     // 获取分页数据
     getRentApprovalListData() {
-      if (this.asideInfoIds) {
-        this.asideInfoIds.some((val) => {
-          // if (val == 9541) this.userApprovalType = '1';
-          // if (val == 9542) this.userApprovalType = '2';
-           return val == 9541 && (this.userApprovalType = '1') || val == 9542 && (this.userApprovalType = '2')
-        })
-      }
+      // if (this.asideInfoIds) {
+      //   this.asideInfoIds.some((val) => {
+      //     // if (val == 9541) this.userApprovalType = '1';
+      //     // if (val == 9542) this.userApprovalType = '2';
+      //      return val == 9541 && (this.userApprovalType = '1') || val == 9542 && (this.userApprovalType = '2')
+      //   })
+      // }
+      // console.log(this.asideInfoIds)
+      // this.userApprovalType = common.queryApprovalFlow(9541, this.asideInfoIds, '1', this.userApprovalType); // 会计审批
+      this.userApprovalType = common.queryApprovalFlow(9541, this.asideInfoIds, '2', this.userApprovalType); // 财务审批
       // console.log(this.userApprovalType);
 
       const params = {
@@ -261,7 +262,7 @@ export default {
       };
       const url = common.rentApprovalUrl;
       axios.post(url, params).then((res) => {
-        if (res.em === 'Success!') {
+        if (res.ec === '0') {
           const data = res.data;
           this.tableData = data.rentModList;
           this.total = data.turnPageTotalNum * 1;
@@ -283,7 +284,7 @@ export default {
       this.getRentApprovalListData()
     },
 
-    // 修改
+    // 审批
     handleApproval(row) {
       this.$router.push({
         path: '/rentApprovalOperation',
