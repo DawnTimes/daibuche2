@@ -126,6 +126,15 @@ export default {
   queryBySerialNumberUrl: '/queryBySerialNumber.do',
   // 核销还款计划的某一期
   verContractReyPayUrl: '/verContractReyPay.do',
+  // 根据合同还款计划查询车辆详情
+  selectCarRepayListUrl: '/selectCarRepayList.do',
+  // 经销店核销查询
+  selectVerContractStementUrl: '/selectVerContractStement.do',
+  // 车辆核销查询
+  selectVerCarStatementUrl: '/selectVerCarStatement.do',
+
+  // 新增更新牌照商
+  addOrUpdateLicenceUrl: '/addOrUpdateLicence.do',
 
   // 验证码
   guid() {

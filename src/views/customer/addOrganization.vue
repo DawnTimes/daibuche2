@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-26 09:32:16
- * @LastEditTime: 2020-09-01 11:09:47
+ * @LastEditTime: 2020-09-15 18:28:22
  * @LastEditors: your name
  * @Description: 新增牌照商
  * @FilePath: \webcode2\src\views\customer\addOrganization.vue
@@ -29,7 +29,9 @@
 import organizationModule from './components/organizationModule';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
-// import { mapState } from 'vuex';
+import { mapState } from 'vuex';
+
+import moment from 'moment';
 
 export default {
   name: 'addOrganization',
@@ -43,26 +45,29 @@ export default {
         label: 'info',
       },
       formData: {
-        status: 'Y',
-        isLimitLicence: 'Y',
-        isGalcCompany: 1,
         areaCode: '',
-        proviceCode: '',
+        bankAccName: '',
+        bankAccountNumber: '',
+        billingAddr: '',
+        billingPhone: '',
         cityCode: '',
-        licenceCode: '',
-        licenceName: '',
+        contactPers: '',
+        contactPersonPhone: '',
+        createUse: '',
+        isGalcComp: 'Y',
+        isLimitLicen: 'Y',
+        lastModifie: '',
+        lastModifiedT: '',
+        legalPhone: '',
+        legalRepresent: '',
         lessor: '',
+        licenCode: '',
+        licenceName: '',
+        provinceCode: '',
+        registerAddr: '',
         socialCreditCode: '',
-        legalRepresentative: '',
-        legalTelephone: '',
-        contactPerson: '',
-        contactPersonTelephone: '',
-        bankAccountNo: '',
-        bankAccountName: '',
-        billingTelephone: '',
-        billingAddress: '',
-        registerAddress: '',
-        remark: '',
+        status: 'Y',
+        type: '1', // 1 新增； 2 编辑
       },
       formReadonly: {
         hide: [],
@@ -75,9 +80,9 @@ export default {
     };
   },
   computed: {
-    // ...mapState('menu', {
-    //   userId: store => store.userId
-    // }),
+    ...mapState({
+      userId: store => store.userId
+    }),
   },
   watch: {},
   created() {},
@@ -87,68 +92,72 @@ export default {
       vm.fatherPath = from.path;
     });
   },
-  mounted() {},
+  mounted() {
+    this.formData.createUse = this.userId;
+    this.formData.lastModifie = this.userId;
+    this.formData.lastModifiedT = moment().format('YYYY-MM-DD HH:mm:ss');
+  },
   methods: {
     // 新增提交
     handleFormDataSubmit(object) {
       const data = object.data;
       this.status.loading = true;
-      // const url = common.systemAddUrl;
+      const url = common.addOrUpdateLicenceUrl;
 
-      // axios.post(url, data).then(res => {
-      //   if (res.code === '0') {
-      //     this.$notify.success({
-      //       title: '温馨提示！',
-      //       message: '新增成功！'
-      //     });
+      axios.post(url, data).then(res => {
+        if (res.ec === '0') {
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '新增成功！'
+          });
 
-      // Object.assign(this.formData, {
-      //   status: 'Y',
-      //   isLimitLicence: 'Y',
-      //   isGalcCompany: 1,
-      //   areaCode: '',
-      //   proviceCode: '',
-      //   cityCode: '',
-      //   licenceCode: '',
-      //   licenceName: '',
-      //   lessor: '',
-      //   socialCreditCode: '',
-      //   legalRepresentative: '',
-      //   legalTelephone: '',
-      //   contactPerson: '',
-      //   contactPersonTelephone: '',
-      //   bankAccountNo: '',
-      //   bankAccountName: '',
-      //   billingTelephone: '',
-      //   billingAddress: '',
-      //   registerAddress: '',
-      //   remark: '',
-      // });
+          Object.assign(this.formData, {
+            areaCode: '',
+            bankAccName: '',
+            bankAccountNumber: '',
+            billingAddr: '',
+            billingPhone: '',
+            cityCode: '',
+            contactPers: '',
+            contactPersonPhone: '',
+            createUse: this.userId,
+            isGalcComp: '',
+            isLimitLicen: 'Y',
+            lastModifie: '',
+            lastModifiedT: '',
+            legalPhone: '',
+            legalRepresent: '',
+            lessor: '',
+            licenCode: '',
+            licenceName: '',
+            provinceCode: '',
+            registerAddr: '',
+            socialCreditCode: '',
+            status: 'Y',
+            type: '1', // 1 新增； 2 编辑
+          });
 
-      //     setTimeout(() => {
-      //       this.$router.push({
-      //         path: '/systemList'
-      //       });
-      //     }, 1000);
-      //     this.status.loading = false;
-      //     this.formData = {
-      //       status: 'Y',
-      //       createUser: this.userId
-      //     }
-      //   } else {
-      //     this.status.loading = false;
-      //     this.$notify.error({
-      //       title: '温馨提示！',
-      //       message: res.msg || '新增失败!'
-      //     });
-      //   }
-      // }).catch(err => {
-      //   this.status.loading = false;
-      //   this.$notify.error({
-      //     title: '温馨提示！',
-      //     message: err ? err.em : '新增失败，请联系管理员!',
-      //   });
-      // });
+          setTimeout(() => {
+            this.$router.push({
+              path: '/rentManagement'
+            });
+          }, 1000);
+          this.status.loading = false;
+
+        } else {
+          this.status.loading = false;
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '新增失败!'
+          });
+        }
+      }).catch(err => {
+        this.status.loading = false;
+        this.$notify.error({
+          title: '温馨提示！',
+          message: err ? err.em : '新增失败，请联系管理员!',
+        });
+      });
     },
   },
   filters: {

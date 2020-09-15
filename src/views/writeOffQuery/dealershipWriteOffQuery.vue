@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-09-03 17:55:50
+ * @LastEditTime: 2020-09-15 15:41:53
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -13,31 +13,28 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="80px"
+        label-width="106px"
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="经销店:" prop="systemName">
-          <el-input maxlength="30" v-model="formData.systemName" placeholder></el-input>
+        <el-form-item label="经销店/牌照商:" prop="name">
+          <el-input maxlength="30" v-model="formData.name" placeholder></el-input>
         </el-form-item>
-        <el-form-item label="牌照商:" prop="interfaceName">
-          <el-input maxlength="50" v-model="formData.interfaceName" placeholder></el-input>
+        <el-form-item label="合同编号:" prop="contractNumber">
+          <el-input maxlength="30" v-model="formData.contractNumber" placeholder></el-input>
         </el-form-item>
-        <el-form-item label="合同编号:" prop="systemCode">
-          <el-input maxlength="30" v-model="formData.systemCode" placeholder></el-input>
-        </el-form-item>
-        <el-form-item label="期数:" prop="systemName">
-          <el-input maxlength="30" v-model="formData.systemName" placeholder></el-input>
+        <el-form-item label="期数:" prop="nper">
+          <el-input maxlength="30" v-model="formData.nper" placeholder></el-input>
         </el-form-item>
 
-        <el-form-item label="是否限牌:" prop="interfaceName">
-          <el-select v-model="formData.value" placeholder="请选择" style="width: 100%">
+        <el-form-item label="是否限牌:" prop="isLimitLicence">
+          <el-select v-model="formData.isLimitLicence" clearable placeholder="请选择" style="width: 100%">
             <el-option
-              v-for="item in limitStatus"
+              v-for="item in this.$options.filters.flagValue([])"
               :key="item.value"
               :label="item.label"
-              :value="item.value"
-            ></el-option>
+              :value="item.value">
+            </el-option>
           </el-select>
         </el-form-item>
 
@@ -62,13 +59,12 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
-        'text-align':'center',
-        'font-weight':'bold',  
-        'background':'#627CAF',    
-        'color': '#fff',
-      }"
+          'text-align':'center',
+          'font-weight':'bold',  
+          'background':'#627CAF',    
+          'color': '#fff',
+        }"
       >
         <el-table-column
           width="50"
@@ -78,42 +74,57 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="" label="经销店" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="牌照商" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="id" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="期数" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="是否限牌" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="上牌地" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="车辆数量" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="租赁方式" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="支付日" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="核销状态" show-overflow-tooltip width="100">
+        <el-table-column prop="name" label="经销店/牌照商" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="nper" label="期数" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="isLimitLicence" label="是否限牌" show-overflow-tooltip width="100">
           <template slot-scope="scope">
-            <span
-              :class="{greenStatus: scope.row.approvalStatus == '', redStatus: scope.row.approvalStatus == '', blueColor: scope.row.approvalStatus == ''}"
-            >{{ formatStatus(scope.row.status, paidTemp) }}</span>
+            <span :class="{ greenStatus: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="" label="核销人" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="银行单据号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="支援金状态" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="num" label="车辆数量" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="leaseWay" label="租赁方式" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+              <span>{{ scope.row.leaseWay | leaseWay }}</span>
+            </template>
+        </el-table-column>
+        <el-table-column prop="payDate" label="支付日" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.payDate | timeFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="repaymentStatus" label="核销状态" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+            <span
+              :class="{greenStatus: scope.row.repaymentStatus == '', redStatus: scope.row.repaymentStatus == '', blueColor: scope.row.repaymentStatus == ''}"
+            >{{ scope.row.repaymentStatus }}</span>
+          </template>
+        </el-table-column>
+        <!-- <el-table-column prop="" label="核销人" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="银行单据号" show-overflow-tooltip width="120"></el-table-column> -->
+        <el-table-column prop="payStatus" label="支援金状态" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.payStatus }}</span>
+          </template>
+        </el-table-column>
 
-        <el-table-column align="center" prop="" label="应收金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="应收本金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="应收利息" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="应收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="应收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="已收金额" show-overflow-tooltipwidth="100"></el-table-column>
-        <el-table-column align="center" prop="" label="已收本金" show-overflow-tooltipwidth="100"></el-table-column>
-        <el-table-column align="center" prop="" label="已收利息" show-overflow-tooltipwidth="100"></el-table-column>
-        <el-table-column align="center" prop="" label="已收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="已收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="未收金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="未收本金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="未收利息" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="未收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="未收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="dueAmount" label="应收金额" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="应收本金" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="dueInterest" label="应收利息" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="dueManagementFee" label="应收管理费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="dueCommission" label="应收手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="verAmount" label="已收金额" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="已收本金" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="已收利息" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="verManagementFee" label="已收管理费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="verCommission" label="已收手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="outstandingAmount" label="未收金额" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="outstandingPrincipal" label="未收本金" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="outstandingInterest" label="未收利息" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="outstandingManagementFee" label="未收管理费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="outstandingCommission" label="未收手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
       </el-table>
     </div>
     <div class="page-layer">
@@ -146,26 +157,16 @@ export default {
       pageSize: 10,
       pageNum: 1,
       total: 0,
-      formData: {},
-      appravolStatus: [
-        {
-          value: '1',
-          label: '全部核销',
-        },
-        {
-          value: '2',
-          label: '未核销',
-        },
-        {
-          value: '3',
-          label: '部分核销',
-        },
-      ],
+      formData: {
+        name: '',
+        contractNumber: '',
+        isLimitLicence: '',
+        nper: '',
+        pageSize: 10,
+        pageNum: 1,
+      },
 
-      tableData: [
-        { id: 123456, status: '未核销' },
-        { id: 123456, status: '全部核销' },
-      ],
+      tableData: [],
       tableHeight: 0,
       // 数据字典
       paidTemp: [],
@@ -221,20 +222,47 @@ export default {
     next();
   },
 
-  mounted() {},
+  mounted() {
+    this.getDealersShipWriteOffListData();
+  },
   methods: {
     // 查询
-    queryForm() {},
+    queryForm() {
+      this.pageNum = 1;
+      this.formData.pageNum = 1;
+      this.getDealersShipWriteOffListData();
+    },
 
     // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.getDealersShipWriteOffListData();
     },
 
     // 自定义列接口索引
     indexMethod(index) {
       let order = this.pageSize * (this.pageNum - 1);
       return index + order + 1;
+    },
+
+    // 获取分页数据
+    getDealersShipWriteOffListData() {
+      const url = common.selectVerContractStementUrl;
+      const params = {
+        nper            : this.formData.nper,
+        contractNumber  : this.formData.contractNumber,
+        isLimitLicence  : this.formData.isLimitLicence,
+        name            : this.formData.name,
+        turnPageShowNum : this.formData.pageSize,
+        turnPageBeginPos: this.formData.pageNum,
+      };
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          const data = res.data;
+          this.tableData = data.verConList;
+          this.total = data.turnPageTotalNum * 1;
+        }
+      })
     },
 
     // 导出经销店核销清单
@@ -246,10 +274,12 @@ export default {
       this.formData.pageNum = 1;
       this.pageSize = val;
       this.formData.pageSize = val;
+      this.getDealersShipWriteOffListData();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
       this.formData.pageNum = (val - 1) * this.pageSize + 1;
+      this.getDealersShipWriteOffListData();
     },
 
     // 获取状态数据字典

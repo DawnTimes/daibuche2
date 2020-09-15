@@ -115,6 +115,12 @@ const Dictionary = {
     { label: '异常', value: 'N' },
   ],
 
+  // 反冲状态
+  recoilStatus: [
+    { label: '已反冲', value: 'Y' },
+    { label: '未反冲', value: 'N' },
+  ],
+
   // 保留多少位小数点
   FilterFixed: (data, fixed) => {
     if (data) {

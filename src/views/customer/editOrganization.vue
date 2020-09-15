@@ -95,7 +95,7 @@ export default {
     handleFormDataSubmit(object) {
       const data = object.data;
       this.status.loading = true;
-      // const url = common.systemAddUrl;
+      // const url = common.addOrUpdateLicenceUrl;
 
       // axios.post(url, data).then(res => {
       //   if (res.code === '0') {

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-08-27 10:59:28
+ * @LastEditTime: 2020-09-15 18:17:32
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -24,15 +24,15 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="牌照商代码"
-                prop="licenceCode"
-                v-show="!$formAtReadonly('licenceCode', formReadonly.hide)"
+                prop="licenCode"
+                v-show="!$formAtReadonly('licenCode', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.licenceCode"
+                  v-model="formData.licenCode"
                   maxlength="20"
                   placeholder
-                  :disabled="$formAtReadonly('licenceCode', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('licenCode', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -54,13 +54,13 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="是否限牌"
-                prop="isLimitLicence"
-                v-show="!$formAtReadonly('isLimitLicence', formReadonly.hide)"
+                prop="isLimitLicen"
+                v-show="!$formAtReadonly('isLimitLicen', formReadonly.hide)"
                 class="form-item"
               >
                 <el-radio-group
-                  v-model="formData.isLimitLicence"
-                  :disabled="$formAtReadonly('isLimitLicence', formReadonly.readonly)"
+                  v-model="formData.isLimitLicen"
+                  :disabled="$formAtReadonly('isLimitLicen', formReadonly.readonly)"
                 >
                   <el-radio label="Y">是</el-radio>
                   <el-radio label="N">否</el-radio>
@@ -70,16 +70,16 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="是否广汽租赁"
-                prop="isGalcCompany"
-                v-show="!$formAtReadonly('isGalcCompany', formReadonly.hide)"
+                prop="isGalcComp"
+                v-show="!$formAtReadonly('isGalcComp', formReadonly.hide)"
                 class="form-item"
               >
                 <el-radio-group
-                  v-model="formData.isGalcCompany"
-                  :disabled="$formAtReadonly('isGalcCompany', formReadonly.readonly)"
+                  v-model="formData.isGalcComp"
+                  :disabled="$formAtReadonly('isGalcComp', formReadonly.readonly)"
                 >
-                  <el-radio :label="1">是</el-radio>
-                  <el-radio :label="2">否</el-radio>
+                  <el-radio label="Y">是</el-radio>
+                  <el-radio label="N">否</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
@@ -117,30 +117,30 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="法人"
-                prop="legalRepresentative"
-                v-show="!$formAtReadonly('legalRepresentative', formReadonly.hide)"
+                prop="legalRepresent"
+                v-show="!$formAtReadonly('legalRepresent', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.legalRepresentative"
+                  v-model="formData.legalRepresent"
                   maxlength="20"
                   placeholder
-                  :disabled="$formAtReadonly('legalRepresentative', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('legalRepresent', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="法人电话"
-                prop="legalTelephone"
-                v-show="!$formAtReadonly('legalTelephone', formReadonly.hide)"
+                prop="legalPhone"
+                v-show="!$formAtReadonly('legalPhone', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.legalTelephone"
+                  v-model="formData.legalPhone"
                   maxlength="11"
                   placeholder
-                  :disabled="$formAtReadonly('legalTelephone', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('legalPhone', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -148,30 +148,30 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="联系人"
-                prop="contactPerson"
-                v-show="!$formAtReadonly('contactPerson', formReadonly.hide)"
+                prop="contactPers"
+                v-show="!$formAtReadonly('contactPers', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.contactPerson"
+                  v-model="formData.contactPers"
                   maxlength="20"
                   placeholder
-                  :disabled="$formAtReadonly('contactPerson', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('contactPers', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="联系人电话"
-                prop="contactPersonTelephone"
-                v-show="!$formAtReadonly('contactPersonTelephone', formReadonly.hide)"
+                prop="contactPersonPhone"
+                v-show="!$formAtReadonly('contactPersonPhone', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.contactPersonTelephone"
+                  v-model="formData.contactPersonPhone"
                   maxlength="11"
                   placeholder
-                  :disabled="$formAtReadonly('contactPersonTelephone', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('contactPersonPhone', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -278,28 +278,28 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="开户银行账号"
-                prop="bankAccountNo"
-                v-show="!$formAtReadonly('bankAccountNo', formReadonly.hide)"
+                prop="bankAccountNumber"
+                v-show="!$formAtReadonly('bankAccountNumber', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.bankAccountNo"
+                  v-model="formData.bankAccountNumber"
                   maxlength="30"
-                  :disabled="$formAtReadonly('bankAccountNo', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('bankAccountNumber', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="开户银行名称"
-                prop="bankAccountName"
-                v-show="!$formAtReadonly('bankAccountName', formReadonly.hide)"
+                prop="bankAccName"
+                v-show="!$formAtReadonly('bankAccName', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.bankAccountName"
+                  v-model="formData.bankAccName"
                   maxlength="30"
-                  :disabled="$formAtReadonly('bankAccountName', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('bankAccName', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -307,30 +307,30 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="开票电话"
-                prop="billingTelephone"
-                v-show="!$formAtReadonly('billingTelephone', formReadonly.hide)"
+                prop="billingPhone"
+                v-show="!$formAtReadonly('billingPhone', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.billingTelephone"
+                  v-model="formData.billingPhone"
                   maxlength="11"
-                  :disabled="$formAtReadonly('billingTelephone', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('billingPhone', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
               <el-form-item
                 label="开票地址"
-                prop="billingAddress"
-                v-show="!$formAtReadonly('billingAddress', formReadonly.hide)"
+                prop="billingAddr"
+                v-show="!$formAtReadonly('billingAddr', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.billingAddress"
+                  v-model="formData.billingAddr"
                   type="textarea"
                   maxlength="100"
                   :autosize="{ minRows: 3, maxRows: 3}"
-                  :disabled="$formAtReadonly('billingAddress', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('billingAddr', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -338,20 +338,20 @@
             <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
               <el-form-item
                 label="注册地址"
-                prop="registerAddress"
-                v-show="!$formAtReadonly('registerAddress', formReadonly.hide)"
+                prop="registerAddr"
+                v-show="!$formAtReadonly('registerAddr', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.registerAddress"
+                  v-model="formData.registerAddr"
                   type="textarea"
                   maxlength="100"
                   :autosize="{ minRows: 3, maxRows: 3}"
-                  :disabled="$formAtReadonly('registerAddress', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('registerAddr', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
-            <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
+            <!-- <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
               <el-form-item
                 label="备注"
                 prop
@@ -366,7 +366,7 @@
                   :disabled="$formAtReadonly('remark', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
-            </el-col>
+            </el-col> -->
           </el-row>
         </el-form>
       </el-col>
@@ -472,7 +472,7 @@ export default {
       cityArr: [],
       cityCode: '',
       rules: {
-        licenceCode: [
+        licenCode: [
           {
             required: true,
             message: '牌照商代码不能为空',
@@ -507,14 +507,14 @@ export default {
         //     trigger: 'blur'
         //   }
         // ],
-        bankAccountName: [
+        bankAccName: [
           {
             required: true,
             message: '开户银行名称不能为空',
             trigger: 'blur',
           },
         ],
-        // billingAddress: [
+        // billingAddr: [
         //   {
         //     required: true,
         //     message: '开票地址不能为空',
@@ -528,14 +528,14 @@ export default {
             trigger: 'change',
           },
         ],
-        isLimitLicence: [
+        isLimitLicen: [
           {
             required: true,
             message: '请选择是否限牌',
             trigger: 'change',
           },
         ],
-        isGalcCompany: [
+        isGalcComp: [
           {
             required: true,
             message: '请选择是否广汽租赁',
@@ -563,35 +563,35 @@ export default {
             trigger: 'blur',
           },
         ],
-        registerAddress: [
+        registerAddr: [
           {
             required: true,
             message: '注册地址不能为空',
             trigger: 'blur',
           },
         ],
-        bankAccountNo: [
+        bankAccountNumber: [
           {
             required: true,
             validator: checkBankCode,
             trigger: 'blur',
           },
         ],
-        legalTelephone: [
+        legalPhone: [
           {
             required: false,
             validator: checkPhone2,
             trigger: 'blur',
           },
         ],
-        contactPersonTelephone: [
+        contactPersonPhone: [
           {
             required: false,
             validator: checkPhone2,
             trigger: 'blur',
           },
         ],
-        billingTelephone: [
+        billingPhone: [
           {
             required: false,
             validator: checkPhone2,

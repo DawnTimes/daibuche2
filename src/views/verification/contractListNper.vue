@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-09-14 17:29:42
+ * @LastEditTime: 2020-09-15 15:42:55
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -115,17 +115,17 @@
         </el-table-column>
         <el-table-column prop="num" label="车辆数量" show-overflow-tooltip>
           <template slot-scope="scope">
-            <el-link type="primary" @click="queryCar(scope.row.num)">{{ scope.row.num }}</el-link>
+            <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.num }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="batchStartingDate" label="起租日" show-overflow-tooltip width="160">
+        <el-table-column prop="batchStartingDate" label="起租日" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.batchStartingDate | timeFormatTemp }}</span>
+            <span>{{ scope.row.batchStartingDate | timeFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="payDate" label="支付日" show-overflow-tooltip width="160">
+        <el-table-column prop="payDate" label="支付日" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.payDate | timeFormatTemp }}</span>
+            <span>{{ scope.row.payDate | timeFormat }}</span>
           </template>
         </el-table-column>
         
@@ -179,7 +179,7 @@
       v-on:formDataSubmit="formDataSubmit"
     ></writeOff-dialog>
     
-    <nperCarList ref="nperCarListDialog"></nperCarList>
+    <nperCarList ref="nperCarListDialog" :carTableData="carTableData"></nperCarList>
   </div>
 </template>
 
@@ -240,6 +240,8 @@ export default {
       status: {
         loading: false,
       },
+
+      carTableData: [],
     };
   },
   computed: {
@@ -401,9 +403,17 @@ export default {
 
     // 车辆清单
     queryCar(row) {
-      // this.$router.push({
-      //   path: '/nperCarList',
-      // });
+      this.carTableData = [];
+      const url = common.selectCarRepayListUrl;
+      const params = {
+        nper: row.nper,
+        oldContractId: row.contractId,
+      };
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          this.carTableData = res.data.carRepList;
+        }
+      })
       this.$refs.nperCarListDialog.isShow(true);
     },
 
