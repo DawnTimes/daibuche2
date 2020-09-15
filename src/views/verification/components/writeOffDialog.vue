@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-09-04 13:56:53
+ * @LastEditTime: 2020-09-14 16:59:12
  * @LastEditors: your name
  * @Description: 核销弹框
  * @FilePath: \webcode2\src\views\verification\components\writeOffDialog.vue
@@ -15,11 +15,11 @@
       :visible.sync="writeOffFormVisible"
       :destroy-on-close="true"
     >
-      <el-form :model="writeOffForm" label-width="110px" size="medium">
+      <el-form :model="writeOffForm" ref="writeOffForm" :rules="rules" label-width="110px" size="medium">
         <el-row :gutter="0">
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
             <el-form-item label="银行单据号">
-              <el-input v-model="writeOffForm.name" disabled></el-input>
+              <el-input v-model="writeOffForm.serialNumber" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
@@ -34,19 +34,19 @@
           </el-col> -->
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
             <el-form-item label="合同编号">
-              <el-input v-model="writeOffForm.name" disabled></el-input>
+              <el-input v-model="writeOffForm.contractNumber" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
             <el-form-item label="期数">
-              <el-input v-model="writeOffForm.name" disabled></el-input>
+              <el-input v-model="writeOffForm.nper" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-            <el-form-item label="是否代付" prop class="form-item">
-              <el-radio-group v-model="writeOffForm.radio">
-                <el-radio :label="1">是</el-radio>
-                <el-radio :label="2">否</el-radio>
+            <el-form-item label="是否代付" prop="isDebt" class="form-item">
+              <el-radio-group v-model="writeOffForm.isDebt">
+                <el-radio label="Y">是</el-radio>
+                <el-radio label="N">否</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -54,9 +54,9 @@
             <!-- <el-form-item label="车辆数量">
           <el-input v-model="writeOffForm.name" disabled></el-input>
             </el-form-item>-->
-            <el-form-item label="代付标志" v-show="writeOffForm.radio == 1">
+            <el-form-item label="代付标志" v-show="writeOffForm.isDebt == 'Y'">
               <el-input
-                v-model="writeOffForm.name"
+                v-model="writeOffForm.debtIdentification"
                 type="textarea"
                 :autosize="{ minRows: 2, maxRows: 3}"
               ></el-input>
@@ -65,7 +65,7 @@
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <el-form-item label="备注">
               <el-input
-                v-model="writeOffForm.name"
+                v-model="writeOffForm.remark"
                 type="textarea"
                 :autosize="{ minRows: 3, maxRows: 4}"
               ></el-input>
@@ -75,7 +75,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="writeOffFormVisible = false" size="medium" plain>取 消</el-button>
-        <el-button type="primary" @click="writeOffSubmit" :loading="loading" size="medium">核 销</el-button>
+        <el-button type="primary" @click="writeOffSubmit('writeOffForm')" :loading="loading" size="medium">核 销</el-button>
       </div>
     </el-dialog>
   </div>
@@ -111,6 +111,15 @@ export default {
   data() {
     return {
       writeOffFormVisible: false,
+      rules: {
+        isDebt: [
+          {
+            required: true,
+            message: '请选择是否代付',
+            trigger: ['blur', 'change'],
+          },
+        ],
+      },
     };
   },
   computed: {},
@@ -119,11 +128,18 @@ export default {
   mounted() {},
   methods: {
     // 核销提交
-    writeOffSubmit() {
-      // 防止重复提交
-      if (this.loading === false) {
-        this.handleEmitData();
-      }
+    writeOffSubmit(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // 防止重复提交
+          if (this.loading === false) {
+            this.handleEmitData();
+          }
+        } else {
+          return false;
+        }
+      });
+      
     },
 
     // 组件通讯

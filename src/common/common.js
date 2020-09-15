@@ -114,6 +114,18 @@ export default {
   queryBankStatementUrl: '/queryBankStatement.do',
   // 新增银行流水单
   addBankStatementUrl: '/addBankStatement.do',
+  // 退款
+  bankStatementRefundUrl: '/bankStatementRefund.do',
+  // 反冲
+  backlashDealUrl: '/backlashDeal.do',
+  // 删除银行流水单
+  deleteBankStatementUrl: '/deleteBankStatement.do',
+  // 查询合同期数还款计划
+  queryContractRepayUrl: '/queryContractRepay.do',
+  // 查询收入已核销未核销退款
+  queryBySerialNumberUrl: '/queryBySerialNumber.do',
+  // 核销还款计划的某一期
+  verContractReyPayUrl: '/verContractReyPay.do',
 
   // 验证码
   guid() {

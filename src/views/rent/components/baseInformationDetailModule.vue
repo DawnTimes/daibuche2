@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-09-11 13:56:42
+ * @LastEditTime: 2020-09-14 10:09:35
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\baseInformationDetailModule.vue
@@ -66,10 +66,10 @@
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
-              <div class="tempBox" v-show="!$formAtReadonly('licenceCode', formReadonly.hide)">
+              <div class="tempBox" v-show="!$formAtReadonly('licenceName', formReadonly.hide)">
                 <span>牌照商：</span>
-                <el-tooltip :content="baseInfoForm.licenceCode" placement="top-start" effect="light">
-                  <span>{{ baseInfoForm.licenceCode }}</span>
+                <el-tooltip :content="baseInfoForm.licenceName" placement="top-start" effect="light">
+                  <span>{{ baseInfoForm.licenceName }}</span>
                 </el-tooltip>
               </div>
             </el-col>

@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-09-04 10:52:02
+ * @LastEditTime: 2020-09-14 15:24:42
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\router\index.js
@@ -370,7 +370,7 @@ const router = new Router({
           name: 'contractListNper',
           component: contractListNper,
           meta: {
-            title: '期数列表',
+            title: '合同期数还款计划',
           }
         },
         // {

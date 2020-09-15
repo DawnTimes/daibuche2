@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-09-04 13:59:23
+ * @LastEditTime: 2020-09-14 11:00:58
  * @LastEditors: your name
  * @Description: 退款弹框
  * @FilePath: \webcode2\src\views\verification\components\refundDialog.vue
@@ -23,20 +23,20 @@
         size="medium"
       >
         <el-form-item label="银行单据号" prop>
-          <el-input v-model="refundForm.name" disabled></el-input>
+          <el-input v-model="refundForm.serialNumber" disabled></el-input>
         </el-form-item>
         <el-form-item label="汇款名称" prop>
-          <el-input v-model="refundForm.name" disabled></el-input>
+          <el-input v-model="refundForm.sideAccountName" disabled></el-input>
         </el-form-item>
         <el-form-item label="汇款账号" prop>
-          <el-input v-model="refundForm.name" disabled></el-input>
+          <el-input v-model="refundForm.sideAccount" disabled></el-input>
         </el-form-item>
-        <el-form-item label="退款金额" prop="bankAccountNo">
-          <el-input v-model="refundForm.bankAccountNo"></el-input>
+        <el-form-item label="退款金额" prop="refund">
+          <el-input v-model="refundForm.refund"></el-input>
         </el-form-item>
-        <el-form-item label="备注">
-          <el-input v-model="refundForm.name" type="textarea" :autosize="{ minRows: 3, maxRows: 4}"></el-input>
-        </el-form-item>
+        <!-- <el-form-item label="备注">
+          <el-input v-model="refundForm.remark" type="textarea" :autosize="{ minRows: 3, maxRows: 4}"></el-input>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="refundFormVisible = false" size="medium" plain>取 消</el-button>
@@ -88,21 +88,7 @@ export default {
     return {
       refundFormVisible: false,
       rules: {
-        bankAccountName: [
-          {
-            required: true,
-            message: '账户名称不能为空',
-            trigger: 'blur',
-          },
-        ],
-        bankAccountAddr: [
-          {
-            required: true,
-            message: '开户行不能为空',
-            trigger: 'blur',
-          },
-        ],
-        bankAccountNo: [
+        refund: [
           {
             required: true,
             validator: checkNumber,

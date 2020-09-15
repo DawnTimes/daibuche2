@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-11 16:13:23
+ * @LastEditTime: 2020-09-14 14:31:34
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -83,11 +83,11 @@
         <el-table-column prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
         <el-table-column prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
           <template slot-scope="scope">
-          <span :class="{ blueColor: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue }}</span>
-        </template>
+            <span :class="{ blueColor: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue }}</span>
+          </template>
         </el-table-column>        
         <el-table-column prop="" label="生效年月" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="licenceCode" label="牌照商" show-overflow-tooltip width="180"></el-table-column>
+        <el-table-column prop="licenceName" label="牌照商" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
         <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
         <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip width="120">

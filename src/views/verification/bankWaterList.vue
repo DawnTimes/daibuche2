@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-09-11 16:23:29
+ * @LastEditTime: 2020-09-14 18:11:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -61,12 +61,6 @@
         <el-form-item>
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
-        <el-form-item label="">
-          <el-button type="primary" @click="importButton" v-show="rightControl.import">导入银行流水单</el-button>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出银行流水单</el-button>
-        </el-form-item>
         <el-form-item>
           <el-button
             icon="el-icon-plus"
@@ -76,6 +70,13 @@
             v-show="rightControl.add"
           >新增银行流水单</el-button>
         </el-form-item>
+        <el-form-item label="">
+          <el-button type="primary" @click="importButton" v-show="rightControl.import">导入银行流水单</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出银行流水单</el-button>
+        </el-form-item>
+        
       </el-form>
     </div>
 
@@ -104,7 +105,7 @@
         ></el-table-column>
         <el-table-column prop="tradeDate" label="交易时间" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="income" label="收款金额" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="income" label="收款金额" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="companyName" label="收款名称" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="bankAccountNo" label="收款账号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="bankAccountName" label="收款开户行" show-overflow-tooltip width="100"></el-table-column>
@@ -122,16 +123,27 @@
         <el-table-column prop="projectCategory" label="项目类别" show-overflow-tooltip></el-table-column>
         <el-table-column prop="" label="是否虚拟收款" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="verState" label="核销状态" show-overflow-tooltip>
-          <!-- <template slot-scope="scope">
+          <template slot-scope="scope">
             <span
-            :class="{greenStatus: scope.row.verState == '', redStatus: scope.row.verState == '', blueColor: scope.row.verState == '',
-            yellowColor: scope.row.verState == ''}"
-            >{{ formatStatus(scope.row.verState, paidTemp) }}</span>
-          </template>-->
+            :class="{greenStatus: scope.row.verState == '全部核销', blueColor: scope.row.verState == 'PART' || scope.row.verState == '未核销'}"
+            >{{ scope.row.verState }}</span>
+          </template>
         </el-table-column>
-        <el-table-column prop="haveVerLines" label="已核销额" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="notVerLines" label="未核销额" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="refund" label="退款金额" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="haveVerLines" label="已核销额" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.haveVerLines || 0 }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="notVerLines" label="未核销额" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.notVerLines || 0 }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="refund" label="退款金额" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.refund || 0 }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="newLedgerLogo" label="新台账标志" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="250" fixed="right">
@@ -140,25 +152,25 @@
               size="mini"
               type="primary"
               @click="handleContract(scope.row)"
-              v-show="rightControl.writeOff && scope.row.status == '未核销'"
+              v-if="rightControl.writeOff && scope.row.verState == '未核销'"
             >核销</el-button>
             <el-button
               size="mini"
               plain
               @click="handleDetail(scope.row)"
-              v-show="rightControl.detail && scope.row.status == '全部核销'"
+              v-if="rightControl.detail && scope.row.verState == '全部核销'"
             >核销详情</el-button>
             <el-button
               size="mini"
               type="warning"
               @click="handleRefund(scope.row)"
-              v-show="rightControl.refund && scope.row.status == '未核销'"
+              v-if="rightControl.refund && (scope.row.verState == 'PART' || scope.row.verState == '未核销')"
             >退款</el-button>
             <el-button
               size="mini"
               type="danger"
               @click="handleDelete(scope.row)"
-              v-show="rightControl.delete && scope.row.status == '未核销'"
+              v-if="rightControl.delete && scope.row.verState == '未核销'"
             >删除</el-button>
           </template>
         </el-table-column>
@@ -245,12 +257,22 @@ export default {
         },
       ],
 
-      tableData: [],
+      tableData: [{
+        serialNumber: '123'
+      }],
       tableHeight: 100,
       // 数据字典
       paidTemp: [],
       
-      refundForm: {},
+      refundForm: {
+        serialNumber: '',
+        sideAccountName: '',
+        sideAccount: '',
+        refund: '',
+        remark: '',
+      },
+      // 未核销额
+      notVerLines: 0,
       status: {
         loading: false,
       },
@@ -362,7 +384,7 @@ export default {
         if (res.ec === '0') {
           const data = res.data;
           this.tableData = data.bankStatementList;
-          this.total = turnPageTotalNum * 1;
+          this.total = data.turnPageTotalNum * 1;
         }
       })
     },
@@ -468,7 +490,11 @@ export default {
     // 核销
     handleContract(row) {
       this.$router.push({
-        path: '/contractListNper'
+        path: '/contractListNper',
+        query: {
+          serialNumber: row.serialNumber,
+          name: row.sideAccountName,
+        },
       })
     },
     // 核销详情
@@ -481,30 +507,30 @@ export default {
     // 删除
     handleDelete(row) {
       this.showDeleteBox = true;
-      this.deleteId = row.id;
+      this.deleteId = row.serialNumber;
     },
 
     // 删除提交
     deleteSubmit() {
-      // const url = common.systemDeleteUrl;
-      // const data = {
-      //   id: this.deleteId
-      // };
-      // axios.post(url, data).then(res => {
-      //   if (res.code === '0') {
-      //     this.$notify.success({
-      //       title: '温馨提示！',
-      //       message: '删除成功！'
-      //     });
-      //     this.showDeleteBox = false;
-      //     this.getSystemListData();
-      //   } else {
-      //     this.$notify.error({
-      //       title: '温馨提示！',
-      //       message: '删除失败！'
-      //     });
-      //   }
-      // });
+      const url = common.deleteBankStatementUrl;
+      const data = {
+        serialNumber: this.deleteId
+      };
+      axios.post(url, data).then(res => {
+        if (res.ec === '0') {
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '删除成功！'
+          });
+          this.showDeleteBox = false;
+          this.getBankWaterListData();
+        } else {
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '删除失败！'
+          });
+        }
+      });
     },
 
     // 取消删除
@@ -514,12 +540,52 @@ export default {
 
     // 退款弹框
     handleRefund(row) {
+      this.refundForm.serialNumber = row.serialNumber;
+      this.refundForm.sideAccountName = row.sideAccountName;
+      this.refundForm.sideAccount = row.sideAccount;
+      // this.refundForm.refund = row.refund;
+      // this.refundForm.remark = row.remark;
+      this.notVerLines = row.notVerLines * 1 || 0;
       this.$refs.refundDialog.isShow(true);
     },
 
     // 退款确定
-    formDataSubmit(data) {
-      this.$refs.refundDialog.isShow(false);
+    formDataSubmit(obj) {
+      const url = common.bankStatementRefundUrl;
+      const params = obj.data;
+      if (this.notVerLines < params.refund * 1) {
+        this.$notify.warning({
+          title: '温馨提示！',
+          message: '退款金额不能大于未核销金额！'
+        });
+        return false
+      }
+      this.status.loading = true;
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '退款成功！'
+          });
+          this.status.loading = false;
+          this.$refs.refundDialog.isShow(false);
+          this.refundForm.refund = '';
+          this.getBankWaterListData();
+        } else {
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '退款失败！'
+          });
+          this.status.loading = false;
+        }
+      }).catch((err) => {
+        this.status.loading = false;
+        this.$notify.error({
+            title: '温馨提示！',
+            message: err.em || '退款失败！'
+          });
+      })
+      
     },
   },
   filters: {

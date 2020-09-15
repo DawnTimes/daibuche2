@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 18:11:48
- * @LastEditTime: 2020-09-11 15:11:32
+ * @LastEditTime: 2020-09-14 09:59:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\components\approvalModule.vue
@@ -164,8 +164,8 @@ export default {
       total: 0,
       // 审批操作下拉选项
       approvalOptions: [
-        { id: 'approved', name: '审批通过' },
-        { id: 'refuse', name: '审批拒绝' },
+        { id: 'Y', name: '审批通过' },
+        { id: 'N', name: '审批拒绝' },
       ],
 
       rules: {

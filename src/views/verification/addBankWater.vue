@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:58:16
- * @LastEditTime: 2020-09-11 17:32:46
+ * @LastEditTime: 2020-09-14 17:59:43
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\addBankWater.vue
@@ -50,6 +50,12 @@ export default {
         sideAccount: '',
         sideAccountName: '',
         tradeDate: '',
+        verState: '未核销',
+        refund: '',
+        projectCategory: '',
+        paidLogo: '',
+        notVerLines: '',
+        newLedgerLogo: '',
       },
       formReadonly: {
         hide: [],
@@ -92,6 +98,7 @@ export default {
           sideAccount: '',
           sideAccountName: '',
           tradeDate: '',
+          verState: '未核销',
         });
 
           setTimeout(() => {

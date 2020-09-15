@@ -90,6 +90,31 @@ const Dictionary = {
     },
   ],
 
+  // 租赁方式
+  leaseWay: [
+    { label: '直租', value: 'LEASE' },
+    { label: '回租', value: 'BACK-LEASE' },
+    { label: '经租', value: 'OPERATING-LEASE' },
+  ],
+
+  // 合同类型
+  contractType: [
+    { label: '直租合同', value: 'LEASE' },
+    { label: '回租合同', value: 'BACK-LEASE' },
+    { label: '经租合同', value: 'OPERATING-LEASE' },
+    { label: '直租变更协议', value: 'LEASE-CHANGE' },
+    { label: '回租变更协议', value: 'BACK-LEASE-CHANGE' },
+    { label: '经租变更协议', value: 'OPERATING-LEASE-CHANGE' },
+    { label: '终止协议', value: 'END_CHANGE' },
+    { label: '买断', value: 'BUY_OUT' },
+  ],
+
+  // 合同状态
+  contractStatus: [
+    { label: '正常', value: 'Y' },
+    { label: '异常', value: 'N' },
+  ],
+
   // 保留多少位小数点
   FilterFixed: (data, fixed) => {
     if (data) {

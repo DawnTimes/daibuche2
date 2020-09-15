@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-09-11 17:56:52
+ * @LastEditTime: 2020-09-14 18:04:14
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -28,8 +28,8 @@
               >
                 <el-date-picker
                   v-model="formData.tradeDate"
-                  type="datetime"
-                  value-format="yyyy-MM-dd HH:mm:ss"
+                  type="date"
+                  value-format="yyyy-MM-dd"
                   style="width: 100%"
                   :disabled="$formAtReadonly('tradeDate', formReadonly.readonly)"
                   placeholder="选择日期">
@@ -159,6 +159,21 @@
                 </el-radio-group>
               </el-form-item>
             </el-col> -->
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="新台账标志"
+                prop="newLedgerLogo"
+                v-show="!$formAtReadonly('newLedgerLogo', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.newLedgerLogo"
+                  maxlength="30"
+                  placeholder=""
+                  :disabled="$formAtReadonly('newLedgerLogo', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
 
             <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
               <el-form-item
