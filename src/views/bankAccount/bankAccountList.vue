@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-09-02 14:38:14
- * @LastEditTime: 2020-09-03 17:37:09
+ * @LastEditTime: 2020-09-16 13:44:32
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\bankAccount\bankAccountList.vue
@@ -46,7 +46,6 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -62,15 +61,15 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop label="账户名称" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="账号" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="开户行" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="创建人" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="创建时间" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="修改人" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="修改时间" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" label="操作" width="180" fixed="right">
+        <el-table-column prop label="账户名称" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="账号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="开户行" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="创建人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="创建时间" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="修改人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="修改时间" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column label="操作" width="180" fixed="right">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
             <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>

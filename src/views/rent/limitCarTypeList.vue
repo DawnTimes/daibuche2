@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-11 16:13:53
+ * @LastEditTime: 2020-09-16 15:05:18
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeList.vue
@@ -187,7 +187,20 @@ export default {
     };
   },
   computed: {},
-  watch: {},
+  watch: {
+    // 监听城市的变化，获取对应城市的牌照商
+    'formData.cityCode'(nval, oval) {
+      console.log(nval, 12, oval);
+      if (nval) {
+        // 清空选中的牌照商
+        this.formData.licenceCode = '';
+
+        this.queryLicenceByCity(nval);
+      } else {
+        this.getLicenceList();
+      }
+    }
+  },
   created() {
     this.getLimitCarTypeList();
     this.getLicenceList();
@@ -408,14 +421,31 @@ export default {
       if (node.level > 1) return resolve([]);
     },
 
+    // 点击选中
     handleNodeClick(data, node) {
+      console.log(node);
       if (node.isLeaf) {
         this.formData.cityCode = data.code;
         this.formData.cityName = data.name;
       }
     },
 
-    // 牌照商下拉选
+    // 根据城市选牌照商
+    queryLicenceByCity(val) {
+      const params = {
+        cityCode: val,
+      };
+      const url = common.findCityLicenceUrl;
+      
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          const data = res.data;
+          this.licenceOptions = data.cityLicence;
+        }
+      })
+    },
+
+    // 全部牌照商下拉选
     getLicenceList() {
       const params = {
         turnPageBeginPos: 1,

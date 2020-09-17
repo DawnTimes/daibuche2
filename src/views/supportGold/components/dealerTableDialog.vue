@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-18 11:23:35
- * @LastEditTime: 2020-08-21 11:48:46
+ * @LastEditTime: 2020-09-16 13:49:04
  * @LastEditors: your name
  * @Description: 经销店弹窗
  * @FilePath: \webcode2\src\views\supportGold\components\dealerTableDialog.vue
@@ -28,7 +28,6 @@
             @selection-change="handleSelectionChange"
             ref="table"
             style="width: 100%"
-            :cell-style="{'text-align': 'center', 'height': '40px'}"
             :header-cell-style="{
               'text-align':'center',
               'font-weight':'bold',  
@@ -45,47 +44,41 @@
               show-overflow-tooltip
               width="120"
             ></el-table-column>
-            <el-table-column align="center" prop label="经销店名称" show-overflow-tooltip width="120"></el-table-column>
-            <el-table-column align="center" prop label="经销店类型" show-overflow-tooltip width="120"></el-table-column>
-            <el-table-column align="center" prop label="期数" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop label="车辆数量" show-overflow-tooltip></el-table-column>
+            <el-table-column prop label="经销店名称" show-overflow-tooltip width="120"></el-table-column>
+            <el-table-column prop label="经销店类型" show-overflow-tooltip width="120"></el-table-column>
+            <el-table-column prop label="期数" show-overflow-tooltip></el-table-column>
+            <el-table-column prop label="车辆数量" show-overflow-tooltip></el-table-column>
             <el-table-column
-              align="center"
               prop
               :label="getMonthTotal(2)"
               show-overflow-tooltip
               width="140"
             ></el-table-column>
             <el-table-column
-              align="center"
               prop
               :label="getMonthTotal(3)"
               show-overflow-tooltip
               width="140"
             ></el-table-column>
             <el-table-column
-              align="center"
               prop
               :label="getMonth(2)"
               show-overflow-tooltip
               width="120"
             ></el-table-column>
             <el-table-column
-              align="center"
               prop
               :label="getMonth(3)"
               show-overflow-tooltip
               width="120"
             ></el-table-column>
             <el-table-column
-              align="center"
               prop
               :label="getMonth(4)"
               show-overflow-tooltip
               width="120"
             ></el-table-column>
             <el-table-column
-              align="center"
               prop
               :label="getMonth(5)"
               show-overflow-tooltip

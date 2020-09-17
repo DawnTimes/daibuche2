@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-09-15 18:17:32
+ * @LastEditTime: 2020-09-16 10:59:34
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -373,7 +373,7 @@
     </el-row>
     <el-row :gutter="10">
       <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="16">
-        <div style="padding: 20px 0 20px 0; text-align: center">
+        <div style="padding: 10px 0 20px 0; text-align: center">
           <el-button @click="handleGoToBack()">取 消</el-button>
           <el-button
             v-show="!$formAtReadonly('saveBtn', formReadonly.hide)"
@@ -468,7 +468,7 @@ export default {
       ],
       areaCode: '',
       provinceArr: [],
-      proviceCode: '',
+      provinceCode: '',
       cityArr: [],
       cityCode: '',
       rules: {
@@ -602,8 +602,31 @@ export default {
     };
   },
   computed: {},
-  watch: {},
-  created() {},
+  watch: {
+    // 监听区域码的变化，获取省份list
+    'formData.areaCode'(nval, oval) {
+      console.log(nval, oval);
+      if (nval && this.$route.path === '/editOrganization') {
+        const params = {
+          areaCode: nval,
+        };
+        this.getprovinceData(params);
+      }
+    },
+    
+    // 监听省份码的变化，获取城市list
+    'formData.provinceCode'(nval, oval) {
+      console.log(nval, oval);
+      if (nval && this.$route.path === '/editOrganization') {
+        const params = {
+          provinceCode: nval,
+        };
+        this.getCityData(params);
+      }
+    },
+  },
+  created() {
+  },
   mounted() {
     if (this.$formAtReadonly('*', this.formReadonly.readonly)) this.rules = {};
   },
@@ -632,10 +655,10 @@ export default {
     },
     // 选择省份
     changeProvice(val) {
-      if (this.areaCode) {
+      if (this.formData.areaCode) {
         this.formData.cityCode = '';
         this.cityArr = [];
-        this.proviceCode = val;
+        this.provinceCode = val;
         const params = {
           provinceCode: val,
         };
@@ -661,7 +684,7 @@ export default {
 
     // 选择城市
     changeCity(val) {
-      if (!this.proviceCode) {
+      if (!this.formData.provinceCode) {
         this.$notify.warning({
           title: '温馨提示',
           message: '请先选择省份',

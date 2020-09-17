@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:25:10
- * @LastEditTime: 2020-08-25 16:29:43
+ * @LastEditTime: 2020-09-16 13:45:49
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\collectionRecord.vue
@@ -31,7 +31,6 @@
             stripe
             ref="table"
             style="width: 100%"
-            :cell-style="{'text-align': 'center', 'height': '40px'}"
             :header-cell-style="{
             'text-align':'center',
             'font-weight':'bold',  
@@ -53,13 +52,13 @@
               :index="indexMethod"
               fixed
             ></el-table-column>
-            <el-table-column align="center" prop="name" label="经销店名称" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop label="电催人员" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop label="电催日期" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop="id" label="承诺还款日期" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop label="最新联系人" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop label="逾期原因" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop label="电催记录" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="name" label="经销店名称" show-overflow-tooltip></el-table-column>
+            <el-table-column prop label="电催人员" show-overflow-tooltip></el-table-column>
+            <el-table-column prop label="电催日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="id" label="承诺还款日期" show-overflow-tooltip></el-table-column>
+            <el-table-column prop label="最新联系人" show-overflow-tooltip></el-table-column>
+            <el-table-column prop label="逾期原因" show-overflow-tooltip></el-table-column>
+            <el-table-column prop label="电催记录" show-overflow-tooltip></el-table-column>
           </el-table>
         </div>
         <div class="page-layer">

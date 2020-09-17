@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-09-03 17:44:22
+ * @LastEditTime: 2020-09-16 13:47:55
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -69,7 +69,6 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -85,26 +84,26 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="id" label="经销店编码" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="经销店名称" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="车架号" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="车牌号" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="车型" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="上牌地" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="批次号" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="批次" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="支付状态" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="租金" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="牌照费" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="租金合计" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="车型支援金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="牌照支援" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="总支援金" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="当期/总期数" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="剩余期数" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="支付登记时间" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="备注" show-overflow-tooltip ></el-table-column>
+        <el-table-column prop="id" label="经销店编码" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="经销店名称" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="车架号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="车牌号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="车型" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="上牌地" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="批次号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="批次" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="支付状态" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="租金" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="牌照费" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="租金合计" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="车型支援金" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="牌照支援" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="总支援金" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="当期/总期数" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="剩余期数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="支付登记时间" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="备注" show-overflow-tooltip ></el-table-column>
       </el-table>
     </div>
     <div class="page-layer">

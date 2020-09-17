@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-26 09:32:16
- * @LastEditTime: 2020-09-15 18:28:22
+ * @LastEditTime: 2020-09-16 14:17:08
  * @LastEditors: your name
  * @Description: 新增牌照商
  * @FilePath: \webcode2\src\views\customer\addOrganization.vue
@@ -94,8 +94,8 @@ export default {
   },
   mounted() {
     this.formData.createUse = this.userId;
-    this.formData.lastModifie = this.userId;
-    this.formData.lastModifiedT = moment().format('YYYY-MM-DD HH:mm:ss');
+    // this.formData.lastModifie = this.userId;
+    // this.formData.lastModifiedT = moment().format('YYYY-MM-DD HH:mm:ss');
   },
   methods: {
     // 新增提交

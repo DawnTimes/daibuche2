@@ -27,7 +27,6 @@
       size="medium"
       :height="GLOBAL.height"
       border
-      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  

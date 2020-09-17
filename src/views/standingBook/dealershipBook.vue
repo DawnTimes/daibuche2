@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-09-03 17:43:12
+ * @LastEditTime: 2020-09-16 13:46:49
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -63,7 +63,6 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -79,18 +78,18 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="" label="所属期间" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="经销店" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="牌照商" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="id" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="期数" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="是否限牌" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="是否商贸" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="上牌地" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="车辆数量" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="租赁方式" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="支付日" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="支援金状态" show-overflow-tooltip width="100">
+        <el-table-column prop="" label="所属期间" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="经销店" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="牌照商" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="id" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="期数" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="是否限牌" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="是否商贸" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="上牌地" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="车辆数量" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="租赁方式" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="支付日" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="支援金状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span
               :class="{greenStatus: scope.row.approvalStatus == '', redStatus: scope.row.approvalStatus == '', blueColor: scope.row.approvalStatus == ''}"
@@ -98,16 +97,16 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" prop="" label="本金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="利息" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="应收租金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="已收租金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="未收租金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="支援金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="差额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="本金" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="利息" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="管理费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="应收租金" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="已收租金" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="未收租金" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="支援金" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="差额" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
       </el-table>
     </div>
     <div class="page-layer">

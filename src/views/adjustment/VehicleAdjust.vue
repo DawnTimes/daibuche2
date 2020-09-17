@@ -48,7 +48,6 @@
 			'background':'#627CAF',    
 			'color': '#fff',
 			}"
-      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :height="GLOBAL.height"
       size="medium"
       :data="tableData"

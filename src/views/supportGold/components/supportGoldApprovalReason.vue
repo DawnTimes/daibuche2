@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-08-28 15:19:06
+ * @LastEditTime: 2020-09-16 13:50:08
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -66,7 +66,6 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -82,21 +81,20 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="" label="经销店代码" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="id" label="经销店名称" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="支援金金额" sortable="custom" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="num" label="车辆数" sortable="custom" show-overflow-tooltip width="100">
+        <el-table-column prop="" label="经销店代码" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="id" label="经销店名称" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="支援金金额" sortable="custom" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="num" label="车辆数" sortable="custom" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.num }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="" label="是否商贸" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="是否商贸" show-overflow-tooltip></el-table-column>
         
-        <el-table-column align="center" prop="" label="是否收齐" show-overflow-tooltip></el-table-column> -->
-        <!-- <el-table-column align="center" prop="" label="数据来源" show-overflow-tooltip></el-table-column> -->
-        <el-table-column align="center" prop="reason" label="申请原因" sortable show-overflow-tooltip  width="160"></el-table-column>
+        <el-table-column prop="" label="是否收齐" show-overflow-tooltip></el-table-column> -->
+        <!-- <el-table-column prop="" label="数据来源" show-overflow-tooltip></el-table-column> -->
+        <el-table-column prop="reason" label="申请原因" sortable show-overflow-tooltip  width="160"></el-table-column>
         <el-table-column
-            align="center"
             prop="rent"
             :label="setMonthTotal(2)"
             show-overflow-tooltip
@@ -104,7 +102,6 @@
             sortable
           ></el-table-column>
           <el-table-column
-            align="center"
             prop
             :label="setMonthTotal(3)"
             show-overflow-tooltip
@@ -112,7 +109,6 @@
             sortable
           ></el-table-column>
           <el-table-column
-            align="center"
             prop
             :label="setMonth(2)"
             show-overflow-tooltip
@@ -120,7 +116,6 @@
             sortable
           ></el-table-column>
           <el-table-column
-            align="center"
             prop
             :label="setMonth(3)"
             show-overflow-tooltip
@@ -128,7 +123,6 @@
             sortable
           ></el-table-column>
           <el-table-column
-            align="center"
             prop
             :label="setMonth(4)"
             show-overflow-tooltip
@@ -136,7 +130,6 @@
             sortable
           ></el-table-column>
           <el-table-column
-            align="center"
             prop
             :label="setMonth(5)"
             show-overflow-tooltip

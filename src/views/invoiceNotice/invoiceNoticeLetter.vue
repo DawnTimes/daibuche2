@@ -120,7 +120,6 @@
       <el-table
         :data="tableData"
         border
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'color': '#333',

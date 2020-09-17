@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-09-03 18:03:37
+ * @LastEditTime: 2020-09-16 13:46:03
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -63,7 +63,6 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -79,28 +78,28 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop label="经销店" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="逾期开始日期" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="逾期天数" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="id" label="应还租金总额（含牌照费）" show-overflow-tooltip width="200"></el-table-column>
-        <el-table-column align="center" prop label="已发支援金/未付租金" show-overflow-tooltip width="160"></el-table-column>
-        <el-table-column align="center" prop label="已发未付对应月份" show-overflow-tooltip width="140"></el-table-column>
-        <el-table-column align="center" prop label="未发支援金/未付租金" show-overflow-tooltip width="160"></el-table-column>
-        <el-table-column align="center" prop label="未发未付对应月份" show-overflow-tooltip width="140"></el-table-column>
-        <el-table-column align="center" prop="" label="应还罚息金额" width="120"></el-table-column>
-        <el-table-column align="center" prop label="应还金额合计" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="店总姓名" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="店总联系方式" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="售后经理姓名" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="售后经理联系方式" show-overflow-tooltip width="140"></el-table-column>
-        <el-table-column align="center" prop label="催收记录查询" show-overflow-tooltip width="120">
+        <el-table-column prop label="经销店" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="逾期开始日期" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="逾期天数" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="id" label="应还租金总额（含牌照费）" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop label="已发支援金/未付租金" show-overflow-tooltip width="160"></el-table-column>
+        <el-table-column prop label="已发未付对应月份" show-overflow-tooltip width="140"></el-table-column>
+        <el-table-column prop label="未发支援金/未付租金" show-overflow-tooltip width="160"></el-table-column>
+        <el-table-column prop label="未发未付对应月份" show-overflow-tooltip width="140"></el-table-column>
+        <el-table-column prop="" label="应还罚息金额" width="120"></el-table-column>
+        <el-table-column prop label="应还金额合计" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="店总姓名" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="店总联系方式" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="售后经理姓名" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="售后经理联系方式" show-overflow-tooltip width="140"></el-table-column>
+        <el-table-column prop label="催收记录查询" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <el-link type="primary" @click="queryRecord(scope.row)" v-show="rightControl.entry">查看催收记录</el-link>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop label="电催日期" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="逾期原因" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="电催情况" show-overflow-tooltip fixed="right">
+        <el-table-column prop label="电催日期" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="逾期原因" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="电催情况" show-overflow-tooltip fixed="right">
           <template slot-scope="scope">
             <el-link type="primary" @click="entryRecord(scope.row)" v-show="rightControl.entry">录入</el-link>
           </template>

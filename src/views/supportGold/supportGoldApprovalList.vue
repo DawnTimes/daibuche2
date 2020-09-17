@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-09-11 14:06:03
+ * @LastEditTime: 2020-09-16 13:47:26
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -50,7 +50,6 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -66,17 +65,17 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="month" label="支援金月份" show-overflow-tooltip width="120"></el-table-column>
-        <!-- <el-table-column align="center" prop="" label="期数" show-overflow-tooltip></el-table-column> -->
-        <el-table-column align="center" prop="" label="批次号" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="batch" label="批次" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="month" label="支援金月份" show-overflow-tooltip width="120"></el-table-column>
+        <!-- <el-table-column prop="" label="期数" show-overflow-tooltip></el-table-column> -->
+        <el-table-column prop="" label="批次号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="batch" label="批次" show-overflow-tooltip></el-table-column>
         
-        <el-table-column align="center" prop="" label="店数" show-overflow-tooltip></el-table-column> -->
-        <el-table-column align="center" prop="" label="车辆数" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="审批状态" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="申请人" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="申请时间" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="店数" show-overflow-tooltip></el-table-column> -->
+        <el-table-column prop="" label="车辆数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="审批状态" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="申请人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="申请时间" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="备注" show-overflow-tooltip></el-table-column>
 
         <el-table-column
           align="center"

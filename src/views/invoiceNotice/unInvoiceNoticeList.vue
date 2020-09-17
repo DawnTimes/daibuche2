@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-09-03 18:00:43
+ * @LastEditTime: 2020-09-16 13:45:35
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\unInvoiceNoticeList.vue
@@ -59,7 +59,6 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -75,17 +74,17 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop label="经销店/牌照商编号" show-overflow-tooltip width="150"></el-table-column>
-        <el-table-column align="center" prop label="经销店/牌照商名称" show-overflow-tooltip width="150"></el-table-column>
-        <el-table-column align="center" prop="id" label="合同编号" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="合同状态" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="上牌地" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="是否限牌" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="是否广汽租赁" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="是否商贸" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="租赁方式" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="对应期数" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="remark" label="不开通知原因" width="300" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="经销店/牌照商编号" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop label="经销店/牌照商名称" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="id" label="合同编号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="合同状态" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="上牌地" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="是否限牌" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="是否广汽租赁" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="是否商贸" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="租赁方式" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="对应期数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="remark" label="不开通知原因" width="300" show-overflow-tooltip></el-table-column>
 
       </el-table>
     </div>

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-09-10 14:20:15
+ * @LastEditTime: 2020-09-16 13:47:11
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -63,7 +63,6 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -79,20 +78,20 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="month" label="支援金月份" show-overflow-tooltip width="120"></el-table-column>
-        <!-- <el-table-column align="center" prop label="期数" show-overflow-tooltip></el-table-column> -->
-        <el-table-column align="center" prop label="批次号" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="batch" label="批次" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="店数" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="车辆数" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="审批状态" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="申请人" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="申请时间" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="支付状态" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="支付登记时间" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" label="操作" width="180" fixed="right">
+        <el-table-column prop="month" label="支援金月份" show-overflow-tooltip width="120"></el-table-column>
+        <!-- <el-table-column prop label="期数" show-overflow-tooltip></el-table-column> -->
+        <el-table-column prop label="批次号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="batch" label="批次" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="店数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="车辆数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="审批状态" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="申请人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="申请时间" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="支付状态" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="支付登记时间" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column label="操作" width="180" fixed="right">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleRegister(scope.row)" v-show="rightControl.register">登记</el-button>
             <el-button size="mini" @click="handleDetail(scope.row)" v-show="rightControl.detail">详情</el-button>

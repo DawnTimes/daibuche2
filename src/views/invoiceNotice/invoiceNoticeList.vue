@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-09-03 18:00:03
+ * @LastEditTime: 2020-09-16 13:45:20
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -66,7 +66,6 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -83,31 +82,31 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop label="单据号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="生成时间" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="购方名称" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="id" label="购方税号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="购方地址电话" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="购方银行帐号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="销方地址电话" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop label="销方银行帐号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="remark" label="备注" width="300"></el-table-column>
-        <el-table-column align="center" prop label="商品名称" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="规格" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="商品编码" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="计量单位" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="数量" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="金额" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="税率" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="复核人" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="收款人" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="折扣金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="扣除额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="特殊票种" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="接收人邮件" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop label="发票号码" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="开票时间" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop label="操作" width="180" fixed="right">
+        <el-table-column prop label="单据号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="生成时间" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="购方名称" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="id" label="购方税号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="购方地址电话" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="购方银行帐号" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="销方地址电话" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop label="销方银行帐号" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="remark" label="备注" width="300"></el-table-column>
+        <el-table-column prop label="商品名称" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="规格" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="商品编码" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="计量单位" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="数量" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="金额" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="税率" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="复核人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="收款人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="折扣金额" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="扣除额" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="特殊票种" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="接收人邮件" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop label="发票号码" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="开票时间" show-overflow-tooltip></el-table-column>
+        <el-table-column prop label="操作" width="180" fixed="right">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="handleNotice(scope.row)" v-show="rightControl.notice">通知单</el-button>
             <el-button size="mini" plain @click="handleRegister(scope.row)" v-show="rightControl.register">登记</el-button>

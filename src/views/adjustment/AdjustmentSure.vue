@@ -35,7 +35,6 @@
       style="width: 100%"
       type="index"
       border
-      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
     'text-align':'center',
     'font-weight':'bold',  

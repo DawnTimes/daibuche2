@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-08-21 11:50:56
+ * @LastEditTime: 2020-09-16 13:51:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
@@ -44,7 +44,6 @@
         :max-height="tableHeight"
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -60,20 +59,20 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="id" label="银行单据号" show-overflow-tooltip width="120" fixed="left"></el-table-column>
-        <el-table-column align="center" prop="" label="经销店/牌照商" show-overflow-tooltip width="120"></el-table-column>
-        <!-- <el-table-column align="center" prop="" label="牌照商" show-overflow-tooltip width="120"></el-table-column> -->
-        <el-table-column align="center" prop="" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="车型" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="车架号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="车牌号" show-overflow-tooltip width="100"></el-table-column>
-        <!-- <el-table-column align="center" prop="" label="发动机号" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column align="center" prop="" label="是否限牌" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="是否广汽租赁" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="上牌地" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="租赁方式" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="期数" show-overflow-tooltip width="100"></el-table-column>        
-        <el-table-column align="center" prop="" label="核销状态" show-overflow-tooltip>
+        <el-table-column prop="id" label="银行单据号" show-overflow-tooltip width="120" fixed="left"></el-table-column>
+        <el-table-column prop="" label="经销店/牌照商" show-overflow-tooltip width="120"></el-table-column>
+        <!-- <el-table-column prop="" label="牌照商" show-overflow-tooltip width="120"></el-table-column> -->
+        <el-table-column prop="" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="车型" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="车架号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="车牌号" show-overflow-tooltip width="100"></el-table-column>
+        <!-- <el-table-column prop="" label="发动机号" show-overflow-tooltip width="100"></el-table-column> -->
+        <el-table-column prop="" label="是否限牌" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="是否广汽租赁" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="上牌地" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="租赁方式" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="期数" show-overflow-tooltip width="100"></el-table-column>        
+        <el-table-column prop="" label="核销状态" show-overflow-tooltip>
          <template slot-scope="scope">
             <span
             :class="{greenStatus: scope.row.approvalStatus == '', redStatus: scope.row.approvalStatus == '', blueColor: scope.row.approvalStatus == '',
@@ -81,30 +80,29 @@
             >{{ formatStatus(scope.row.approvalStatus, paidTemp) }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="" label="核销人" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="核销时间" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="支援金状态" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="反冲状态" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="核销人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="核销时间" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="支援金状态" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="反冲状态" show-overflow-tooltip></el-table-column>
 
-        <el-table-column align="center" prop="" label="应收金额" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="应收本金" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="应收利息" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="应收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="应收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="已收金额" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="已收本金" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="已收利息" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="已收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="已收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="未收金额" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="未收本金" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="未收利息" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="未收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="未收手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="应收金额" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="应收本金" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="应收利息" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="应收管理费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="应收手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="已收金额" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="已收本金" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="已收利息" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="已收管理费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="已收手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="未收金额" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="未收本金" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="未收利息" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="未收管理费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="未收手续费" show-overflow-tooltip width="120"></el-table-column>
 
-        <el-table-column align="center" prop="remark" label="备注" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column
-          align="center"
           label="操作"
           width="100"
           fixed="right"

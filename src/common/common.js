@@ -135,6 +135,25 @@ export default {
 
   // 新增更新牌照商
   addOrUpdateLicenceUrl: '/addOrUpdateLicence.do',
+  // 查询牌照商详情
+  selectLicenceByCodeUrl: '/selectLicenceByCode.do',
+  // 查询城市牌照商
+  findCityLicenceUrl: '/findCityLicence.do',
+
+  // 支援金申请List
+  supportApplyListUrl: '/supportApplyList.do',
+  // 支援金待审批List(分页)
+  spprotWaitListUrl: '/spprotWaitList.do',
+  // 支援金历史记录
+  supporFundHisListUrl: '/supporFundHisList.do',
+  // 支援金申请
+  supportFundUrl: '/supportFund.do',
+  // 按经销店的支援金车辆清单
+  supportCarListByAgIdUrl: '/supportCarListByAgId.do',
+  // 按申请批次统计经销店的欠款情况（申请原因说明分页）
+  supportAgListUrl: '/supportAgList.do',
+  // 支援金总车辆清单List
+  supportCarListUrl: '/supportCarList.do',
 
   // 验证码
   guid() {

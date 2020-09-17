@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-09-15 15:49:59
+ * @LastEditTime: 2020-09-16 17:58:11
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -115,6 +115,7 @@
             <span>{{ scope.row.payDay | timeFormat }}</span>
           </template>
         </el-table-column>
+        <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="verState" label="核销状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span
@@ -124,7 +125,7 @@
         </el-table-column>
         <el-table-column prop="verPersion" label="核销人" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="verDate" label="核销时间" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="120"></el-table-column>
+        
         <el-table-column prop="payStatus" label="支援金状态" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="backlash" label="反冲状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
@@ -383,8 +384,20 @@ export default {
     },
     // 反冲提交
     formDataSubmit() {
-      // this.status.loading = true;
-      this.$refs.recoilModule.isShow(false);
+      this.status.loading = true;
+      const url = common.backlashDealUrl;
+      const params = {
+        backList: [
+          { id : '' }
+        ],
+      };
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          this.status.loading = false;
+          this.$refs.recoilModule.isShow(false);
+        }
+      })
+      
     },
 
     // 批量选择
@@ -400,13 +413,45 @@ export default {
         });
         return false
       }
-      this.$confirm('是否确定反冲选中的车辆?', '提示', {
+
+      // 批量反冲时，每次操作只能选择同一合同编号的车辆进行
+      let arrTem = [];
+      this.multipleSelection.forEach((v) => {
+        arrTem.push(v.contractInfoId)
+      })
+      // console.log(arrTem);
+      const status = arrTem.some((val) => {
+        return val !== arrTem[0]
+      })
+      // console.log(status);
+      if (status) {
+        this.$notify.warning({
+          title: '温馨提示',
+          message: '只能同时批量反冲合同编号相同的车辆！',
+        });
+        return false
+      }
+      
+      this.$confirm('是否确定反冲选中的车辆? 反冲后不可恢复！?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
       })
-        .then(() => {})
+        .then(() => {
+          const url = common.backlashDealUrl;
+          const params = {
+            backList: [
+              { id : '' }
+            ],
+          };
+          axios.post(url, params).then((res) => {
+            if (res.ec === '0') {
+              
+            }
+          })
+        })
         .catch(() => {});
+
     },
   },
   filters: {

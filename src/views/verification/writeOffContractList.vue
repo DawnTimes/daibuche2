@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-08-12 16:51:01
+ * @LastEditTime: 2020-09-16 13:50:26
  * @LastEditors: your name
  * @Description: 根据银行流水单的付款名称查询合同
  * @FilePath: \webcode2\src\views\verification\writeOffContractList.vue
@@ -19,7 +19,6 @@
         stripe
         ref="table"
         style="width: 100%"
-        :cell-style="{'text-align': 'center', 'height': '40px'}"
         :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -34,12 +33,12 @@
           type="index"
           fixed
         ></el-table-column>
-        <el-table-column align="center" prop="id" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="id" label="经销店名称" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column align="center" prop="" label="牌照商名称" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="上牌地" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="是否限牌" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="合同状态" show-overflow-tooltip width="100">
+        <el-table-column prop="id" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="id" label="经销店名称" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="牌照商名称" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="上牌地" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="是否限牌" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="合同状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span
             :class="{greenStatus: scope.row.approvalStatus == '', redStatus: scope.row.approvalStatus == '', blueColor: scope.row.approvalStatus == '',
@@ -47,15 +46,14 @@
             >{{ formatStatus(scope.row.approvalStatus, dictTemp) }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="" label="合同类型" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="租赁方式" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="车辆数量" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column align="center" prop="" label="月租金" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="月牌照费" show-overflow-tooltip></el-table-column>
-        <el-table-column align="center" prop="" label="月租金合计" show-overflow-tooltip width="120"></el-table-column>  
-        <el-table-column align="center" prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="合同类型" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="租赁方式" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="车辆数量" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="月租金" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="月牌照费" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="月租金合计" show-overflow-tooltip width="120"></el-table-column>  
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
         <el-table-column
-          align="center"
           label="操作"
           width="150"
           fixed="right"

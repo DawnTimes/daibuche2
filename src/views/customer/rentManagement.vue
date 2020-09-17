@@ -93,7 +93,6 @@
       style="width: 100%"
       border
       :max-height="tableHeight"
-      :cell-style="{'text-align': 'center', 'height': '40px'}"
       :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -383,7 +382,7 @@ export default {
       this.$router.push({
         path: '/editOrganization',
         query: {
-          licenceCode: row.licenceCode,
+          id: row.licenceCode,
         },
       });
     },
