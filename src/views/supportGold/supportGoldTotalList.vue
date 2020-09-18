@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-09-16 13:47:55
+ * @LastEditTime: 2020-09-17 17:28:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -26,18 +26,18 @@
             placeholder="选择日期"
           ></el-date-picker>
         </el-form-item> -->
-        <el-form-item label="经销店名称:" prop="interfaceName">
-          <el-input maxlength="50" v-model="formData.interfaceName" clearable placeholder></el-input>
+        <el-form-item label="经销店名称:" prop="agentName">
+          <el-input maxlength="50" v-model="formData.agentName" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="车架号:" prop="interfaceName">
-          <el-input maxlength="50" v-model="formData.interfaceName" clearable placeholder></el-input>
+        <el-form-item label="车架号:" prop="frameNumber">
+          <el-input maxlength="50" v-model="formData.frameNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="批次号:" prop="interfaceName">
-          <el-input maxlength="50" v-model="formData.interfaceName" clearable placeholder></el-input>
+        <el-form-item label="批次号:" prop="batchNumber">
+          <el-input maxlength="50" v-model="formData.batchNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="期数:" prop="systemName">
+        <!-- <el-form-item label="期数:" prop="systemName">
           <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <!-- <el-form-item label="支付状态:" prop="interfaceName">
           <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
             <el-option
@@ -64,6 +64,8 @@
     <div class="table">
       <el-table
         :data="tableData"
+        v-loading="tableLoading"
+        element-loading-text="拼命加载中"
         border
         stripe
         :max-height="tableHeight"
@@ -84,26 +86,30 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="id" label="经销店编码" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop label="经销店名称" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop label="车架号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="车牌号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="车型" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="上牌地" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="批次号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="批次" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="支付状态" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="租金" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="牌照费" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="租金合计" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="车型支援金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop label="牌照支援" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="总支援金" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="当期/总期数" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop label="剩余期数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop label="支付登记时间" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop label="备注" show-overflow-tooltip ></el-table-column>
+        <el-table-column prop="agentCode" label="经销店编码" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="plateNumber" label="车牌号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="modelCode" label="车型" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="batch" label="批次" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.payStatus }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="monthlyRent" label="租金" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="rentCardFee" label="牌照费" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="supportFund" label="车型支援金" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="licenceFund" label="牌照支援金" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="currentTotal" label="当期/总期数" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="surplus" label="剩余期数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="支付登记时间" show-overflow-tooltip width="120"></el-table-column>
+        <!-- <el-table-column prop="remark" label="备注" show-overflow-tooltip ></el-table-column> -->
       </el-table>
     </div>
     <div class="page-layer">
@@ -139,9 +145,16 @@ export default {
       pageSize: 10,
       pageNum: 1,
       total: 0,
-      formData: {},
+      formData: {
+        agentName: '',
+        batchNumber: '',
+        frameNumber: '',
+        pageSize: 10,
+        pageNum: 1,
+      },
 
-      tableData: [{ id: '123456' }, { id: '009877'}],
+      tableData: [],
+      tableLoading: false,
       tableHeight: 100,
       limitStatus: [
         { value: 'Y', label: '是' },
@@ -199,14 +212,20 @@ export default {
 
   mounted() {
     // moment().format('YYYY-MM-DD HH:mm:ss')
+    this.getSupportGoldTotalListData();
   },
   methods: {
     // 查询
-    queryForm() {},
+    queryForm() {
+      this.pageNum = 1;
+      this.formData.pageNum = 1;
+      this.getSupportGoldTotalListData();
+    },
 
     // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.getSupportGoldTotalListData();
     },
 
 
@@ -216,16 +235,43 @@ export default {
       return index + order + 1;
     },
 
+    // 获取分页数据
+    getSupportGoldTotalListData() {
+      this.tableLoading = true;
+      const url = common.supportCarListUrl;
+      const params = {
+        agentName: this.formData.agentName,
+        batchNumber: this.formData.batchNumber,
+        frameNumber: this.formData.frameNumber,
+        turnPageBeginPos: this.formData.pageNum,
+        turnPageShowNum: this.formData.pageSize,
+      };
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          const data = res.data;
+          this.tableData = data.supportCarList;
+          this.total = data.turnPageTotalNum * 1;
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
+        }
+      }).catch(() => {
+        this.tableLoading = false;
+      })
+    },
+
     // 分页
     handleSizeChange(val) {
       this.pageNum = 1;
       this.formData.pageNum = 1;
       this.pageSize = val;
       this.formData.pageSize = val;
+      this.getSupportGoldTotalListData();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
       this.formData.pageNum = (val - 1) * this.pageSize + 1;
+      this.getSupportGoldTotalListData();
     },
 
   },

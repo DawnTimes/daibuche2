@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 18:11:48
- * @LastEditTime: 2020-08-20 18:25:29
+ * @LastEditTime: 2020-09-17 17:35:24
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldModule.vue
@@ -25,9 +25,9 @@
           >
             <el-row :gutter="0">
               <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
-                <el-form-item label="申请日期:" prop="dateTime" class="form-item">
+                <el-form-item label="申请日期:" prop="applyDate" class="form-item">
                   <el-date-picker
-                    v-model="formData.dateTime"
+                    v-model="formData.applyDate"
                     value-format="yyyy-MM-dd"
                     type="date"
                     placeholder="选择日期"
@@ -255,7 +255,7 @@ export default {
       },
 
       rules: {
-        dateTime: [
+        applyDate: [
           {
             required: true,
             message: '请选择日期',

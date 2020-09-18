@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-09-16 17:58:11
+ * @LastEditTime: 2020-09-17 17:19:05
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -68,6 +68,8 @@
     <div class="table">
       <el-table
         :data="tableData"
+        v-loading="tableLoading"
+        element-loading-text="拼命加载中"
         border
         stripe
         :max-height="tableHeight"
@@ -225,6 +227,7 @@ export default {
       ],
 
       tableData: [],
+      tableLoading: false,
       tableHeight: 100,
       // 数据字典
       paidTemp: [],
@@ -315,6 +318,7 @@ export default {
 
     // 获取分页数据
     getCarWriteOffListData() {
+      this.tableLoading = true;
       const url = common.selectVerCarStatementUrl;
       const params = {
         nper            : this.formData.nper,
@@ -332,7 +336,12 @@ export default {
           const data = res.data;
           this.tableData = data.verCarList;
           this.total = data.turnPageTotalNum * 1;
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
         }
+      }).catch(() => {
+        this.tableLoading = false;
       })
     },
 

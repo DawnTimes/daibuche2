@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-09-16 13:47:42
+ * @LastEditTime: 2020-09-17 18:30:16
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldHistory.vue
@@ -18,19 +18,19 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="支援金月份:" prop="systemName">
+        <el-form-item label="支援金月份:" prop="month">
           <el-date-picker
-            v-model="formData.value1"
+            v-model="formData.month"
             type="month"
             value-format="yyyy-MM"
             placeholder="选择月份"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="期数:" prop="interfaceName">
+        <!-- <el-form-item label="期数:" prop="interfaceName">
           <el-input maxlength="50" v-model="formData.interfaceName" clearable placeholder></el-input>
-        </el-form-item>
-        <el-form-item label="批次号:" prop="systemName">
-          <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
+        </el-form-item> -->
+        <el-form-item label="批次号:" prop="batchNumber">
+          <el-input maxlength="30" v-model="formData.batchNumber" clearable placeholder></el-input>
         </el-form-item>
 
         <el-form-item>
@@ -66,7 +66,7 @@
           fixed
         ></el-table-column>
         <el-table-column prop="month" label="支援金月份" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop label="期数" show-overflow-tooltip></el-table-column>
+        <!-- <el-table-column prop label="期数" show-overflow-tooltip></el-table-column> -->
         <el-table-column prop label="批次号" show-overflow-tooltip></el-table-column>
         <el-table-column prop="batch" label="批次" show-overflow-tooltip></el-table-column>
         <el-table-column prop label="店数" show-overflow-tooltip></el-table-column>
@@ -119,7 +119,13 @@ export default {
       pageSize: 10,
       pageNum: 1,
       total: 0,
-      formData: {},
+      formData: {
+        month: '',
+        batchNumber: '',
+        year: '',
+        pageSize: 10,
+        pageNum: 1,
+      },
 
       tableData: [{ batch: '第一批', month:'2020-08' }, { batch: '第二批', month:'2020-08'}],
       tableHeight: 100,
@@ -211,6 +217,25 @@ export default {
     indexMethod(index) {
       let order = this.pageSize * (this.pageNum - 1);
       return index + order + 1;
+    },
+
+    // 获取分页数据
+    getSupportGoldHistoryListData() {
+      const url = common.supporFundHisListUrl;
+      const params = {
+        month: this.formData.month,
+        batchNumber: this.formData.batchNumber,
+        year: '',
+        turnPageBeginPos: this.formData.pageNum,
+        turnPageShowNum: this.formData.pageSize,
+      };
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          const data = res.data;
+          this.tableData = data.supportCarList;
+          this.total = data.turnPageTotalNum * 1;
+        }
+      })
     },
 
     // 分页

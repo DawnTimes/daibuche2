@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-16 15:05:18
+ * @LastEditTime: 2020-09-17 17:19:55
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeList.vue
@@ -59,6 +59,7 @@
       <el-table
         :data="tableData"
         v-loading="tableLoading"
+        element-loading-text="拼命加载中"
         border
         stripe
         :max-height="tableHeight"
@@ -496,7 +497,7 @@ export default {
       this.tableLoading = true;
 
       axios.post(url, params).then((res) => {
-        if (res.em === 'Success!') {
+        if (res.ec === '0') {
           const data = res.data;
           this.tableData = data.rentLimitList;
           this.total = data.turnPageTotalNum * 1;

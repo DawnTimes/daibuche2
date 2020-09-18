@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-09-03 18:08:11
+ * @LastEditTime: 2020-09-17 15:51:24
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\layouts\components\Aside.vue
@@ -84,7 +84,7 @@ export default {
         url = common.userMenuUrl;
       }
       axios.get(url, { roles: this.roles }).then((res) => {
-        console.log(res.menus);
+        // console.log(res.menus);
         this.setAsideInfo(res.menus);
         this.setAsideInfoIds(res.ids);
         this.menuList = res.menus;

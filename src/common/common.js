@@ -88,8 +88,8 @@ export default {
 
   // 数据字典
   queryDictUrl: '/dataDict/queryDict.do',
-
-  bankWaterDownUrl: '/bankStatemntExcel/exportBankStatement',
+  // 导出银行流水单
+  bankWaterDownUrl: '/bankStatemntExcel/exportBankStatement.do',
 
   // 限牌车型分页
   queryLimitCarListUrl: '/queryLimitCarList.do',

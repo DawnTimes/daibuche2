@@ -180,7 +180,7 @@ export default {
     initData() {
       let url = common.rolePageUrl;
       axios.get(url, this.params).then((res) => {
-        console.log(res);
+        // console.log(res);
         res.records.forEach((obj, index) => {
           obj.createTime = obj.createTime.substr(0, 10);
         });
@@ -193,7 +193,7 @@ export default {
       this.realParams.limit = this.params.limit;
       let url = common.rolePageUrl;
       axios.get(url, this.realParams).then((res) => {
-        console.log(res);
+        // console.log(res);
         res.records.forEach((obj, index) => {
           obj.createTime = obj.createTime.substr(0, 10);
         });

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-09-16 13:47:11
+ * @LastEditTime: 2020-09-17 16:58:38
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -18,22 +18,22 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="支援金月份:" prop="systemName">
+        <!-- <el-form-item label="支援金月份:" prop="systemName">
           <el-date-picker
             v-model="formData.value1"
             type="month"
             value-format="yyyy-MM"
             placeholder="选择月份"
           ></el-date-picker>
-        </el-form-item>
+        </el-form-item> -->
         <!-- <el-form-item label="期数:" prop="interfaceName">
           <el-input maxlength="50" v-model="formData.interfaceName" clearable placeholder></el-input>
         </el-form-item> -->
-        <el-form-item label="批次号:" prop="systemName">
-          <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
+        <el-form-item label="批次号:" prop="batchNumber">
+          <el-input maxlength="30" v-model="formData.batchNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="审批状态:" prop="interfaceName">
-          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
+        <el-form-item label="审批状态:" prop="approvalStatus">
+          <el-select v-model="formData.approvalStatus" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in appravolStatus"
               :key="item.value"
@@ -78,23 +78,35 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="month" label="支援金月份" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="支援金月份" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.year + '-' + scope.row.month }}</span>
+          </template>
+        </el-table-column>
         <!-- <el-table-column prop label="期数" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop label="批次号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="batch" label="批次" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="店数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="车辆数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="审批状态" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="申请人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="申请时间" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="支付状态" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop label="支付登记时间" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="Batch" label="批次" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="店数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="month" label="审批状态" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="creater" label="申请人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="申请时间" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.create_time | timeFormatTemp }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="" label="支付状态" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.payStatus }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="支付登记时间" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="180" fixed="right">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleRegister(scope.row)" v-show="rightControl.register">登记</el-button>
-            <el-button size="mini" @click="handleDetail(scope.row)" v-show="rightControl.detail">详情</el-button>
+            <el-button type="primary" size="mini" @click="handleRegister(scope.row)" v-if="rightControl.register">登记</el-button>
+            <el-button size="mini" @click="handleDetail(scope.row)" v-if="rightControl.detail">详情</el-button>
             <!-- <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button> -->
           </template>
         </el-table-column>
@@ -152,9 +164,14 @@ export default {
       pageSize: 10,
       pageNum: 1,
       total: 0,
-      formData: {},
+      formData: {
+        batchNumber: '',
+        approvalStatus: '',
+        pageSize: 10,
+        pageNum: 1,
+      },
 
-      tableData: [{ batch: '第一批', month:'2020-08' }, { batch: '第二批', month:'2020-08'}],
+      tableData: [],
       tableHeight: 100,
       appravolStatus: [],
 
@@ -235,14 +252,20 @@ export default {
 
   mounted() {
     // moment().format('YYYY-MM-DD HH:mm:ss')
+    this.getSupportGoldApplyListData();
   },
   methods: {
     // 查询
-    queryForm() {},
+    queryForm() {
+      this.pageNum = 1;
+      this.formData.pageNum = 1;
+      this.getSupportGoldApplyListData();
+    },
 
     // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.getSupportGoldApplyListData();
     },
 
     // 申请支援金
@@ -258,16 +281,36 @@ export default {
       return index + order + 1;
     },
 
+    // 获取分页数据
+    getSupportGoldApplyListData() {
+      const url = common.supportApplyListUrl;
+      const params = {
+        batchNumber: this.formData.batchNumber,
+        approvalStatus: this.formData.approvalStatus,
+        turnPageBeginPos: this.formData.pageNum,
+        turnPageShowNum: this.formData.pageSize,
+      };
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          const data = res.data;
+          this.tableData = data.applyList;
+          this.total = data.turnPageTotalNum * 1;
+        }
+      })
+    },
+
     // 分页
     handleSizeChange(val) {
       this.pageNum = 1;
       this.formData.pageNum = 1;
       this.pageSize = val;
       this.formData.pageSize = val;
+      this.getSupportGoldApplyListData();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
       this.formData.pageNum = (val - 1) * this.pageSize + 1;
+      this.getSupportGoldApplyListData();
     },
 
     // 详情

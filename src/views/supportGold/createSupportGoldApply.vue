@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-18 10:04:11
- * @LastEditTime: 2020-08-18 10:32:42
+ * @LastEditTime: 2020-09-17 18:07:53
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\createSupportGoldApply.vue
@@ -24,6 +24,8 @@
 
 <script>
 import supportGoldModule from './components/supportGoldModule';
+import { mapState } from 'vuex';
+import common from '@/common/common.js';
 
 export default {
   name: 'createSupportGoldApply',
@@ -34,18 +36,34 @@ export default {
   data() {
     return {
       activeName: 'first',
-      formData: {},
+      formData: {
+        creater: '',
+        applyDate: '',
+        agList: [
+          { agId: '', reason: '' }
+        ],
+      },
       status: {
         loading: false,
       },
     };
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      userId: store => store.userId
+    })
+  },
   watch: {},
-  created() {},
+  created() {
+    this.formData.creater = this.userId;
+  },
   mounted() {},
   methods: {
-    formDataSubmit(data) {},
+    // 确定申请
+    formDataSubmit(obj) {
+      const data = obj.data;
+      const url = common.supportFundUrl;
+    },
   },
   filters: {
     function() {},
