@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-09-16 13:50:08
+ * @LastEditTime: 2020-09-18 11:58:21
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -22,10 +22,10 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="经销店:" prop="interfaceName">
-          <el-input maxlength="50" v-model="formData.interfaceName" clearable placeholder></el-input>
+        <el-form-item label="经销店:" prop="agentName">
+          <el-input maxlength="50" v-model="formData.agentName" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="是否收齐:" prop="interfaceName">
+        <!-- <el-form-item label="是否收齐:" prop="interfaceName">
           <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in limitStatus"
@@ -34,9 +34,9 @@
               :value="item.value"
             ></el-option>
           </el-select>
-        </el-form-item>
-        <el-form-item label="是否商贸:" prop="interfaceName">
-          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
+        </el-form-item> -->
+        <el-form-item label="是否商贸:" prop="isGacShop">
+          <el-select v-model="formData.isGacShop" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in isCommerce"
               :key="item.value"
@@ -81,56 +81,58 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="" label="经销店代码" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="id" label="经销店名称" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="" label="支援金金额" sortable="custom" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="num" label="车辆数" sortable="custom" show-overflow-tooltip width="100">
+        <el-table-column prop="agentCode" label="经销店代码" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="supportFund" label="支援金" sortable="custom" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="licenceFund" label="牌照费" sortable="custom" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="totalFund" label="支援金总额" sortable="custom" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="carNum" label="车辆数" sortable="custom" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.num }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="" label="是否商贸" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="isGacShop" label="是否商贸" show-overflow-tooltip></el-table-column>
         
-        <el-table-column prop="" label="是否收齐" show-overflow-tooltip></el-table-column> -->
+        <!-- <el-table-column prop="" label="是否收齐" show-overflow-tooltip></el-table-column> --> -->
         <!-- <el-table-column prop="" label="数据来源" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop="reason" label="申请原因" sortable show-overflow-tooltip  width="160"></el-table-column>
+        <el-table-column prop="remark" label="申请原因" show-overflow-tooltip></el-table-column>
         <el-table-column
-            prop="rent"
+            prop="twoN"
             :label="setMonthTotal(2)"
             show-overflow-tooltip
             width="140"
             sortable
           ></el-table-column>
           <el-table-column
-            prop
+            prop="threeN"
             :label="setMonthTotal(3)"
             show-overflow-tooltip
             width="140"
             sortable
           ></el-table-column>
           <el-table-column
-            prop
+            prop="two"
             :label="setMonth(2)"
             show-overflow-tooltip
             width="120"
             sortable
           ></el-table-column>
           <el-table-column
-            prop
+            prop="three"
             :label="setMonth(3)"
             show-overflow-tooltip
             width="120"
             sortable
           ></el-table-column>
           <el-table-column
-            prop
+            prop="four"
             :label="setMonth(4)"
             show-overflow-tooltip
             width="120"
             sortable
           ></el-table-column>
           <el-table-column
-            prop
+            prop="five"
             :label="setMonth(5)"
             show-overflow-tooltip
             width="120"
@@ -184,14 +186,15 @@ export default {
       pageNum: 1,
       total: 0,
       formData: {
-        
+        agentName: '',
+        applyDate: '',
+        id: '',
+        isGacShop: '',
+        pageSize: 10,
+        pageNum: 1,
       },
 
-      tableData: [
-        { id: '经销店1', num: 88, rent: 9999, reason: '特殊原因' },
-        { id: '经销店2', num: 68, rent: 6909 },
-        { id: '经销店3', num: 98, rent: 3979 },
-      ],
+      tableData: [],
       tableHeight: 100,
       appravolStatus: [],
       limitStatus: [
@@ -199,9 +202,8 @@ export default {
         { value: 'N', label: '否' },
       ],
       isCommerce: [
-        { value: 'Y', label: '非商贸' },
-        { value: 'N', label: '商贸全资' },
-        { value: 'R', label: '商贸非全资' },
+        { value: 'Y', label: '是' },
+        { value: 'N', label: '否' },
       ],
 
     };
@@ -258,6 +260,26 @@ export default {
     //监听排序
     sortChange(column, prop, order) {
       console.log(column, prop, order);
+    },
+
+    // 获取分页数据
+    getSupportGoldReasonListData() {
+      const url = common.supportAgListUrl;
+      const params = {
+        agentName: this.formData.agentName,
+        applyDate: this.formData.applyDate,
+        id: this.formData.id,
+        isGacShop: this.formData.isGacShop,
+        turnPageBeginPos: this.formData.pageNum,
+        turnPageShowNum: this.formData.pageSize,
+      };
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          const data = res.data;
+          this.tableData = data.agSuppList;
+          this.total = data.turnPageTotalNum * 1;
+        }
+      })
     },
 
     // 合计

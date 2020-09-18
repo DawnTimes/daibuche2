@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-09-17 18:30:16
+ * @LastEditTime: 2020-09-18 15:11:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldHistory.vue
@@ -206,11 +206,16 @@ export default {
   },
   methods: {
     // 查询
-    queryForm() {},
+    queryForm() {
+      this.pageNum = 1;
+      this.formData.pageNum = 1;
+      this.getSupportGoldHistoryListData();
+    },
 
     // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.getSupportGoldHistoryListData();
     },
 
     // 自定义列接口索引
@@ -232,7 +237,7 @@ export default {
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
           const data = res.data;
-          this.tableData = data.supportCarList;
+          this.tableData = data.applyList;
           this.total = data.turnPageTotalNum * 1;
         }
       })
@@ -244,10 +249,12 @@ export default {
       this.formData.pageNum = 1;
       this.pageSize = val;
       this.formData.pageSize = val;
+      this.getSupportGoldHistoryListData();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
       this.formData.pageNum = (val - 1) * this.pageSize + 1;
+      this.getSupportGoldHistoryListData();
     },
 
     // 详情
