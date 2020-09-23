@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-09-18 15:11:52
+ * @LastEditTime: 2020-09-23 18:39:28
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldHistory.vue
@@ -65,19 +65,38 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="month" label="支援金月份" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="支援金月份" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.year + '-' + scope.row.month }}</span>
+          </template>
+        </el-table-column>
         <!-- <el-table-column prop label="期数" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop label="批次号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip></el-table-column>
         <el-table-column prop="batch" label="批次" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="店数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="车辆数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="审批状态" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="申请人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="申请时间" show-overflow-tooltip></el-table-column>
-        <el-table-column prop label="支付状态" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop label="支付登记时间" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="店数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="rentCount" label="支援金" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="LicenceFee" label="牌照费" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="rentTotalCount" label="支援金合计" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.approvalStatus | supportApprovalStatus }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="creater" label="申请人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.create_time | timeFormatTemp }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.payStatus }}</span>
+          </template>
+        </el-table-column>
+        <!-- <el-table-column prop="" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="支付登记时间" show-overflow-tooltip width="120"></el-table-column> -->
+        <!-- <el-table-column prop="" label="备注" show-overflow-tooltip></el-table-column> -->
         <el-table-column label="操作" width="150" fixed="right">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleDetail(scope.row)" v-show="rightControl.detail">详情</el-button>
@@ -127,7 +146,7 @@ export default {
         pageNum: 1,
       },
 
-      tableData: [{ batch: '第一批', month:'2020-08' }, { batch: '第二批', month:'2020-08'}],
+      tableData: [],
       tableHeight: 100,
       appravolStatus: [],
 
@@ -203,6 +222,7 @@ export default {
 
   mounted() {
     // moment().format('YYYY-MM-DD HH:mm:ss')
+    this.getSupportGoldHistoryListData();
   },
   methods: {
     // 查询
@@ -228,9 +248,9 @@ export default {
     getSupportGoldHistoryListData() {
       const url = common.supporFundHisListUrl;
       const params = {
-        month: this.formData.month,
+        month: this.formData.month ? moment(this.formData.month).format('MM') : '',
         batchNumber: this.formData.batchNumber,
-        year: '',
+        year: this.formData.month ? moment(this.formData.month).format('YYYY') : '',
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
       };
@@ -259,11 +279,18 @@ export default {
 
     // 详情
     handleDetail(row) {
+      sessionStorage.setItem('supportGoldDeatilPath', this.$route.path);
       this.$router.push({
         path: '/supportGoldDetail',
         query: {
-          month: row.month,
-          batch: row.batch,
+          id         : row.id,
+          year       : row.year,
+          month      : row.month,
+          batch      : row.Batch,
+          applyDate  : moment(row.creater).format('YYYY-MM-DD'),
+          type       : this.userApprovalType,
+          carNum     : row.carNum,
+          batchNumber: row.batchNumber,
         },
       })
     },

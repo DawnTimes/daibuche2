@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-09-11 16:14:56
+ * @LastEditTime: 2020-09-23 15:00:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalOperation.vue
@@ -181,7 +181,7 @@ export default {
           this.status.loading = false;
           this.$notify.error({
             title: '温馨提示！',
-            message: res.em || '提交失败!'
+            message: res.em || '提交失败，请联系管理员!'
           });
         }
       }).catch((err) => {

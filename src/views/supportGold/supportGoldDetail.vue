@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-08-20 15:14:11
+ * @LastEditTime: 2020-09-23 18:37:32
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldDetail.vue
@@ -13,7 +13,7 @@
     <div class="wrapper">
       <el-tabs type="card" v-model="formTemp.activeName" class="noBorder">
         <el-tab-pane class="title" name="first" label="原因说明">
-          <supportGoldApproval-reason :currentMonth="currentMonth" :batch="batch"></supportGoldApproval-reason>
+          <supportGoldApproval-reason></supportGoldApproval-reason>
 
           <div style="padding: 20px 0 20px 0; text-align: center">
             <el-button @click="handleGoToBack()" plain size="medium">返 回</el-button>
@@ -90,11 +90,8 @@ export default {
   created() {
     // this.formData.approvalUser = this.userId;
     // this.formData.approvalTime = moment().format('YYYY-MM-DD HH:mm:ss');
-    const params = this.$route.query;
-    this.batch = params.batch;
-    const times = new Date(params.month);
-    // console.log(times);
-    this.currentMonth = times.getMonth() + 1 + '';
+    const query = this.$route.query;
+    Object.assign(this.baseInfoForm, query);
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -102,8 +99,23 @@ export default {
       vm.fatherPath = from.path;
     });
   },
-  mounted() {},
+  mounted() {
+    this.getDetail();
+  },
   methods: {
+    // 详情
+    getDetail() {
+      const url = common.supportApprovalListUrl;
+      const params = {
+        id: this.baseInfoForm.id,
+      }
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          
+        }
+      })
+    },
+
     handleFormDataSubmit() {},
 
     // 上一步
@@ -117,8 +129,9 @@ export default {
 
     // 返回
     handleGoToBack() {
+      const path = sessionStorage.getItem('supportGoldDeatilPath');
       this.$router.push({
-        path: this.fatherPath,
+        path: path,
       });
     },
   },

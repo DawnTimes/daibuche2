@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:25:10
- * @LastEditTime: 2020-09-16 13:45:49
+ * @LastEditTime: 2020-09-23 16:23:54
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\collectionRecord.vue
@@ -19,10 +19,11 @@
       ></addRecord-module>
     </div>
 
-    <el-row :gutter="10">
+    <el-row :gutter="0">
       <el-col :xs="24" :sm="24" :md="20" :lg="20" :xl="18">
         <div class="exportBtn">
           <el-button type="primary" size="medium">导出</el-button>
+          <el-button size="medium" plain>导入</el-button>
         </div>
         <div class="table">
           <el-table

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-09-18 11:58:21
+ * @LastEditTime: 2020-09-23 14:04:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -10,23 +10,23 @@
 <template>
   <div class="supportGoldApprovalReason">
     <div class="approvalTitle">
-      <span>2020年{{ currentMonth }}月{{ batch }}支援金原因说明</span>
+      <span>{{ currentYear }}年{{ currentMonth }}月{{ batch }}支援金原因说明</span>
     </div>
 
     <div class="hearderBox">
       <el-form
         :inline="true"
-        :model="formData"
+        :model="reasonForm"
         class="demo-form-inline"
         label-width="80px"
         size="small"
         ref="ruleForm"
       >
         <el-form-item label="经销店:" prop="agentName">
-          <el-input maxlength="50" v-model="formData.agentName" clearable placeholder></el-input>
+          <el-input maxlength="50" v-model="reasonForm.agentName" clearable placeholder></el-input>
         </el-form-item>
         <!-- <el-form-item label="是否收齐:" prop="interfaceName">
-          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
+          <el-select v-model="reasonForm.value" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in limitStatus"
               :key="item.value"
@@ -36,7 +36,7 @@
           </el-select>
         </el-form-item> -->
         <el-form-item label="是否商贸:" prop="isGacShop">
-          <el-select v-model="formData.isGacShop" clearable placeholder="请选择" style="width: 100%">
+          <el-select v-model="reasonForm.isGacShop" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in isCommerce"
               :key="item.value"
@@ -83,15 +83,20 @@
         ></el-table-column>
         <el-table-column prop="agentCode" label="经销店代码" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="supportFund" label="支援金" sortable="custom" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="licenceFund" label="牌照费" sortable="custom" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="totalFund" label="支援金总额" sortable="custom" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="carNum" label="车辆数" sortable="custom" show-overflow-tooltip width="100">
+        <el-table-column prop="carNum" label="车辆数" sortable="custom" show-overflow-tooltip width="90">
           <template slot-scope="scope">
-            <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.num }}</el-link>
+            <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.carNum }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="isGacShop" label="是否商贸" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="supportFund" label="支援金" sortable="custom" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="licenceFund" label="牌照费" sortable="custom" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="totalFund" label="支援金总额" sortable="custom" show-overflow-tooltip width="120"></el-table-column>
+        
+        <el-table-column prop="isGacShop" label="是否商贸" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.isGacShop | flagValue }}</span>
+          </template>
+        </el-table-column>
         
         <!-- <el-table-column prop="" label="是否收齐" show-overflow-tooltip></el-table-column> --> -->
         <!-- <el-table-column prop="" label="数据来源" show-overflow-tooltip></el-table-column> -->
@@ -154,7 +159,7 @@
       ></el-pagination>
     </div>
     
-    <carList-dialog ref="carListDialog"></carList-dialog>
+    <carList-dialog ref="carListDialog" :paramsForm="paramsForm"></carList-dialog>
   </div>
 </template>
 
@@ -162,20 +167,32 @@
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+import { mapState } from 'vuex';
+import moment from 'moment';
 
 import carListDialog from './carListDialog';
 
 export default {
   name: '',
   props: {
-    currentMonth: {
-      type: String,
-      default: '',
-    },
-    batch: {
-      type: String,
-      default: '',
-    }
+    // currentMonth: {
+    //   type: String,
+    //   default: '',
+    // },
+    // currentYear: {
+    //   type: String,
+    //   default: '',
+    // },
+    // batch: {
+    //   type: String,
+    //   default: '',
+    // },
+    // reasonForm: {
+    //   type: Object,
+    //   default: () => {
+    //     return {}
+    //   }
+    // },
   },
   components: {
     carListDialog,
@@ -185,7 +202,7 @@ export default {
       pageSize: 10,
       pageNum: 1,
       total: 0,
-      formData: {
+      reasonForm: {
         agentName: '',
         applyDate: '',
         id: '',
@@ -193,6 +210,9 @@ export default {
         pageSize: 10,
         pageNum: 1,
       },
+      currentMonth: '',
+      currentYear: '',
+      batch: '',
 
       tableData: [],
       tableHeight: 100,
@@ -206,15 +226,26 @@ export default {
         { value: 'N', label: '否' },
       ],
 
+      paramsForm: {
+        tableData: [],
+      },
+
     };
   },
   computed: {
-
+    
   },
   watch: {
 
   },
   created() {
+    const params = this.$route.query;
+    this.reasonForm.id = params.id;
+    this.reasonForm.applyDate = params.applyDate;
+    this.batch = params.batch;
+    this.currentMonth = params.month;
+    this.currentYear = params.year;
+
     this.$nextTick(function () {
       this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
       
@@ -240,15 +271,20 @@ export default {
   },
   
   mounted() {
-
+    this.getSupportGoldReasonListData();
   },
   methods: {
     // 查询
-    queryForm() {},
+    queryForm() {
+      this.pageNum = 1;
+      this.reasonForm.pageNum = 1;
+      this.getSupportGoldReasonListData();
+    },
 
     // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.getSupportGoldReasonListData();
     },
 
     // 自定义列接口索引
@@ -256,22 +292,17 @@ export default {
       let order = this.pageSize * (this.pageNum - 1);
       return index + order + 1;
     },
-    
-    //监听排序
-    sortChange(column, prop, order) {
-      console.log(column, prop, order);
-    },
 
     // 获取分页数据
     getSupportGoldReasonListData() {
       const url = common.supportAgListUrl;
       const params = {
-        agentName: this.formData.agentName,
-        applyDate: this.formData.applyDate,
-        id: this.formData.id,
-        isGacShop: this.formData.isGacShop,
-        turnPageBeginPos: this.formData.pageNum,
-        turnPageShowNum: this.formData.pageSize,
+        agentName: this.reasonForm.agentName,
+        isGacShop: this.reasonForm.isGacShop,
+        id: this.reasonForm.id,
+        applyDate: this.reasonForm.applyDate,
+        turnPageBeginPos: this.reasonForm.pageNum,
+        turnPageShowNum: this.reasonForm.pageSize,
       };
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
@@ -281,6 +312,12 @@ export default {
         }
       })
     },
+    
+    //监听排序
+    sortChange(column, prop, order) {
+      console.log(column, prop, order);
+    },
+
 
     // 合计
     getSummaries(param) {
@@ -313,9 +350,12 @@ export default {
               return prev;
             }
           }, 0);
-          if (index === 4) {
+          if (index === 3) {
             // 合计车辆数
             sums[index] += '辆';
+          } else if (index === 8) {
+            // 合计车辆数
+            sums[index] = '';
           } else {
             sums[index] += '元';
           }
@@ -330,13 +370,15 @@ export default {
     // 分页
     handleSizeChange(val) {
       this.pageNum = 1;
-      this.formData.pageNum = 1;
+      this.reasonForm.pageNum = 1;
       this.pageSize = val;
-      this.formData.pageSize = val;
+      this.reasonForm.pageSize = val;
+      this.getSupportGoldReasonListData();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
-      this.formData.pageNum = (val - 1) * this.pageSize + 1;
+      this.reasonForm.pageNum = (val - 1) * this.pageSize + 1;
+      this.getSupportGoldReasonListData();
     },
 
     // 设置截止月份总欠款
@@ -364,6 +406,18 @@ export default {
     // 查询车辆清单
     queryCar(row) {
       this.$refs.carListDialog.isShow(true);
+
+      const url = common.supportCarListByAgIdUrl;
+      const params = {
+        batchNumber: row.batchNumber,
+        agId: row.agId,
+      };
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          const data = res.data;
+          this.paramsForm.tableData = data.supportCarList;
+        }
+      })
     },
 
 

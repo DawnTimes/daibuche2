@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-20 10:23:26
- * @LastEditTime: 2020-09-16 13:48:13
+ * @LastEditTime: 2020-09-21 18:52:53
  * @LastEditors: your name
  * @Description: 车辆支援金清单
  * @FilePath: \webcode2\src\views\supportGold\components\carListDialog.vue
@@ -12,7 +12,7 @@
     <el-dialog width="90%" :close-on-click-modal="false" :visible.sync="carDialogVisible">
       <div class="table">
         <el-table
-          :data="tableData"
+          :data="paramsForm.tableData"
           border
           stripe
           show-summary
@@ -75,6 +75,12 @@ export default {
     //     }
     //   }
     // },
+    paramsForm: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
   },
   components: {},
   data() {
@@ -94,7 +100,9 @@ export default {
   watch: {},
   created() {
   },
-  mounted() {},
+  mounted() {
+    // this.getCarListData();
+  },
   methods: {
     // 合计
     getSummaries(param) {
@@ -122,6 +130,21 @@ export default {
       });
 
       return sums;
+    },
+
+    // 获取车辆数据
+    getCarListData(batchNumber = '', agId = '') {
+      const url = common.supportCarListByAgIdUrl;
+      const params = {
+        batchNumber: batchNumber,
+        agId: agId,
+      };
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          const data = res.data;
+          this.tableData = data.supportCarList;
+        }
+      })
     },
 
     // 利用父组件调用子组件的函数传参来显示弹框

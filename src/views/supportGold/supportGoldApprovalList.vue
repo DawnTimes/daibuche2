@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-09-16 13:47:26
+ * @LastEditTime: 2020-09-23 14:56:58
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -18,9 +18,9 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="支援金月份:" prop="systemName">
+        <el-form-item label="支援金月份:" prop="month">
           <el-date-picker
-            v-model="formData.value1"
+            v-model="formData.month"
             type="month"
             value-format="yyyy-MM"
             placeholder="选择日期"
@@ -29,8 +29,8 @@
         <!-- <el-form-item label="期数:" prop="interfaceName">
           <el-input maxlength="50" v-model="formData.interfaceName" clearable placeholder></el-input>
         </el-form-item> -->
-        <el-form-item label="批次号:" prop="systemName">
-          <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
+        <el-form-item label="批次号:" prop="batchNumber">
+          <el-input maxlength="30" v-model="formData.batchNumber" clearable placeholder></el-input>
         </el-form-item>
 
         <el-form-item>
@@ -65,17 +65,35 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="month" label="支援金月份" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="month" label="支援金月份" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.year + '-' + scope.row.month }}</span>
+          </template>
+        </el-table-column>
         <!-- <el-table-column prop="" label="期数" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop="" label="批次号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="batch" label="批次" show-overflow-tooltip></el-table-column>
-        
-        <el-table-column prop="" label="店数" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop="" label="车辆数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" label="审批状态" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" label="申请人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" label="申请时间" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="Batch" label="批次" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="店数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="rentCount" label="支援金" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="LicenceFee" label="牌照费" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="rentTotalCount" label="支援金合计" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.approvalStatus | supportApprovalStatus }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="creater" label="申请人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.create_time | timeFormatTemp }}</span>
+          </template>
+        </el-table-column>
+        <!-- <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.payStatus }}</span>
+          </template>
+        </el-table-column> -->
 
         <el-table-column
           align="center"
@@ -110,6 +128,8 @@
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+import moment from 'moment';
+import { mapState } from 'vuex';
 
 export default {
   name: '',
@@ -125,13 +145,14 @@ export default {
       pageNum: 1,
       total: 0,
       formData: {
-        
+        month: '',
+        batchNumber: '',
+        year: '',
+        pageSize: 10,
+        pageNum: 1,
       },
 
-      tableData: [
-        { month: '2020-07', batch: '第一批' },
-        { month: '2020-08', batch: '第三批' },
-      ],
+      tableData: [],
       tableHeight: 100,
       appravolStatus: [],
       
@@ -140,11 +161,14 @@ export default {
       rightControl: {
         approval: false,
       },
+      userApprovalType: '',
 
     };
   },
   computed: {
-
+    ...mapState({
+      asideInfoIds: store => store.asideInfoIds,
+    }),
   },
   watch: {
 
@@ -185,15 +209,20 @@ export default {
   },
   
   mounted() {
-
+    this.getSupportGoldApprovalListData();
   },
   methods: {
     // 查询
-    queryForm() {},
+    queryForm() {
+      this.pageNum = 1;
+      this.formData.pageNum = 1;
+      this.getSupportGoldApprovalListData();
+    },
 
     // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.getSupportGoldApprovalListData();
     },
 
     // 自定义列接口索引
@@ -202,16 +231,41 @@ export default {
       return index + order + 1;
     },
 
+    // 获取分页数据
+    getSupportGoldApprovalListData() {
+      this.userApprovalType = common.queryApprovalFlow(9631, this.asideInfoIds, '1'); // 会计审批
+      // this.userApprovalType = common.queryApprovalFlow(9632, this.asideInfoIds, '2'); // 资管部长审批
+
+      const url = common.spprotWaitListUrl;
+      const params = {
+        batchNumber: this.formData.batchNumber,
+        month: this.formData.month ? moment(this.formData.month).format('MM') : '',
+        year: this.formData.month ? moment(this.formData.month).format('YYYY') : '',
+        type: this.userApprovalType,
+        turnPageBeginPos: this.formData.pageNum,
+        turnPageShowNum: this.formData.pageSize,
+      };
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          const data = res.data;
+          this.tableData = data.applyList;
+          this.total = data.turnPageTotalNum * 1;
+        }
+      })
+    },
+
     // 分页
     handleSizeChange(val) {
       this.pageNum = 1;
       this.formData.pageNum = 1;
       this.pageSize = val;
       this.formData.pageSize = val;
+      this.getSupportGoldApprovalListData();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
       this.formData.pageNum = (val - 1) * this.pageSize + 1;
+      this.getSupportGoldApprovalListData();
     },
 
     // 审批
@@ -219,8 +273,14 @@ export default {
       this.$router.push({
         path: '/supportGoldApprovaled',
         query: {
-          month: row.month,
-          batch: row.batch,
+          id         : row.id,
+          year       : row.year,
+          month      : row.month,
+          batch      : row.Batch,
+          applyDate  : moment(row.creater).format('YYYY-MM-DD'),
+          type       : this.userApprovalType,
+          carNum     : row.carNum,
+          batchNumber: row.batchNumber,
         },
       })
     },

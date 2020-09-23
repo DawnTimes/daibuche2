@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-09-17 16:58:38
+ * @LastEditTime: 2020-09-23 18:39:03
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -88,9 +88,13 @@
         <el-table-column prop="Batch" label="批次" show-overflow-tooltip></el-table-column>
         <el-table-column prop="" label="店数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="month" label="审批状态" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="month" label="审批状态" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.approvalStatus | supportApprovalStatus }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="creater" label="申请人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" label="申请时间" show-overflow-tooltip>
+        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.create_time | timeFormatTemp }}</span>
           </template>
@@ -315,11 +319,18 @@ export default {
 
     // 详情
     handleDetail(row) {
+      sessionStorage.setItem('supportGoldDeatilPath', this.$route.path);
       this.$router.push({
         path: '/supportGoldDetail',
         query: {
-          month: row.month,
-          batch: row.batch,
+          id         : row.id,
+          year       : row.year,
+          month      : row.month,
+          batch      : row.Batch,
+          applyDate  : moment(row.creater).format('YYYY-MM-DD'),
+          type       : this.userApprovalType,
+          carNum     : row.carNum,
+          batchNumber: row.batchNumber,
         },
       })
     },
@@ -367,8 +378,33 @@ export default {
     },
 
     // 登记确定
-    formDataSubmit() {
-      this.$refs.registerDialog.isShow(false);
+    formDataSubmit(obj) {
+      const data = obj.data;
+      const url = common.supportRegisterUrl;
+      this.status.loading = true;
+      axios.post(url, data).then((res) => {
+        if (res.ec === '0') {
+          this.status.loading = true;
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '登记成功',
+          });
+          this.$refs.registerDialog.isShow(false);
+        } else {
+          this.status.loading = false;
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '登记失败',
+          });
+        }
+      }).catch((err) => {
+        this.status.loading = false;
+        this.$notify.error({
+          title: '温馨提示！',
+          message: err ? err.em : '登记失败'
+        });
+      })
+      
     },
   },
   filters: {

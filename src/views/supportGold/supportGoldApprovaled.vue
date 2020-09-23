@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-09-10 17:57:22
+ * @LastEditTime: 2020-09-23 15:01:46
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovaled.vue
@@ -13,7 +13,7 @@
     <div class="wrapper">
       <el-tabs type="card" v-model="formTemp.activeName" class="noBorder">
         <el-tab-pane class="title" name="first" label="原因说明">
-          <supportGoldApproval-reason :currentMonth="currentMonth" :batch="batch"></supportGoldApproval-reason>
+          <supportGoldApproval-reason></supportGoldApproval-reason>
 
           <div style="padding: 20px 0 20px 0; text-align: center">
             <el-button @click="handleGoToBack()" size="medium">返 回</el-button>
@@ -75,19 +75,32 @@ export default {
       formTemp: {
         activeName: 'first',
       },
+      id: '',
       currentMonth: '',
+      currentYear: '',
       batch: '',
+      // formData: {
+      //   agentName: '',
+      //   applyDate: '',
+      //   id: '',
+      //   isGacShop: '',
+      //   pageSize: 10,
+      //   pageNum: 1,
+      // },
       baseInfoForm: {
-        status: 'Y',
+        
       },
       formData: {
-        status: 'Y',
-        approvalUser: '',
+        type: '',
+        approvalPerson: '',
+        approvalOpinion: '',
+        id: '',
+        approvalOperation: '',
         approvalTime: '',
       },
       formReadonly: {
         hide: ['cancelBtn1'],
-        readonly: ['approvalUser', 'approvalTime'],
+        readonly: ['approvalPerson', 'approvalTime'],
       },
       status: {
         loading: false,
@@ -102,13 +115,13 @@ export default {
   },
   watch: {},
   created() {
-    this.formData.approvalUser = this.userId;
+    this.formData.approvalPerson = this.userId;
     this.formData.approvalTime = moment().format('YYYY-MM-DD HH:mm:ss');
-    const params = this.$route.query;
-    this.batch = params.batch;
-    const times = new Date(params.month);
-    // console.log(times);
-    this.currentMonth = times.getMonth() + 1 + '';
+
+    const query = this.$route.query;
+    this.formData.id = query.id;
+    this.formData.type = query.type;
+    Object.assign(this.baseInfoForm, query);
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -116,9 +129,57 @@ export default {
       vm.fatherPath = from.path;
     });
   },
-  mounted() {},
+  mounted() {
+    this.getDetail();
+  },
   methods: {
-    handleFormDataSubmit() {},
+    // 详情
+    getDetail() {
+      const url = common.supportApprovalListUrl;
+      const params = {
+        id: this.formData.id,
+      }
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          
+        }
+      })
+    },
+
+    // 审批提交
+    handleFormDataSubmit(obj) {
+      const data = obj.data;
+      const url = common.supportApprovalUrl;
+      this.status.loading = true;
+      axios.post(url, data).then((res) => {
+        if (res.ec === '0') {
+          this.status.loading = false;
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '提交成功！'
+          });
+
+          setTimeout(() => {
+            this.$router.push({
+              path: '/supportGoldApprovalList'
+            });
+          }, 1000);
+        } else {
+          this.status.loading = false;
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '提交失败，请联系管理员!'
+          });
+        }
+      }).catch((err) => {
+        this.status.loading = false;
+        this.$notify.error({
+          title: '温馨提示！',
+          message: err ? err.em : '提交失败，请联系管理员!',
+        });
+      })
+      
+    },
 
     // 上一步
     prevStep() {

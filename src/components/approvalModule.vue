@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 18:11:48
- * @LastEditTime: 2020-09-14 09:59:44
+ * @LastEditTime: 2020-09-23 14:20:33
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\components\approvalModule.vue
@@ -232,6 +232,7 @@ export default {
       const params = {
         approvalOperation: this.formData.approvalOperation, // 审批操作
         approvalPerson: this.formData.approvalPerson, // 审批人
+        approvalTime: this.formData.approvalTime, // 审批时间
         id: this.formData.id || null, // id
         approvalOpinion: this.formData.approvalOpinion || null, // 审批意见
         type: this.formData.type || null, // 

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-09-10 14:42:56
+ * @LastEditTime: 2020-09-23 14:52:02
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\baseInformationDetailModule.vue
@@ -15,37 +15,37 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>支援金月份：</span>
-                <span>8</span>
+                <span>{{ baseInfoForm.month }}</span>
               </div>
             </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+            <!-- <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>期数：</span>
                 <span></span>
               </div>
-            </el-col>
+            </el-col> -->
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>批次号：</span>
-                <span></span>
+                <span>{{ baseInfoForm.batchNumber }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>批次：</span>
-                <span></span>
+                <span>{{ baseInfoForm.batch }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>店数：</span>
-                <span>55</span>
+                <span>{{ baseInfoForm.carNum }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
-                <span>车辆数：</span>
-                <span>6888</span>
+                <span>车辆数量：</span>
+                <span>{{ baseInfoForm.carNum }}</span>
               </div>
             </el-col>
           </el-row>

@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 18:11:48
- * @LastEditTime: 2020-09-17 17:35:24
+ * @LastEditTime: 2020-09-22 17:36:25
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldModule.vue
@@ -38,7 +38,7 @@
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
-                <el-form-item label="支援金月份:" prop="monthTime" class="form-item">
+                <el-form-item label="支援金月份:" prop="" class="form-item">
                   <el-date-picker
                     v-model="formData.monthTime"
                     value-format="yyyy-MM"
@@ -74,12 +74,11 @@
       <div class="table dealerFrom">
         <el-form :rules="rules" :model="formData" ref="formData1" status-icon>
           <el-table
-            :data="formData.tableData"
+            :data="formData.agList"
             border
             stripe
             ref="table"
             style="width: 100%"
-            :cell-style="{'text-align': 'center', 'height': '60px'}"
             :header-cell-style="{
             'text-align':'center',
             'font-weight':'bold',  
@@ -89,17 +88,20 @@
           >
             <el-table-column width="50" align="center" label="序号" type="index" fixed></el-table-column>
             <el-table-column
-              align="center"
-              prop="id"
+              prop="agentCode"
               label="经销店代码"
               show-overflow-tooltip
-              width="120"
             ></el-table-column>
-            <el-table-column align="center" prop label="经销店名称" show-overflow-tooltip width="120"></el-table-column>
-            <el-table-column align="center" prop label="是否商贸" show-overflow-tooltip width="100"></el-table-column>
-            <el-table-column align="center" prop label="期数" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop label="车辆数量" show-overflow-tooltip></el-table-column>
-            <el-table-column
+            <!-- <el-table-column prop="agId" label="经销店id" show-overflow-tooltip></el-table-column> -->
+            <el-table-column prop="agentShortName" label="经销店简称" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="agentFullName" label="经销店名称" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="isGacShop" label="是否商贸" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <span>{{ scope.row.isGacShop | flagValue }}</span>
+              </template>
+            </el-table-column>
+            <!-- <el-table-column prop="agentCode" label="车辆数量" show-overflow-tooltip></el-table-column> -->
+            <!-- <el-table-column
               align="center"
               prop
               :label="setMonthTotal(2)"
@@ -140,19 +142,19 @@
               :label="setMonth(5)"
               show-overflow-tooltip
               width="100"
-            ></el-table-column>
+            ></el-table-column> -->
             <el-table-column
               align="center"
-              prop="remark"
+              prop="reason"
               label="申请原因"
               show-overflow-tooltip
-              width="300"
+              width="400"
             >
               <template slot-scope="scope">
                 <el-form-item
                   label=" "
-                  :prop="'tableData.' + scope.$index + '.remark'"
-                  :rules="rules.remark"
+                  :prop="'agList.' + scope.$index + '.reason'"
+                  :rules="rules.reason"
                 >
                   <el-input
                     type="textarea"
@@ -160,7 +162,7 @@
                     :autosize="{ minRows: 1, maxRows: 4}"
                     size="mini"
                     placeholder="请输入内容"
-                    v-model="scope.row.remark"
+                    v-model="scope.row.reason"
                   ></el-input>
                 </el-form-item>
               </template>
@@ -233,10 +235,17 @@ export default {
   },
   data() {
     return {
-      tableData: [],
+      // agList: [],
       tableHeight: 200,
       dealerForm: {
         currentMonth: null,
+        agentCode2: '',
+        agentName: '',
+        isGacShop: '',
+        socialCreditCode: '',
+        status: '',
+        pageSize: 10,
+        pageNum: 1,
       },
       currentMonth: null,
 
@@ -269,7 +278,7 @@ export default {
             trigger: 'change',
           },
         ],
-        remark: [
+        reason: [
           {
             required: true,
             message: '请输入原因',
@@ -329,21 +338,41 @@ export default {
 
     // 选择经销店
     handleChoose() {
-      if (_.isEmpty(this.formData.monthTime)) {
-        this.$notify.warning({
-          title: '温馨提示！',
-          message: '请先选择支援金月份',
-        });
-        return;
-      }
+      // if (_.isEmpty(this.formData.monthTime)) {
+      //   this.$notify.warning({
+      //     title: '温馨提示！',
+      //     message: '请先选择支援金月份',
+      //   });
+      //   return;
+      // }
       this.dealerForm.currentMonth = this.currentMonth;
       this.$refs.dealerTableDialog.isShow(true);
     },
 
+
     // 选择经销店确定
     formDataSure(obj) {
-      this.$set(this.formData, 'tableData', obj.data);
-      // this.formData.tableData = obj.data;
+      console.log(obj);
+      // this.$set(this.formData, 'agList', obj.data);
+      // this.formData
+      this.$nextTick(() => {
+        // 解构赋值
+        this.formData.agList.push(...obj.data);
+        // 对json数组去重， 使用js hash去重；js中使用hash去重，需要建立在对象的基础之上，因为对象的存储采用的是hash表
+        /*
+         * hash去重：不是自己去写hash算法  利用对象属性的添加内部应用了hash算法
+         * 思路：将元素 作为对象的属性进行添加 当对象内没有此属性时   将此元素作为属性添加  否则不添加
+         * hash表：线性表+链表
+         * 功能：无论查找还是添加都非常快
+         */
+        let hash = {};
+        this.formData.agList = this.formData.agList.reduce((temp, item) => {
+          hash[item.agId] ? '' : hash[item.agId] = true && temp.push(item)
+          return temp
+        }, [])
+        // console.log(this.formData.agList);
+      })
+      // this.formData.agList = obj.data;
       this.$refs.dealerTableDialog.isShow(false);
     },
 
@@ -356,7 +385,7 @@ export default {
               // 防止重复提交
               if (this.loading === false) {
                 // 审批状态改为待提交
-                this.formData.approvalStatus = 'toBeSubmit';
+                // this.formData.approvalStatus = 'toBeSubmit';
                 this.handleEmitData();
               }
             } else {
@@ -386,9 +415,10 @@ export default {
 
     // 删除
     handleDelete(row) {
-      this.formData.tableData.forEach((val, index) => {
-        if (val.id === row.id) {
-          this.formData.tableData.splice(index, 1);
+      this.formData.agList.forEach((val, index) => {
+        if (val.agId === row.agId) {
+          this.formData.agList.splice(index, 1);
+          // console.log(this.formData.agList);
         }
       });
     },

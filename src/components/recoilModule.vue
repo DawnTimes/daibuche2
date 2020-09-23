@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-08-19 16:06:36
+ * @LastEditTime: 2020-09-23 15:31:42
  * @LastEditors: your name
  * @Description: 反冲弹框
  * @FilePath: \webcode2\src\components\recoilModule.vue
@@ -11,25 +11,28 @@
     <el-dialog width="30%" :close-on-click-modal='false' title="反冲" :visible.sync="recoilFormVisible">
       <el-form :model="recoilForm" label-width="110px" size="medium">
         <el-form-item label="银行单据号">
-          <el-input v-model="recoilForm.id" disabled></el-input>
+          <el-input v-model="recoilForm.serialNumber" disabled></el-input>
         </el-form-item>
-        <el-form-item label="经销店/牌照商">
-          <el-input v-model="recoilForm.name" disabled></el-input>
+        <el-form-item label="经销店">
+          <el-input v-model="recoilForm.agentFullName" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="牌照商">
+          <el-input v-model="recoilForm.licenceName" disabled></el-input>
         </el-form-item>
         <el-form-item label="合同编号">
-          <el-input v-model="recoilForm.name" disabled></el-input>
+          <el-input v-model="recoilForm.contractInfoId" disabled></el-input>
         </el-form-item>
         <el-form-item label="期数">
-          <el-input v-model="recoilForm.name" disabled></el-input>
+          <el-input v-model="recoilForm.nper" disabled></el-input>
         </el-form-item>
         <el-form-item label="车架号">
-          <el-input v-model="recoilForm.name" disabled></el-input>
+          <el-input v-model="recoilForm.frameNumber" disabled></el-input>
         </el-form-item>
-        <el-form-item label="反冲金额">
+        <!-- <el-form-item label="反冲金额">
           <el-input v-model="recoilForm.name" disabled></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="备注">
-          <el-input v-model="recoilForm.name" max="300" type="textarea" :autosize="{ minRows: 3, maxRows: 4}"></el-input>
+          <el-input v-model="recoilForm.remark" max="300" type="textarea" :autosize="{ minRows: 3, maxRows: 4}"></el-input>
         </el-form-item>
         
       </el-form>

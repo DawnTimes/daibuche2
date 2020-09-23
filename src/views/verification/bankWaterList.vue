@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-09-17 09:33:39
+ * @LastEditTime: 2020-09-23 11:26:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -218,6 +218,7 @@ import { queryDict } from '@/api/index.js';
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+import axios2 from 'axios';
 
 import refundDialog from './components/refundDialog'; // 退款弹框
 import confirmBox from '@/components/confirmBox';  // 删除弹框
@@ -451,43 +452,91 @@ export default {
 
     // 数据导出下载文件
     exportButton() {
-      const params = {
-        
-      };
-      const url = common.bankWaterDownUrl;
-      axios.get(url, params, {
-        responseType: 'arraybuffer'
-      })
-        .then(res => {
-          const filename = res.filename || '银行流水单.xlsx';
-          this.fileDownload(res, filename);
-        })
-        .catch(() => {
-          this.$message.error('导出错误！请重新导出');
-        });
+      // 后端返回的是流文件
+      // const params = {
+      //   companyName: '',
+      //   serialNumber: '',
+      //   sideAccount: '',
+      //   sideAccountName: '',
+      // };
+      // const url = common.bankWaterDownUrl;
+      // axios2.get(url, params, {
+      //   responseType: 'arraybuffer'
+      // })
+      //   .then(res => {
+            //res为后台返回的流数据信息
+      //     const filename = res.filename || '银行流水单.xlsx';
+      //     this.fileDownload(res, filename);
+      //   })
+      //   .catch(() => {
+      //     this.$message.error('导出错误！请重新导出');
+      //   });
+      
+
+      // 后台生成Excel,前端直接获取并下载Excel
+      // 方式一：通过Form表单方式请求后台，直接下载excel文件
+      /**
+       * input标签主要用来传递请求所需的参数：
+       *
+       * 1.name属性是传递请求所需的参数名.
+       * 2.value属性是传递请求所需的参数值.
+       *
+       * 3.当为get类型时，请求所需的参数用input标签来传递，直接写在URL后面是无效的。
+       * 4.当为post类型时，queryString参数直接写在URL后面，formData参数则用input标签传递
+       *       有多少数据则使用多少input标签
+       *
+  　　　*/
+      // let form = document.createElement("form");//定义一个form表单
+      // form.style = "display:none";
+      // form.target = ""; 
+      // form.method = "get"; 
+      // form.action = '/api' + common.bankWaterDownUrl; 
+      // document.body.appendChild(form); //将表单放置在web中
+
+      // //创建隐藏表单
+      // let newElement = document.createElement("input");
+      // newElement.setAttribute("name","companyName");
+      // newElement.setAttribute("type","hidden");
+      // newElement.setAttribute("value", this.formData.companyName || '');
+      // form.appendChild(newElement);
+      // form.submit();//表单提交
+      
+      // 方式二：get方式请求后台，直接使用window.location.href 或 window.open()打开请求结果。
+      // /api/bankStatemntExcel/exportBankStatement.do
+      window.location.href = `/api/${common.bankWaterDownUrl}?companyName=${
+        this.formData.companyName ? this.formData.companyName : ''
+      }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''}&sideAccount=${
+        this.formData.sideAccount ? this.formData.sideAccount : ''
+      }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`;
+
+      // window.open(`/api/${common.bankWaterDownUrl}?companyName=${
+      // this.formData.companyName ? this.formData.companyName : ''
+      // }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''}&sideAccount=${
+      //   this.formData.sideAccount ? this.formData.sideAccount : ''
+      // }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`, '_parent')
     },
 
     fileDownload(data, fileName) {
       const blob = new Blob([data], {
-        type: 'application/octet-stream'
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
       });
       const filename = fileName;
       if (typeof window.navigator.msSaveBlob !== 'undefined') {
         window.navigator.msSaveBlob(blob, filename);
       } else {
-        const blobURL = window.URL.createObjectURL(blob);
+        const blobURL = window.URL.createObjectURL(blob); // 创建下载的链接
         // 通过创建a标签下载
         const tempLink = document.createElement('a');
         tempLink.style.display = 'none';
         tempLink.href = blobURL;
-        tempLink.setAttribute('download', filename);
+        tempLink.setAttribute('download', filename); // 下载后文件名
         if (typeof tempLink.download === 'undefined') {
           tempLink.setAttribute('target', '_blank');
         }
         document.body.appendChild(tempLink);
         tempLink.click();
-        document.body.removeChild(tempLink);
-        window.URL.revokeObjectURL(blobURL); // 释放内存
+        document.body.removeChild(tempLink); // 下载完成移除元素
+        window.URL.revokeObjectURL(blobURL); // 释放内存 释放掉blob对象
       }
     },
 

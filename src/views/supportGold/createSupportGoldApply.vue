@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-18 10:04:11
- * @LastEditTime: 2020-09-17 18:07:53
+ * @LastEditTime: 2020-09-22 10:07:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\createSupportGoldApply.vue
@@ -26,6 +26,7 @@
 import supportGoldModule from './components/supportGoldModule';
 import { mapState } from 'vuex';
 import common from '@/common/common.js';
+import axios from '@/common/axios.js';
 
 export default {
   name: 'createSupportGoldApply',
@@ -39,9 +40,7 @@ export default {
       formData: {
         creater: '',
         applyDate: '',
-        agList: [
-          { agId: '', reason: '' }
-        ],
+        agList: [],
       },
       status: {
         loading: false,
@@ -63,6 +62,39 @@ export default {
     formDataSubmit(obj) {
       const data = obj.data;
       const url = common.supportFundUrl;
+      this.status.loading = true;
+      axios.post(url, data).then((res) => {
+        console.log(res);
+        if (res.ec === '0') {
+          this.status.loading = false;
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '申请成功！'
+          })
+          
+          setTimeout(() => {
+            this.$router.push({
+              path: '/supportGoldApply'
+            })
+          }, 1000);
+          Object.assign(this.formData, {
+            applyDate: '',
+            agList: [],
+          })
+        } else {
+          this.status.loading = false;
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '申请失败，请联系管理员1111！'
+          })
+        }
+      }).catch((err) => {
+        this.status.loading = false;
+        this.$notify.error({
+          title: '温馨提示！',
+          message: err.em || '申请失败，请联系管理员！'
+        })
+      })
     },
   },
   filters: {

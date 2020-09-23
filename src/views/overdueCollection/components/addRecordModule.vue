@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:02:13
- * @LastEditTime: 2020-08-25 16:29:16
+ * @LastEditTime: 2020-09-23 16:22:52
  * @LastEditors: your name
  * @Description: 新增电催记录
  * @FilePath: \webcode2\src\views\overdueCollection\components\addRecordModule.vue
@@ -9,7 +9,7 @@
 
 <template>
   <div class="addRecordModule">
-    <el-row :gutter="10">
+    <el-row :gutter="0">
       <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="14">
         <el-form
           :model="formData"
@@ -122,9 +122,9 @@
         </el-form>
       </el-col>
     </el-row>
-    <el-row :gutter="10">
+    <el-row :gutter="0">
       <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="16">
-        <div style="padding: 20px 0 20px 0; text-align: center">
+        <div style="padding: 10px 0 10px 0; text-align: center">
           <el-button @click="handleGoToBack()">退 出</el-button>
           <el-button
             v-show="!$formAtReadonly('saveBtn', formReadonly.hide)"

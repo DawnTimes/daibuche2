@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-15 09:09:45
+ * @LastEditTime: 2020-09-21 15:15:04
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalList.vue
@@ -247,8 +247,8 @@ export default {
       //   })
       // }
       // console.log(this.asideInfoIds)
-      this.userApprovalType = common.queryApprovalFlow(9541, this.asideInfoIds, '1', this.userApprovalType); // 会计审批
-      // this.userApprovalType = common.queryApprovalFlow(9541, this.asideInfoIds, '2', this.userApprovalType); // 财务审批
+      this.userApprovalType = common.queryApprovalFlow(9541, this.asideInfoIds, '1'); // 会计审批
+      // this.userApprovalType = common.queryApprovalFlow(9541, this.asideInfoIds, '2'); // 财务审批
       // console.log(this.userApprovalType);
 
       const params = {

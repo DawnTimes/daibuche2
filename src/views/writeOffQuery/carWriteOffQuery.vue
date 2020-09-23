@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-09-17 17:19:05
+ * @LastEditTime: 2020-09-23 15:43:03
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -388,11 +388,18 @@ export default {
 
     // 反冲
     handleRecoil(row) {
-      // this.recoilFormVisible = true;
+      this.recoilForm.serialNumber   = row.serialNumber || '';
+      this.recoilForm.agentFullName  = row.agentFullName || '';
+      this.recoilForm.licenceName    = row.licenceName || '';
+      this.recoilForm.contractInfoId = row.contractInfoId || '';
+      this.recoilForm.nper           = row.nper || '';
+      this.recoilForm.frameNumber    = row.frameNumber || '';
+      this.recoilForm.remark         = row.remark || '';
       this.$refs.recoilModule.isShow(true);
     },
     // 反冲提交
-    formDataSubmit() {
+    formDataSubmit(obj) {
+      console.log(obj);
       this.status.loading = true;
       const url = common.backlashDealUrl;
       const params = {
@@ -403,8 +410,24 @@ export default {
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
           this.status.loading = false;
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '反冲成功！',
+          })
           this.$refs.recoilModule.isShow(false);
+        } else {
+          this.status.loading = false;
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '反冲失败！',
+          })
         }
+      }).catch((err) => {
+        this.status.loading = false;
+        this.$notify.error({
+          title: '温馨提示！',
+          message: err ? err.em : '反冲失败！',
+        })
       })
       
     },
@@ -455,11 +478,24 @@ export default {
           };
           axios.post(url, params).then((res) => {
             if (res.ec === '0') {
-              
+              this.$notify.success({
+                title: '温馨提示！',
+                message: '反冲成功！',
+              })
+            } else {
+              this.$notify.error({
+                title: '温馨提示！',
+                message: res.em || '反冲失败！',
+              })
             }
           })
         })
-        .catch(() => {});
+        .catch((err) => {
+          this.$notify.error({
+            title: '温馨提示！',
+            message: err ? err.em : '反冲失败！',
+          })
+        });
 
     },
   },

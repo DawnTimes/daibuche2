@@ -67,7 +67,7 @@ const Dictionary = {
     },
   ],
 
-  // 审批状态
+  // 租金审批状态
   approvalStatus: [{
       label: '生成租金',
       value: '1'
@@ -83,6 +83,28 @@ const Dictionary = {
     {
       label: '生效',
       value: '4'
+    },
+    {
+      label: '审批拒绝',
+      value: '5'
+    },
+  ],
+  // 支援金审批状态
+  supportApprovalStatus: [{
+      label: '生成支援金',
+      value: '1'
+    },
+    {
+      label: '待会计审批',
+      value: '2'
+    },
+    {
+      label: '待资管负责人审批',
+      value: '3'
+    },
+    {
+      label: '生效',
+      value: '5'
     },
     {
       label: '审批拒绝',

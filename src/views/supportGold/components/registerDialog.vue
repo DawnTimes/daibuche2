@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 15:27:34
- * @LastEditTime: 2020-08-19 16:15:49
+ * @LastEditTime: 2020-09-23 18:18:00
  * @LastEditors: your name
  * @Description: 登记弹窗
  * @FilePath: \webcode2\src\views\supportGold\components\registerDialog.vue
@@ -17,7 +17,7 @@
       :visible.sync="registerFormVisible"
     >
       <el-form :model="registerForm" label-width="100px" size="medium">
-        <el-form-item label="批次号">
+        <el-form-item label="支援金id">
           <el-input v-model="registerForm.id" disabled></el-input>
         </el-form-item>
         <el-form-item label="支付登记人">
@@ -34,7 +34,7 @@
         </el-form-item>
         <el-form-item label="备注">
           <el-input
-            v-model="registerForm.name"
+            v-model="registerForm.remark"
             type="textarea"
             maxlength="300"
             :autosize="{ minRows: 3, maxRows: 4}"
