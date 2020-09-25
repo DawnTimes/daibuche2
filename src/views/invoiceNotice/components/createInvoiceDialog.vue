@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 15:15:46
- * @LastEditTime: 2020-08-25 10:24:57
+ * @LastEditTime: 2020-09-24 14:00:19
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\components\createInvoiceDialog.vue
@@ -15,25 +15,37 @@
       :close-on-click-modal="false"
       title="生成开票明细"
       :visible.sync="createInvoiceFormVisible"
+      :destroy-on-close="true"
     >
-      <el-form :model="invoiceForm" label-width="80px" size="medium">
+      <el-form
+        :model="invoiceForm"
+        ref="invoiceForm"
+        :rules="rules"
+        label-width="80px"
+        size="medium"
+      >
         <!-- <el-form-item label="登记人">
           <el-input v-model="invoiceForm.userId" disabled></el-input>
-        </el-form-item> -->
-        <el-form-item label="生成日期">
+        </el-form-item>-->
+        <el-form-item label="生成日期" prop="applyDate">
           <el-date-picker
-            v-model="invoiceForm.currentTime"
+            v-model="invoiceForm.applyDate"
             value-format="yyyy-MM-dd"
             type="date"
             :picker-options="pickerOptionsDate"
             placeholder="选择日期"
+            style="width: 80%"
           ></el-date-picker>
         </el-form-item>
-        
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="createInvoiceFormVisible = false" plain size="medium">取 消</el-button>
-        <el-button type="primary" @click="invoiceFormSubmit" :loading="loading" size="medium">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="invoiceFormSubmit('invoiceForm')"
+          :loading="loading"
+          size="medium"
+        >确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -68,24 +80,32 @@ export default {
           var currentDate = new Date();
           var currentMonth = currentDate.getMonth() + 1;
           var currentYear = currentDate.getFullYear();
-          // 只能选择每月5号,大于当前月的不能选
+          // 只能选择每月5号,并且大于当前月的不能选
           // return day != 5
 
           if (year > currentYear) {
-            return true
-          } else if (year = currentYear) {
+            return true;
+          } else if ((year = currentYear)) {
             if (month <= currentMonth) {
               if (day != 5) {
-                return true
+                return true;
               } else {
-                return false
+                return false;
               }
             } else {
-              return true
+              return true;
             }
           }
-          
         },
+      },
+      rules: {
+        applyDate: [
+          {
+            required: true,
+            message: '请选择生成日期',
+            trigger: 'change',
+          },
+        ],
       },
     };
   },
@@ -95,11 +115,21 @@ export default {
   mounted() {},
   methods: {
     // 登记提交
-    invoiceFormSubmit() {
-      // 防止重复提交
+    invoiceFormSubmit(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (!valid) {
+          this.$notify.warning({
+            title: '温馨提示',
+            message: '请正确填写表单',
+          });
+          return;
+        }
+
+        // 防止重复提交
       if (this.loading === false) {
         this.handleEmitData();
       }
+      });
     },
 
     // 组件通讯

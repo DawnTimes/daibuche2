@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-09-23 17:47:01
+ * @LastEditTime: 2020-09-24 09:45:27
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -14,7 +14,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="110px"
+        label-width="120px"
         size="small"
         ref="ruleForm"
       >
@@ -30,9 +30,9 @@
         <el-form-item label="期数:" prop="nper">
           <el-input maxlength="10" v-model="formData.nper" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="车型:" prop="systemName">
+        <!-- <el-form-item label="车型:" prop="systemName">
           <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="车架号:" prop="frameNumber">
           <el-input maxlength="30" v-model="formData.frameNumber" clearable placeholder></el-input>
         </el-form-item>

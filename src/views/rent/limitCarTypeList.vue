@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-17 17:19:55
+ * @LastEditTime: 2020-09-25 14:56:50
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeList.vue
@@ -17,7 +17,7 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="车型代码:" prop="modelCode">
+        <el-form-item label="车型名称:" prop="modelCode">
           <el-input maxlength="30" v-model="formData.modelCode" placeholder></el-input>
         </el-form-item>
         <el-form-item label="城市:" prop="cityName">
@@ -82,7 +82,7 @@
         ></el-table-column>
         <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
         <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="brandName" label="品牌名称" show-overflow-tooltip></el-table-column>
         <el-table-column prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
         <el-table-column prop="licenceName" label="牌照商" show-overflow-tooltip></el-table-column>
         <el-table-column prop="cityName" label="城市" show-overflow-tooltip></el-table-column>

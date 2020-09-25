@@ -42,7 +42,7 @@ export default {
   // editPasswordUrl        : "/carmanage-admin/user/updatePassword",
   // addOrUpdateAgentUrl2   : "/carmanage-admin/addOrUpdateAgent2.do",
 
-
+  // 一期
   allTreeUrl              : "/menu/allTree",
   userMenuUrl             : "/menu/userMenu",
   carAdjustlistUrl        : "/carAdjustlist.do",
@@ -84,7 +84,7 @@ export default {
   addOrUpdateAgentUrl2    : "/addOrUpdateAgent2.do",
 
 
-  
+  // 二期
   queryDictUrl                  : '/dataDict/queryDict.do',                      // 数据字典
   bankWaterDownUrl              : '/bankStatemntExcel/exportBankStatement.do',   // 导出银行流水单
   queryLimitCarListUrl          : '/queryLimitCarList.do',                       // 限牌车型分页
@@ -125,6 +125,11 @@ export default {
   queryNotInvoiceNoticeDetailUrl: '/queryNotInvoiceNoticeDetail.do',             // 无需开票明细
   queryInvoiceNoticeDetailUrl   : '/queryInvoiceNoticeDetail.do',                // 开票明细
   queryInvoiceByContractIdUrl   : '/queryInvoiceByContractId.do',                // 开票通知单
+  createInvoiceDetailUrl        : '/createInvoiceDetail.do',                     // 生成开票明细
+  invoiceRegisterUrl            : '/invoiceRegister.do',                         // 开票登记
+  collectionListUrl             : '/collectionList.do',                          // 逾期记录分页
+  collectionQueryListUrl        : '/collectionQueryList.do',                     // 催收记录
+  createCollectionUrl           : '/createCollection.do',                        // 新增催收记录
 
 
   // 验证码

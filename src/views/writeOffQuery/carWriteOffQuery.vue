@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-09-23 15:43:03
+ * @LastEditTime: 2020-09-25 18:06:25
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -96,7 +96,7 @@
         <el-table-column prop="licenceName" label="牌照商" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="contractInfoId" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="carModel" label="车型" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="plateNumber" label="车牌号" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="engineNumber" label="发动机号" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="nper" label="期数" show-overflow-tooltip width="100"></el-table-column>
@@ -126,7 +126,11 @@
           </template>
         </el-table-column>
         <el-table-column prop="verPersion" label="核销人" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="verDate" label="核销时间" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="verDate" label="核销时间" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.verDate | timeFormat }}</span>
+          </template>
+        </el-table-column>
         
         <el-table-column prop="payStatus" label="支援金状态" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="backlash" label="反冲状态" show-overflow-tooltip width="100">
@@ -245,6 +249,7 @@ export default {
       recoilFormVisible: false,
 
       multipleSelection: [], // 批量选择
+      bacthCarId: [],
 
       // 按钮权限
       rightArray: [9731, 9732],
@@ -388,42 +393,51 @@ export default {
 
     // 反冲
     handleRecoil(row) {
-      this.recoilForm.serialNumber   = row.serialNumber || '';
-      this.recoilForm.agentFullName  = row.agentFullName || '';
-      this.recoilForm.licenceName    = row.licenceName || '';
-      this.recoilForm.contractInfoId = row.contractInfoId || '';
-      this.recoilForm.nper           = row.nper || '';
-      this.recoilForm.frameNumber    = row.frameNumber || '';
-      this.recoilForm.remark         = row.remark || '';
-      this.$refs.recoilModule.isShow(true);
+      // this.recoilForm.serialNumber   = row.serialNumber || '';
+      // this.recoilForm.agentFullName  = row.agentFullName || '';
+      // this.recoilForm.licenceName    = row.licenceName || '';
+      // this.recoilForm.contractInfoId = row.contractInfoId || '';
+      // this.recoilForm.nper           = row.nper || '';
+      // this.recoilForm.frameNumber    = row.frameNumber || '';
+      // this.recoilForm.remark         = row.remark || '';
+      // this.$refs.recoilModule.isShow(true);
+
+      this.$confirm('是否确定反冲选中的车辆? 反冲后不可恢复！', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.formDataSubmit(row.id);
+      }).catch(() => {         
+        });
     },
     // 反冲提交
-    formDataSubmit(obj) {
-      console.log(obj);
-      this.status.loading = true;
+    formDataSubmit(id) {
+      // console.log(obj);
+      // this.status.loading = true;
       const url = common.backlashDealUrl;
       const params = {
         backList: [
-          { id : '' }
+          { id : id }
         ],
       };
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
-          this.status.loading = false;
+          // this.status.loading = false;
           this.$notify.success({
             title: '温馨提示！',
             message: '反冲成功！',
           })
-          this.$refs.recoilModule.isShow(false);
+          // this.$refs.recoilModule.isShow(false);
         } else {
-          this.status.loading = false;
+          // this.status.loading = false;
           this.$notify.error({
             title: '温馨提示！',
             message: res.em || '反冲失败！',
           })
         }
       }).catch((err) => {
-        this.status.loading = false;
+        // this.status.loading = false;
         this.$notify.error({
           title: '温馨提示！',
           message: err ? err.em : '反冲失败！',
@@ -434,7 +448,13 @@ export default {
 
     // 批量选择
     handleSelectionChange(val) {
+      this.bacthCarId = [];
       this.multipleSelection = val;
+      if (!_.isEmpty(this.multipleSelection)) {
+        this.multipleSelection.forEach((item) => {
+          this.bacthCarId.push(item.id)
+        })
+      }
     },
     // 批量反冲
     batchRecoil() {
@@ -464,17 +484,18 @@ export default {
         return false
       }
       
-      this.$confirm('是否确定反冲选中的车辆? 反冲后不可恢复！?', '提示', {
+      this.$confirm('是否确定反冲选中的车辆? 反冲后不可恢复！', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
       })
         .then(() => {
           const url = common.backlashDealUrl;
+          let idArr = [];
+          // 合并数组
+          idArr = _.concat(this.bacthCarId, tidArr);
           const params = {
-            backList: [
-              { id : '' }
-            ],
+            backList: idArr,
           };
           axios.post(url, params).then((res) => {
             if (res.ec === '0') {
@@ -488,15 +509,14 @@ export default {
                 message: res.em || '反冲失败！',
               })
             }
-          })
-        })
-        .catch((err) => {
-          this.$notify.error({
-            title: '温馨提示！',
-            message: err ? err.em : '反冲失败！',
-          })
+          }).catch((err) => {
+            this.$notify.error({
+              title: '温馨提示！',
+              message: err ? err.em : '反冲失败！',
+            })
+          });
+        }).catch(() => {         
         });
-
     },
   },
   filters: {

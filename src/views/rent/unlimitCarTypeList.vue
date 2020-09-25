@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-16 14:43:06
+ * @LastEditTime: 2020-09-25 14:55:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeList.vue
@@ -57,7 +57,7 @@
         ></el-table-column>
         <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
         <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="brandName" label="品牌名称" show-overflow-tooltip></el-table-column>
         <el-table-column prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
         <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
         <el-table-column prop="monthlyRent" label="月租金" show-overflow-tooltip>

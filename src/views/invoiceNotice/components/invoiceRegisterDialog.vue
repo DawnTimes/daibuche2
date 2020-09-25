@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 11:28:29
- * @LastEditTime: 2020-08-25 10:08:15
+ * @LastEditTime: 2020-09-24 14:27:30
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\components\invoiceRegisterDialog.vue
@@ -14,13 +14,20 @@
       :close-on-click-modal="false"
       title="发票登记"
       :visible.sync="invoiceRegisterFormVisible"
+      :destroy-on-close="true"
     >
-      <el-form :model="registerForm" label-width="80px" size="medium">
-        <el-form-item label="购方名称">
-          <el-input v-model="registerForm.id" disabled></el-input>
+      <el-form
+        :model="registerForm"
+        ref="registerForm"
+        :rules="rules"
+        label-width="80px"
+        size="medium"
+      >
+        <!-- <el-form-item label="购方名称">
+          <el-input v-model="registerForm.buyName" disabled></el-input>
         </el-form-item>
         <el-form-item label="购方税号">
-          <el-input v-model="registerForm.id" disabled></el-input>
+          <el-input v-model="registerForm.buyCreditCode" disabled></el-input>
         </el-form-item>
         <el-form-item label="备注">
           <el-input
@@ -30,24 +37,28 @@
             disabled
             :autosize="{ minRows: 2, maxRows: 4}"
           ></el-input>
+        </el-form-item> -->
+        <el-form-item label="发票号码" prop="invoiceNumber">
+          <el-input maxlength="50" v-model="registerForm.invoiceNumber"></el-input>
         </el-form-item>
-        <el-form-item label="发票号码">
-          <el-input v-model="registerForm.name"></el-input>
-        </el-form-item>
-        <el-form-item label="开票时间">
+        <el-form-item label="开票时间" prop="invoiceDate">
           <el-date-picker
-            v-model="registerForm.currentTime"
+            v-model="registerForm.invoiceDate"
             value-format="yyyy-MM-dd"
             style="width: 100%"
             type="date"
             placeholder="选择日期"
           ></el-date-picker>
         </el-form-item>
-        
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="invoiceRegisterFormVisible = false" plain size="medium">取 消</el-button>
-        <el-button type="primary" @click="registerSubmit" :loading="loading" size="medium">登 记</el-button>
+        <el-button
+          type="primary"
+          @click="registerSubmit('registerForm')"
+          :loading="loading"
+          size="medium"
+        >登 记</el-button>
       </div>
     </el-dialog>
   </div>
@@ -73,6 +84,22 @@ export default {
   data() {
     return {
       invoiceRegisterFormVisible: false,
+      rules: {
+        invoiceDate: [
+          {
+            required: true,
+            message: '请选择开票日期',
+            trigger: 'change',
+          },
+        ],
+        invoiceNumber: [
+          {
+            required: true,
+            message: '请输入发票号码',
+            trigger: 'blur',
+          },
+        ],
+      },
     };
   },
   computed: {},
@@ -81,11 +108,21 @@ export default {
   mounted() {},
   methods: {
     // 登记提交
-    registerSubmit() {
-      // 防止重复提交
-      if (this.loading === false) {
-        this.handleEmitData();
-      }
+    registerSubmit(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (!valid) {
+          this.$notify.warning({
+            title: '温馨提示',
+            message: '请正确填写表单',
+          });
+          return;
+        }
+
+        // 防止重复提交
+        if (this.loading === false) {
+          this.handleEmitData();
+        }
+      });
     },
 
     // 组件通讯

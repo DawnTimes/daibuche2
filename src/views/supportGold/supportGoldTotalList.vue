@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-09-17 17:28:52
+ * @LastEditTime: 2020-09-25 16:33:37
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -89,10 +89,10 @@
         <el-table-column prop="agentCode" label="经销店编码" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="plateNumber" label="车牌号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="plateNumber" label="车牌号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="modelCode" label="车型" show-overflow-tooltip></el-table-column>
         <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="batch" label="批次" show-overflow-tooltip></el-table-column>
         <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">

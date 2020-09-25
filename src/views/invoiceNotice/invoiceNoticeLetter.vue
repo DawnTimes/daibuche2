@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-08-25 10:04:08
+ * @LastEditTime: 2020-09-24 16:39:48
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -19,7 +19,7 @@
           <span>开票通知单</span>
         </div>
         <div class="lettetMode">
-          <span>租赁方式</span>
+          <span>{{ formData.leaseWay ? (formData.leaseWay | leaseWay) : '租赁方式' }}</span>
         </div>
       </div>
       <div class="makeBox">
@@ -27,7 +27,7 @@
           <span>制单部门：车辆业务部</span>
         </div>
         <div class="makeTime">
-          <span>制单时间：2020/8/24</span>
+          <span>制单时间：{{ letterForm.currentDate }}</span>
         </div>
       </div>
       <div class="tableInfoBox">
@@ -36,41 +36,41 @@
             <span>发票种类</span>
           </div>
           <div class="speciesItem2">
-            <span>车辆租金</span>
-            <span>违章保证金</span>
+            <span>{{ letterForm.incoiceType }}</span>
+            <span>{{ letterForm.margin }}</span>
           </div>
           <div class="speciesItem3">
             <span>增值税专用发票</span>
-            <span>违章保证金</span>
+            <span>收据</span>
           </div>
           <div class="speciesItem4">
             <span>税率</span>
           </div>
           <div class="speciesItem4">
-            <span>13%</span>
+            <span>{{ letterForm.rate }}</span>
           </div>
           <div class="speciesItem5">
             <span>合同编号</span>
           </div>
           <div class="speciesItem6">
-            <span>GALC-ZL-1901150031</span>
+            <span>{{ formData.contractNumber }}</span>
           </div>
         </div>
         <div class="contentBox">
           <div class="contentItem1">
-            <span>发票种类</span>
+            <span>开票内容</span>
           </div>
           <div class="contentItem2">
-            <span>*经营租赁*车辆租金</span>
+            <span>{{ letterForm.letterContent }}</span>
           </div>
           <div class="contentItem3">
             <span>纳税人类型</span>
           </div>
           <div class="contentItem4">
-            <el-checkbox-group v-model="formData.checkList">
+            <el-checkbox-group v-model="formData.checkList" :max="1">
               <el-checkbox :label="1">一般纳税人</el-checkbox>
-              <el-checkbox :label="2" disabled>小规模纳税人</el-checkbox>
-              <el-checkbox :label="3" disabled>个人</el-checkbox>
+              <el-checkbox :label="2">小规模纳税人</el-checkbox>
+              <el-checkbox :label="3">个人</el-checkbox>
             </el-checkbox-group>
           </div>
         </div>
@@ -79,7 +79,7 @@
             <span>客户名称(全称)</span>
           </div>
           <div class="contentItem4">
-            <span>商丘宏宝汽车销售服务有限公司</span>
+            <span>{{ formData.name }}</span>
           </div>
         </div>
         <div class="contentBox2">
@@ -88,7 +88,7 @@
             <span>（个人）身份证号码</span>
           </div>
           <div class="contentItem4">
-            <span>商丘宏宝汽车销售服务有限公司</span>
+            <span>{{ formData.creditCode }}</span>
           </div>
         </div>
         <div class="contentBox2">
@@ -97,7 +97,7 @@
             <span>（个人）手机号码</span>
           </div>
           <div class="contentItem4">
-            <span>商丘市梁园区民主西路北富康路西中原车城F10栋1-2层门面03706967776</span>
+            <span>{{ formData.addressTel }}</span>
           </div>
         </div>
         <div class="contentBox">
@@ -105,7 +105,7 @@
             <span>（机构）开户行及账号</span>
           </div>
           <div class="contentItem4">
-            <span>中国工商银行股份有限公司商丘梁园支行1716020309200070928</span>
+            <span>{{ formData.bankAccount }}</span>
           </div>
         </div>
         <div class="contentBox">
@@ -113,7 +113,7 @@
             <span>电子邮箱地址</span>
           </div>
           <div class="contentItem4">
-            <span>123456@163.com</span>
+            <span>{{ formData.email }}</span>
           </div>
         </div>
       </div>
@@ -126,21 +126,24 @@
       }"
         style="width: 100%"
       >
-        <el-table-column prop="dae" label="租金期数" width="100"></el-table-column>
-        <el-table-column prop="date" label="应收日期" width="100"></el-table-column>
-        <el-table-column prop="address" label="车辆台数" width="100"></el-table-column>
-        <el-table-column prop="address" label="月租金合计" width="160"></el-table-column>
-        <el-table-column prop="address" label="车辆租金" width="180"></el-table-column>
-        <el-table-column prop="address" label="管理费" width="100"></el-table-column>
-        <el-table-column prop="address" label="开票日期" width="168"></el-table-column>
-        <el-table-column prop="address" label="票据号码" width="170"></el-table-column>
+        <el-table-column prop="nper" label="租金期数" width="100" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="payDay" label="应收日期" width="100" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="num" label="车辆台数" width="100" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="dueAmount" label="月租金合计" width="100" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="dueInterest" label="车辆租金" show-overflow-tooltip v-if="true"></el-table-column>
+        <el-table-column prop="duePrincipal" label="本金" show-overflow-tooltip v-if="true"></el-table-column>
+        <el-table-column prop="dueInterest" label="利息" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="dueManagementFee" label="管理费" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="dueCommission" label="手续费" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="invoiceDate" label="开票日期" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="invoiceNumber" label="票据号码" show-overflow-tooltip></el-table-column>
       </el-table>
       <div class="footerBox">
         <div class="agentBox">
-          <span>经办人：张三</span>
+          <span>经办人：</span>
         </div>
         <div class="headerBox">
-          <span>经办部门负责人：李四</span>
+          <span>经办部门负责人：</span>
         </div>
       </div>
 
@@ -153,31 +156,95 @@
 </template>
 
 <script>
+import _ from 'lodash';
+import axios from '@/common/axios.js';
+import common from '@/common/common.js';
+import moment from 'moment';
+import { mapState } from 'vuex';
+
 export default {
   name: 'invoiceNoticeLetter',
   props: {},
   components: {},
   data() {
     return {
+      contractId: '',
       formData: {
         checkList: [1],
+        addressTel: '',
+        bankAccount: '',
+        contractNumber: '',
+        contractId: '',
+        creditCode: '',
+        leaseWay: '',
+        name: '',
+        email: '',
+        invoiceDetail: [],
+      },
+      letterForm: {
+        currentDate: '',
+        rate: '13%',
+        incoiceType: '车辆租金',
+        margin: '违章保证金',
+        letterContent: '*经营租赁*车辆租金',
       },
       tableData: [
-        { date: '2020-08-01'},
-        { date: '2020-08-02'},
-        { date: '2020-08-03'},
-        { date: '2020-08-04'},
-        { date: '2020-08-05'},
-        { date: '2020-08-05'},
-        { date: '2020-08-05'},
+        { nper: '1'},
+        { nper: '2'},
+        { nper: '3'},
+        { nper: '4'},
+        { nper: '5'},
+        { nper: '6'},
+        { nper: '7'},
+
+      ],
+      // 经租
+      jzLeaseList: [
+        { nper: '首期租金' },
+        { nper: '手续费' },
+        { nper: '违章保证金' },
+        { nper: '0' },
+      ],
+      // 直租
+      zzLeaseList: [
+        { nper: '首付款' },
+        { nper: '手续费' },
+        { nper: '保证金' },
+      ],
+      // 回租
+      hzLeaseList: [
+        { nper: '0' },
       ],
     };
   },
   computed: {},
   watch: {},
-  created() {},
-  mounted() {},
+  created() {
+    this.tableData = _.concat(this.jzLeaseList, this.tableData);
+    this.letterForm.currentDate = moment().format('YYYY-MM-DD')
+    this.contractId = this.$route.query.contractId;
+  },
+  mounted() {
+    this.queryNoticeLetterDetail();
+  },
   methods: {
+    // 详情
+    queryNoticeLetterDetail() {
+      const url = common.queryInvoiceByContractIdUrl;
+      const params = {
+        contractId: this.contractId,
+      };
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          
+        } else {
+
+        }
+      }).catch((err) => {
+        
+      })
+    },
+
     // 返回
     handleBack() {
       this.$router.push({
@@ -393,6 +460,10 @@ export default {
       display: flex;
       justify-content: space-between;
       font-weight: bold;
+
+      .headerBox {
+        padding-right: 80px;
+      }
     }
 
     .footerBtn {

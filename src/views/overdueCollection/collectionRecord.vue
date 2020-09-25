@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:25:10
- * @LastEditTime: 2020-09-23 16:23:54
+ * @LastEditTime: 2020-09-25 15:58:04
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\collectionRecord.vue
@@ -20,10 +20,10 @@
     </div>
 
     <el-row :gutter="0">
-      <el-col :xs="24" :sm="24" :md="20" :lg="20" :xl="18">
+      <el-col :xs="24" :sm="24" :md="24" :lg="20" :xl="18">
         <div class="exportBtn">
-          <el-button type="primary" size="medium">导出</el-button>
-          <el-button size="medium" plain>导入</el-button>
+          <el-button type="primary" size="medium" @click="importButton">导入</el-button>
+          <el-button type="primary" size="medium" plain @click="exportButton">导出</el-button>
         </div>
         <div class="table">
           <el-table
@@ -42,24 +42,26 @@
             <el-table-column
               width="50"
               align="center"
-              type="selection"
-              fixed
-            ></el-table-column>
-            <el-table-column
-              width="50"
-              align="center"
               label="序号"
               type="index"
               :index="indexMethod"
               fixed
             ></el-table-column>
-            <el-table-column prop="name" label="经销店名称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop label="电催人员" show-overflow-tooltip></el-table-column>
-            <el-table-column prop label="电催日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="id" label="承诺还款日期" show-overflow-tooltip></el-table-column>
-            <el-table-column prop label="最新联系人" show-overflow-tooltip></el-table-column>
-            <el-table-column prop label="逾期原因" show-overflow-tooltip></el-table-column>
-            <el-table-column prop label="电催记录" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="name" label="经销店名称" show-overflow-tooltip min-width="100"></el-table-column>
+            <el-table-column prop="electricExpeditor" label="电催人员" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="electricDate" label="电催日期" show-overflow-tooltip min-width="100">
+              <template slot-scope="scope">
+                <span>{{ scope.row.electricDate | timeFormatTemp }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="promisedRepayDate" label="承诺还款日期" show-overflow-tooltip min-width="100">
+              <template slot-scope="scope">
+                <span>{{ scope.row.promisedRepayDate | timeFormat }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="newLink" label="最新联系人" show-overflow-tooltip min-width="100"></el-table-column>
+            <el-table-column prop="overdueReason" label="逾期原因" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="electricCatalysis" label="电催记录" show-overflow-tooltip></el-table-column>
           </el-table>
         </div>
         <div class="page-layer">
@@ -76,34 +78,47 @@
         </div>
       </el-col>
     </el-row>
+
+    <!-- // 导入催收记录 -->
+    <upload-dialog ref="uploadDialog"></upload-dialog>
   </div>
 </template>
 
 <script>
 import addRecordModule from './components/addRecordModule';
+import _ from 'lodash';
+import axios from '@/common/axios.js';
+import common from '@/common/common.js';
+import moment from 'moment';
 import { mapState } from 'vuex';
+
+import uploadDialog from '@/components/uploadDialog';  // 上传弹框
 
 export default {
   name: '',
   props: {},
   components: {
     addRecordModule,
+    uploadDialog,
   },
   data() {
     return {
       total: 0,
       pageNum: 1,
-      pageSize: 10,
-      tableData: [
-        { name: '广州广汽租赁' },
-        { name: '南京广汽租赁' },
-      ],
+      pageSize: 5,
+      tableData: [],
       formData: {
-        userId: ''
+        electricExpeditor: '',
+        electricCatalysis: '',
+        electricDate: '',
+        newLink: '',
+        overdueReason: '',
+        promisedRepayDate: '',
+        soldId: '',
       },
       formReadonly: {
         hide: [],
-        readonly: [],
+        readonly: ['electricExpeditor'],
       },
       status: { loading: false },
     };
@@ -114,15 +129,65 @@ export default {
     })
   },
   watch: {},
-  created() {},
+  created() {
+    this.soldId = this.$route.query.soldId;
+    this.formData.soldId = this.$route.query.soldId;
+  },
   mounted() {
-    this.formData.userId = this.userId;
+    this.formData.electricExpeditor = this.userId;
+    this.getCollectionRecordListData();
   },
   methods: {
+    // 获取分页数据
+    getCollectionRecordListData() {
+      const url = common.collectionQueryListUrl;
+      const params = {
+        soldId            : this.soldId,
+        turnPageBeginPos: this.pageNum,
+        turnPageShowNum : this.pageSize,
+      };
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          const data = res.data;
+          this.tableData = data.recordList;
+          this.total = data.turnPageTotalNum * 1;
+        } 
+      })
+    },
+
     // 确定提交
     formDataSubmit(obj) {
       const data = obj.data;
-      const url = '';
+      const url = common.createCollectionUrl;
+      this.status.loading = true;
+      axios.post(url, data).then((res) => {
+        if (res.ec === '0') {
+          this.status.loading = false;
+          this.$notify.success({
+            title: '温馨提示',
+            message: '保存成功',
+          });
+          Object.assign(this.formData, {
+            electricCatalysis: '',
+            newLink: '',
+            overdueReason: '',
+            promisedRepayDate: '',
+          })
+          this.getCollectionRecordListData();
+        } else {
+          this.status.loading = false;
+          this.$notify.error({
+            title: '温馨提示',
+            message: res.em || '保存失败',
+          });
+        }
+      }).catch((err) => {
+        this.status.loading = false;
+        this.$notify.error({
+          title: '温馨提示',
+          message: err ? err.em : '保存失败'
+        });
+      })
     },
 
     // 自定义列接口索引
@@ -131,16 +196,23 @@ export default {
       return index + order + 1;
     },
 
-    // 导出经销店台账
+    // 导出
     exportButton() {},
+
+    // 导入
+    importButton() {
+      this.$refs.uploadDialog.isShow(true);
+    },
 
     // 分页
     handleSizeChange(val) {
       this.pageNum = 1;
       this.pageSize = val;
+      this.getCollectionRecordListData();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
+      this.getCollectionRecordListData();
     },
   },
   filters: {

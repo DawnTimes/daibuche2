@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:02:13
- * @LastEditTime: 2020-09-23 16:22:52
+ * @LastEditTime: 2020-09-25 14:39:28
  * @LastEditors: your name
  * @Description: 新增电催记录
  * @FilePath: \webcode2\src\views\overdueCollection\components\addRecordModule.vue
@@ -23,31 +23,31 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="电催人员"
-                prop="userId"
-                v-show="!$formAtReadonly('userId', formReadonly.hide)"
+                prop="electricExpeditor"
+                v-show="!$formAtReadonly('electricExpeditor', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.userId"
+                  v-model="formData.electricExpeditor"
                   maxlength="30"
                   placeholder=""
-                  :disabled="$formAtReadonly('userId', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('electricExpeditor', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="电催日期"
-                prop="callTime"
-                v-show="!$formAtReadonly('callTime', formReadonly.hide)"
+                prop="electricDate"
+                v-show="!$formAtReadonly('electricDate', formReadonly.hide)"
                 class="form-item"
               >
                 <el-date-picker
-                  v-model="formData.callTime"
-                  type="date"
-                  value-format="yyyy-MM-dd"
+                  v-model="formData.electricDate"
+                  type="datetime"
+                  value-format="yyyy-MM-dd HH:mm:ss"
                   style="width: 100%"
-                  :disabled="$formAtReadonly('callTime', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('electricDate', formReadonly.readonly)"
                   placeholder="选择日期">
                 </el-date-picker>
               </el-form-item>
@@ -56,31 +56,31 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="最新联系人"
-                prop="contacts"
-                v-show="!$formAtReadonly('contacts', formReadonly.hide)"
+                prop="newLink"
+                v-show="!$formAtReadonly('newLink', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.contacts"
+                  v-model="formData.newLink"
                   maxlength="30"
                   placeholder=""
-                  :disabled="$formAtReadonly('contacts', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('newLink', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="承诺还款日期"
-                prop="refund"
-                v-show="!$formAtReadonly('refund', formReadonly.hide)"
+                prop="promisedRepayDate"
+                v-show="!$formAtReadonly('promisedRepayDate', formReadonly.hide)"
                 class="form-item"
               >
                 <el-date-picker
-                  v-model="formData.refund"
+                  v-model="formData.promisedRepayDate"
                   type="date"
                   value-format="yyyy-MM-dd"
                   style="width: 100%"
-                  :disabled="$formAtReadonly('refund', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('promisedRepayDate', formReadonly.readonly)"
                   placeholder="选择日期">
                 </el-date-picker>
               </el-form-item>
@@ -89,32 +89,32 @@
             <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
               <el-form-item
                 label="逾期原因"
-                prop=""
-                v-show="!$formAtReadonly('createTime', formReadonly.hide)"
+                prop="overdueReason"
+                v-show="!$formAtReadonly('overdueReason', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.createTime"
+                  v-model="formData.overdueReason"
                   type="textarea"
                   maxlength="300"
                   :autosize="{ minRows: 3, maxRows: 5}"
-                  :disabled="$formAtReadonly('createTime', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('overdueReason', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
               <el-form-item
                 label="电催情况"
-                prop="callResults"
-                v-show="!$formAtReadonly('callResults', formReadonly.hide)"
+                prop="electricCatalysis"
+                v-show="!$formAtReadonly('electricCatalysis', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.callResults"
+                  v-model="formData.electricCatalysis"
                   type="textarea"
                   maxlength="300"
                   :autosize="{ minRows: 3, maxRows: 5}"
-                  :disabled="$formAtReadonly('callResults', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('electricCatalysis', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -124,7 +124,7 @@
     </el-row>
     <el-row :gutter="0">
       <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="16">
-        <div style="padding: 10px 0 10px 0; text-align: center">
+        <div style="padding: 5px 0 5px 0; text-align: center">
           <el-button @click="handleGoToBack()">退 出</el-button>
           <el-button
             v-show="!$formAtReadonly('saveBtn', formReadonly.hide)"
@@ -166,11 +166,11 @@ export default {
   data() {
     return {
       rules: {
-        userId: [{ required: true, message: '请输入电催人员姓名', trigger: 'blur'}],
-        callResults: [{ required: true, message: '请输入电催人情况', trigger: 'blur'}],
-        contacts: [{ required: false, message: '请输入最新联系人', trigger: 'blur'}],
-        callTime: [{ required: true, message: '请输入电催日期', trigger: 'change'}],
-        refund: [{ required: false, message: '请输入承诺还款日期', trigger: 'change'}],
+        electricExpeditor: [{ required: true, message: '请输入电催人员姓名', trigger: 'blur'}],
+        electricCatalysis: [{ required: true, message: '请输入电催人情况', trigger: 'blur'}],
+        newLink: [{ required: false, message: '请输入最新联系人', trigger: 'blur'}],
+        electricDate: [{ required: true, message: '请输入电催日期', trigger: 'change'}],
+        promisedRepayDate: [{ required: false, message: '请输入承诺还款日期', trigger: 'change'}],
       },
     };
   },

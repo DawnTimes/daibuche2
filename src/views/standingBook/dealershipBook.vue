@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-09-23 17:47:07
+ * @LastEditTime: 2020-09-24 10:39:30
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -55,7 +55,7 @@
       </el-form>
     </div>
 
-    <div class="table" v-loading="tableLoading" element-loading-text="拼命加载中">
+    <div class="table">
       <el-table
         :data="tableData"
         v-loading="tableLoading"
