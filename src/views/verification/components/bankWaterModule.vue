@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-09-14 18:04:14
+ * @LastEditTime: 2020-09-27 16:27:19
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -63,6 +63,7 @@
                   maxlength="30"
                   placeholder=""
                   :disabled="$formAtReadonly('bankAccountNo', formReadonly.readonly)"
+                  @input="inputChange"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -229,6 +230,10 @@
 </template>
 
 <script>
+import _ from 'lodash';
+import axios from '@/common/axios.js';
+import common from '@/common/common.js';
+
 export default {
   name: 'bankWaterModule',
   props: {
@@ -356,12 +361,47 @@ export default {
     };
   },
   computed: {},
-  watch: {},
+  watch: {
+    'formData.bankAccountNo'(newVal) {
+      if (newVal) {
+        console.log(newVal);
+        this.queryBankAccountData(newVal);
+      }
+    }
+  },
   created() {},
   mounted() {
     if (this.$formAtReadonly('*', this.formReadonly.readonly)) this.rules = {};
   },
   methods: {
+    // 查询银行账号信息
+    queryBankAccountData(bankAccount) {
+      const url = common.queryBankInfoUrl;
+      const params = {
+        bankAccount: bankAccount,
+        bankAccountName: '',
+        bankName: '',
+      };
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          // console.log(res);
+          const data = res.data;
+          if (!_.isEmpty(data.bankInfoList)) {
+            this.formData.companyName = data.bankInfoList[0].bankAccountName;
+            this.formData.bankAccountName = data.bankInfoList[0].bankName;
+          } else {
+            this.formData.companyName = '';
+            this.formData.bankAccountName = '';
+          }
+        }
+      })
+    },
+
+    inputChange(val) {
+      // console.log(val);
+      // this.queryBankAccountData(val);
+    },
+
     // 确定
     handleSubmit(formName) {
       this.$refs[formName].validate((valid) => {

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-09-15 15:41:53
+ * @LastEditTime: 2020-09-28 16:05:32
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -54,6 +54,8 @@
     <div class="table">
       <el-table
         :data="tableData"
+        v-loading="tableLoading"
+        element-loading-text="拼命加载中"
         border
         stripe
         :max-height="tableHeight"
@@ -114,16 +116,16 @@
         <el-table-column prop="dueInterest" label="应收利息" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="dueManagementFee" label="应收管理费" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="dueCommission" label="应收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="verAmount" label="已收金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="已收本金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="已收利息" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="verManagementFee" label="已收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="verCommission" label="已收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="outstandingAmount" label="未收金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="outstandingPrincipal" label="未收本金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="outstandingInterest" label="未收利息" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="outstandingManagementFee" label="未收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="outstandingCommission" label="未收手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="verAmount" label="已核金额" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="已核本金" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="" label="已核利息" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="verManagementFee" label="已核管理费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="verCommission" label="已核手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="outstandingAmount" label="未核金额" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="outstandingPrincipal" label="未核本金" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="outstandingInterest" label="未核利息" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="outstandingManagementFee" label="未核管理费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="outstandingCommission" label="未核手续费" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
       </el-table>
     </div>
@@ -167,6 +169,7 @@ export default {
       },
 
       tableData: [],
+      tableLoading: false,
       tableHeight: 0,
       // 数据字典
       paidTemp: [],
@@ -256,17 +259,33 @@ export default {
         turnPageShowNum : this.formData.pageSize,
         turnPageBeginPos: this.formData.pageNum,
       };
+      this.tableLoading = true;
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
           const data = res.data;
           this.tableData = data.verConList;
           this.total = data.turnPageTotalNum * 1;
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
         }
+      }).catch(() => {
+        this.tableLoading = false;
       })
     },
 
     // 导出经销店核销清单
-    exportButton() {},
+    exportButton() {
+      window.location.href = `/api/${common.exportVerCarExcelUrl}?nper=${
+        this.formData.nper ? this.formData.nper : ''
+      }&contractNumber=${
+        this.formData.contractNumber ? this.formData.contractNumber : ''
+      }&isLimitLicence=${
+        this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
+      }&name=${
+        this.formData.name ? this.formData.name : ''
+      }`;
+    },
 
     // 分页
     handleSizeChange(val) {

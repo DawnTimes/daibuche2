@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-09-23 14:04:44
+ * @LastEditTime: 2020-09-27 11:13:59
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -85,7 +85,9 @@
         <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="carNum" label="车辆数" sortable="custom" show-overflow-tooltip width="90">
           <template slot-scope="scope">
-            <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.carNum }}</el-link>
+            <el-tooltip content="点击查询" placement="top" effect="light">
+              <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.carNum }}</el-link>
+            </el-tooltip>
           </template>
         </el-table-column>
         <el-table-column prop="supportFund" label="支援金" sortable="custom" show-overflow-tooltip width="120"></el-table-column>
@@ -213,6 +215,7 @@ export default {
       currentMonth: '',
       currentYear: '',
       batch: '',
+      batchNumber: '',
 
       tableData: [],
       tableHeight: 100,
@@ -245,6 +248,7 @@ export default {
     this.batch = params.batch;
     this.currentMonth = params.month;
     this.currentYear = params.year;
+    this.batchNumber = params.batchNumber;
 
     this.$nextTick(function () {
       this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
@@ -315,7 +319,7 @@ export default {
     
     //监听排序
     sortChange(column, prop, order) {
-      console.log(column, prop, order);
+      // console.log(column, prop, order);
     },
 
 
@@ -409,7 +413,7 @@ export default {
 
       const url = common.supportCarListByAgIdUrl;
       const params = {
-        batchNumber: row.batchNumber,
+        batchNumber: this.batchNumber,
         agId: row.agId,
       };
       axios.post(url, params).then((res) => {

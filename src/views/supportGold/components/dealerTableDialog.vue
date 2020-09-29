@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-18 11:23:35
- * @LastEditTime: 2020-09-22 17:30:34
+ * @LastEditTime: 2020-09-27 14:22:19
  * @LastEditors: your name
  * @Description: 经销店弹窗
  * @FilePath: \webcode2\src\views\supportGold\components\dealerTableDialog.vue
@@ -22,6 +22,8 @@
         <div class="table">
           <el-table
             :data="dealerTableData"
+            v-loading="tableLoading" 
+            element-loading-text="拼命加载中"
             border
             stripe
             max-height="430"
@@ -144,6 +146,7 @@ export default {
       total: 0,
       dealerFormVisible: false,
       dealerTableData: [],
+      tableLoading: false,
       tableHeight: 100,
       multipleSelection: [],
       paramForm: {
@@ -247,12 +250,18 @@ export default {
         turnPageBeginPos: this.paramForm.pageNum,
         turnPageShowNum: this.paramForm.pageSize,
       };
+      this.tableLoading = true;
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
           const data = res.data;
           this.dealerTableData = data.agentList;
           this.total = data.turnPageTotalNum * 1;
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
         }
+      }).catch(() => {
+        this.tableLoading = false;
       })
     },
 

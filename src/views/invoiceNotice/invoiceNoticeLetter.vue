@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-09-24 16:39:48
+ * @LastEditTime: 2020-09-29 16:25:24
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -19,7 +19,7 @@
           <span>开票通知单</span>
         </div>
         <div class="lettetMode">
-          <span>{{ formData.leaseWay ? (formData.leaseWay | leaseWay) : '租赁方式' }}</span>
+          <span>{{ formData.leaseWay | leaseWayFc(formData.leaseWay) }}</span>
         </div>
       </div>
       <div class="makeBox">
@@ -118,8 +118,10 @@
         </div>
       </div>
       <el-table
-        :data="tableData"
+        :data="formData.invoiceDetail"
         border
+        show-summary
+        :summary-method="getSummaries"
         :header-cell-style="{
         'text-align':'center',
         'color': '#333',
@@ -127,14 +129,20 @@
         style="width: 100%"
       >
         <el-table-column prop="nper" label="租金期数" width="100" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="payDay" label="应收日期" width="100" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="payDay" label="应收日期" width="100" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.payDay | timeFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="num" label="车辆台数" width="100" show-overflow-tooltip></el-table-column>
         <el-table-column prop="dueAmount" label="月租金合计" width="100" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="dueInterest" label="车辆租金" show-overflow-tooltip v-if="true"></el-table-column>
-        <el-table-column prop="duePrincipal" label="本金" show-overflow-tooltip v-if="true"></el-table-column>
-        <el-table-column prop="dueInterest" label="利息" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="dueManagementFee" label="管理费" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="dueCommission" label="手续费" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="dueInterest" label="车辆租金" show-overflow-tooltip v-if="formData.leaseWay == 'OPERATING-LEASE'"></el-table-column>
+        <el-table-column prop="dueInterest" label="利息/手续费" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'"></el-table-column>
+        <el-table-column prop="duePrincipal" label="本金" show-overflow-tooltip v-if="formData.leaseWay == 'LEASE'"></el-table-column>
+        <el-table-column prop="duePrincipal" label="本金/保证金" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'"></el-table-column>
+        <el-table-column prop="dueInterest" label="利息" show-overflow-tooltip v-if="formData.leaseWay == 'LEASE'"></el-table-column>
+        <el-table-column prop="dueManagementFee" label="管理费" show-overflow-tooltip v-if="formData.leaseWay == 'OPERATING-LEASE' || formData.leaseWay == 'LEASE'"></el-table-column>
+        <!-- <el-table-column prop="dueCommission" label="手续费" show-overflow-tooltip v-if="formData.leaseWay == 'OPERATING-LEASE' || formData.leaseWay == 'LEASE'"></el-table-column> -->
         <el-table-column prop="invoiceDate" label="开票日期" show-overflow-tooltip></el-table-column>
         <el-table-column prop="invoiceNumber" label="票据号码" show-overflow-tooltip></el-table-column>
       </el-table>
@@ -149,7 +157,7 @@
 
       <div class="footerBtn">
         <el-button size="medium" @click="handleBack()">返回</el-button>
-        <el-button type="primary" size="medium">导出</el-button>
+        <el-button type="primary" size="medium" @click="exportButton">导出</el-button>
       </div>
     </div>
   </div>
@@ -188,16 +196,7 @@ export default {
         margin: '违章保证金',
         letterContent: '*经营租赁*车辆租金',
       },
-      tableData: [
-        { nper: '1'},
-        { nper: '2'},
-        { nper: '3'},
-        { nper: '4'},
-        { nper: '5'},
-        { nper: '6'},
-        { nper: '7'},
-
-      ],
+      tableData: [],
       // 经租
       jzLeaseList: [
         { nper: '首期租金' },
@@ -218,11 +217,42 @@ export default {
     };
   },
   computed: {},
-  watch: {},
+  watch: {
+    'formData.leaseWay'(val) {
+      if (val == 'LEASE') {
+        Object.assign(this.letterForm, {
+          rate: '13%',
+          incoiceType: '利息/本金/管理费',
+          margin: '保证金',
+          letterContent: '*融资租赁*有形动产融资租赁服务',
+        })
+        this.formData.invoiceDetail = _.concat(this.zzLeaseList, this.formData.invoiceDetail);
+      }
+      if (val == 'BACK-LEASE') {
+        Object.assign(this.letterForm, {
+          rate: '6%',
+          incoiceType: '利息/手续费',
+          margin: '本金/保证金',
+          letterContent: '*金融服务*有形动产融资性售后回租',
+        })
+        this.formData.invoiceDetail = _.concat(this.hzLeaseList, this.formData.invoiceDetail);
+      }
+      if (val == 'OPERATING-LEASE') {
+        Object.assign(this.letterForm, {
+          rate: '13%',
+          incoiceType: '车辆租金',
+          margin: '违章保证金',
+          letterContent: '*经营租赁*车辆租金',
+        })
+        this.formData.invoiceDetail = _.concat(this.jzLeaseList, this.formData.invoiceDetail);
+      }
+    } 
+  },
   created() {
-    this.tableData = _.concat(this.jzLeaseList, this.tableData);
+    
     this.letterForm.currentDate = moment().format('YYYY-MM-DD')
     this.contractId = this.$route.query.contractId;
+    console.log(this.formData.leaseWay);
   },
   mounted() {
     this.queryNoticeLetterDetail();
@@ -236,6 +266,8 @@ export default {
       };
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
+          const data = res.data;
+          Object.assign(this.formData, data);
           
         } else {
 
@@ -243,6 +275,59 @@ export default {
       }).catch((err) => {
         
       })
+    },
+
+    // 合计
+    getSummaries(param) {
+      const { columns, data } = param;
+      console.log(columns, data);
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '合计';
+          return;
+        }
+        // 
+        if (index === 1 || index === 2) {
+          sums[index] = '--';
+          return;
+        }
+
+        if (index == columns.length - 1 || index == columns.length - 2) {
+          sums[index] = '--';
+          return;
+        }
+        // 统计金额
+        // map() 方法返回一个新数组，数组中的元素为原始数组元素调用函数处理后的值。map() 方法按照原始数组元素顺序依次处理元素。map() 不会改变原始数组。
+        // Number() 函数把对象的值转换为数字。
+        // every() 方法使用指定函数检测数组中的所有元素, 如果数组中检测到有一个元素不满足，则整个表达式返回 false ，且剩余的元素不会再进行检测。如果所有元素都满足条件，则返回 true。
+        const values = data.map((item) => Number(item[column.property]));
+        // isNaN() 函数用于检查其参数是否是非数字值。如果参数值为 NaN 或字符串、对象、undefined等非数字值则返回 true, 否则返回 false。
+        if (!values.every((value) => isNaN(value))) {
+          // reduce() 方法接收一个函数作为累加器
+          sums[index] = values.reduce((prev, curr) => {
+            console.log(prev, curr);
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              // return prev + curr
+              return Math.round((prev + curr) * 100) / 100; // 保留2位小数
+            } else {
+              return prev;
+            }
+          }, 0);
+          sums[index] += '';
+        } else {
+          sums[index] = 'N/A';
+        }
+      });
+
+      return sums;
+    },
+
+    // 导出
+    exportButton() {
+      window.location.href = `/api/${common.exportSubcarInvoiceNoticeUrl}?contractId=${this.contractId ? this.contractId : ''}`;
+      
     },
 
     // 返回
@@ -253,7 +338,12 @@ export default {
     },
   },
   filters: {
-    function() {},
+    leaseWayFc(val) {
+      if (val == 'LEASE') return '直租业务';
+      if (val == 'BACK-LEASE') return '回租业务';
+      if (val == 'OPERATING-LEASE') return '经营租赁';
+      return '租赁方式'
+    },
   },
 };
 </script>
@@ -471,5 +561,7 @@ export default {
       text-align: center;
     }
   }
+
 }
 </style>
+

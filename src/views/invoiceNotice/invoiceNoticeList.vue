@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-09-25 13:41:15
+ * @LastEditTime: 2020-09-29 16:41:57
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -29,20 +29,37 @@
           ></el-date-picker>
         </el-form-item> -->
         <el-form-item label="购方名称:" prop="buyName">
-          <el-input maxlength="50" v-model="formData.buyName" clearable placeholder></el-input>
+          <el-input
+            maxlength="50"
+            v-model="formData.buyName"
+            clearable
+            placeholder
+          ></el-input>
         </el-form-item>
         <el-form-item label="购方税号:" prop="buyCreditCode">
-          <el-input maxlength="30" v-model="formData.buyCreditCode" clearable placeholder></el-input>
+          <el-input
+            maxlength="30"
+            v-model="formData.buyCreditCode"
+            clearable
+            placeholder
+          ></el-input>
         </el-form-item>
         <el-form-item label="备注:" prop="remark">
-          <el-input maxlength="200" v-model="formData.remark" clearable placeholder></el-input>
+          <el-input
+            maxlength="200"
+            v-model="formData.remark"
+            clearable
+            placeholder
+          ></el-input>
         </el-form-item>
 
         <el-form-item>
           <el-button type="primary" @click="queryForm">查询</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
+          <el-button type="primary" @click="resetForm('ruleForm')"
+            >重置</el-button
+          >
         </el-form-item>
 
         <!-- <el-form-item label>
@@ -51,17 +68,41 @@
       </el-form>
 
       <div class="batchBtn">
-        <el-button size="medium" type="primary" @click="createInvoice" v-show="rightControl.add">生成开票明细</el-button>
-        <el-button size="medium" type="primary" @click="importButton" v-show="rightControl.import">导入开票明细</el-button>
-        <el-button size="medium" type="primary" @click="exportButton" v-show="rightControl.export">导出开票明细</el-button>
-        <el-button size="medium" type="primary" @click="exportButton" v-show="rightControl.exportBtn">批量导出通知单</el-button>
+        <el-button
+          size="medium"
+          type="primary"
+          @click="createInvoice"
+          v-show="rightControl.add"
+          >生成开票明细</el-button
+        >
+        <el-button
+          size="medium"
+          type="primary"
+          @click="importButton"
+          v-show="rightControl.import"
+          >导入开票明细</el-button
+        >
+        <el-button
+          size="medium"
+          type="primary"
+          @click="exportButton"
+          v-show="rightControl.export"
+          >导出开票明细</el-button
+        >
+        <el-button
+          size="medium"
+          type="primary"
+          @click="exportButton"
+          v-show="rightControl.exportBtn"
+          >批量导出通知单</el-button
+        >
       </div>
     </div>
 
     <div class="table">
       <el-table
         :data="tableData"
-        v-loading="tableLoading" 
+        v-loading="tableLoading"
         element-loading-text="拼命加载中"
         border
         stripe
@@ -69,13 +110,18 @@
         ref="table"
         style="width: 100%"
         :header-cell-style="{
-        'text-align':'center',
-        'font-weight':'bold',  
-        'background':'#627CAF',    
-        'color': '#fff',
-      }"
+          'text-align': 'center',
+          'font-weight': 'bold',
+          background: '#627CAF',
+          color: '#fff',
+        }"
       >
-        <el-table-column width="50" align="center" type="selection" fixed></el-table-column>
+        <el-table-column
+          width="50"
+          align="center"
+          type="selection"
+          fixed
+        ></el-table-column>
         <el-table-column
           width="50"
           align="center"
@@ -84,34 +130,121 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="billingNo" label="单据号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="createTime" label="生成时间" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="buyName" label="购方名称" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="buyCreditCode" label="购方税号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="buyAddTel" label="购方地址电话" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="buyBankNameNo" label="购方银行帐号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="sellName" label="销方地址电话" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="sellBankNameNo" label="销方银行帐号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="remark" label="备注" width="300" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="tradeName" label="商品名称" show-overflow-tooltip width="100"></el-table-column>
-        <!-- <el-table-column prop="" label="规格" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column
+          prop="billingNo"
+          label="单据号"
+          show-overflow-tooltip
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop="createTime"
+          label="生成时间"
+          show-overflow-tooltip
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop="buyName"
+          label="购方名称"
+          show-overflow-tooltip
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop="buyCreditCode"
+          label="购方税号"
+          show-overflow-tooltip
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop="buyAddTel"
+          label="购方地址电话"
+          show-overflow-tooltip
+          width="120"
+        ></el-table-column>
+        <el-table-column
+          prop="buyBankNameNo"
+          label="购方银行帐号"
+          show-overflow-tooltip
+          width="120"
+        ></el-table-column>
+        <el-table-column
+          prop="sellName"
+          label="销方地址电话"
+          show-overflow-tooltip
+          width="120"
+        ></el-table-column>
+        <el-table-column
+          prop="sellBankNameNo"
+          label="销方银行帐号"
+          show-overflow-tooltip
+          width="120"
+        ></el-table-column>
+        <el-table-column
+          prop="remark"
+          label="备注"
+          width="300"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="tradeName"
+          label="商品名称"
+          show-overflow-tooltip
+          width="100"
+        ></el-table-column>
+        <el-table-column prop="" label="规格" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="商品编码" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="计量单位" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="amount" label="金额" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="tax" label="税率" show-overflow-tooltip></el-table-column>
-        <!-- <el-table-column prop="" label="复核人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="计量单位" show-overflow-tooltip></el-table-column>
+        <el-table-column
+          prop="num"
+          label="数量"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="amount"
+          label="金额"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="tax"
+          label="税率"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column prop="" label="复核人" show-overflow-tooltip></el-table-column>
         <el-table-column prop="" label="收款人" show-overflow-tooltip></el-table-column>
         <el-table-column prop="" label="折扣金额" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="扣除额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="特殊票种" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="receiverAddr" label="接收人邮件" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="invoiceNumber" label="发票号码" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="invoiceDate" label="开票时间" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="" label="特殊票种" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column
+          prop="receiverAddr"
+          label="接收人邮件"
+          show-overflow-tooltip
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop="invoiceNumber"
+          label="发票号码"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="invoiceDate"
+          label="开票时间"
+          show-overflow-tooltip
+        ></el-table-column>
         <el-table-column label="操作" width="180" fixed="right">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="handleNotice(scope.row)" v-show="rightControl.notice">通知单</el-button>
-            <el-button size="mini" plain @click="handleRegister(scope.row)" v-show="rightControl.register">登记</el-button>
+            <el-button
+              size="mini"
+              type="primary"
+              @click="handleNotice(scope.row)"
+              v-show="rightControl.notice"
+              >通知单</el-button
+            >
+            <el-button
+              size="mini"
+              plain
+              @click="handleRegister(scope.row)"
+              v-show="rightControl.register"
+              >登记</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -159,7 +292,7 @@ import { mapState } from 'vuex';
 
 import invoiceRegisterDialog from './components/invoiceRegisterDialog'; // 登记弹框
 import createInvoiceDialog from './components/createInvoiceDialog'; // 生成开票明细弹框
-import uploadDialog from '@/components/uploadDialog';  // 上传弹框
+import uploadDialog from '@/components/uploadDialog'; // 上传弹框
 
 export default {
   name: '',
@@ -282,25 +415,28 @@ export default {
     getInvoiceNoticeListData() {
       const url = common.queryInvoiceNoticeDetailUrl;
       const params = {
-        buyCreditCode   : this.formData.buyCreditCode,
-        buyName         : this.formData.buyName,
-        remark          : this.formData.remark,
+        buyCreditCode: this.formData.buyCreditCode,
+        buyName: this.formData.buyName,
+        remark: this.formData.remark,
         turnPageBeginPos: this.formData.pageNum,
-        turnPageShowNum : this.formData.pageSize,
+        turnPageShowNum: this.formData.pageSize,
       };
       this.tableLoading = true;
-      axios.post(url, params).then((res) => {
-        if (res.ec === '0') {
-          const data = res.data;
-          this.tableData = data.invoiceList;
-          this.total = data.turnPageTotalNum * 1;
+      axios
+        .post(url, params)
+        .then((res) => {
+          if (res.ec === '0') {
+            const data = res.data;
+            this.tableData = data.invoiceList;
+            this.total = data.turnPageTotalNum * 1;
+            this.tableLoading = false;
+          } else {
+            this.tableLoading = false;
+          }
+        })
+        .catch(() => {
           this.tableLoading = false;
-        } else {
-          this.tableLoading = false;
-        }
-      }).catch(() => {
-        this.tableLoading = false;
-      })
+        });
     },
 
     // 导入开票明细
@@ -308,8 +444,17 @@ export default {
       this.$refs.uploadDialog.isShow(true);
     },
 
-    // 导出
-    exportButton() {},
+    // 导出明细
+    exportButton() {
+      window.location.href = `/api/${
+        common.exportSubcarInvoiceListUrl
+      }?buyName=${
+        this.formData.buyName ? this.formData.buyName : ''
+      }&buyCreditCode=${
+        this.formData.buyCreditCode ? this.formData.buyCreditCode : ''
+      }&remark=${
+        this.formData.remark ? this.formData.remark : ''}`;
+    },
 
     // 分页
     handleSizeChange(val) {
@@ -332,15 +477,15 @@ export default {
         query: {
           contractId: row.contractId,
         },
-      })
+      });
     },
 
     // 登记弹窗
     handleRegister(row) {
       // this.registerForm.currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
       // this.registerForm.userId = this.userId;
-      this.registerForm.contractId    = row.contractId;
-      this.registerForm.payDay        = row.payDay;
+      this.registerForm.contractId = row.contractId;
+      this.registerForm.payDay = row.payDay;
       // this.registerForm.buyName       = row.buyName;
       // this.registerForm.buyCreditCode = row.buyCreditCode;
       // this.registerForm.remark        = row.remark;
@@ -352,29 +497,32 @@ export default {
       const data = obj.data;
       const url = common.invoiceRegisterUrl;
       this.status.loading = true;
-      axios.post(url, data).then((res) => {
-        if (res.ec === '0') {
-          this.status.loading = false;
-          this.$refs.invoiceRegisterDialog.isShow(false);
-          this.$notify.success({
-            title: '温馨提示',
-            message: '登记成功',
-          });
-          this.getInvoiceNoticeListData();
-        } else {
+      axios
+        .post(url, data)
+        .then((res) => {
+          if (res.ec === '0') {
+            this.status.loading = false;
+            this.$refs.invoiceRegisterDialog.isShow(false);
+            this.$notify.success({
+              title: '温馨提示',
+              message: '登记成功',
+            });
+            this.getInvoiceNoticeListData();
+          } else {
+            this.status.loading = false;
+            this.$notify.error({
+              title: '温馨提示',
+              message: res.em || '登记失败',
+            });
+          }
+        })
+        .catch((err) => {
           this.status.loading = false;
           this.$notify.error({
             title: '温馨提示',
-            message: res.em || '登记失败',
+            message: err ? err.em : '登记失败',
           });
-        }
-      }).catch((err) => {
-        this.status.loading = false;
-        this.$notify.error({
-          title: '温馨提示',
-          message: err ? err.em : '登记失败'
         });
-      })
     },
 
     // 生成开票明细弹框
@@ -388,29 +536,32 @@ export default {
       data.creater = this.userId;
       const url = common.createInvoiceDetailUrl;
       this.status.createLoading = true;
-      axios.post(url, data).then((res) => {
-        if (res.ec === '0') {
-          this.status.createLoading = false;
-          this.$refs.createInvoiceDialog.isShow(false);
-          this.$notify.success({
-            title: '温馨提示',
-            message: '生成开票明细成功',
-          });
-          this.getInvoiceNoticeListData();
-        } else {
+      axios
+        .post(url, data)
+        .then((res) => {
+          if (res.ec === '0') {
+            this.status.createLoading = false;
+            this.$refs.createInvoiceDialog.isShow(false);
+            this.$notify.success({
+              title: '温馨提示',
+              message: '生成开票明细成功',
+            });
+            this.getInvoiceNoticeListData();
+          } else {
+            this.status.createLoading = false;
+            this.$notify.error({
+              title: '温馨提示',
+              message: res.em || '生成开票明细失败',
+            });
+          }
+        })
+        .catch((err) => {
           this.status.createLoading = false;
           this.$notify.error({
             title: '温馨提示',
-            message: res.em || '生成开票明细失败',
+            message: err ? err.em : '生成开票明细失败',
           });
-        }
-      }).catch((err) => {
-        this.status.createLoading = false;
-        this.$notify.error({
-          title: '温馨提示',
-          message: err ? err.em : '生成开票明细失败'
         });
-      })
     },
   },
   filters: {

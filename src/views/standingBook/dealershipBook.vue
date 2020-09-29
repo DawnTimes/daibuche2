@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-09-24 10:39:30
+ * @LastEditTime: 2020-09-29 16:47:27
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -327,7 +327,16 @@ export default {
     },
 
     // 导出经销店台账
-    exportButton() {},
+    exportButton() {
+      window.location.href = `/api/${
+        common.exportAgentSBUrl
+      }?name=${
+        this.formData.name ? this.formData.name : ''
+      }&contractNumber=${
+        this.formData.contractNumber ? this.formData.contractNumber : ''
+      }&nper=${
+        this.formData.nper ? this.formData.nper : ''}`;
+    },
 
     // 分页
     handleSizeChange(val) {

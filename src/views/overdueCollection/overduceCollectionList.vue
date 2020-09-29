@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-09-25 14:46:44
+ * @LastEditTime: 2020-09-27 09:38:49
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -50,8 +50,8 @@
         </el-form-item>
 
         <el-form-item label>
-          <!-- <el-button type="primary" @click="importButton" v-show="rightControl.import">导入</el-button>
-          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出</el-button> -->
+          <!-- <el-button type="primary" @click="importButton" v-show="rightControl.import">导入</el-button> -->
+          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出</el-button>
         </el-form-item>
       </el-form>
 

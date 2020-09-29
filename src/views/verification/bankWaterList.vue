@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-09-23 11:26:29
+ * @LastEditTime: 2020-09-27 10:33:45
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -83,6 +83,8 @@
     <div class="table">
       <el-table
         :data="tableData"
+        v-loading="tableLoading"
+        element-loading-text="拼命加载中"
         border
         stripe
         :max-height="tableHeight"
@@ -262,9 +264,8 @@ export default {
         },
       ],
 
-      tableData: [{
-        serialNumber: '123'
-      }],
+      tableData: [],
+      tableLoading: false,
       tableHeight: 100,
       // 数据字典
       paidTemp: [],
@@ -385,12 +386,18 @@ export default {
         turnPageShowNum: this.formData.pageSize,
       };
 
+      this.tableLoading = true;
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
           const data = res.data;
           this.tableData = data.bankStatementList;
           this.total = data.turnPageTotalNum * 1;
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
         }
+      }).catch(() => {
+        this.tableLoading = false;
       })
     },
 

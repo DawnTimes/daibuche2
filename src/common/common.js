@@ -85,52 +85,61 @@ export default {
 
 
   // 二期
-  queryDictUrl                  : '/dataDict/queryDict.do',                      // 数据字典
-  bankWaterDownUrl              : '/bankStatemntExcel/exportBankStatement.do',   // 导出银行流水单
-  queryLimitCarListUrl          : '/queryLimitCarList.do',                       // 限牌车型分页
-  queryNotLimitCarListUrl       : '/queryNotLimitCarList.do',                    // 非限牌车型分页
-  rentSubmitUrl                 : '/rentSubmit.do',                              // 租金修改保存、提交
-  queryRentHisUrl               : '/queryRentHis.do',                            // 查询租金修改历史和申请（分页）
-  updateRentUrl                 : '/updateRent.do',                              // 租金编辑
-  queryRentDetailByIdUrl        : '/queryRentDetailById.do',                     // 根据id查询租金修改
-  rentApprovalUrl               : '/rentApproval.do',                            // 租金待审批分页
-  rentApprovalOperationUrl      : '/rentApprovalOperation.do',                   // 租金审批操作
-  rentModificationSumUrl        : '/rentModificationSum.do',                     // 租金修改待办统计  
-  queryBankStatementUrl         : '/queryBankStatement.do',                      // 查询银行流水单列表
-  addBankStatementUrl           : '/addBankStatement.do',                        // 新增银行流水单
-  bankStatementRefundUrl        : '/bankStatementRefund.do',                     // 退款
-  backlashDealUrl               : '/backlashDeal.do',                            // 反冲
-  deleteBankStatementUrl        : '/deleteBankStatement.do',                     // 删除银行流水单
-  queryContractRepayUrl         : '/queryContractRepay.do',                      // 查询合同期数还款计划
-  queryBySerialNumberUrl        : '/queryBySerialNumber.do',                     // 查询收入已核销未核销退款
-  verContractReyPayUrl          : '/verContractReyPay.do',                       // 核销还款计划的某一期
-  selectCarRepayListUrl         : '/selectCarRepayList.do',                      // 根据合同还款计划查询车辆详情
-  selectVerContractStementUrl   : '/selectVerContractStement.do',                // 经销店核销查询
-  selectVerCarStatementUrl      : '/selectVerCarStatement.do',                   // 车辆核销查询  
-  addOrUpdateLicenceUrl         : '/addOrUpdateLicence.do',                      // 新增更新牌照商
-  selectLicenceByCodeUrl        : '/selectLicenceByCode.do',                     // 查询牌照商详情
-  findCityLicenceUrl            : '/findCityLicence.do',                         // 查询城市牌照商  
-  supportApplyListUrl           : '/supportApplyList.do',                        // 支援金申请List
-  spprotWaitListUrl             : '/spprotWaitList.do',                          // 支援金待审批List(分页)
-  supporFundHisListUrl          : '/supporFundHisList.do',                       // 支援金历史记录
-  supportFundUrl                : '/supportFund.do',                             // 支援金申请
-  supportCarListByAgIdUrl       : '/supportCarListByAgId.do',                    // 按经销店的支援金车辆清单
-  supportAgListUrl              : '/supportAgList.do',                           // 按申请批次统计经销店的欠款情况（申请原因说明分页）
-  supportCarListUrl             : '/supportCarList.do',                          // 支援金总车辆清单List
-  supportApprovalListUrl        : '/supportApprovalList.do',                     // 支援金审批详情List
-  supportApprovalUrl            : '/supportApproval.do',                         // 支援金审批操作
-  supportRegisterUrl            : '/supportRegister.do',                         // 支援金登记
-  queryAgentStandingBookUrl     : '/queryAgentStandingBook.do',                  // 经销店台账
-  queryCarStandingBookUrl       : '/queryCarStandingBook.do',                    // 车辆台账
-  queryNotInvoiceNoticeDetailUrl: '/queryNotInvoiceNoticeDetail.do',             // 无需开票明细
-  queryInvoiceNoticeDetailUrl   : '/queryInvoiceNoticeDetail.do',                // 开票明细
-  queryInvoiceByContractIdUrl   : '/queryInvoiceByContractId.do',                // 开票通知单
-  createInvoiceDetailUrl        : '/createInvoiceDetail.do',                     // 生成开票明细
-  invoiceRegisterUrl            : '/invoiceRegister.do',                         // 开票登记
-  collectionListUrl             : '/collectionList.do',                          // 逾期记录分页
-  collectionQueryListUrl        : '/collectionQueryList.do',                     // 催收记录
-  createCollectionUrl           : '/createCollection.do',                        // 新增催收记录
-
+  queryDictUrl                  : '/dataDict/queryDict.do',                                    // 数据字典
+  bankWaterDownUrl              : '/bankStatemntExcel/exportBankStatement.do',                 // 导出银行流水单
+  queryLimitCarListUrl          : '/queryLimitCarList.do',                                     // 限牌车型分页
+  queryNotLimitCarListUrl       : '/queryNotLimitCarList.do',                                  // 非限牌车型分页
+  rentSubmitUrl                 : '/rentSubmit.do',                                            // 租金修改保存、提交
+  queryRentHisUrl               : '/queryRentHis.do',                                          // 查询租金修改历史和申请（分页）
+  updateRentUrl                 : '/updateRent.do',                                            // 租金编辑
+  queryRentDetailByIdUrl        : '/queryRentDetailById.do',                                   // 根据id查询租金修改
+  rentApprovalUrl               : '/rentApproval.do',                                          // 租金待审批分页
+  rentApprovalOperationUrl      : '/rentApprovalOperation.do',                                 // 租金审批操作
+  rentModificationSumUrl        : '/rentModificationSum.do',                                   // 租金修改待办统计  
+  queryBankStatementUrl         : '/queryBankStatement.do',                                    // 查询银行流水单列表
+  addBankStatementUrl           : '/addBankStatement.do',                                      // 新增银行流水单
+  bankStatementRefundUrl        : '/bankStatementRefund.do',                                   // 退款
+  backlashDealUrl               : '/backlashDeal.do',                                          // 反冲
+  deleteBankStatementUrl        : '/deleteBankStatement.do',                                   // 删除银行流水单
+  queryContractRepayUrl         : '/queryContractRepay.do',                                    // 查询合同期数还款计划
+  queryBySerialNumberUrl        : '/queryBySerialNumber.do',                                   // 查询收入已核销未核销退款
+  verContractReyPayUrl          : '/verContractReyPay.do',                                     // 核销还款计划的某一期
+  selectCarRepayListUrl         : '/selectCarRepayList.do',                                    // 根据合同还款计划查询车辆详情
+  selectVerContractStementUrl   : '/selectVerContractStement.do',                              // 经销店核销查询
+  selectVerCarStatementUrl      : '/selectVerCarStatement.do',                                 // 车辆核销查询  
+  addOrUpdateLicenceUrl         : '/addOrUpdateLicence.do',                                    // 新增更新牌照商
+  selectLicenceByCodeUrl        : '/selectLicenceByCode.do',                                   // 查询牌照商详情
+  findCityLicenceUrl            : '/findCityLicence.do',                                       // 查询城市牌照商  
+  supportApplyListUrl           : '/supportApplyList.do',                                      // 支援金申请List
+  spprotWaitListUrl             : '/spprotWaitList.do',                                        // 支援金待审批List(分页)
+  supporFundHisListUrl          : '/supporFundHisList.do',                                     // 支援金历史记录
+  supportFundUrl                : '/supportFund.do',                                           // 支援金申请
+  supportCarListByAgIdUrl       : '/supportCarListByAgId.do',                                  // 按经销店的支援金车辆清单
+  supportAgListUrl              : '/supportAgList.do',                                         // 按申请批次统计经销店的欠款情况（申请原因说明分页）
+  supportCarListUrl             : '/supportCarList.do',                                        // 支援金总车辆清单List
+  supportApprovalListUrl        : '/supportApprovalList.do',                                   // 支援金审批详情List
+  supportApprovalUrl            : '/supportApproval.do',                                       // 支援金审批操作
+  supportRegisterUrl            : '/supportRegister.do',                                       // 支援金登记
+  queryAgentStandingBookUrl     : '/queryAgentStandingBook.do',                                // 经销店台账
+  queryCarStandingBookUrl       : '/queryCarStandingBook.do',                                  // 车辆台账
+  queryNotInvoiceNoticeDetailUrl: '/queryNotInvoiceNoticeDetail.do',                           // 无需开票明细
+  queryInvoiceNoticeDetailUrl   : '/queryInvoiceNoticeDetail.do',                              // 开票明细
+  queryInvoiceByContractIdUrl   : '/queryInvoiceByContractId.do',                              // 开票通知单
+  createInvoiceDetailUrl        : '/createInvoiceDetail.do',                                   // 生成开票明细
+  invoiceRegisterUrl            : '/invoiceRegister.do',                                       // 开票登记
+  collectionListUrl             : '/collectionList.do',                                        // 逾期记录分页
+  collectionQueryListUrl        : '/collectionQueryList.do',                                   // 催收记录
+  createCollectionUrl           : '/createCollection.do',                                      // 新增催收记录
+  queryBankInfoUrl              : '/queryBankInfo.do',                                         // 查询银行账号信息
+  exportAgentSBUrl              : '/AgentSBExcel/exportAgentSB.do',                            // 导出经销店台账
+  exportCarSBUrl                : '/CarStandingBookOutput/exportCarSB.do',                     // 导出车辆台账
+  exportCollectionUrl           : '/CollectionExport/exportCollection.do',                     // 导出催收
+  importCollectionUrl           : '/CollectionExport/importCollection.do',                     // 导入催收
+  exportSubcarInvoiceNoticeUrl  : '/SubcarInvoiceNotice36Nper/exportSubcarInvoiceNotice.do',   // 导出开票通知单
+  exportSubcarInvoiceListUrl    : '/SubcarInvoiceNotice/exportSubcarInvoiceNotice.do',         // 导出开票明细
+  licenceExportExcelUrl         : '/licenceExcel/licenceExportExcel.do',                       // 导出出租方
+  supportOutputExcelUrl         : '/supportExcel/supportOutputExcel.do',                       // 导出支援金
+  exportVerCarExcelUrl          : '/verCarStatement/exportVerCarExcel.do',                     // 导出核销车辆
 
   // 验证码
   guid() {

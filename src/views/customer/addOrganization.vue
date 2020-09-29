@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-26 09:32:16
- * @LastEditTime: 2020-09-16 14:17:08
+ * @LastEditTime: 2020-09-28 14:33:16
  * @LastEditors: your name
  * @Description: 新增牌照商
  * @FilePath: \webcode2\src\views\customer\addOrganization.vue
@@ -54,7 +54,7 @@ export default {
         contactPers: '',
         contactPersonPhone: '',
         createUse: '',
-        isGalcComp: 'Y',
+        isGalcComp: 'N',
         isLimitLicen: 'Y',
         lastModifie: '',
         lastModifiedT: '',
@@ -121,7 +121,7 @@ export default {
             contactPers: '',
             contactPersonPhone: '',
             createUse: this.userId,
-            isGalcComp: '',
+            isGalcComp: 'N',
             isLimitLicen: 'Y',
             lastModifie: '',
             lastModifiedT: '',

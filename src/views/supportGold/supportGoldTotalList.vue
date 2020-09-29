@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-09-25 16:33:37
+ * @LastEditTime: 2020-09-29 15:18:54
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -56,7 +56,7 @@
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-show="rightControl.export">导出</el-button>
+          <el-button type="primary" v-show="rightControl.export" @click="exportButton">导出</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -272,6 +272,18 @@ export default {
       this.pageNum = val;
       this.formData.pageNum = (val - 1) * this.pageSize + 1;
       this.getSupportGoldTotalListData();
+    },
+
+    // 导出
+    exportButton() {
+      window.location.href = `/api/${
+        common.supportOutputExcelUrl
+      }?agentName=${
+        this.formData.agentName ? this.formData.agentName : ''
+      }&frameNumber=${
+        this.formData.frameNumber ? this.formData.frameNumber : ''
+      }&batchNumber=${
+        this.formData.batchNumber ? this.formData.batchNumber : ''}`;
     },
 
   },

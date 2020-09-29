@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:25:10
- * @LastEditTime: 2020-09-25 15:58:04
+ * @LastEditTime: 2020-09-29 14:50:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\collectionRecord.vue
@@ -197,7 +197,16 @@ export default {
     },
 
     // 导出
-    exportButton() {},
+    exportButton() {
+      window.location.href = `/api/${
+        common.exportCollectionUrl
+      }?buyName=${
+        this.formData.buyName ? this.formData.buyName : ''
+      }&buyCreditCode=${
+        this.formData.buyCreditCode ? this.formData.buyCreditCode : ''
+      }&remark=${
+        this.formData.remark ? this.formData.remark : ''}`;
+    },
 
     // 导入
     importButton() {

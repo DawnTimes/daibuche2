@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-09-24 09:45:27
+ * @LastEditTime: 2020-09-29 16:51:16
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -341,7 +341,20 @@ export default {
     },
 
     // 导出车辆台账
-    exportButton() {},
+    exportButton() {
+      window.location.href = `/api/${
+        common.exportCarSBUrl
+      }?name=${
+        this.formData.name ? this.formData.name : ''
+      }&contractNumber=${
+        this.formData.contractNumber ? this.formData.contractNumber : ''
+      }&nper=${
+        this.formData.nper ? this.formData.nper : ''
+      }&frameNumber=${
+        this.formData.frameNumber ? this.formData.frameNumber : ''
+      }&isLimitLicence=${
+        this.formData.isLimitLicence ? this.formData.isLimitLicence : ''}`;
+    },
 
     // 分页
     handleSizeChange(val) {

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-09-15 15:42:55
+ * @LastEditTime: 2020-09-27 10:53:35
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -64,6 +64,8 @@
     <div class="table">
       <el-table
         :data="tableData"
+        v-loading="tableLoading" 
+        element-loading-text="拼命加载中"
         border
         stripe
         ref="table"
@@ -115,7 +117,9 @@
         </el-table-column>
         <el-table-column prop="num" label="车辆数量" show-overflow-tooltip>
           <template slot-scope="scope">
-            <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.num }}</el-link>
+            <el-tooltip content="点击查询" placement="top" effect="light">
+              <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.num }}</el-link>
+            </el-tooltip>
           </template>
         </el-table-column>
         <el-table-column prop="batchStartingDate" label="起租日" show-overflow-tooltip width="120">
@@ -219,6 +223,7 @@ export default {
         pageNum: 1,
       },
       tableData: [],
+      tableLoading: false,
 
       // 数据字典
       dictTemp: [],
@@ -334,13 +339,19 @@ export default {
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
       };
+      this.tableLoading = true;
 
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
           const data = res.data;
           this.tableData = data.contRepayList;
           this.total = data.turnPageTotalNum * 1;
+          this.tableLoading = false;
+        } else {
+          his.tableLoading = false;
         }
+      }).catch(() => {
+        his.tableLoading = false;
       })
     },
 

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-20 10:23:26
- * @LastEditTime: 2020-09-21 18:52:53
+ * @LastEditTime: 2020-09-27 13:54:48
  * @LastEditors: your name
  * @Description: 车辆支援金清单
  * @FilePath: \webcode2\src\views\supportGold\components\carListDialog.vue
@@ -27,29 +27,29 @@
       }"
         >
           <el-table-column width="50" align="center" label="序号" type="index" fixed></el-table-column>
-          <el-table-column prop label="经销店名称" show-overflow-tooltip width="150"></el-table-column>
-          <el-table-column prop label="车架号" show-overflow-tooltip>
+          <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="150"></el-table-column>
+          <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip>
             <template slot-scope="scope">
-              <span>{{ scope.row.id }}</span>
+              <span>{{ scope.row.frameNumber }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop label="车牌号" show-overflow-tooltip></el-table-column>
-          <el-table-column prop label="车型" show-overflow-tooltip></el-table-column>
-          <el-table-column prop label="上牌地" show-overflow-tooltip></el-table-column>
-          <el-table-column prop label="批次" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="plateNumber" label="车牌号" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="modelCode" label="车型" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="batch" label="批次" show-overflow-tooltip></el-table-column>
 
-          <el-table-column prop="rent" label="租金" show-overflow-tooltip>
+          <el-table-column prop="monthlyRent" label="租金" show-overflow-tooltip>
             <template slot-scope="scope">
-              <span>{{ scope.row.rent }}</span>
+              <span>{{ scope.row.monthlyRent }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop label="牌照费" show-overflow-tooltip></el-table-column>
-          <el-table-column prop label="租金合计" show-overflow-tooltip></el-table-column>
-          <el-table-column prop label="车型支援金" show-overflow-tooltip width="100"></el-table-column>
-          <el-table-column prop label="牌照支援" show-overflow-tooltip></el-table-column>
-          <el-table-column prop label="总支援金" show-overflow-tooltip></el-table-column>
-          <el-table-column prop label="当期/总期数" show-overflow-tooltip width="120"></el-table-column>
-          <el-table-column prop label="剩余期数" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="rentCardFee" label="牌照费" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="supportFund" label="车型支援金" show-overflow-tooltip width="100"></el-table-column>
+          <el-table-column prop="licenceFund" label="牌照支援金" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="currentTotal" label="当期/总期数" show-overflow-tooltip width="120"></el-table-column>
+          <el-table-column prop="surplus" label="剩余期数" show-overflow-tooltip></el-table-column>
         </el-table>
       </div>
       <div slot="footer" class="dialog-footer">
@@ -85,10 +85,7 @@ export default {
   components: {},
   data() {
     return {
-      tableData: [
-        { id: '0001', rent: '8888' },
-        { id: '0002', rent: '3522' },
-      ],
+      tableData: [],
 
       // 数据字典
       dictTemp: [],
@@ -123,7 +120,12 @@ export default {
               return prev;
             }
           }, 0);
-          sums[index] += ' 元';
+          if (index >= 7 && index <= 12) {
+            sums[index] += ' 元';
+          } else {
+            sums[index] = '';
+          }
+          
         } else {
           sums[index] = '';
         }

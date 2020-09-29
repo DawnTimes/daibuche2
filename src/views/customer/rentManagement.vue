@@ -32,7 +32,7 @@
               <el-option label="澳门" value="001"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="牌照商" prop="licenceName">
+          <el-form-item label="牌照商名称" prop="licenceName">
             <el-input
               class="inputSelectClass"
               v-model="params.licenceName"
@@ -89,6 +89,8 @@
       size="medium"
       ref="table"
       :data="tableData"
+      v-loading="tableLoading"
+      element-loading-text="拼命加载中"
       stripe
       style="width: 100%"
       border
@@ -290,8 +292,9 @@ export default {
       currentPage: 1, //初始页
       pageSize: 10, //    每页的数据
       tableData: [],
+      tableLoading: false,
       params: {
-        areaName: '',
+        areaCode: '',
         licenceName: '',
         status: '',
         lessor: '',
@@ -300,7 +303,7 @@ export default {
         turnPageShowNum: 10, // 每页展示的条数
       },
       realParams: {
-        areaName: '',
+        areaCode: '',
         licenceName: '',
         status: '',
         lessor: '',
@@ -313,12 +316,13 @@ export default {
     // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.initData();
     },
 
     initData() {
       this.tableData = [];
       const params = {
-        areaName: this.params.areaName,
+        areaCode: this.params.areaCode,
         licenceName: this.params.licenceName,
         status: this.params.status,
         lessor: this.params.lessor,
@@ -326,12 +330,18 @@ export default {
         turnPageBeginPos: this.params.turnPageBeginPos, // 开始是数据的序号，后台需要
         turnPageShowNum: this.params.turnPageShowNum, // 每页展示的条数
       };
+      this.tableLoading = true;
       let url = common.licenceListUrl;
       axios.post(url, params).then((res) => {
-        if (res.em === 'Success!') {
+        if (res.ec === '0') {
           this.tableData = res.data.licenceList;
           this.totalCount = parseInt(res.data.turnPageTotalNum);
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
         }
+      }).catch(() => {
+        this.tableLoading = false;
       });
     },
 
@@ -371,6 +381,17 @@ export default {
     // 导出
     batchesDownload() {
       // console.log('batchesDownload!');
+      window.location.href = `/api/${common.licenceExportExcelUrl}?areaCode=${
+        this.params.areaCode ? this.params.areaCode : ''
+      }&licenceName=${
+        this.params.licenceName ? this.params.licenceName : ''
+      }&status=${
+        this.params.status ? this.params.status : ''
+      }&lessor=${
+        this.params.lessor ? this.params.lessor : ''
+      }&socialCreditCode=${
+        this.params.socialCreditCode ? this.params.socialCreditCode : ''
+      }`;
     },
     indexMethod(index) {
       let order = this.pageSize * (this.currentPage - 1);
