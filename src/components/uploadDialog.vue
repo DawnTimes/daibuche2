@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 11:25:57
- * @LastEditTime: 2020-08-19 15:23:05
+ * @LastEditTime: 2020-09-30 17:21:27
  * @LastEditors: your name
  * @Description: 文件上传弹窗
  * @FilePath: \webcode2\src\components\uploadDialog.vue
@@ -23,10 +23,12 @@
         multiple
         :limit="1"
         accept=".xlsx, .xls"
-        :auto-upload="true"
+        :auto-upload="false"
         :on-exceed="handleExceed"
         :on-success="handleAvatarSuccess"
+        :on-error="handleAvatarError"
         :before-upload="beforeAvatarUpload"
+        :on-change="onChange"
         :file-list="fileList"
       >
         <el-button size="small" type="primary">选取文件</el-button>
@@ -41,49 +43,98 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+
 export default {
   name: '',
   props: {
-    fileList: {
-      type: Array,
+    // fileList: {
+    //   type: Array,
+    //   default: () => {
+    //     return [];
+    //   },
+    // },
+    
+    uploadURLStr: {
+      type: String,
       default: () => {
-        return [];
-      },
+        return ''
+      }
     },
+
+    // 上传成功的状态
   },
   components: {},
   data() {
     return {
       uploadFormVisible: false,
       loading: false,
+      fileList: [],
+      // 上传成功时设置状态
     };
   },
-  computed: {},
+  computed: {
+    // ...mapState({
+    //   successStatus: store => store.successStatus
+    // }),
+    
+  },
   watch: {},
-  created() {},
+  created() {
+    // console.log(this.uploadURLStr);
+  },
   mounted() {},
   methods: {
+    ...mapMutations({
+      setSuccessStatus: 'setSuccessStatus'
+    }),
+
     // 上传URL
     uploadURL() {
-      return ''
+      // const baseUrl = 'http://192.166.87.131:8083/api';
+      // console.log(baseUrl + this.uploadURLStr);
+      return '/api' + this.uploadURLStr
     },
     // 立即上传
     submitUpload() {
+      console.log(this.fileList);
       if (this.fileList.length === 0){
           this.$message.warning('请先上传文件');
         } else {
+          this.loading = true;
           this.$refs.upload.submit();
         }
       
     },
 
+    // 文件状态改变时的钩子，添加文件、上传成功和上传失败时都会被调用
+    onChange(file, fileList) {
+      // console.log(file, fileList);
+      this.fileList = fileList;
+    },
+
     // 上传成功
-    handleAvatarSuccess(res, file) {
-      
+    handleAvatarSuccess(res, file, fileList) {
+      // console.log(res, file, fileList);
+      this.$message.success(res);
+      this.loading = false;
+      this.uploadFormVisible = false;
+      this.successStatus = true;
+      this.setSuccessStatus(true);
+      // this.$store.commit('setSuccessStatus', true);
+
+    },
+
+    // 上传失败
+    handleAvatarError(err, file, fileList) {
+      // console.log(err, file, fileList);
+      this.loading = false;
+      this.$message.error(res);
     },
 
     // 上传之前判断文件格式 大小
     beforeAvatarUpload(file) {
+      // console.log(file);
       // 格式
       const isXLS = file.name.substring(file.name.lastIndexOf('.') + 1) === 'xls';
       const isXLSX = file.name.substring(file.name.lastIndexOf('.') + 1) === 'xlsx';
@@ -93,9 +144,11 @@ export default {
 
       if (!isXLS && !isXLSX) {
         this.$message.error('上传的文件是能是xlsx或xls格式!');
+        this.loading = false;
       }
       if (!isLt10M) {
         this.$message.error('上传的文件大小不能超过 10MB!');
+        this.loading = false;
       }
       return (isXLS || isXLSX) && isLt10M;
     },
@@ -103,15 +156,17 @@ export default {
     // 删除
     handleRemove(file, fileList) {
       // console.log(file, fileList);
+      this.loading = false;
+      this.fileList = fileList;
     },
 
     // 文件超出个数限制时的钩子
     handleExceed(files, fileList) {
-      this.$notify.warning(
-        `当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${
-          files.length + fileList.length
-        } 个文件`
-      );
+      this.$notify.warning({
+        title: '温馨提示',
+        message: '每次限制上传 1 个文件',
+        duration: 2500
+      });
     },
 
     // 利用父组件调用子组件的函数传参来显示弹框

@@ -154,14 +154,16 @@ const Dictionary = {
   // 格式化时间 YYYY-MM-DD
   timeFormat(data) {
     if (data) {
-      const time = new Date(data);
-      const year = time.getFullYear();
-      const month = time.getMonth() + 1;
-      const day = time.getDate();
+      // const time = new Date(data);
+      // const year = time.getFullYear();
+      // const month = time.getMonth() + 1;
+      // const day = time.getDate();
       // const hour = time.getHours();
       // const minute = time.getMinutes();
       // const second = time.getSeconds();
-      return `${year}-${month}-${day}`;
+      // return `${year}-${month}-${day}`;
+
+      return moment(data).format('YYYY-MM-DD')
     }
 
     return data;

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-09-27 10:33:45
+ * @LastEditTime: 2020-09-30 17:11:36
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -105,18 +105,18 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="tradeDate" label="交易时间" show-overflow-tooltip width="100">
+        <el-table-column prop="tradeDate" label="交易时间" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.tradeDate | timeFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="income" label="收款金额" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="companyName" label="收款名称" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="bankAccountNo" label="收款账号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="bankAccountName" label="收款开户行" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="sideAccount" label="汇款名称" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="sideAccountName" label="汇款账号" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="income" label="收款金额" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="companyName" label="收款名称" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="bankAccountNo" label="收款账号" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="bankAccountName" label="收款开户行" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="sideAccount" label="汇款名称" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="sideAccountName" label="汇款账号" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="abstract" label="摘要" show-overflow-tooltip></el-table-column>
         <el-table-column prop="" label="是否代付" show-overflow-tooltip>
           <template slot-scope="scope">
@@ -127,7 +127,7 @@
         </el-table-column>
         <el-table-column prop="paidLogo" label="代付标志" show-overflow-tooltip></el-table-column>
         <el-table-column prop="projectCategory" label="项目类别" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" label="是否虚拟收款" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="是否虚拟收款" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="verState" label="核销状态" show-overflow-tooltip>
           <template slot-scope="scope">
             <span
@@ -135,22 +135,22 @@
             >{{ scope.row.verState }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="haveVerLines" label="已核销额" show-overflow-tooltip width="120">
+        <el-table-column prop="haveVerLines" label="已核销额" show-overflow-tooltip width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.haveVerLines || 0 }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="notVerLines" label="未核销额" show-overflow-tooltip width="120">
+        <el-table-column prop="notVerLines" label="未核销额" show-overflow-tooltip width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.notVerLines || 0 }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="refund" label="退款金额" show-overflow-tooltip width="120">
+        <el-table-column prop="refund" label="退款金额" show-overflow-tooltip width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.refund || 0 }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="newLedgerLogo" label="新台账标志" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="newLedgerLogo" label="新台账标志" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="250" fixed="right">
           <template slot-scope="scope">
@@ -158,25 +158,28 @@
               size="mini"
               type="primary"
               @click="handleContract(scope.row)"
-              v-if="rightControl.writeOff && scope.row.verState == '未核销'"
+              v-if="rightControl.writeOff"
+              :disabled="scope.row.verState == '1'"
             >核销</el-button>
-            <el-button
+            <!-- <el-button
               size="mini"
               plain
               @click="handleDetail(scope.row)"
               v-if="rightControl.detail && scope.row.verState == '全部核销'"
-            >核销详情</el-button>
+            >核销详情</el-button> -->
             <el-button
               size="mini"
               type="warning"
               @click="handleRefund(scope.row)"
-              v-if="rightControl.refund && (scope.row.verState == 'PART' || scope.row.verState == '未核销')"
+              v-if="rightControl.refund"
+              :disabled="scope.row.verState == '1'"
             >退款</el-button>
             <el-button
               size="mini"
               type="danger"
               @click="handleDelete(scope.row)"
-              v-if="rightControl.delete && scope.row.verState == '未核销'"
+              v-if="rightControl.delete"
+              :disabled="scope.row.verState == '1'"
             >删除</el-button>
           </template>
         </el-table-column>
@@ -211,7 +214,7 @@
     ></confirmBox>
 
     <!-- // 导入银行流水单 -->
-    <upload-dialog ref="uploadDialog"></upload-dialog>
+    <upload-dialog ref="uploadDialog" :uploadURLStr="bankWaterUploadURL"></upload-dialog>
   </div>
 </template>
 
@@ -305,6 +308,9 @@ export default {
         delete: false,
         detail: false,
       },
+
+      // 导入URL
+      bankWaterUploadURL: ''
     };
   },
   computed: {
@@ -410,6 +416,7 @@ export default {
 
     // 导入银行流水单
     importButton() {
+      this.bankWaterUploadURL = common.importCollectionUrl,
       this.$refs.uploadDialog.isShow(true);
     },
 
@@ -521,6 +528,15 @@ export default {
       // }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''}&sideAccount=${
       //   this.formData.sideAccount ? this.formData.sideAccount : ''
       // }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`, '_parent')
+
+      // const arr = [
+      //   {id: '123'},
+      //   {id: '456'},
+      //   {id: '789'},
+      // ];
+      // const aa = JSON.stringify(arr);
+      // // escape() 函数可对字符串进行编码，这样就可以在所有的计算机上读取该字符串。可以使用 unescape() 对 escape() 编码的字符串进行解码。
+      // window.open(`/api/${common.bankWaterDownUrl}?${escape(aa)}`, '_parent')
     },
 
     fileDownload(data, fileName) {

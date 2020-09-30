@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:25:10
- * @LastEditTime: 2020-09-29 14:50:06
+ * @LastEditTime: 2020-09-30 17:07:37
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\collectionRecord.vue
@@ -80,7 +80,7 @@
     </el-row>
 
     <!-- // 导入催收记录 -->
-    <upload-dialog ref="uploadDialog"></upload-dialog>
+    <upload-dialog ref="uploadDialog" :uploadURLStr="recordUploadURL"></upload-dialog>
   </div>
 </template>
 
@@ -121,17 +121,39 @@ export default {
         readonly: ['electricExpeditor'],
       },
       status: { loading: false },
+
+      // 导入URL
+      recordUploadURL: '',
+      pageForm: {
+        pageNum: 1,
+        pageSize: 5,
+      },
     };
   },
   computed: {
     ...mapState({
       userId: (store) => store.userId,
-    })
+      successStatus: (store) => store.successStatus,
+    }),
   },
-  watch: {},
+  watch: {
+    // 监听是否导入成功，成功则刷新催收记录
+    successStatus(val) {
+      if (val) {
+        this.getCollectionRecordListData();
+      }
+    }
+  },
   created() {
     this.soldId = this.$route.query.soldId;
     this.formData.soldId = this.$route.query.soldId;
+
+    // this.$on('successStatus', (data) => {
+    //   console.log(data);
+    //   if (data.status) {
+    //     this.getCollectionRecordListData();
+    //   }
+    // })
   },
   mounted() {
     this.formData.electricExpeditor = this.userId;
@@ -143,8 +165,8 @@ export default {
       const url = common.collectionQueryListUrl;
       const params = {
         soldId            : this.soldId,
-        turnPageBeginPos: this.pageNum,
-        turnPageShowNum : this.pageSize,
+        turnPageBeginPos: this.pageForm.pageNum,
+        turnPageShowNum : this.pageForm.pageSize,
       };
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
@@ -210,17 +232,21 @@ export default {
 
     // 导入
     importButton() {
+      this.recordUploadURL = common.importCollectionUrl,
       this.$refs.uploadDialog.isShow(true);
     },
 
     // 分页
     handleSizeChange(val) {
       this.pageNum = 1;
+      this.pageForm.pageNum = 1;
       this.pageSize = val;
+      this.pageForm.pageSize = val;
       this.getCollectionRecordListData();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
+      this.pageForm.pageNum = (val - 1) * this.pageSize + 1;
       this.getCollectionRecordListData();
     },
   },

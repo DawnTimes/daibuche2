@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-09-27 09:38:49
+ * @LastEditTime: 2020-09-30 09:31:41
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -328,7 +328,19 @@ export default {
     },
 
     // 导出
-    exportButton() {},
+    exportButton() {
+      window.location.href = `/api/${common.exportCollectionUrl}?name=${
+        this.formData.name ? this.formData.name : ''
+      }&beginDay=${
+        this.formData.beginDay ? this.formData.beginDay : ''
+      }&endDay=${
+        this.formData.endDay ? this.formData.endDay : ''
+      }&beginAmount=${
+        this.formData.beginAmount ? this.formData.beginAmount : ''
+      }&endAmount=${
+        this.formData.endAmount ? this.formData.endAmount : ''
+      }`;
+    },
 
     // 分页
     handleSizeChange(val) {

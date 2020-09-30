@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-08-10 15:26:28
+ * @LastEditTime: 2020-09-30 17:04:24
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\store\index.js
@@ -18,7 +18,8 @@ const store = new Vuex.Store({
     userId: sessionStorage.getItem('userId') || '',
     personName: sessionStorage.getItem('personName') || '',
     asideInfo: JSON.parse(sessionStorage.getItem('asideInfo')) || [],
-    asideInfoIds: JSON.parse(sessionStorage.getItem('asideInfoIds')) || []
+    asideInfoIds: JSON.parse(sessionStorage.getItem('asideInfoIds')) || [],
+    successStatus: false,
 
 
   },
@@ -47,7 +48,17 @@ const store = new Vuex.Store({
     setAsideInfoIds(state, asideInfoIds) {
       state.asideInfoIds = asideInfoIds
       sessionStorage.setItem('asideInfoIds', JSON.stringify(asideInfoIds))
+    },
+
+    setSuccessStatus(state, successStatus) {
+      state.successStatus = successStatus
     }
+  },
+
+  getters: {
+    // getUserName: (state, getters) => {
+    //   return state.personName
+    // }
   }
 });
 

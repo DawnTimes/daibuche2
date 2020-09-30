@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-09-29 16:41:57
+ * @LastEditTime: 2020-09-30 17:20:18
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -279,7 +279,7 @@
     ></createInvoice-dialog>
 
     <!-- // 导入开票明细 -->
-    <upload-dialog ref="uploadDialog"></upload-dialog>
+    <upload-dialog ref="uploadDialog" :uploadURLStr="invoiceUploadURL"></upload-dialog>
   </div>
 </template>
 
@@ -343,6 +343,9 @@ export default {
         register: false,
         exportBtn: false,
       },
+
+      // 导入URL
+      invoiceUploadURL: ''
     };
   },
   computed: {
@@ -441,6 +444,7 @@ export default {
 
     // 导入开票明细
     importButton() {
+      this.invoiceUploadURL = common.importCollectionUrl,
       this.$refs.uploadDialog.isShow(true);
     },
 
