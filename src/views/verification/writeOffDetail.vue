@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-16 13:51:06
+ * @LastEditTime: 2020-10-10 13:58:12
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
@@ -221,7 +221,11 @@ export default {
   },
   methods: {
     // 查询
-    queryForm() {},
+    queryForm() {
+      // 重置当前页
+      this.pageNum = 1;
+      this.formData.pageNum = 1;
+    },
 
     // 重置
     resetForm(formName) {

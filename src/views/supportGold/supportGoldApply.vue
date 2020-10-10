@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-09-23 18:39:03
+ * @LastEditTime: 2020-10-10 15:44:24
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -58,6 +58,8 @@
     <div class="table">
       <el-table
         :data="tableData"
+        v-loading="tableLoading"
+        element-loading-text="拼命加载中"
         border
         stripe
         :max-height="tableHeight"
@@ -177,6 +179,7 @@ export default {
 
       tableData: [],
       tableHeight: 100,
+      tableLoading: false,
       appravolStatus: [],
 
       // 删除提示文本
@@ -287,6 +290,7 @@ export default {
 
     // 获取分页数据
     getSupportGoldApplyListData() {
+      this.tableLoading = true;
       const url = common.supportApplyListUrl;
       const params = {
         batchNumber: this.formData.batchNumber,
@@ -299,7 +303,12 @@ export default {
           const data = res.data;
           this.tableData = data.applyList;
           this.total = data.turnPageTotalNum * 1;
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
         }
+      }).catch(() => {
+        this.tableLoading = false;
       })
     },
 

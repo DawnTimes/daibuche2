@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-09-29 16:25:24
+ * @LastEditTime: 2020-10-10 13:51:28
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -202,7 +202,7 @@ export default {
         { nper: '首期租金' },
         { nper: '手续费' },
         { nper: '违章保证金' },
-        { nper: '0' },
+        // { nper: '0' },
       ],
       // 直租
       zzLeaseList: [
@@ -252,7 +252,7 @@ export default {
     
     this.letterForm.currentDate = moment().format('YYYY-MM-DD')
     this.contractId = this.$route.query.contractId;
-    console.log(this.formData.leaseWay);
+    // console.log(this.formData.leaseWay);
   },
   mounted() {
     this.queryNoticeLetterDetail();
@@ -280,7 +280,7 @@ export default {
     // 合计
     getSummaries(param) {
       const { columns, data } = param;
-      console.log(columns, data);
+      // console.log(columns, data);
       const sums = [];
       columns.forEach((column, index) => {
         if (index === 0) {
@@ -306,7 +306,7 @@ export default {
         if (!values.every((value) => isNaN(value))) {
           // reduce() 方法接收一个函数作为累加器
           sums[index] = values.reduce((prev, curr) => {
-            console.log(prev, curr);
+            // console.log(prev, curr);
             const value = Number(curr);
             if (!isNaN(value)) {
               // return prev + curr
@@ -410,7 +410,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 50px;
+      height: 40px;
 
       .makeDepart {
         padding-left: 30px;

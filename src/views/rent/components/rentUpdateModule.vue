@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 10:31:50
- * @LastEditTime: 2020-09-10 18:18:13
+ * @LastEditTime: 2020-10-10 16:32:05
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\rentUpdateModule.vue
@@ -120,22 +120,22 @@
                 </el-select> -->
               </el-form-item>
             </el-col>
-            <!-- <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
-                label="生效年月"
-                prop=""
-                v-show="!$formAtReadonly('effectiveMonth', formReadonly.hide)"
+                label="生效日期"
+                prop="validDate"
+                v-show="!$formAtReadonly('validDate', formReadonly.hide)"
                 class="form-item"
               >
                 <el-date-picker
-                  v-model="formData.effectiveMonth"
-                  type="month"
-                  value-format="yyyy-MM"
-                  :disabled="$formAtReadonly('effectiveMonth', formReadonly.readonly)"
-                  placeholder="选择月份"
+                  v-model="formData.validDate"
+                  type="date"
+                  value-format="yyyy-MM-dd"
+                  :disabled="$formAtReadonly('validDate', formReadonly.readonly)"
+                  placeholder="选择日期"
                 ></el-date-picker>
               </el-form-item>
-            </el-col> -->
+            </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="是否限牌"
@@ -361,11 +361,11 @@ export default {
             trigger: 'blur',
           },
         ],
-        effectiveMonth: [
+        validDate: [
           {
             required: true,
-            message: '生效年月不能为空',
-            trigger: ['blur', 'change'],
+            message: '生效日期不能为空',
+            trigger: 'change',
           },
         ],
       },

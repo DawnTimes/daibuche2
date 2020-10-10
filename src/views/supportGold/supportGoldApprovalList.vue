@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-09-23 14:56:58
+ * @LastEditTime: 2020-10-10 15:45:04
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -45,6 +45,8 @@
     <div class="table">
       <el-table
         :data="tableData"
+        v-loading="tableLoading"
+        element-loading-text="拼命加载中"
         border
         stripe
         :max-height="tableHeight"
@@ -154,6 +156,7 @@ export default {
 
       tableData: [],
       tableHeight: 100,
+      tableLoading: false,
       appravolStatus: [],
       
       // 按钮权限
@@ -236,6 +239,8 @@ export default {
       this.userApprovalType = common.queryApprovalFlow(9631, this.asideInfoIds, '1'); // 会计审批
       // this.userApprovalType = common.queryApprovalFlow(9632, this.asideInfoIds, '2'); // 资管部长审批
 
+      this.tableLoading = true;
+
       const url = common.spprotWaitListUrl;
       const params = {
         batchNumber: this.formData.batchNumber,
@@ -250,7 +255,12 @@ export default {
           const data = res.data;
           this.tableData = data.applyList;
           this.total = data.turnPageTotalNum * 1;
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
         }
+      }).catch(() => {
+        this.tableLoading = false;
       })
     },
 

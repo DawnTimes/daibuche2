@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-21 15:15:04
+ * @LastEditTime: 2020-10-10 15:34:54
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalList.vue
@@ -46,6 +46,8 @@
     <div class="table">
       <el-table
         :data="tableData"
+        v-loading="tableLoading"
+        element-loading-text="拼命加载中"
         border
         stripe
         :max-height="tableHeight"
@@ -76,7 +78,11 @@
         </el-table-column>
         <!-- <el-table-column prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
         <el-table-column prop="seriesName" label="车系" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop="" label="生效年月" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="validDate" label="生效日期" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.validDate | timeFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="licenceName" label="牌照商" show-overflow-tooltip></el-table-column>
         <el-table-column prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
         <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
@@ -153,10 +159,9 @@ export default {
         pageNum: 1,
       },
 
-      tableData: [
-        { id: 123456 },
-      ],
+      tableData: [],
       tableHeight: 100,
+      tableLoading: false,
       appravolStatus: [],
 
       // 按钮权限
@@ -261,13 +266,19 @@ export default {
         turnPageShowNum: this.formData.pageSize,
       };
       const url = common.rentApprovalUrl;
+      this.tableLoading = true;
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
           const data = res.data;
           this.tableData = data.rentModList;
           this.total = data.turnPageTotalNum * 1;
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
         }
-      });
+      }).catch(() => {
+        this.tableLoading = false;
+      })
     },
 
     // 分页

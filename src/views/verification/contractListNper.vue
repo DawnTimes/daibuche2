@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-09-27 10:53:35
+ * @LastEditTime: 2020-10-10 16:10:06
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -183,7 +183,7 @@
       v-on:formDataSubmit="formDataSubmit"
     ></writeOff-dialog>
     
-    <nperCarList ref="nperCarListDialog" :carTableData="carTableData"></nperCarList>
+    <nperCarList ref="nperCarListDialog" :carTableData="carTableData" :tableLoading="carTableLoading"></nperCarList>
   </div>
 </template>
 
@@ -247,6 +247,7 @@ export default {
       },
 
       carTableData: [],
+      carTableLoading: false,
     };
   },
   computed: {
@@ -414,6 +415,7 @@ export default {
 
     // 车辆清单
     queryCar(row) {
+      this.carTableLoading = true;
       this.carTableData = [];
       const url = common.selectCarRepayListUrl;
       const params = {
@@ -423,7 +425,12 @@ export default {
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
           this.carTableData = res.data.carRepList;
+          this.carTableLoading = false;
+        } else {
+          this.carTableLoading = false;
         }
+      }).catch(() => {
+        this.carTableLoading = false;
       })
       this.$refs.nperCarListDialog.isShow(true);
     },

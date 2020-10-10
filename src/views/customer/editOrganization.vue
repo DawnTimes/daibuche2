@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-26 09:32:16
- * @LastEditTime: 2020-09-16 12:00:04
+ * @LastEditTime: 2020-10-10 15:17:19
  * @LastEditors: your name
  * @Description: 新增牌照商
  * @FilePath: \webcode2\src\views\customer\editOrganization.vue
@@ -72,7 +72,7 @@ export default {
       },
       formReadonly: {
         hide: [],
-        readonly: ['licenceCode'],
+        readonly: ['licenCode'],
       },
       status: {
         loading: false,

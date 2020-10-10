@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-09-09 18:18:51
+ * @LastEditTime: 2020-10-10 15:20:16
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\editRent.vue
@@ -63,6 +63,7 @@ export default {
         brandName: '',
         modifier: '',
         remark: '',
+        validDate: '',
       },
       formReadonly: {
         hide: ['id', 'saveBtn', 'cancelBtn1', 'cancelBtn2'],

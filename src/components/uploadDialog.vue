@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 11:25:57
- * @LastEditTime: 2020-09-30 17:21:27
+ * @LastEditTime: 2020-10-10 10:28:48
  * @LastEditors: your name
  * @Description: 文件上传弹窗
  * @FilePath: \webcode2\src\components\uploadDialog.vue
@@ -97,7 +97,7 @@ export default {
     },
     // 立即上传
     submitUpload() {
-      console.log(this.fileList);
+      // console.log(this.fileList);
       if (this.fileList.length === 0){
           this.$message.warning('请先上传文件');
         } else {
@@ -119,7 +119,8 @@ export default {
       this.$message.success(res);
       this.loading = false;
       this.uploadFormVisible = false;
-      this.successStatus = true;
+      // this.successStatus = true;
+      // 更新上传成功的状态
       this.setSuccessStatus(true);
       // this.$store.commit('setSuccessStatus', true);
 
@@ -127,9 +128,9 @@ export default {
 
     // 上传失败
     handleAvatarError(err, file, fileList) {
-      // console.log(err, file, fileList);
+      // console.log(err);
       this.loading = false;
-      this.$message.error(res);
+      this.$message.error(JSON.parse(err.message) || '上传错误，请重试');
     },
 
     // 上传之前判断文件格式 大小

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-09-14 10:09:35
+ * @LastEditTime: 2020-10-10 15:24:41
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\baseInformationDetailModule.vue
@@ -12,12 +12,12 @@
       <el-row :gutter="0">
         <el-col :xs="24" :sm="24" :md="22" :lg="20" :xl="16">
           <el-row :gutter="0">
-            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+            <!-- <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>id编号：</span>
                 <span>{{ baseInfoForm.id }}</span>
               </div>
-            </el-col>
+            </el-col> -->
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>车型代码：</span>
@@ -75,8 +75,8 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
-                <span>原月租金：</span>
-                <span>{{ baseInfoForm.monthlyRent }} 元</span>
+                <span>生效日期：</span>
+                <span>{{ baseInfoForm.validDate }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">

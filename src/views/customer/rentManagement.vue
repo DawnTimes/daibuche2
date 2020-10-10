@@ -274,7 +274,7 @@
     ></el-pagination>
 
     <!-- // 导入 -->
-    <upload-dialog ref="uploadDialog"></upload-dialog>
+    <upload-dialog ref="uploadDialog" :uploadURLStr="rentUploadURL"></upload-dialog>
   </div>
 </template>
 <script>
@@ -310,6 +310,9 @@ export default {
         socialCreditCode: '',
       },
       tableHeight: 100,
+
+      // 导入url
+      rentUploadURL: '',
     };
   },
   methods: {
@@ -376,6 +379,7 @@ export default {
 
     // 导入
     importButton() {
+      this.rentUploadURL = common.importLicenceCompanyUrl,
       this.$refs.uploadDialog.isShow(true);
     },
     // 导出

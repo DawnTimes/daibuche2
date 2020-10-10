@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-09-09 17:40:11
+ * @LastEditTime: 2020-10-10 16:28:45
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeRentUpdate.vue
@@ -56,6 +56,7 @@ export default {
         brandName: '',
         modifier: '',
         remark: '',
+        validDate: '',
       },
       formReadonly: {
         hide: ['id', 'cityName', 'licenceName', 'rentLicenceFee', 'totalMonthlyRent', 'newLicenceFee', 'newtotalMonthlyRent', 'cancelBtn1', 'cancelBtn3'],
@@ -77,8 +78,8 @@ export default {
     const query = JSON.parse(this.$route.query.row);
     Object.assign(this.formData, query);
     this.formData.modifier = this.userId;
-    console.log(query);
-    console.log(this.formData);
+    // console.log(query);
+    // console.log(this.formData);
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -124,6 +125,7 @@ export default {
             brandName: '',
             modifier: this.userId,
             remark: '',
+            validDate: '',
           });
         } else {
           this.status.loading = false;

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-09-30 17:11:36
+ * @LastEditTime: 2020-10-10 09:29:31
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -74,7 +74,7 @@
           <el-button type="primary" @click="importButton" v-show="rightControl.import">导入银行流水单</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出银行流水单</el-button>
+          <el-button type="primary" id="exportButton"  @click="exportButton" :loading="exportLoading" v-show="rightControl.export">导出银行流水单</el-button>
         </el-form-item>
         
       </el-form>
@@ -310,7 +310,8 @@ export default {
       },
 
       // 导入URL
-      bankWaterUploadURL: ''
+      bankWaterUploadURL: '',
+      exportLoading: false,
     };
   },
   computed: {
@@ -416,7 +417,7 @@ export default {
 
     // 导入银行流水单
     importButton() {
-      this.bankWaterUploadURL = common.importCollectionUrl,
+      this.bankWaterUploadURL = common.importBankStatementUrl,
       this.$refs.uploadDialog.isShow(true);
     },
 
@@ -478,7 +479,7 @@ export default {
       //   responseType: 'arraybuffer'
       // })
       //   .then(res => {
-            //res为后台返回的流数据信息
+      //       // res为后台返回的流数据信息
       //     const filename = res.filename || '银行流水单.xlsx';
       //     this.fileDownload(res, filename);
       //   })
@@ -517,17 +518,43 @@ export default {
       
       // 方式二：get方式请求后台，直接使用window.location.href 或 window.open()打开请求结果。
       // /api/bankStatemntExcel/exportBankStatement.do
-      window.location.href = `/api/${common.bankWaterDownUrl}?companyName=${
-        this.formData.companyName ? this.formData.companyName : ''
+      // window.location.href = `/api/${common.bankWaterDownUrl}?companyName=${
+      //   this.formData.companyName ? this.formData.companyName : ''
+      // }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''}&sideAccount=${
+      //   this.formData.sideAccount ? this.formData.sideAccount : ''
+      // }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`;
+
+      
+      // this.exportLoading = true;
+      window.open(`/api/${common.bankWaterDownUrl}?companyName=${
+      this.formData.companyName ? this.formData.companyName : ''
       }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''}&sideAccount=${
         this.formData.sideAccount ? this.formData.sideAccount : ''
-      }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`;
+      }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`, '_parent')
+      // .addEventListener('beforeunload', (e) => {
+      //   console.log(e);
+      //   this.exportLoading = false;
+      // })
 
-      // window.open(`/api/${common.bankWaterDownUrl}?companyName=${
+
+      // var itime = 0;
+      // var exportButton = document.getElementById('exportButton');
+      // exportButton.setAttribute("disabled", "disabled");
+      // exportButton.innerHTML = `正在下载<i style="color:blueviolet;">${itime}</i>`;
+      // var hurl = `/api/${common.bankWaterDownUrl}?companyName=${
       // this.formData.companyName ? this.formData.companyName : ''
       // }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''}&sideAccount=${
       //   this.formData.sideAccount ? this.formData.sideAccount : ''
-      // }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`, '_parent')
+      // }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`;
+      // window.open(hurl, '_parent').addEventListener("beforeunload", (e) => {
+      //   console.log(e);
+      //     clearTimeout(downloadTimer);
+      //     exportButton.innerHTML = '导出银行流水单';
+      //     exportButton.removeAttribute("disabled");
+      // });
+      // var downloadTimer = setInterval(() => {
+      //     exportButton.children[0].innerText = ++itime;
+      // }, 1000);
 
       // const arr = [
       //   {id: '123'},

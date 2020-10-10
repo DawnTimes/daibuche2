@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-09-15 15:42:45
+ * @LastEditTime: 2020-10-10 16:08:15
  * @LastEditors: your name
  * @Description: 查询期数下所有车辆
  * @FilePath: \webcode2\src\views\verification\components\nperCarList.vue
@@ -20,6 +20,8 @@
       <div class="table">
         <el-table
           :data="carTableData"
+          v-loading="tableLoading"
+          element-loading-text="拼命加载中"
           border
           stripe
           ref="table"
@@ -108,6 +110,10 @@ export default {
       default: () => {
         return [];
       },
+    },
+    tableLoading: {
+      type: Boolean,
+      default: false,
     },
   },
   components: {},

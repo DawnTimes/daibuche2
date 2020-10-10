@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-25 14:55:29
+ * @LastEditTime: 2020-10-10 14:38:30
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeList.vue
@@ -35,6 +35,8 @@
     <div class="table">
       <el-table
         :data="tableData"
+        v-loading="tableLoading"
+        element-loading-text="拼命加载中"
         border
         stripe
         :max-height="tableHeight"
@@ -121,10 +123,9 @@ export default {
         pageNum: 1,
       },
 
-      tableData: [
-        { id: 123456 },
-      ],
+      tableData: [],
       tableHeight: 100,
+      tableLoading: false,
       
       rightArray: [9521],
       rightControl: {
@@ -209,13 +210,19 @@ export default {
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
       };
+      this.tableLoading = true;
       const url = common.queryNotLimitCarListUrl;
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
           const data = res.data;
           this.tableData = data.notLimitList;
           this.total = data.turnPageTotalNum * 1;
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
         }
+      }).catch(() => {
+        this.tableLoading = false;
       })
     },
 

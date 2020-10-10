@@ -138,8 +138,10 @@ export default {
   exportSubcarInvoiceNoticeUrl  : '/SubcarInvoiceNotice36Nper/exportSubcarInvoiceNotice.do',   // 导出开票通知单
   exportSubcarInvoiceListUrl    : '/SubcarInvoiceNotice/exportSubcarInvoiceNotice.do',         // 导出开票明细
   licenceExportExcelUrl         : '/licenceExcel/licenceExportExcel.do',                       // 导出出租方
+  importLicenceCompanyUrl       : 'licenceExcel/importLicenceCompany',                         // 导入出租方
   supportOutputExcelUrl         : '/supportExcel/supportOutputExcel.do',                       // 导出支援金
   exportVerCarExcelUrl          : '/verCarStatement/exportVerCarExcel.do',                     // 导出核销车辆
+  importBankStatementUrl        : '/bankStatemntExcel/importBankStatement.do',                 // 银行流水导入
 
   // 验证码
   guid() {

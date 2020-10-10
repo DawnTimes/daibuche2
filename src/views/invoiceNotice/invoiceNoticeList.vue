@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-09-30 17:20:18
+ * @LastEditTime: 2020-10-10 16:19:54
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -86,6 +86,7 @@
           size="medium"
           type="primary"
           @click="exportButton"
+          :loading="exportLoading"
           v-show="rightControl.export"
           >导出开票明细</el-button
         >
@@ -141,18 +142,24 @@
           label="生成时间"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.createTime | timeFormatTemp }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="buyName"
           label="购方名称"
           show-overflow-tooltip
-          width="100"
+          width="150"
         ></el-table-column>
+        <!-- 自适应列宽 -->
+        <!-- <af-table-column label="购方名称" prop="buyName"></af-table-column> -->
         <el-table-column
           prop="buyCreditCode"
           label="购方税号"
           show-overflow-tooltip
-          width="100"
+          width="150"
         ></el-table-column>
         <el-table-column
           prop="buyAddTel"
@@ -190,9 +197,23 @@
           show-overflow-tooltip
           width="100"
         ></el-table-column>
-        <el-table-column prop="" label="规格" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="商品编码" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="计量单位" show-overflow-tooltip></el-table-column>
+        <el-table-column
+          prop=""
+          label="规格"
+          show-overflow-tooltip
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop=""
+          label="商品编码"
+          show-overflow-tooltip
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop=""
+          label="计量单位"
+          show-overflow-tooltip
+        ></el-table-column>
         <el-table-column
           prop="num"
           label="数量"
@@ -208,11 +229,34 @@
           label="税率"
           show-overflow-tooltip
         ></el-table-column>
-        <el-table-column prop="" label="复核人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" label="收款人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" label="折扣金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="扣除额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="特殊票种" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column
+          prop=""
+          label="复核人"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop=""
+          label="收款人"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop=""
+          label="折扣金额"
+          show-overflow-tooltip
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop=""
+          label="扣除额"
+          show-overflow-tooltip
+          width="100"
+        ></el-table-column>
+        <el-table-column
+          prop=""
+          label="特殊票种"
+          show-overflow-tooltip
+          width="100"
+        ></el-table-column>
         <el-table-column
           prop="receiverAddr"
           label="接收人邮件"
@@ -279,7 +323,10 @@
     ></createInvoice-dialog>
 
     <!-- // 导入开票明细 -->
-    <upload-dialog ref="uploadDialog" :uploadURLStr="invoiceUploadURL"></upload-dialog>
+    <upload-dialog
+      ref="uploadDialog"
+      :uploadURLStr="invoiceUploadURL"
+    ></upload-dialog>
   </div>
 </template>
 
@@ -345,7 +392,8 @@ export default {
       },
 
       // 导入URL
-      invoiceUploadURL: ''
+      invoiceUploadURL: '',
+      exportLoading: false,
     };
   },
   computed: {
@@ -444,20 +492,33 @@ export default {
 
     // 导入开票明细
     importButton() {
-      this.invoiceUploadURL = common.importCollectionUrl,
-      this.$refs.uploadDialog.isShow(true);
+      (this.invoiceUploadURL = common.importCollectionUrl),
+        this.$refs.uploadDialog.isShow(true);
     },
 
     // 导出明细
     exportButton() {
+      // this.exportLoading = true;
       window.location.href = `/api/${
         common.exportSubcarInvoiceListUrl
       }?buyName=${
         this.formData.buyName ? this.formData.buyName : ''
       }&buyCreditCode=${
         this.formData.buyCreditCode ? this.formData.buyCreditCode : ''
-      }&remark=${
-        this.formData.remark ? this.formData.remark : ''}`;
+      }&remark=${this.formData.remark ? this.formData.remark : ''}`;
+
+      // setTimeout(() => {
+      //   this.exportLoading = false;
+      // }, 1000);
+
+      // window.open(`/api/${
+      //   common.exportSubcarInvoiceListUrl
+      // }?buyName=${
+      //   this.formData.buyName ? this.formData.buyName : ''
+      // }&buyCreditCode=${
+      //   this.formData.buyCreditCode ? this.formData.buyCreditCode : ''
+      // }&remark=${
+      //   this.formData.remark ? this.formData.remark : ''}`, '_parent');
     },
 
     // 分页

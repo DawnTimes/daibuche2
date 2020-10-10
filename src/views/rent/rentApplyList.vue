@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-09-14 14:31:34
+ * @LastEditTime: 2020-10-10 15:34:22
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -56,6 +56,8 @@
     <div class="table">
       <el-table
         :data="tableData"
+        v-loading="tableLoading"
+        element-loading-text="拼命加载中"
         border
         stripe
         :max-height="tableHeight"
@@ -86,7 +88,11 @@
             <span :class="{ blueColor: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue }}</span>
           </template>
         </el-table-column>        
-        <el-table-column prop="" label="生效年月" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="validDate" label="生效日期" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.validDate | timeFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="licenceName" label="牌照商" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
         <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
@@ -203,6 +209,7 @@ export default {
 
       tableData: [],
       tableHeight: 100,
+      tableLoading: false,
       appravolStatus: [],
 
       // 删除提示文本
@@ -311,13 +318,19 @@ export default {
         turnPageShowNum: this.formData.pageSize,
       };
       const url = common.queryRentHisUrl;
+      this.tableLoading = true;
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
           const data = res.data;
           this.tableData = data.rentModList;
           this.total = data.turnPageTotalNum * 1;
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
         }
-      });
+      }).catch(() => {
+        this.tableLoading = false;
+      })
     },
 
     // 获取状态数据字典
