@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-09-29 16:51:16
+ * @LastEditTime: 2020-10-12 15:44:49
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -120,14 +120,18 @@
         <el-table-column prop="verState" label="核销状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span
-              :class="{greenStatus: scope.row.verState == '', redStatus: scope.row.verState == '', blueColor: scope.row.verState == ''}"
-            >{{ formatStatus(scope.row.verState) }}</span>
+              :class="{greenStatus: scope.row.verState == 'FULL', redStatus: scope.row.verState == 'NOT', blueColor: scope.row.verState == 'PART'}"
+            >{{ scope.row.verState | verState }}</span>
           </template>
         </el-table-column>
         <!-- <el-table-column prop="" label="核销人" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="核销时间" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="是否足额" show-overflow-tooltip width="120"></el-table-column> -->
-        <el-table-column prop="payStatus" label="支援金状态" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="payStatus" label="支援金状态" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.payStatus | payStatus }}</span>
+          </template>
+        </el-table-column>
         <!-- <el-table-column prop="" label="反冲状态" show-overflow-tooltip width="100"></el-table-column> -->
 
         <!-- <el-table-column prop="" label="本金" show-overflow-tooltip width="100"></el-table-column>
@@ -160,7 +164,7 @@
         <el-table-column prop="bankName" label="收款开户行" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="bankNo" label="收款账号" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="支援金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="差额" show-overflow-tooltip width="100"></el-table-column>
+        <!-- <el-table-column prop="" label="差额" show-overflow-tooltip width="100"></el-table-column> -->
         <el-table-column prop="" label="支援金批次" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="支援金申请日期" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-09-29 16:47:27
+ * @LastEditTime: 2020-10-12 15:37:54
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -117,13 +117,13 @@
             <span>{{ scope.row.payDay | timeFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="" label="支援金状态" show-overflow-tooltip width="100">
+        <!-- <el-table-column prop="payStatus" label="支援金状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span
-              :class="{greenStatus: scope.row.approvalStatus == '', redStatus: scope.row.approvalStatus == '', blueColor: scope.row.approvalStatus == ''}"
-            >{{ formatStatus(scope.row.status, paidTemp) }}</span>
+              :class="{greenStatus: scope.row.payStatus == '', redStatus: scope.row.payStatus == '', blueColor: scope.row.payStatus == ''}"
+            >{{ formatStatus(scope.row.payStatus, paidTemp) }}</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
 
         <!-- <el-table-column prop="" label="本金" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="利息" show-overflow-tooltip width="100"></el-table-column>
@@ -153,7 +153,7 @@
         <el-table-column prop="outstandingManagementFee" label="未收管理费" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="outstandingCommission" label="未收手续费" show-overflow-tooltip width="120"></el-table-column>
         
-        <el-table-column prop="" label="支援金" show-overflow-tooltip width="100"></el-table-column>
+        <!-- <el-table-column prop="" label="支援金" show-overflow-tooltip width="100"></el-table-column> -->
         <!-- <el-table-column prop="" label="差额" show-overflow-tooltip width="100"></el-table-column> -->
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
       </el-table>

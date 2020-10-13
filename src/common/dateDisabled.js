@@ -1,13 +1,13 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-27 11:46:30
- * @LastEditTime: 2020-08-18 14:59:45
+ * @LastEditTime: 2020-10-12 16:57:17
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\common\dateDisabled.js
  */
 
-
+// 只能选每月4号和19号
 export const dateDisabled = (inputDate) => {
   // var year = inputDate.getFullYear();
   // var month = (inputDate.getMonth() + 1).toString();
@@ -28,7 +28,23 @@ export const dateDisabled = (inputDate) => {
   }
 }
 
+// 只能选每年一月一号
+export const effectDate = (inputDate) => {
+  const month = inputDate.getMonth() + 1;
+  const day = inputDate.getDate();
 
+  if (month == 1) {
+    if (day == 1) {
+      return false
+    } else {
+      return true
+    }
+  } else {
+    return true
+  }
+}
+
+// 不能选大于当月的月份
 export const monthDisabled = (inputDate) => {
   var time = new Date();
   var year = time.getFullYear();

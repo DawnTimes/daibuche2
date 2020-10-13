@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 10:31:50
- * @LastEditTime: 2020-10-10 16:32:05
+ * @LastEditTime: 2020-10-12 16:58:04
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\rentUpdateModule.vue
@@ -133,6 +133,7 @@
                   value-format="yyyy-MM-dd"
                   :disabled="$formAtReadonly('validDate', formReadonly.readonly)"
                   placeholder="选择日期"
+                  :picker-options="pickerOptionsDate"
                 ></el-date-picker>
               </el-form-item>
             </el-col>
@@ -303,6 +304,7 @@
 <script>
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+import { effectDate } from '@/common/dateDisabled.js';
 
 export default {
   name: 'rentUpdateModule',
@@ -368,6 +370,13 @@ export default {
             trigger: 'change',
           },
         ],
+      },
+
+      // 只能选择每年一月一号
+      pickerOptionsDate: {
+        disabledDate: (time) => {
+          return effectDate(time);
+        },
       },
 
     };

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-10 16:19:54
+ * @LastEditTime: 2020-10-12 09:29:02
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -399,9 +399,18 @@ export default {
   computed: {
     ...mapState({
       userId: (store) => store.userId,
+      successStatus: (store) => store.successStatus,
     }),
   },
-  watch: {},
+  watch: {
+    // 监听是否导入成功，成功则刷新催收记录
+    successStatus(val) {
+      if (val) {
+        this.getInvoiceNoticeListData();
+      }
+    }
+  },
+  
   created() {
     // 判断权限
     this.rightArray.forEach((item, index, array) => {

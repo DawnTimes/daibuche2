@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-10 15:34:22
+ * @LastEditTime: 2020-10-12 17:41:10
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -49,6 +49,9 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="createContract" :disabled="contractReadonly">生成合同</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -148,9 +151,9 @@
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleEdit(scope.row)" v-if="rightControl.edit">编辑</el-button>
+            <el-button type="primary" size="mini" @click="handleEdit(scope.row)" v-if="rightControl.edit" :disabled="scope.row.approvalStatus == '2' || scope.row.approvalStatus == '3'">编辑</el-button>
             <el-button size="mini" @click="handleDetail(scope.row)" v-if="rightControl.detail">详情</el-button>
-            <el-button type="danger" size="mini" @click="handleDelete(scope.row)" v-if="rightControl.delete">删除</el-button>
+            <el-button type="danger" size="mini" @click="handleDelete(scope.row)" v-if="rightControl.delete" :disabled="scope.row.approvalStatus == '2' || scope.row.approvalStatus == '3'">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -184,6 +187,7 @@ import common from '@/common/common.js';
 import confirmBox from '@/components/confirmBox';  // 删除弹框
 import { queryDict } from '@/api/index.js';
 import eventBus from '@/common/eventBus.js';
+import { mapState } from 'vuex';
 
 export default {
   name: '',
@@ -234,13 +238,24 @@ export default {
       // 数据字典集
       dictStatusTemp: [],
       dictApprovalTemp: [],
+
+      // 生成合同按钮是否禁用
+      contractReadonly: false,
     };
   },
   computed: {
-
+    ...mapState({
+      rentApprovalNum: store => store.rentApprovalNum,
+    })
   },
   watch: {
-
+    rentApprovalNum(val) {
+      if (val != 0) {
+        this.contractReadonly = true;
+      } else {
+        this.contractReadonly = false;
+      }
+    }
   },
   created() {
     // this.getDictStatus('status', 'UNIFY_SYSTEM_INTERFACE');
@@ -283,7 +298,12 @@ export default {
   },
   
   mounted() {
-
+    // console.log(this.rentApprovalNum);
+    // if (this.rentApprovalNum != 0) {
+    //   this.contractReadonly = true;
+    // } else {
+    //   this.contractReadonly = false;
+    // }
   },
   methods: {
     // 查询
@@ -298,6 +318,26 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
       this.getRentApplyListData();
+    },
+
+    // 生成合同
+    createContract() {
+      this.$confirm('是否生成租金修改后的合同?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$notify({
+          title: '温馨提示',
+          type: 'success',
+          message: '生成合同成功!'
+        });
+      }).catch(() => {
+        this.$notify({
+          type: 'info',
+          message: '已取消'
+        });          
+      });
     },
 
     // 自定义列接口索引

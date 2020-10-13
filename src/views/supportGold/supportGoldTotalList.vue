@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-09-29 15:18:54
+ * @LastEditTime: 2020-10-12 15:13:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -96,7 +96,7 @@
         <el-table-column prop="batch" label="批次" show-overflow-tooltip></el-table-column>
         <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.payStatus }}</span>
+            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | payStatus }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="monthlyRent" label="租金" show-overflow-tooltip></el-table-column>
@@ -108,7 +108,11 @@
         <el-table-column prop="currentTotal" label="当期/总期数" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="surplus" label="剩余期数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="" label="支付登记时间" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="支付登记时间" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.time | timeFormat }}</span>
+          </template>
+        </el-table-column>
         <!-- <el-table-column prop="remark" label="备注" show-overflow-tooltip ></el-table-column> -->
       </el-table>
     </div>

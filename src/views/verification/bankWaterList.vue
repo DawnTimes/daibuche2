@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-10 09:29:31
+ * @LastEditTime: 2020-10-12 15:45:42
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -131,8 +131,8 @@
         <el-table-column prop="verState" label="核销状态" show-overflow-tooltip>
           <template slot-scope="scope">
             <span
-            :class="{greenStatus: scope.row.verState == '全部核销', blueColor: scope.row.verState == 'PART' || scope.row.verState == '未核销'}"
-            >{{ scope.row.verState }}</span>
+            :class="{greenStatus: scope.row.verState == 'FULL', blueColor: scope.row.verState == 'PART', redStatus: scope.row.verState == 'NOT'}"
+            >{{ scope.row.verState | verState }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="haveVerLines" label="已核销额" show-overflow-tooltip width="150">
@@ -159,7 +159,7 @@
               type="primary"
               @click="handleContract(scope.row)"
               v-if="rightControl.writeOff"
-              :disabled="scope.row.verState == '1'"
+              :disabled="scope.row.verState == 'FULL'"
             >核销</el-button>
             <!-- <el-button
               size="mini"
@@ -172,14 +172,14 @@
               type="warning"
               @click="handleRefund(scope.row)"
               v-if="rightControl.refund"
-              :disabled="scope.row.verState == '1'"
+              :disabled="scope.row.verState == 'FULL'"
             >退款</el-button>
             <el-button
               size="mini"
               type="danger"
               @click="handleDelete(scope.row)"
               v-if="rightControl.delete"
-              :disabled="scope.row.verState == '1'"
+              :disabled="scope.row.verState == 'FULL'"
             >删除</el-button>
           </template>
         </el-table-column>
@@ -228,6 +228,8 @@ import axios2 from 'axios';
 import refundDialog from './components/refundDialog'; // 退款弹框
 import confirmBox from '@/components/confirmBox';  // 删除弹框
 import uploadDialog from '@/components/uploadDialog';  // 上传弹框
+
+import { mapState } from 'vuex';
 
 export default {
   name: '',
@@ -315,10 +317,18 @@ export default {
     };
   },
   computed: {
-
+    ...mapState({
+      userId: (store) => store.userId,
+      successStatus: (store) => store.successStatus,
+    }),
   },
   watch: {
-
+    // 监听是否导入成功，成功则刷新催收记录
+    successStatus(val) {
+      if (val) {
+        this.getBankWaterListData();
+      }
+    }
   },
   created() {
     this.getBankWaterListData();

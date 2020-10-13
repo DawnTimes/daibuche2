@@ -76,12 +76,19 @@ export default {
           }, 1500);
         } else {
           this.loading = false;
-          this.$alert('操作失败，请联系管理员!', '提示', {
-            confirmButtonText: '确定',
+          this.$message({
+            message: res.msg || '操作失败!',
+            type: 'error',
+            duration: 2500,
           });
         }
-      }).catch(() => {
+      }).catch((err) => {
         this.loading = false;
+        this.$message({
+            message: err ? err.em : '操作失败!',
+            type: 'error',
+            duration: 2500,
+          });
       });
     },
     recursionData(data) {

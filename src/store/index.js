@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-09-30 17:04:24
+ * @LastEditTime: 2020-10-12 17:10:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\store\index.js
@@ -20,6 +20,7 @@ const store = new Vuex.Store({
     asideInfo: JSON.parse(sessionStorage.getItem('asideInfo')) || [],
     asideInfoIds: JSON.parse(sessionStorage.getItem('asideInfoIds')) || [],
     successStatus: false,
+    rentApprovalNum: 0,
 
 
   },
@@ -52,7 +53,12 @@ const store = new Vuex.Store({
 
     setSuccessStatus(state, successStatus) {
       state.successStatus = successStatus
-    }
+    },
+    
+    setRentApprovalNum(state, rentApprovalNum) {
+      state.rentApprovalNum = rentApprovalNum
+    },
+
   },
 
   getters: {

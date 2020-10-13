@@ -281,6 +281,7 @@
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 import uploadDialog from '@/components/uploadDialog'; // 上传弹框
+import { mapState } from 'vuex';
 
 export default {
   components: {
@@ -315,6 +316,23 @@ export default {
       rentUploadURL: '',
     };
   },
+
+  computed: {
+    ...mapState({
+      userId: (store) => store.userId,
+      successStatus: (store) => store.successStatus,
+    }),
+  },
+
+  watch: {
+    // 监听是否导入成功，成功则刷新催收记录
+    successStatus(val) {
+      if (val) {
+        this.initData();
+      }
+    }
+  },
+
   methods: {
     // 重置
     resetForm(formName) {

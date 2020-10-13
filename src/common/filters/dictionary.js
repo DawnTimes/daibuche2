@@ -143,6 +143,19 @@ const Dictionary = {
     { label: '未反冲', value: 'N' },
   ],
 
+  // 支付状态
+  payStatus: [
+    { label: '已发放', value: 'HAVEGRANT' },
+    { label: '未申请', value: 'NOT' },
+  ],
+
+  // 核销状态
+  verState: [
+    { label: '已核销', value: 'FULL' },
+    { label: '部分核销', value: 'PART' },
+    { label: '未核销', value: 'NOT' },
+  ],
+
   // 保留多少位小数点
   FilterFixed: (data, fixed) => {
     if (data) {
