@@ -134,7 +134,7 @@ export default {
   queryBankInfoUrl              : 'queryBankInfo.do',                                         // 查询银行账号信息
   exportAgentSBUrl              : 'AgentSBExcel/exportAgentSB.do',                            // 导出经销店台账
   exportCarSBUrl                : 'CarStandingBookOutput/exportCarSB.do',                     // 导出车辆台账
-  exportCollectionUrl           : 'CollectionExport/exportCollection.do',                     // 导出催收
+  exportCollectionUrl           : 'CollectionExport/exportCollection.do',                     // 导出逾期
   importCollectionUrl           : 'CollectionExport/importCollection.do',                     // 导入催收
   exportSubcarInvoiceNoticeUrl  : 'SubcarInvoiceNotice36Nper/exportSubcarInvoiceNotice.do',   // 导出开票通知单
   exportSubcarInvoiceListUrl    : 'SubcarInvoiceNotice/exportSubcarInvoiceNotice.do',         // 导出开票明细
@@ -143,7 +143,10 @@ export default {
   supportOutputExcelUrl         : 'supportExcel/supportOutputExcel.do',                       // 导出支援金
   exportVerCarExcelUrl          : 'verCarStatement/exportVerCarExcel.do',                     // 导出核销车辆
   importBankStatementUrl        : 'bankStatemntExcel/importBankStatement.do',                 // 银行流水导入
-  supportApprovalSumUrl         : 'supportApprovalSum.do',                                                    // 支援金审批待办统计
+  supportApprovalSumUrl         : 'supportApprovalSum.do',                                    // 支援金审批待办统计
+  InvoiceSumUrl                 : 'InvoiceSum.do',                                            // 开票明细待办统计
+  exportCollectionByAgentIdUrl  : '/CollectionExport/exportCollectionByAgentId',              // 导出催收记录
+  deleteRentModificationUrl     : '/deleteRentModification.do',                  //租金修改删除
 
   // 验证码
   guid() {

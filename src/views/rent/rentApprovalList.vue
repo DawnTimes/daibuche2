@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-10 15:34:54
+ * @LastEditTime: 2020-10-13 17:37:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalList.vue
@@ -20,8 +20,12 @@
         <!-- <el-form-item label="任务编号:" prop="systemName">
           <el-input maxlength="30" v-model="formData.systemName" placeholder=""></el-input>
         </el-form-item> -->
-        <el-form-item label="车型代码:" prop="modelCode">
+        
+        <!-- <el-form-item label="车型代码:" prop="modelCode">
           <el-input maxlength="50" v-model="formData.modelCode" placeholder=""></el-input>
+        </el-form-item> -->
+        <el-form-item label="车型名称:" prop="modelName">
+          <el-input maxlength="50" v-model="formData.modelName" placeholder=""></el-input>
         </el-form-item>
         <el-form-item label="是否限牌:" prop="isLimitLicence">
           <el-select v-model="formData.isLimitLicence" clearable placeholder="请选择" style="width: 100%">
@@ -30,6 +34,25 @@
               :key="item.value"
               :label="item.label"
               :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="城市:" prop="cityName">
+          <el-select v-model="formData.cityName" placeholder="请选择">
+            <el-option value label style="height:240px; overflow-y: auto; background-color:#fff; color: #606266; font-weight: normal">
+              <el-tree :props="defaultProps" :load="loadNode" lazy @node-click="handleNodeClick" highlight-current accordion></el-tree>
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="牌照商:" prop="licenceCode">
+          <!-- <el-input maxlength="50" v-model="formData.licenceCode" placeholder></el-input> -->
+          <el-select v-model="formData.licenceCode" filterable allow-create clearable  placeholder="请选择">
+            <el-option
+              v-for="item in licenceOptions"
+              :key="item.licenceCode"
+              :label="item.licenceName"
+              :value="item.licenceCode">
             </el-option>
           </el-select>
         </el-form-item>
@@ -68,9 +91,11 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="modId" label="id编号" show-overflow-tooltip fixed="left"></el-table-column>
+        <!-- <el-table-column prop="modId" label="id编号" show-overflow-tooltip fixed="left"></el-table-column> -->
         <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
         <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
         <el-table-column prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
           <template slot-scope="scope">
           <span :class="{ blueColor: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue }}</span>
@@ -146,6 +171,7 @@ export default {
     
   },
   data() {
+    let _that = this;
     return {
       pageSize: 10,
       pageNum: 1,
@@ -155,6 +181,7 @@ export default {
         isLimitLicence: '',
         licenceCode: '',
         modelCode: '',
+        modelName: '',
         pageSize: 10,
         pageNum: 1,
       },
@@ -172,6 +199,24 @@ export default {
 
       userApprovalType: '',
 
+      defaultProps: {
+        children: 'children',
+        label: 'name',
+        isLeaf: 'leaf',
+      },
+      licenceOptions: [],
+
+      cityProps: {
+        checkStrictly: false,
+        children: 'children',
+        label: 'name',
+        value: 'code',
+        lazy: true,
+        lazyLoad(node, resolve) {
+          _that.getCascaderCityData(node, resolve);
+        },
+      },
+
     };
   },
   computed: {
@@ -181,7 +226,18 @@ export default {
     
   },
   watch: {
+    // 监听城市的变化，获取对应城市的牌照商
+    'formData.cityCode'(nval, oval) {
+      // console.log(nval, 12, oval);
+      if (nval) {
+        // 清空选中的牌照商
+        this.formData.licenceCode = '';
 
+        this.queryLicenceByCity(nval);
+      } else {
+        this.getLicenceList();
+      }
+    }
   },
   created() {
     // 判断权限
@@ -220,6 +276,7 @@ export default {
   
   mounted() {
     this.getRentApprovalListData();
+    this.getLicenceList();
   },
   methods: {
     // 查询
@@ -233,6 +290,7 @@ export default {
     // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.formData.cityCode = '';
       this.getRentApprovalListData()
     },
 
@@ -260,6 +318,7 @@ export default {
         cityCode: this.formData.cityCode,
         licenceCode: this.formData.licenceCode,
         modelCode: this.formData.modelCode,
+        modelName: this.formData.modelName,
         isLimitLicence: this.formData.isLimitLicence,
         type: this.userApprovalType,
         turnPageBeginPos: this.formData.pageNum,
@@ -278,6 +337,161 @@ export default {
         }
       }).catch(() => {
         this.tableLoading = false;
+      })
+    },
+
+        // 获取城市数据 二级（省份-城市）
+    getCascaderCityData(node, resolve) {
+      if (node.level === 0) {
+        // 先获取省份
+        const url = common.findProviInfoUrl;
+        const params = {
+          areaCode: '',
+        };
+        axios.post(url, params).then((res) => {
+          if (res.em === 'Success!') {
+            const data2 = res.data.provinceList;
+            const listData2 = data2.map((item) => {
+              this.$set(item, 'name', item.provinceName);
+              this.$set(item, 'code', item.provinceCode);
+              this.$set(item, 'children', []);
+              return item;
+            });
+            listData2.forEach((val) => {
+              // 去掉最后一级（城市）的箭头
+              if (
+                val.provinceCode === '710000' ||
+                val.provinceCode === '810000' ||
+                val.provinceCode === '820000' ||
+                val.provinceCode === 'TWN'
+              ) {
+                val.leaf = node.level >= 0;
+              }
+            });
+            resolve(listData2);
+          }
+        });
+      } else if (node.level === 1) {
+        // 先获取城市
+        const url = common.findCityInfoUrl;
+        const params = {
+          provinceCode: node.data.provinceCode,
+        };
+        axios.post(url, params).then((res) => {
+          if (res.em === 'Success!') {
+            const data3 = res.data.cityList;
+            const listData3 = data3.map((item) => {
+              this.$set(item, 'name', item.cityName);
+              this.$set(item, 'code', item.cityCode);
+              // this.$set(item, 'children', []);
+              return item;
+            });
+
+            listData3.forEach((val) => {
+              // 去掉最后一级（城市）的箭头
+              val.leaf = node.level >= 1;
+            });
+            resolve(listData3);
+          }
+        });
+      }
+    },
+
+    loadNode(node, resolve) {
+      if (node.level === 0) {
+        // 先获取省份
+        const url = common.findProviInfoUrl;
+        const params = {
+          areaCode: '',
+        };
+        axios.post(url, params).then((res) => {
+          if (res.em === 'Success!') {
+            const data2 = res.data.provinceList;
+            const listData2 = data2.map((item) => {
+              this.$set(item, 'name', item.provinceName);
+              this.$set(item, 'code', item.provinceCode);
+              this.$set(item, 'children', []);
+              return item;
+            });
+            listData2.forEach((val) => {
+              // 去掉最后一级（城市）的箭头
+              if (
+                val.provinceCode === '710000' ||
+                val.provinceCode === '810000' ||
+                val.provinceCode === '820000' ||
+                val.provinceCode === 'TWN'
+              ) {
+                val.leaf = node.level >= 0;
+              }
+            });
+            resolve(listData2);
+          }
+        });
+      }
+      if (node.level === 1) {
+        // 先获取城市
+        const url = common.findCityInfoUrl;
+        const params = {
+          provinceCode: node.data.provinceCode,
+        };
+        axios.post(url, params).then((res) => {
+          if (res.em === 'Success!') {
+            const data3 = res.data.cityList;
+            const listData3 = data3.map((item) => {
+              this.$set(item, 'name', item.cityName);
+              this.$set(item, 'code', item.cityCode);
+              // this.$set(item, 'children', []);
+              return item;
+            });
+
+            listData3.forEach((val) => {
+              // 去掉最后一级（城市）的箭头
+              val.leaf = node.level >= 1;
+            });
+            resolve(listData3);
+          }
+        });
+      }
+      if (node.level > 1) return resolve([]);
+    },
+
+    // 点击选中
+    handleNodeClick(data, node) {
+      // console.log(node);
+      if (node.isLeaf) {
+        this.formData.cityCode = data.code;
+        this.formData.cityName = data.name;
+      }
+    },
+
+    // 根据城市选牌照商
+    queryLicenceByCity(val) {
+      const params = {
+        cityCode: val,
+      };
+      const url = common.findCityLicenceUrl;
+      
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          const data = res.data;
+          this.licenceOptions = data.cityLicence;
+        }
+      })
+    },
+
+    // 全部牌照商下拉选
+    getLicenceList() {
+      const params = {
+        turnPageBeginPos: 1,
+        turnPageShowNum: 1000000,
+      };
+      const url = common.licenceListUrl;
+
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          const data = res.data;
+          this.licenceOptions = data.licenceList;
+        }
       })
     },
 

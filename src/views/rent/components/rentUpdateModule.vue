@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 10:31:50
- * @LastEditTime: 2020-10-12 16:58:04
+ * @LastEditTime: 2020-10-13 14:59:01
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\rentUpdateModule.vue
@@ -132,7 +132,7 @@
                   type="date"
                   value-format="yyyy-MM-dd"
                   :disabled="$formAtReadonly('validDate', formReadonly.readonly)"
-                  placeholder="选择日期"
+                  placeholder="只能选择每年的1月1日"
                   :picker-options="pickerOptionsDate"
                 ></el-date-picker>
               </el-form-item>

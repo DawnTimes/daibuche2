@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-20 10:23:26
- * @LastEditTime: 2020-09-27 13:54:48
+ * @LastEditTime: 2020-10-13 15:37:35
  * @LastEditors: your name
  * @Description: 车辆支援金清单
  * @FilePath: \webcode2\src\views\supportGold\components\carListDialog.vue
@@ -13,12 +13,15 @@
       <div class="table">
         <el-table
           :data="paramsForm.tableData"
+          v-loading="tableLoading"
+          element-loading-text="拼命加载中"
           border
           stripe
           show-summary
           :summary-method="getSummaries"
           ref="table"
           style="width: 100%"
+          max-height="430px"
           :header-cell-style="{
         'text-align':'center',
         'font-weight':'bold',  
@@ -80,6 +83,11 @@ export default {
       default: () => {
         return {}
       }
+    },
+
+    tableLoading: {
+      type: Boolean,
+      default: false,
     },
   },
   components: {},

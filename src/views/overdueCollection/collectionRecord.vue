@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:25:10
- * @LastEditTime: 2020-09-30 17:07:37
+ * @LastEditTime: 2020-10-13 14:37:16
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\collectionRecord.vue
@@ -221,13 +221,10 @@ export default {
     // 导出
     exportButton() {
       window.location.href = `/api/${
-        common.exportCollectionUrl
-      }?buyName=${
-        this.formData.buyName ? this.formData.buyName : ''
-      }&buyCreditCode=${
-        this.formData.buyCreditCode ? this.formData.buyCreditCode : ''
-      }&remark=${
-        this.formData.remark ? this.formData.remark : ''}`;
+        common.exportCollectionByAgentIdUrl
+      }?id=${
+        this.soldId ? this.soldId : ''
+      }`;
     },
 
     // 导入

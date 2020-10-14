@@ -57,7 +57,7 @@ export default {
       num: 0,
       rentNumbers: 0, // 租金审批数量
       goldNumbers: 0, // 支援金审批数量
-      invoiceNumbers: 0, // 通知单审批数量
+      invoiceNumbers: 0, // 通知单数量
       haveTodo: false,
       rentShow: true,
       goldShow: true,
@@ -93,6 +93,8 @@ export default {
         }
       });
     });
+
+    this.InvoiceWaitingTotal();
   },
   methods: {
     ...mapMutations({
@@ -117,6 +119,7 @@ export default {
     rentWaitingTotal(idsArr) {
       let type = '';
       type = common.queryApprovalFlow(9541, idsArr, '1');
+      // type = common.queryApprovalFlow(9542, idsArr, '2');
       const url = common.rentModificationSumUrl;
       const params = {
         type: type,
@@ -133,7 +136,8 @@ export default {
     // 支援金审批待办统计
     supportGoldWaitingTotal(idsArr) {
       let type = '';
-      type = common.queryApprovalFlow(9541, idsArr, '2');
+      // type = common.queryApprovalFlow(9631, idsArr, '1');
+      type = common.queryApprovalFlow(9632, idsArr, '2');
       const url = common.supportApprovalSumUrl;
       const params = {
         type: type,
@@ -141,6 +145,17 @@ export default {
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
           this.goldNumbers = res.data.number * 1;
+        }
+      })
+    },
+
+    // 开票明细待办统计
+    InvoiceWaitingTotal(idsArr) {
+      const url = common.InvoiceSumUrl;
+      const params = {}
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          this.invoiceNumbers = res.data.num * 1;
         }
       })
     },

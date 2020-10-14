@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-10-10 15:20:51
+ * @LastEditTime: 2020-10-13 16:56:26
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeRentUpdate.vue
@@ -65,7 +65,7 @@ export default {
         validDate: '',
       },
       formReadonly: {
-        hide: ['id', 'modelCode', 'cancelBtn2', 'cancelBtn3'],
+        hide: ['id', '', 'cancelBtn2', 'cancelBtn3'],
         readonly: [],
       },
       status: {

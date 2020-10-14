@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-09 10:26:03
+ * @LastEditTime: 2020-10-13 17:38:21
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeList.vue
@@ -17,8 +17,11 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="车型代码:" prop="modelCode">
+        <!-- <el-form-item label="车型代码:" prop="modelCode">
           <el-input maxlength="30" v-model="formData.modelCode" placeholder></el-input>
+        </el-form-item> -->
+        <el-form-item label="车型名称:" prop="modelName">
+          <el-input maxlength="30" v-model="formData.modelName" placeholder></el-input>
         </el-form-item>
         <el-form-item label="城市:" prop="cityName">
           <!-- <el-input maxlength="50" v-model="formData.cityCode" placeholder=""></el-input> -->
@@ -89,7 +92,7 @@
         <el-table-column prop="licenceName" label="牌照商" show-overflow-tooltip></el-table-column>
         <!-- <af-table-column label="牌照商" prop="licenceName"></af-table-column> -->
         <el-table-column prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="num" label="数量" show-overflow-tooltip width="80"></el-table-column>
         <el-table-column prop="monthlyRent" label="月租金" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.monthlyRent}} 元</span>
@@ -157,6 +160,7 @@ export default {
         cityCode: '',
         licenceCode: '',
         modelCode: '',
+        modelName: '',
         pageSize: 10,
         pageNum: 1,
         cityName: '',
@@ -194,7 +198,7 @@ export default {
   watch: {
     // 监听城市的变化，获取对应城市的牌照商
     'formData.cityCode'(nval, oval) {
-      console.log(nval, 12, oval);
+      // console.log(nval, 12, oval);
       if (nval) {
         // 清空选中的牌照商
         this.formData.licenceCode = '';
@@ -365,8 +369,6 @@ export default {
       }
     },
 
-    changeCity(val) {},
-
     loadNode(node, resolve) {
       if (node.level === 0) {
         // 先获取省份
@@ -427,7 +429,7 @@ export default {
 
     // 点击选中
     handleNodeClick(data, node) {
-      console.log(node);
+      // console.log(node);
       if (node.isLeaf) {
         this.formData.cityCode = data.code;
         this.formData.cityName = data.name;
@@ -493,6 +495,7 @@ export default {
         cityCode: this.formData.cityCode,
         licenceCode: this.formData.licenceCode,
         modelCode: this.formData.modelCode,
+        modelName: this.formData.modelName,
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
       };

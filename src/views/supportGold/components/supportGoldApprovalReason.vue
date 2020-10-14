@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-09-27 11:13:59
+ * @LastEditTime: 2020-10-13 15:36:48
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -58,6 +58,8 @@
     <div class="table">
       <el-table
         :data="tableData"
+        v-loading="tableLoading"
+        element-loading-text="拼命加载中"
         border
         stripe
         @sort-change="sortChange"
@@ -161,7 +163,7 @@
       ></el-pagination>
     </div>
     
-    <carList-dialog ref="carListDialog" :paramsForm="paramsForm"></carList-dialog>
+    <carList-dialog ref="carListDialog" :paramsForm="paramsForm" :tableLoading="carTableLoading"></carList-dialog>
   </div>
 </template>
 
@@ -219,6 +221,8 @@ export default {
 
       tableData: [],
       tableHeight: 100,
+      tableLoading: false,
+      
       appravolStatus: [],
       limitStatus: [
         { value: 'Y', label: '是' },
@@ -232,6 +236,7 @@ export default {
       paramsForm: {
         tableData: [],
       },
+      carTableLoading: false,
 
     };
   },
@@ -299,6 +304,7 @@ export default {
 
     // 获取分页数据
     getSupportGoldReasonListData() {
+      this.tableLoading = true;
       const url = common.supportAgListUrl;
       const params = {
         agentName: this.reasonForm.agentName,
@@ -313,7 +319,12 @@ export default {
           const data = res.data;
           this.tableData = data.agSuppList;
           this.total = data.turnPageTotalNum * 1;
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
         }
+      }).catch(() => {
+        this.tableLoading = false;
       })
     },
     
@@ -410,7 +421,7 @@ export default {
     // 查询车辆清单
     queryCar(row) {
       this.$refs.carListDialog.isShow(true);
-
+      this.carTableLoading = true;
       const url = common.supportCarListByAgIdUrl;
       const params = {
         batchNumber: this.batchNumber,
@@ -420,7 +431,12 @@ export default {
         if (res.ec === '0') {
           const data = res.data;
           this.paramsForm.tableData = data.supportCarList;
+          this.carTableLoading = false;
+        } else {
+          this.carTableLoading = false;
         }
+      }).catch(() => {
+        this.carTableLoading = false;
       })
     },
 
