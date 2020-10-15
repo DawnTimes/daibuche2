@@ -90,7 +90,8 @@ const Dictionary = {
     },
   ],
   // 支援金审批状态
-  supportApprovalStatus: [{
+  supportApprovalStatus: [
+    {
       label: '生成支援金',
       value: '1'
     },
@@ -146,7 +147,7 @@ const Dictionary = {
   // 支付状态
   payStatus: [
     { label: '已发放', value: 'HAVEGRANT' },
-    { label: '未申请', value: 'NOT' },
+    { label: '未发放', value: 'NOT' },
   ],
 
   // 核销状态
@@ -154,6 +155,20 @@ const Dictionary = {
     { label: '已核销', value: 'FULL' },
     { label: '部分核销', value: 'PART' },
     { label: '未核销', value: 'NOT' },
+  ],
+
+  // 批次
+  batchFormat: [
+    { label: '第一批', value: '1' },
+    { label: '第二批', value: '2' },
+    { label: '第三批', value: '3' },
+    { label: '第四批', value: '4' },
+    { label: '第五批', value: '5' },
+    { label: '第六批', value: '6' },
+    { label: '第七批', value: '7' },
+    { label: '第八批', value: '8' },
+    { label: '第九批', value: '9' },
+    { label: '第十批', value: '10' },
   ],
 
   // 保留多少位小数点

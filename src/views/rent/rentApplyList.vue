@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-13 18:15:18
+ * @LastEditTime: 2020-10-14 15:48:24
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -103,7 +103,7 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <!-- <el-table-column prop="modId" label="任务id" show-overflow-tooltip></el-table-column> -->
+        <!-- <el-table-column prop="modId" label="任务id" show-overflow-tooltip fixed></el-table-column> -->
         <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
         <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="brandName" label="品牌" show-overflow-tooltip width="150"></el-table-column>
@@ -173,9 +173,9 @@
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleEdit(scope.row)" v-if="rightControl.edit" :disabled="scope.row.approvalStatus == '2' || scope.row.approvalStatus == '3'">编辑</el-button>
+            <el-button type="primary" size="mini" @click="handleEdit(scope.row)" v-if="rightControl.edit" :disabled="scope.row.approvalStatus == '2' || scope.row.approvalStatus == '3' || scope.row.approvalStatus == '4'">编辑</el-button>
             <el-button size="mini" @click="handleDetail(scope.row)" v-if="rightControl.detail">详情</el-button>
-            <el-button type="danger" size="mini" @click="handleDelete(scope.row)" v-if="rightControl.delete" :disabled="scope.row.approvalStatus == '2' || scope.row.approvalStatus == '3'">删除</el-button>
+            <el-button type="danger" size="mini" @click="handleDelete(scope.row)" v-if="rightControl.delete" :disabled="scope.row.approvalStatus == '2' || scope.row.approvalStatus == '3' || scope.row.approvalStatus == '4'">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -209,7 +209,7 @@ import common from '@/common/common.js';
 import confirmBox from '@/components/confirmBox';  // 删除弹框
 import { queryDict } from '@/api/index.js';
 import eventBus from '@/common/eventBus.js';
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: '',
@@ -288,6 +288,7 @@ export default {
   computed: {
     ...mapState({
       rentApprovalNum: store => store.rentApprovalNum,
+      asideInfoIds: store => store.asideInfoIds,
     })
   },
   watch: {
@@ -356,13 +357,17 @@ export default {
   
   mounted() {
     // console.log(this.rentApprovalNum);
-    if (this.rentApprovalNum != 0) {
-      this.contractReadonly = true;
-    } else {
-      this.contractReadonly = false;
-    }
+    // if (this.rentApprovalNum != 0) {
+    //   this.contractReadonly = true;
+    // } else {
+    //   this.contractReadonly = false;
+    // }
+
+    this.rentWaitingTotal();
   },
   methods: {
+    ...mapMutations(['setAsideInfo', 'setAsideInfoIds', 'setRentApprovalNum']),
+
     // 查询
     queryForm() {
       // 重置当前页
@@ -376,6 +381,29 @@ export default {
       this.$refs[formName].resetFields();
       this.formData.cityCode = '';
       this.getRentApplyListData();
+    },
+
+    // 租金修改待办统计
+    rentWaitingTotal() {
+      let type = '';
+      type = common.queryApprovalFlow(9541, this.asideInfoIds, '1');
+      // type = common.queryApprovalFlow(9542, idsArr, '2');
+      const url = common.rentModificationSumUrl;
+      const params = {
+        type: type,
+      }
+      axios.post(url, params).then((res) => {
+        if (res.ec === '0') {
+          this.rentNumbers = res.data.num * 1;
+          if (this.rentNumbers != 0) {
+            this.contractReadonly = true;
+          } else {
+            this.contractReadonly = false;
+          }
+          // 保存，用于判断是否可以生成合同
+          this.setRentApprovalNum(this.rentNumbers); 
+        }
+      })
     },
 
     // 生成合同

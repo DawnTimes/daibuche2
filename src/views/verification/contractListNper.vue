@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-10-10 16:10:06
+ * @LastEditTime: 2020-10-14 16:34:02
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -96,7 +96,7 @@
             >{{ scope.row.contractType | contractType }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="经销店/牌照商" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="name" label="经销店/牌照商" show-overflow-tooltip width="200"></el-table-column>
         <!-- <el-table-column prop="id"  label="牌照商名称" show-overflow-tooltip width="120"></el-table-column> -->
         <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip></el-table-column>
         <el-table-column prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-09-28 16:05:32
+ * @LastEditTime: 2020-10-14 18:07:15
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -99,15 +99,15 @@
         <el-table-column prop="repaymentStatus" label="核销状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span
-              :class="{greenStatus: scope.row.repaymentStatus == '', redStatus: scope.row.repaymentStatus == '', blueColor: scope.row.repaymentStatus == ''}"
-            >{{ scope.row.repaymentStatus }}</span>
+              :class="{greenStatus: scope.row.repaymentStatus == 'FULL', blueColor: scope.row.repaymentStatus == 'PART', redStatus: scope.row.repaymentStatus == 'NOT'}"
+            >{{ scope.row.repaymentStatus | verState }}</span>
           </template>
         </el-table-column>
         <!-- <el-table-column prop="" label="核销人" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="银行单据号" show-overflow-tooltip width="120"></el-table-column> -->
         <el-table-column prop="payStatus" label="支援金状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.payStatus }}</span>
+            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | payStatus }}</span>
           </template>
         </el-table-column>
 

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-10-12 15:13:44
+ * @LastEditTime: 2020-10-14 10:14:14
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -38,16 +38,16 @@
         <!-- <el-form-item label="期数:" prop="systemName">
           <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
         </el-form-item> -->
-        <!-- <el-form-item label="支付状态:" prop="interfaceName">
-          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
+        <el-form-item label="支付状态:" prop="payStatus">
+          <el-select v-model="formData.payStatus" clearable placeholder="请选择" style="width: 100%">
             <el-option
-              v-for="item in limitStatus"
+              v-for="item in this.$options.filters.payStatus([])"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></el-option>
           </el-select>
-        </el-form-item> -->
+        </el-form-item>
 
         <el-form-item>
           <el-button type="primary" @click="queryForm">查询</el-button>
@@ -93,7 +93,11 @@
         <el-table-column prop="modelCode" label="车型" show-overflow-tooltip></el-table-column>
         <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip></el-table-column>
         <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="batch" label="批次" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="batch" label="批次" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.batch | batchFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | payStatus }}</span>
@@ -153,6 +157,7 @@ export default {
         agentName: '',
         batchNumber: '',
         frameNumber: '',
+        payStatus: '',
         pageSize: 10,
         pageNum: 1,
       },
@@ -247,6 +252,7 @@ export default {
         agentName: this.formData.agentName,
         batchNumber: this.formData.batchNumber,
         frameNumber: this.formData.frameNumber,
+        payStatus: this.formData.payStatus,
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
       };

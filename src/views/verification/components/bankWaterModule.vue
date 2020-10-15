@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-09-27 16:27:19
+ * @LastEditTime: 2020-10-14 17:59:58
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -53,6 +53,23 @@
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
+                label="收款金额"
+                prop="income"
+                v-show="!$formAtReadonly('income', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  style="width: calc(100% - 32px)"
+                  v-model="formData.income"
+                  maxlength="15"
+                  placeholder="请输入数字且最多保留两位小数"
+                  :disabled="$formAtReadonly('income', formReadonly.readonly)"
+                ></el-input>
+                <span style="text-align: center; display: inline-block; width: 26px">元</span>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
                 label="收款账号"
                 prop="bankAccountNo"
                 v-show="!$formAtReadonly('bankAccountNo', formReadonly.hide)"
@@ -76,7 +93,7 @@
               >
                 <el-input
                   v-model="formData.companyName"
-                  maxlength="30"
+                  maxlength="50"
                   placeholder=""
                   :disabled="$formAtReadonly('companyName', formReadonly.readonly)"
                 ></el-input>
@@ -93,29 +110,13 @@
               >
                 <el-input
                   v-model="formData.bankAccountName"
-                  maxlength="30"
+                  maxlength="50"
                   placeholder=""
                   :disabled="$formAtReadonly('bankAccountName', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
-            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
-              <el-form-item
-                label="收款金额"
-                prop="income"
-                v-show="!$formAtReadonly('income', formReadonly.hide)"
-                class="form-item"
-              >
-                <el-input
-                  style="width: calc(100% - 32px)"
-                  v-model="formData.income"
-                  maxlength="15"
-                  placeholder="请输入数字且最多保留两位小数"
-                  :disabled="$formAtReadonly('income', formReadonly.readonly)"
-                ></el-input>
-                <span style="text-align: center; display: inline-block; width: 26px">元</span>
-              </el-form-item>
-            </el-col>
+            
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="汇款名称"
@@ -125,7 +126,7 @@
               >
                 <el-input
                   v-model="formData.sideAccountName"
-                  maxlength="30"
+                  maxlength="50"
                   placeholder=""
                   :disabled="$formAtReadonly('sideAccountName', formReadonly.readonly)"
                 ></el-input>
@@ -162,6 +163,21 @@
             </el-col> -->
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
+                label="项目类别"
+                prop="projectCategory"
+                v-show="!$formAtReadonly('projectCategory', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.projectCategory"
+                  maxlength="50"
+                  placeholder=""
+                  :disabled="$formAtReadonly('projectCategory', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
                 label="新台账标志"
                 prop="newLedgerLogo"
                 v-show="!$formAtReadonly('newLedgerLogo', formReadonly.hide)"
@@ -169,9 +185,24 @@
               >
                 <el-input
                   v-model="formData.newLedgerLogo"
-                  maxlength="30"
+                  maxlength="50"
                   placeholder=""
                   :disabled="$formAtReadonly('newLedgerLogo', formReadonly.readonly)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="代付标志"
+                prop="paidLogo"
+                v-show="!$formAtReadonly('paidLogo', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-input
+                  v-model="formData.paidLogo"
+                  maxlength="50"
+                  placeholder=""
+                  :disabled="$formAtReadonly('paidLogo', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -179,20 +210,20 @@
             <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
               <el-form-item
                 label="摘要"
-                prop
-                v-show="!$formAtReadonly('abstract', formReadonly.hide)"
+                prop="digest"
+                v-show="!$formAtReadonly('digest', formReadonly.hide)"
                 class="form-item"
               >
                 <el-input
-                  v-model="formData.abstract"
+                  v-model="formData.digest"
                   type="textarea"
                   maxlength="300"
                   :autosize="{ minRows: 3, maxRows: 5}"
-                  :disabled="$formAtReadonly('abstract', formReadonly.readonly)"
+                  :disabled="$formAtReadonly('digest', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
             </el-col>
-            <!-- <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+            <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
               <el-form-item
                 label="备注"
                 prop
@@ -207,7 +238,7 @@
                   :disabled="$formAtReadonly('remark', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
-            </el-col> -->
+            </el-col>
           </el-row>
         </el-form>
       </el-col>

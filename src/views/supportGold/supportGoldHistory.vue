@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-10-12 15:16:39
+ * @LastEditTime: 2020-10-14 10:30:09
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldHistory.vue
@@ -74,7 +74,11 @@
         </el-table-column>
         <!-- <el-table-column prop label="期数" show-overflow-tooltip></el-table-column> -->
         <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="batch" label="批次" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="batch" label="批次" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.Batch | batchFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="" label="店数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="rentCount" label="支援金" show-overflow-tooltip></el-table-column>
@@ -82,7 +86,10 @@
         <el-table-column prop="rentTotalCount" label="支援金合计" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip>
           <template slot-scope="scope">
-            <span>{{ scope.row.approvalStatus | supportApprovalStatus }}</span>
+            <span
+            :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '2' ,
+            skyblueColor: scope.row.approvalStatus == '3'}"
+            >{{ scope.row.approvalStatus | supportApprovalStatus }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="creater" label="申请人" show-overflow-tooltip></el-table-column>

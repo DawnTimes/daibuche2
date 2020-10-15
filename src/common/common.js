@@ -146,7 +146,7 @@ export default {
   supportApprovalSumUrl         : 'supportApprovalSum.do',                                    // 支援金审批待办统计
   InvoiceSumUrl                 : 'InvoiceSum.do',                                            // 开票明细待办统计
   exportCollectionByAgentIdUrl  : '/CollectionExport/exportCollectionByAgentId',              // 导出催收记录
-  deleteRentModificationUrl     : '/deleteRentModification.do',                  //租金修改删除
+  deleteRentModificationUrl     : '/deleteRentModification.do',                               // 租金修改删除
 
   // 验证码
   guid() {

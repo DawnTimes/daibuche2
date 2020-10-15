@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-09-29 10:03:00
+ * @LastEditTime: 2020-10-14 18:09:07
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -166,7 +166,7 @@
           width="150"
         ></el-table-column>
         <el-table-column
-          prop="carNper"
+          prop="nper"
           label="期数"
           show-overflow-tooltip
           width="100"
@@ -269,12 +269,8 @@
         >
           <template slot-scope="scope">
             <span
-              :class="{
-                greenStatus: scope.row.verState == '',
-                redStatus: scope.row.verState == '',
-                blueColor: scope.row.verState == '',
-              }"
-              >{{ scope.row.verState }}</span
+              :class="{greenStatus: scope.row.verState == 'FULL', blueColor: scope.row.verState == 'PART', redStatus: scope.row.verState == 'NOT'}"
+              >{{ scope.row.verState | verState }}</span
             >
           </template>
         </el-table-column>
@@ -300,7 +296,11 @@
           label="支援金状态"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | payStatus }}</span>
+          </template>
+        </el-table-column>
         
 
         <el-table-column

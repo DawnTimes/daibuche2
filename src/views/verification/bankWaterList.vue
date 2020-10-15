@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-12 15:45:42
+ * @LastEditTime: 2020-10-14 17:29:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -117,17 +117,17 @@
         <el-table-column prop="bankAccountName" label="收款开户行" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="sideAccount" label="汇款名称" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="sideAccountName" label="汇款账号" show-overflow-tooltip width="150"></el-table-column>
-        <el-table-column prop="abstract" label="摘要" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" label="是否代付" show-overflow-tooltip>
+        <el-table-column prop="digest" label="摘要" show-overflow-tooltip></el-table-column>
+        <!-- <el-table-column prop="" label="是否代付" show-overflow-tooltip>
           <template slot-scope="scope">
             <span
               :class="[scope.row.status == 'Y' ? 'greenStatus' : 'redStatus']"
             >{{ formatStatus(scope.row.status, paidTemp) }}</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column prop="paidLogo" label="代付标志" show-overflow-tooltip></el-table-column>
         <el-table-column prop="projectCategory" label="项目类别" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" label="是否虚拟收款" show-overflow-tooltip width="150"></el-table-column>
+        <!-- <el-table-column prop="" label="是否虚拟收款" show-overflow-tooltip width="150"></el-table-column> -->
         <el-table-column prop="verState" label="核销状态" show-overflow-tooltip>
           <template slot-scope="scope">
             <span

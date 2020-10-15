@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:58:16
- * @LastEditTime: 2020-09-14 17:59:43
+ * @LastEditTime: 2020-10-14 17:42:56
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\addBankWater.vue
@@ -41,7 +41,6 @@ export default {
         label: 'info',
       },
       formData: {
-        abstract: '',
         bankAccountName: '',
         bankAccountNo: '',
         companyName: '',
@@ -50,12 +49,13 @@ export default {
         sideAccount: '',
         sideAccountName: '',
         tradeDate: '',
-        verState: '未核销',
-        refund: '',
+        verState: 'NOT',
+        refund: '0',
         projectCategory: '',
         paidLogo: '',
         notVerLines: '',
         newLedgerLogo: '',
+        digest: '',
       },
       formReadonly: {
         hide: [],
@@ -78,6 +78,7 @@ export default {
     // 新增提交
     handleFormDataSubmit(object) {
       const data = object.data;
+      data.notVerLines = data.income;
       this.status.loading = true;
       const url = common.addBankStatementUrl;
 
@@ -89,22 +90,26 @@ export default {
           });
 
         Object.assign(this.formData, {
-          abstract: '',
-          bankAccountName: '',
+          // bankAccountName: '',
           bankAccountNo: '',
-          companyName: '',
+          // companyName: '',
           income: '',
           serialNumber: '',
           sideAccount: '',
           sideAccountName: '',
-          tradeDate: '',
-          verState: '未核销',
+          // tradeDate: '',
+          verState: 'NOT',
+          digest: '',
+          projectCategory: '',
+          paidLogo: '',
+          notVerLines: '',
+          newLedgerLogo: '',
         });
 
           setTimeout(() => {
-            this.$router.push({
-              path: '/bankWaterList'
-            });
+            // this.$router.push({
+            //   path: '/bankWaterList'
+            // });
           }, 1000);
           this.status.loading = false;
 

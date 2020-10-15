@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-12 09:29:02
+ * @LastEditTime: 2020-10-14 16:50:47
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -90,13 +90,13 @@
           v-show="rightControl.export"
           >导出开票明细</el-button
         >
-        <el-button
+        <!-- <el-button
           size="medium"
           type="primary"
           @click="exportButton"
           v-show="rightControl.exportBtn"
           >批量导出通知单</el-button
-        >
+        > -->
       </div>
     </div>
 

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-10-13 15:36:48
+ * @LastEditTime: 2020-10-14 15:06:10
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -10,7 +10,7 @@
 <template>
   <div class="supportGoldApprovalReason">
     <div class="approvalTitle">
-      <span>{{ currentYear }}年{{ currentMonth }}月{{ batch }}支援金原因说明</span>
+      <span>{{ currentYear }}年{{ currentMonth }}月{{ batch | batchFormat }}支援金原因说明</span>
     </div>
 
     <div class="hearderBox">
@@ -18,11 +18,11 @@
         :inline="true"
         :model="reasonForm"
         class="demo-form-inline"
-        label-width="80px"
+        label-width="90px"
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="经销店:" prop="agentName">
+        <el-form-item label="经销店名称:" prop="agentName">
           <el-input maxlength="50" v-model="reasonForm.agentName" clearable placeholder></el-input>
         </el-form-item>
         <!-- <el-form-item label="是否收齐:" prop="interfaceName">
@@ -63,6 +63,7 @@
         border
         stripe
         @sort-change="sortChange"
+        :default-sort="defaultSort"
         show-summary
         :summary-method="getSummaries"
         :max-height="tableHeight"
@@ -85,16 +86,20 @@
         ></el-table-column>
         <el-table-column prop="agentCode" label="经销店代码" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="carNum" label="车辆数" sortable="custom" show-overflow-tooltip width="90">
+        <el-table-column prop="carNum" label="车辆数" sortable show-overflow-tooltip width="90" :sort-method="(row1, row2) => sortMethod(row1, row2, 'carNum')">
           <template slot-scope="scope">
             <el-tooltip content="点击查询" placement="top" effect="light">
               <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.carNum }}</el-link>
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="supportFund" label="支援金" sortable="custom" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="licenceFund" label="牌照费" sortable="custom" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="totalFund" label="支援金总额" sortable="custom" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="supportFund" label="支援金" sortable show-overflow-tooltip width="120" :sort-method="(row1, row2) => sortMethod(row1, row2, 'supportFund')">
+          <template slot-scope="scope">
+            <span>{{ scope.row.supportFund }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="licenceFund" label="牌照费" sortable show-overflow-tooltip width="120" :sort-method="(row1, row2) => sortMethod(row1, row2, 'licenceFund')"></el-table-column>
+        <el-table-column prop="totalFund" label="支援金总额" sortable show-overflow-tooltip width="120" :sort-method="(row1, row2) => sortMethod(row1, row2, 'totalFund')"></el-table-column>
         
         <el-table-column prop="isGacShop" label="是否商贸" show-overflow-tooltip>
           <template slot-scope="scope">
@@ -111,6 +116,7 @@
             show-overflow-tooltip
             width="140"
             sortable
+            :sort-method="(row1, row2) => sortMethod(row1, row2, 'twoN')"
           ></el-table-column>
           <el-table-column
             prop="threeN"
@@ -118,6 +124,7 @@
             show-overflow-tooltip
             width="140"
             sortable
+            :sort-method="(row1, row2) => sortMethod(row1, row2, 'threeN')"
           ></el-table-column>
           <el-table-column
             prop="two"
@@ -125,6 +132,7 @@
             show-overflow-tooltip
             width="120"
             sortable
+            :sort-method="(row1, row2) => sortMethod(row1, row2, 'two')"
           ></el-table-column>
           <el-table-column
             prop="three"
@@ -132,6 +140,7 @@
             show-overflow-tooltip
             width="120"
             sortable
+            :sort-method="(row1, row2) => sortMethod(row1, row2, 'three')"
           ></el-table-column>
           <el-table-column
             prop="four"
@@ -139,6 +148,7 @@
             show-overflow-tooltip
             width="120"
             sortable
+            :sort-method="(row1, row2) => sortMethod(row1, row2, 'four')"
           ></el-table-column>
           <el-table-column
             prop="five"
@@ -146,6 +156,7 @@
             show-overflow-tooltip
             width="120"
             sortable
+            :sort-method="(row1, row2) => sortMethod(row1, row2, 'five')"
           ></el-table-column>
       </el-table>
       <p class="tipText">备注：金额负号表示已收齐，正号表示还尚欠额；金额单位：元。</p>
@@ -237,6 +248,11 @@ export default {
         tableData: [],
       },
       carTableLoading: false,
+
+      defaultSort: {
+        // prop: 'supportFund',
+        order: 'ascending',
+      },
 
     };
   },
@@ -331,6 +347,18 @@ export default {
     //监听排序
     sortChange(column, prop, order) {
       // console.log(column, prop, order);
+    },
+
+    // 自定义排序
+    sortMethod(row1, row2, prop) {
+      // console.log(row1, row2, prop);
+      const at = row1[prop] * 1;
+      const bt = row2[prop] * 1;
+      if (at > bt) {
+        return 1
+      } else {
+        return -1
+      }
     },
 
 

@@ -71,7 +71,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['roles', 'userId']),
+    ...mapState(['roles', 'userId', 'asideInfoIds']),
   },
   created() {
     var that = this;
@@ -94,17 +94,22 @@ export default {
       });
     });
 
+    
+  },
+
+  mounted() {
     this.InvoiceWaitingTotal();
   },
+
   methods: {
     ...mapMutations({
       setRentApprovalNum: 'setRentApprovalNum',
     }),
 
-    initData(ids) {
-      common.checkConstractFlow(162, ids, '1', this.params.contractFlowStatus);
-      common.checkConstractFlow(163, ids, '2', this.params.contractFlowStatus);
-      common.checkConstractFlow(164, ids, '3', this.params.contractFlowStatus);
+    initData(idsArr) {
+      common.checkConstractFlow(162, idsArr, '1', this.params.contractFlowStatus);
+      common.checkConstractFlow(163, idsArr, '2', this.params.contractFlowStatus);
+      common.checkConstractFlow(164, idsArr, '3', this.params.contractFlowStatus);
       if (this.params.contractFlowStatus.length === 0) {
         this.params.contractFlowStatus.push('5');
       }

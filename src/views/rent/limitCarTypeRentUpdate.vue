@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-10-13 16:56:26
+ * @LastEditTime: 2020-10-14 11:54:31
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeRentUpdate.vue
@@ -136,7 +136,7 @@ export default {
             brandName: '',
             modifier: this.userId,
             remark: '',
-            validDate: '',
+            // validDate: '',
           });
         } else {
           this.status.loading = false;
