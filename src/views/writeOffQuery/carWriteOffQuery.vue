@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-14 18:09:07
+ * @LastEditTime: 2020-10-15 17:02:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -67,7 +67,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="车型:" prop="carModel">
+        <el-form-item label="车型名称:" prop="carModel">
           <el-input
             maxlength="30"
             v-model="formData.carModel"
@@ -79,6 +79,14 @@
           <el-input
             maxlength="30"
             v-model="formData.frameNumber"
+            clearable
+            placeholder
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="银行单据号:" prop="serialNumber">
+          <el-input
+            maxlength="30"
+            v-model="formData.serialNumber"
             clearable
             placeholder
           ></el-input>
@@ -173,7 +181,7 @@
         ></el-table-column>
         <el-table-column
           prop="carModel"
-          label="车型"
+          label="车型名称"
           show-overflow-tooltip
           width="100"
         ></el-table-column>
@@ -462,6 +470,7 @@ export default {
         nper: '',
         carModel: '',
         frameNumber: '',
+        serialNumber: '',
         pageSize: 10,
         pageNum: 1,
       },
@@ -580,6 +589,7 @@ export default {
         isLimitLicence: this.formData.isLimitLicence,
         name: this.formData.name,
         frameNumber: this.formData.frameNumber,
+        serialNumber: this.formData.serialNumber,
         carModel: this.formData.carModel,
         turnPageShowNum: this.formData.pageSize,
         turnPageBeginPos: this.formData.pageNum,
@@ -614,7 +624,9 @@ export default {
       }&frameNumber=${
         this.formData.frameNumber ? this.formData.frameNumber : ''
       }&carModel=${
-        this.formData.carModel ? this.formData.carModel : ''}`;
+        this.formData.carModel ? this.formData.carModel : ''
+      }&serialNumber=${
+        this.formData.serialNumber ? this.formData.serialNumber : ''}`;
     },
 
     // 分页

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 15:27:34
- * @LastEditTime: 2020-09-23 18:18:00
+ * @LastEditTime: 2020-10-15 11:24:30
  * @LastEditors: your name
  * @Description: 登记弹窗
  * @FilePath: \webcode2\src\views\supportGold\components\registerDialog.vue
@@ -16,30 +16,30 @@
       title="支援金支付登记"
       :visible.sync="registerFormVisible"
     >
-      <el-form :model="registerForm" label-width="100px" size="medium">
+      <el-form :model="registerForm" label-width="90px" size="medium">
         <el-form-item label="支援金id">
           <el-input v-model="registerForm.id" disabled></el-input>
         </el-form-item>
         <el-form-item label="支付登记人">
-          <el-input v-model="registerForm.userId" disabled></el-input>
+          <el-input v-model="registerForm.payer" disabled></el-input>
         </el-form-item>
-        <el-form-item label="支付登记时间">
+        <el-form-item label="支付时间">
           <el-date-picker
-            v-model="registerForm.currentTime"
+            v-model="registerForm.payDate"
             value-format="yyyy-MM-dd"
             style="width: 100%"
             type="date"
             placeholder="选择日期"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="备注">
+        <!-- <el-form-item label="备注">
           <el-input
             v-model="registerForm.remark"
             type="textarea"
             maxlength="300"
             :autosize="{ minRows: 3, maxRows: 4}"
           ></el-input>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="registerFormVisible = false" plain size="medium">取 消</el-button>

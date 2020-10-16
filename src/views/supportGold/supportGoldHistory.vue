@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-10-14 10:30:09
+ * @LastEditTime: 2020-10-15 15:34:56
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldHistory.vue
@@ -103,9 +103,13 @@
             <span>{{ scope.row.payStatus | payStatus }}</span>
           </template>
         </el-table-column>
-        <!-- <el-table-column prop="" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="" label="支付登记时间" show-overflow-tooltip width="120"></el-table-column> -->
-        <!-- <el-table-column prop="" label="备注" show-overflow-tooltip></el-table-column> -->
+        <el-table-column prop="payer" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="payDate" label="支付时间" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.payDate | timeFormatTemp }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="150" fixed="right">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleDetail(scope.row)" v-show="rightControl.detail">详情</el-button>
@@ -303,7 +307,7 @@ export default {
           year       : row.year,
           month      : row.month,
           batch      : row.Batch,
-          applyDate  : moment(row.creater).format('YYYY-MM-DD'),
+          applyDate  : moment(row.create_time).format('YYYY-MM-DD'),
           type       : this.userApprovalType,
           carNum     : row.carNum,
           batchNumber: row.batchNumber,

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-14 17:29:44
+ * @LastEditTime: 2020-10-15 16:51:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -33,27 +33,28 @@
           <el-input maxlength="30" v-model="formData.companyName" clearable placeholder></el-input>
         </el-form-item> -->
 
-        <!-- <el-form-item label="核销状态:" prop="systemName">
-          <el-select v-model="formData.value" clearable placeholder="请选择" style="width: 100%">
+        <el-form-item label="核销状态:" prop="verState">
+          <el-select v-model="formData.verState" clearable placeholder="请选择" style="width: 100%">
             <el-option
-              v-for="item in appravolStatus"
+              v-for="item in this.$options.filters.verState([])"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></el-option>
           </el-select>
-        </el-form-item> -->
+        </el-form-item>
 
-        <!-- <el-form-item label="交易日期:" prop="interfaceCode">
+        <el-form-item label="交易日期:" prop="dateTime">
           <el-date-picker
-            v-model="formData.date"
+            v-model="formData.dateTime"
             type="daterange"
             value-format="yyyy-MM-dd"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+            @change="changeTime"
           ></el-date-picker>
-        </el-form-item> -->
+        </el-form-item>
 
         <el-form-item>
           <el-button type="primary" @click="queryForm">查询</el-button>
@@ -105,9 +106,9 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="tradeDate" label="交易时间" show-overflow-tooltip width="120">
+        <el-table-column prop="tradeDate" label="交易时间" show-overflow-tooltip width="160">
           <template slot-scope="scope">
-            <span>{{ scope.row.tradeDate | timeFormat }}</span>
+            <span>{{ scope.row.tradeDate | timeFormatTemp }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="120"></el-table-column>
@@ -251,6 +252,10 @@ export default {
         serialNumber: '',
         sideAccount: '',
         sideAccountName: '',
+        startTradeDate: '',
+        endTradeDate: '',
+        verState: '',
+        dateTime: [],
         pageSize: 10,
         pageNum: 1,
       },
@@ -382,6 +387,8 @@ export default {
     // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.formData.startTradeDate = '';
+      this.formData.endTradeDate = '';
       this.getBankWaterListData();
     },
 
@@ -389,6 +396,18 @@ export default {
     indexMethod(index) {
       let order = this.pageSize * (this.pageNum - 1);
       return index + order + 1;
+    },
+
+    // 
+    changeTime(val) {
+      // console.log(val);
+      if (val) {
+        this.formData.startTradeDate = val[0];
+        this.formData.endTradeDate = val[1];
+      } else {
+        this.formData.startTradeDate = '';
+        this.formData.endTradeDate = '';
+      }
     },
 
     // 查询分页列表
@@ -399,6 +418,9 @@ export default {
         serialNumber: this.formData.serialNumber,
         sideAccount: this.formData.sideAccount,
         sideAccountName: this.formData.sideAccountName,
+        startTradeDate: this.formData.startTradeDate,
+        endTradeDate: this.formData.endTradeDate,
+        verState: this.formData.verState,
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
       };
@@ -430,9 +452,6 @@ export default {
       this.bankWaterUploadURL = common.importBankStatementUrl,
       this.$refs.uploadDialog.isShow(true);
     },
-
-    // 导出银行流水单
-    // exportButton() {},
 
     // 分页
     handleSizeChange(val) {
@@ -538,9 +557,12 @@ export default {
       // this.exportLoading = true;
       window.open(`/api/${common.bankWaterDownUrl}?companyName=${
       this.formData.companyName ? this.formData.companyName : ''
-      }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''}&sideAccount=${
-        this.formData.sideAccount ? this.formData.sideAccount : ''
-      }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`, '_parent')
+      }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''
+      }&sideAccount=${this.formData.sideAccount ? this.formData.sideAccount : ''
+      }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''
+      }&verState=${this.formData.verState ? this.formData.verState : ''
+      }&startTradeDate=${this.formData.startTradeDate ? this.formData.startTradeDate : ''
+      }&endTradeDate=${this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_parent')
       // .addEventListener('beforeunload', (e) => {
       //   console.log(e);
       //   this.exportLoading = false;

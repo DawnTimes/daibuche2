@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-10-14 10:14:14
+ * @LastEditTime: 2020-10-15 18:03:11
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -90,7 +90,7 @@
         <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="plateNumber" label="车牌号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="modelCode" label="车型" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="modelName" label="车型" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip></el-table-column>
         <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="batch" label="批次" show-overflow-tooltip>
@@ -111,10 +111,10 @@
         <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="currentTotal" label="当期/总期数" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="surplus" label="剩余期数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="" label="支付登记时间" show-overflow-tooltip width="120">
+        <el-table-column prop="payer" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="payDate" label="支付时间" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.time | timeFormat }}</span>
+            <span>{{ scope.row.payDate | timeFormatTemp }}</span>
           </template>
         </el-table-column>
         <!-- <el-table-column prop="remark" label="备注" show-overflow-tooltip ></el-table-column> -->
@@ -293,7 +293,9 @@ export default {
       }&frameNumber=${
         this.formData.frameNumber ? this.formData.frameNumber : ''
       }&batchNumber=${
-        this.formData.batchNumber ? this.formData.batchNumber : ''}`;
+        this.formData.batchNumber ? this.formData.batchNumber : ''
+      }&payStatus=${
+        this.formData.payStatus ? this.formData.payStatus : ''}`;
     },
 
   },

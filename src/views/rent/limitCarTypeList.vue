@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-13 17:38:21
+ * @LastEditTime: 2020-10-15 15:14:32
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeList.vue
@@ -31,7 +31,7 @@
             @change="changeCity"
           ></el-cascader>-->
 
-          <el-select v-model="formData.cityName" placeholder="请选择">
+          <el-select v-model="formData.cityName" placeholder="请选择" filterable>
             <el-option value label style="height:240px; overflow-y: auto; background-color:#fff; color: #606266; font-weight: normal">
               <el-tree :props="defaultProps" :load="loadNode" lazy @node-click="handleNodeClick" highlight-current accordion></el-tree>
             </el-option>

@@ -105,7 +105,7 @@ const Dictionary = {
     },
     {
       label: '生效',
-      value: '5'
+      value: '4'
     },
     {
       label: '审批拒绝',

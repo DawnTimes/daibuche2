@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-10-14 10:29:37
+ * @LastEditTime: 2020-10-15 15:35:28
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -113,16 +113,16 @@
             <span>{{ scope.row.payStatus | payStatus }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="" label="支付登记时间" show-overflow-tooltip width="120">
+        <el-table-column prop="payer" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="payDate" label="支付时间" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.time | timeFormat }}</span>
+            <span>{{ scope.row.payDate | timeFormatTemp }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="180" fixed="right">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleRegister(scope.row)" v-if="rightControl.register">登记</el-button>
+            <el-button type="primary" size="mini" @click="handleRegister(scope.row)" v-if="rightControl.register" :disabled="!(scope.row.approvalStatus == '4')">登记</el-button>
             <el-button size="mini" @click="handleDetail(scope.row)" v-if="rightControl.detail">详情</el-button>
             <!-- <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button> -->
           </template>
@@ -205,8 +205,8 @@ export default {
       deleteId: null,
 
       registerForm: {
-        currentTime: '',
-        userId: '',
+        payDate: '',
+        payer: '',
         id: '',
       },
       status: {
@@ -347,7 +347,7 @@ export default {
           year       : row.year,
           month      : row.month,
           batch      : row.Batch,
-          applyDate  : moment(row.creater).format('YYYY-MM-DD'),
+          applyDate  : moment(row.create_time).format('YYYY-MM-DD'),
           type       : this.userApprovalType,
           carNum     : row.carNum,
           batchNumber: row.batchNumber,
@@ -391,8 +391,8 @@ export default {
 
     // 登记弹窗
     handleRegister(row) {
-      this.registerForm.currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
-      this.registerForm.userId = this.userId;
+      this.registerForm.payDate = moment().format('YYYY-MM-DD HH:mm:ss');
+      this.registerForm.payer = this.userId;
       this.registerForm.id = row.id;
       this.$refs.registerDialog.isShow(true);
     },

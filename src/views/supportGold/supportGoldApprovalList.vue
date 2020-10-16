@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-10-14 10:38:27
+ * @LastEditTime: 2020-10-15 15:34:38
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -103,6 +103,7 @@
             <span>{{ scope.row.payStatus }}</span>
           </template>
         </el-table-column> -->
+         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
 
         <el-table-column
           align="center"
@@ -294,7 +295,7 @@ export default {
           year       : row.year,
           month      : row.month,
           batch      : row.Batch,
-          applyDate  : moment(row.creater).format('YYYY-MM-DD'),
+          applyDate  : moment(row.create_time).format('YYYY-MM-DD'),
           type       : this.userApprovalType,
           carNum     : row.carNum,
           batchNumber: row.batchNumber,

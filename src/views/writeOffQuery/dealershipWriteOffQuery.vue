@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-14 18:07:15
+ * @LastEditTime: 2020-10-15 16:21:49
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -112,13 +112,13 @@
         </el-table-column>
 
         <el-table-column prop="dueAmount" label="应收金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="应收本金" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="duePrincipal" label="应收本金" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="dueInterest" label="应收利息" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="dueManagementFee" label="应收管理费" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="dueCommission" label="应收手续费" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="verAmount" label="已核金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="已核本金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="已核利息" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="verPrincipal" label="已核本金" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="verInterest" label="已核利息" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="verManagementFee" label="已核管理费" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="verCommission" label="已核手续费" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="outstandingAmount" label="未核金额" show-overflow-tooltip width="100"></el-table-column>
