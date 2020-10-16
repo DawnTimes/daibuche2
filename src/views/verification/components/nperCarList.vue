@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-10-10 16:08:15
+ * @LastEditTime: 2020-10-16 17:52:05
  * @LastEditors: your name
  * @Description: 查询期数下所有车辆
  * @FilePath: \webcode2\src\views\verification\components\nperCarList.vue
@@ -71,11 +71,31 @@
               <span>{{ scope.row.payDate | timeFormat }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="principal" label="本金" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="interest" label="利息" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="rentCardFee" label="管理费" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="commission" label="手续费" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="totalMonthlyRent" label="月租合计" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="principal" label="本金" show-overflow-tooltip>
+            <template slot-scope="scope">
+              <span>{{ scope.row.principal | moneyFormat}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="interest" label="利息" show-overflow-tooltip>
+            <template slot-scope="scope">
+              <span>{{ scope.row.interest | moneyFormat}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="rentCardFee" label="管理费" show-overflow-tooltip>
+            <template slot-scope="scope">
+              <span>{{ scope.row.rentCardFee | moneyFormat}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="commission" label="手续费" show-overflow-tooltip>
+            <template slot-scope="scope">
+              <span>{{ scope.row.commission | moneyFormat}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="totalMonthlyRent" label="月租合计" show-overflow-tooltip>
+            <template slot-scope="scope">
+              <span>{{ scope.row.totalMonthlyRent | moneyFormat}}</span>
+            </template>
+          </el-table-column>
           <!-- <el-table-column prop="" label="已收金额" show-overflow-tooltip width="100"></el-table-column>
           <el-table-column prop="" label="已收本金" show-overflow-tooltip width="100"></el-table-column>
           <el-table-column prop="" label="已收利息" show-overflow-tooltip width="100"></el-table-column>

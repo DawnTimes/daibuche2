@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-10-14 16:34:02
+ * @LastEditTime: 2020-10-16 17:49:06
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -134,25 +134,81 @@
         </el-table-column>
         
         
-        <el-table-column prop="dueAmount" label="应收金额" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="duePrincipal" label="应收本金" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="dueinterest" label="应收利息" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="dueManagementFee" label="应收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="dueCommission" label="应收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="receivedAmount" label="已收金额" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="receivedPrincipal" label="已收本金" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="receivedInterest" label="已收利息" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="receivedManagementFee" label="已收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="receivedCommission" label="已收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="outstandingAmount" label="未收金额" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="outstandingPrincipal" label="未收本金" show-overflow-tooltip width="120">
+        <el-table-column prop="dueAmount" label="应收金额" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.outstandingPrincipal || 0 }}</span>
+            <span>{{ scope.row.dueAmount | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="outstandingInterest" label="未收利息" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="outstandingManagementFee" label="未收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="outstandingCommission" label="未收手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="duePrincipal" label="应收本金" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.duePrincipal | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="dueinterest" label="应收利息" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.dueinterest | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="dueManagementFee" label="应收管理费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.dueManagementFee | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="dueCommission" label="应收手续费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.dueCommission | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="receivedAmount" label="已收金额" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.receivedAmount | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="receivedPrincipal" label="已收本金" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.receivedPrincipal | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="receivedInterest" label="已收利息" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.receivedInterest | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="receivedManagementFee" label="已收管理费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.receivedManagementFee | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="receivedCommission" label="已收手续费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.receivedCommission | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="outstandingAmount" label="未收金额" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.outstandingAmount | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="outstandingPrincipal" label="未收本金" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.outstandingPrincipal | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="outstandingInterest" label="未收利息" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.outstandingInterest | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="outstandingManagementFee" label="未收管理费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.outstandingManagementFee | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="outstandingCommission" label="未收手续费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.outstandingCommission | moneyFormat}}</span>
+          </template>
+        </el-table-column>
         <!-- <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column> -->
         <el-table-column label="操作" width="150" fixed="right">
           <template slot-scope="scope">

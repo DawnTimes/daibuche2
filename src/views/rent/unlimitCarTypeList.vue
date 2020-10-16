@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-10 14:38:30
+ * @LastEditTime: 2020-10-16 16:20:01
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeList.vue
@@ -64,7 +64,7 @@
         <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
         <el-table-column prop="monthlyRent" label="月租金" show-overflow-tooltip>
           <template slot-scope="scope">
-            <span>{{ scope.row.monthlyRent}} 元</span>
+            <span>{{ scope.row.monthlyRent | moneyFormat}}</span>
           </template>
         </el-table-column>
         <!-- <el-table-column prop="" label="月租金合计" show-overflow-tooltip></el-table-column> -->

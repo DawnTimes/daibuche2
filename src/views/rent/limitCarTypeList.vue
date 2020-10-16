@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-15 15:14:32
+ * @LastEditTime: 2020-10-16 16:21:10
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeList.vue
@@ -83,24 +83,24 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
         <el-table-column prop="brandName" label="品牌名称" show-overflow-tooltip></el-table-column>
         <!-- 自适应列宽 -->
         <!-- <af-table-column label="品牌名称" prop="brandName"></af-table-column> -->
-        <el-table-column prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="seriesName" label="车系" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="licenceName" label="牌照商" show-overflow-tooltip></el-table-column>
         <!-- <af-table-column label="牌照商" prop="licenceName"></af-table-column> -->
-        <el-table-column prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="cityName" label="城市" show-overflow-tooltip width="80"></el-table-column>
         <el-table-column prop="num" label="数量" show-overflow-tooltip width="80"></el-table-column>
         <el-table-column prop="monthlyRent" label="月租金" show-overflow-tooltip>
           <template slot-scope="scope">
-            <span>{{ scope.row.monthlyRent}} 元</span>
+            <span>{{ scope.row.monthlyRent | moneyFormat}}</span>
           </template>
         </el-table-column>
         <el-table-column prop="rentLicenceFee" label="月牌照费" show-overflow-tooltip>
           <template slot-scope="scope">
-            <span>{{ scope.row.rentLicenceFee}} 元</span>
+            <span>{{ scope.row.rentLicenceFee | moneyFormat}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -110,7 +110,7 @@
           width="120"
         >
           <template slot-scope="scope">
-            <span>{{ scope.row.totalMonthlyRent}} 元</span>
+            <span>{{ scope.row.totalMonthlyRent | moneyFormat}}</span>
           </template>
         </el-table-column>
         <!-- <el-table-column prop="" label="尾款" show-overflow-tooltip></el-table-column> -->

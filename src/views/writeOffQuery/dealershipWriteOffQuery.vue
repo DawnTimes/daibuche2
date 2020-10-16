@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-15 16:21:49
+ * @LastEditTime: 2020-10-16 18:01:54
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -111,21 +111,81 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="dueAmount" label="应收金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="duePrincipal" label="应收本金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="dueInterest" label="应收利息" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="dueManagementFee" label="应收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="dueCommission" label="应收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="verAmount" label="已核金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="verPrincipal" label="已核本金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="verInterest" label="已核利息" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="verManagementFee" label="已核管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="verCommission" label="已核手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="outstandingAmount" label="未核金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="outstandingPrincipal" label="未核本金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="outstandingInterest" label="未核利息" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="outstandingManagementFee" label="未核管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="outstandingCommission" label="未核手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="dueAmount" label="应收金额" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.dueAmount | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="duePrincipal" label="应收本金" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.duePrincipal | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="dueInterest" label="应收利息" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.dueInterest | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="dueManagementFee" label="应收管理费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.dueManagementFee | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="dueCommission" label="应收手续费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.dueCommission | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="verAmount" label="已核金额" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.verAmount | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="verPrincipal" label="已核本金" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.verPrincipal | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="verInterest" label="已核利息" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.verInterest | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="verManagementFee" label="已核管理费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.verManagementFee | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="verCommission" label="已核手续费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.verCommission | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="outstandingAmount" label="未核金额" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.outstandingAmount | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="outstandingPrincipal" label="未核本金" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.outstandingPrincipal | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="outstandingInterest" label="未核利息" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.outstandingInterest | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="outstandingManagementFee" label="未核管理费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.outstandingManagementFee | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="outstandingCommission" label="未核手续费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.outstandingCommission | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
       </el-table>
     </div>

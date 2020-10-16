@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-15 17:02:52
+ * @LastEditTime: 2020-10-16 17:58:27
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -133,6 +133,7 @@
         ref="table"
         @selection-change="handleSelectionChange"
         @select="handleSelect"
+        @select-all="selectAll"
         style="width: 100%"
         :header-cell-style="{
           'text-align': 'center',
@@ -316,91 +317,151 @@
           label="应收金额"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.dueAmount | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="duePrincipal"
           label="应收本金"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.duePrincipal | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="dueInterest"
           label="应收利息"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.dueInterest | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="dueManagementFee"
           label="应收管理费"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.dueManagementFee | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="dueCommission"
           label="应收手续费"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.dueCommission | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="verAmount"
           label="已核金额"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.verAmount | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="verPrincipal"
           label="已核本金"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.verPrincipal | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="verInterest"
           label="已核利息"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.verInterest | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="verManagementFee"
           label="已核管理费"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.verManagementFee | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="verCommission"
           label="已核手续费"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.verCommission | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="notVerAmount"
           label="未核金额"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.notVerAmount | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="notVerPrincipal"
           label="未核本金"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.notVerPrincipal | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="notVerInterest"
           label="未核利息"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.notVerInterest | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="notVerManagementFee"
           label="未核管理费"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.notVerManagementFee | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="notCommission"
           label="未核手续费"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.notCommission | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="remark"
           label="备注"
@@ -474,31 +535,12 @@ export default {
         pageSize: 10,
         pageNum: 1,
       },
-      appravolStatus: [
-        {
-          value: '1',
-          label: '全部核销',
-        },
-        {
-          value: '2',
-          label: '未核销',
-        },
-        {
-          value: '3',
-          label: '部分核销',
-        },
-      ],
 
       tableData: [],
       tableLoading: false,
       tableHeight: 100,
       // 数据字典
       paidTemp: [],
-
-      limitStatus: [
-        { value: 'Y', label: '是' },
-        { value: 'N', label: '否' },
-      ],
 
       // 反冲
       recoilForm: {},
@@ -518,7 +560,16 @@ export default {
     };
   },
   computed: {},
-  watch: {},
+  watch: {
+    // multipleSelection(val) {
+    //   console.log(val);
+    //   val.forEach((item, index) => {
+    //     if (item.backlash == 'Y') {
+    //       this.$refs.table.toggleRowSelection(item, false);
+    //     } 
+    //   });
+    // }
+  },
   created() {
     // 判断权限
     this.rightArray.forEach((item, index, array) => {
@@ -684,17 +735,19 @@ export default {
         type: 'warning',
       })
         .then(() => {
-          this.formDataSubmit(row.id);
+          const idArr = [{ id: row.id }];
+          this.formDataSubmit(idArr);
         })
         .catch(() => {});
     },
+    
     // 反冲提交
-    formDataSubmit(id) {
+    formDataSubmit(idArr) {
       // console.log(obj);
       // this.status.loading = true;
       const url = common.backlashDealUrl;
       const params = {
-        backList: [{ id: id }],
+        backList: idArr,
       };
       axios
         .post(url, params)
@@ -706,6 +759,7 @@ export default {
               message: '反冲成功！',
             });
             // this.$refs.recoilModule.isShow(false);
+            this.getCarWriteOffListData();
           } else {
             // this.status.loading = false;
             this.$notify.error({
@@ -737,15 +791,34 @@ export default {
 
     // 批量选择 全选， 反冲状态为已反冲的不能勾选
     handleSelectionChange(val) {
+      console.log(val);
       this.multipleSelection = val;
       if (val) {
         val.forEach((item, index) => {
           if (item.backlash == 'Y') {
             this.$refs.table.toggleRowSelection(item, false);
-          }
+          } 
         });
       }
+      
+      // this.toggleSelection();
       // console.log(this.multipleSelection);
+    },
+
+    selectAll(val) {
+      // console.log(val);
+
+    },
+
+    // 取消批量选择
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.table.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.table.clearSelection();
+      }
     },
 
     // 去重
@@ -804,37 +877,40 @@ export default {
         type: 'warning',
       })
         .then(() => {
-          const url = common.backlashDealUrl;
+          // const url = common.backlashDealUrl;
           let idArr = [];
           // 合并数组
           // idArr = _.concat(bacthCarIdArr, idArr);
-
+          // // 去重
           idArr = this.unique(bacthCarIdArr);
-          const params = {
-            backList: idArr,
-          };
-          // console.log(params);
-          axios
-            .post(url, params)
-            .then((res) => {
-              if (res.ec === '0') {
-                this.$notify.success({
-                  title: '温馨提示！',
-                  message: '反冲成功！',
-                });
-              } else {
-                this.$notify.error({
-                  title: '温馨提示！',
-                  message: res.em || '反冲失败！',
-                });
-              }
-            })
-            .catch((err) => {
-              this.$notify.error({
-                title: '温馨提示！',
-                message: err ? err.em : '反冲失败！',
-              });
-            });
+
+          this.formDataSubmit(idArr);
+          
+          // const params = {
+          //   backList: idArr,
+          // };
+          // axios
+          //   .post(url, params)
+          //   .then((res) => {
+          //     if (res.ec === '0') {
+          //       this.$notify.success({
+          //         title: '温馨提示！',
+          //         message: '反冲成功！',
+          //       });
+          //       this.getCarWriteOffListData();
+          //     } else {
+          //       this.$notify.error({
+          //         title: '温馨提示！',
+          //         message: res.em || '反冲失败！',
+          //       });
+          //     }
+          //   })
+          //   .catch((err) => {
+          //     this.$notify.error({
+          //       title: '温馨提示！',
+          //       message: err ? err.em : '反冲失败！',
+          //     });
+          //   });
         })
         .catch(() => {});
     },

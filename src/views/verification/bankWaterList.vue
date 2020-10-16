@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-15 16:51:29
+ * @LastEditTime: 2020-10-16 17:23:25
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -20,15 +20,16 @@
         <el-form-item label="银行单据号:" prop="serialNumber">
           <el-input maxlength="30" v-model="formData.serialNumber" clearable placeholder></el-input>
         </el-form-item>
+        <el-form-item label="收款名称:" prop="companyName">
+          <el-input maxlength="30" v-model="formData.companyName" clearable placeholder></el-input>
+        </el-form-item>
         <el-form-item label="汇款名称:" prop="sideAccountName">
           <el-input maxlength="50" v-model="formData.sideAccountName" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="汇款账号:" prop="sideAccount">
           <el-input maxlength="30" v-model="formData.sideAccount" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="收款名称:" prop="companyName">
-          <el-input maxlength="30" v-model="formData.companyName" clearable placeholder></el-input>
-        </el-form-item>
+        
         <!-- <el-form-item label="收款账号:" prop="companyName">
           <el-input maxlength="30" v-model="formData.companyName" clearable placeholder></el-input>
         </el-form-item> -->
@@ -112,12 +113,23 @@
           </template>
         </el-table-column>
         <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="income" label="收款金额" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="income" label="收款金额" show-overflow-tooltip width="150">
+          <template slot-scope="scope">
+            <span>{{ scope.row.income | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="companyName" label="收款名称" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="bankAccountNo" label="收款账号" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="bankAccountName" label="收款开户行" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="sideAccount" label="汇款名称" show-overflow-tooltip width="150"></el-table-column>
-        <el-table-column prop="sideAccountName" label="汇款账号" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="sideAccountName" label="汇款名称" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="sideAccount" label="汇款账号" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="verState" label="核销状态" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span
+            :class="{greenStatus: scope.row.verState == 'FULL', blueColor: scope.row.verState == 'PART', redStatus: scope.row.verState == 'NOT'}"
+            >{{ scope.row.verState | verState }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="digest" label="摘要" show-overflow-tooltip></el-table-column>
         <!-- <el-table-column prop="" label="是否代付" show-overflow-tooltip>
           <template slot-scope="scope">
@@ -129,31 +141,25 @@
         <el-table-column prop="paidLogo" label="代付标志" show-overflow-tooltip></el-table-column>
         <el-table-column prop="projectCategory" label="项目类别" show-overflow-tooltip></el-table-column>
         <!-- <el-table-column prop="" label="是否虚拟收款" show-overflow-tooltip width="150"></el-table-column> -->
-        <el-table-column prop="verState" label="核销状态" show-overflow-tooltip>
-          <template slot-scope="scope">
-            <span
-            :class="{greenStatus: scope.row.verState == 'FULL', blueColor: scope.row.verState == 'PART', redStatus: scope.row.verState == 'NOT'}"
-            >{{ scope.row.verState | verState }}</span>
-          </template>
-        </el-table-column>
+        
         <el-table-column prop="haveVerLines" label="已核销额" show-overflow-tooltip width="150">
           <template slot-scope="scope">
-            <span>{{ scope.row.haveVerLines || 0 }}</span>
+            <span>{{ scope.row.haveVerLines | moneyFormat }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="notVerLines" label="未核销额" show-overflow-tooltip width="150">
           <template slot-scope="scope">
-            <span>{{ scope.row.notVerLines || 0 }}</span>
+            <span>{{ scope.row.notVerLines | moneyFormat }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="refund" label="退款金额" show-overflow-tooltip width="150">
           <template slot-scope="scope">
-            <span>{{ scope.row.refund || 0 }}</span>
+            <span>{{ scope.row.refund | moneyFormat }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="newLedgerLogo" label="新台账标志" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" width="250" fixed="right">
+        <el-table-column label="操作" width="320" fixed="right">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -162,12 +168,13 @@
               v-if="rightControl.writeOff"
               :disabled="scope.row.verState == 'FULL'"
             >核销</el-button>
-            <!-- <el-button
+            <el-button
               size="mini"
               plain
               @click="handleDetail(scope.row)"
-              v-if="rightControl.detail && scope.row.verState == '全部核销'"
-            >核销详情</el-button> -->
+              v-if="rightControl.detail"
+              :disabled="scope.row.verState == 'NOT'"
+            >核销详情</el-button>
             <el-button
               size="mini"
               type="warning"
@@ -231,6 +238,8 @@ import confirmBox from '@/components/confirmBox';  // 删除弹框
 import uploadDialog from '@/components/uploadDialog';  // 上传弹框
 
 import { mapState } from 'vuex';
+
+import { moneyFormat } from '@/common/moneyFormat.js';
 
 export default {
   name: '',
@@ -336,6 +345,7 @@ export default {
     }
   },
   created() {
+    console.log(moneyFormat('-192845565383.00000'));
     this.getBankWaterListData();
 
     // 判断权限
@@ -635,7 +645,10 @@ export default {
     // 核销详情
     handleDetail(row) {
       this.$router.push({
-        path: '/writeOffDetail'
+        path: '/writeOffDetail',
+        query: {
+          serialNumber: row.serialNumber,
+        },
       })
     },
 

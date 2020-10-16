@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-10-14 15:06:10
+ * @LastEditTime: 2020-10-16 17:41:21
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -95,11 +95,19 @@
         </el-table-column>
         <el-table-column prop="supportFund" label="支援金" sortable show-overflow-tooltip width="120" :sort-method="(row1, row2) => sortMethod(row1, row2, 'supportFund')">
           <template slot-scope="scope">
-            <span>{{ scope.row.supportFund }}</span>
+            <span>{{ scope.row.supportFund | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="licenceFund" label="牌照费" sortable show-overflow-tooltip width="120" :sort-method="(row1, row2) => sortMethod(row1, row2, 'licenceFund')"></el-table-column>
-        <el-table-column prop="totalFund" label="支援金总额" sortable show-overflow-tooltip width="120" :sort-method="(row1, row2) => sortMethod(row1, row2, 'totalFund')"></el-table-column>
+        <el-table-column prop="licenceFund" label="牌照费" sortable show-overflow-tooltip width="120" :sort-method="(row1, row2) => sortMethod(row1, row2, 'licenceFund')">
+          <template slot-scope="scope">
+            <span>{{ scope.row.licenceFund | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="totalFund" label="支援金总额" sortable show-overflow-tooltip width="120" :sort-method="(row1, row2) => sortMethod(row1, row2, 'totalFund')">
+          <template slot-scope="scope">
+            <span>{{ scope.row.totalFund | moneyFormat}}</span>
+          </template>
+        </el-table-column>
         
         <el-table-column prop="isGacShop" label="是否商贸" show-overflow-tooltip>
           <template slot-scope="scope">
@@ -117,7 +125,11 @@
             width="140"
             sortable
             :sort-method="(row1, row2) => sortMethod(row1, row2, 'twoN')"
-          ></el-table-column>
+          >
+          <template slot-scope="scope">
+            <span>{{ scope.row.twoN | moneyFormat}}</span>
+          </template>
+          </el-table-column>
           <el-table-column
             prop="threeN"
             :label="setMonthTotal(3)"
@@ -125,7 +137,11 @@
             width="140"
             sortable
             :sort-method="(row1, row2) => sortMethod(row1, row2, 'threeN')"
-          ></el-table-column>
+          >
+          <template slot-scope="scope">
+            <span>{{ scope.row.threeN | moneyFormat}}</span>
+          </template>
+          </el-table-column>
           <el-table-column
             prop="two"
             :label="setMonth(2)"
@@ -133,7 +149,11 @@
             width="120"
             sortable
             :sort-method="(row1, row2) => sortMethod(row1, row2, 'two')"
-          ></el-table-column>
+          >
+          <template slot-scope="scope">
+            <span>{{ scope.row.two | moneyFormat}}</span>
+          </template>
+          </el-table-column>
           <el-table-column
             prop="three"
             :label="setMonth(3)"
@@ -141,7 +161,11 @@
             width="120"
             sortable
             :sort-method="(row1, row2) => sortMethod(row1, row2, 'three')"
-          ></el-table-column>
+          >
+          <template slot-scope="scope">
+            <span>{{ scope.row.three | moneyFormat}}</span>
+          </template>
+          </el-table-column>
           <el-table-column
             prop="four"
             :label="setMonth(4)"
@@ -149,7 +173,11 @@
             width="120"
             sortable
             :sort-method="(row1, row2) => sortMethod(row1, row2, 'four')"
-          ></el-table-column>
+          >
+          <template slot-scope="scope">
+            <span>{{ scope.row.four | moneyFormat}}</span>
+          </template>
+          </el-table-column>
           <el-table-column
             prop="five"
             :label="setMonth(5)"
@@ -157,7 +185,11 @@
             width="120"
             sortable
             :sort-method="(row1, row2) => sortMethod(row1, row2, 'five')"
-          ></el-table-column>
+          >
+          <template slot-scope="scope">
+            <span>{{ scope.row.five | moneyFormat}}</span>
+          </template>
+          </el-table-column>
       </el-table>
       <p class="tipText">备注：金额负号表示已收齐，正号表示还尚欠额；金额单位：元。</p>
     </div>
@@ -186,6 +218,8 @@ import { mapState } from 'vuex';
 import moment from 'moment';
 
 import carListDialog from './carListDialog';
+
+import { moneyFormat } from '@/common/moneyFormat.js';
 
 export default {
   name: '',
@@ -388,20 +422,21 @@ export default {
             // console.log(prev, curr);
             const value = Number(curr);
             if (!isNaN(value)) {
-              return prev + curr;
+              // 千分位格式化金额
+              return moneyFormat(prev + curr);
             } else {
-              return prev;
+              return moneyFormat(prev);
             }
           }, 0);
           if (index === 3) {
             // 合计车辆数
             sums[index] += '辆';
           } else if (index === 8) {
-            // 合计车辆数
             sums[index] = '';
-          } else {
-            sums[index] += '元';
-          }
+          } 
+          // else {
+          //   sums[index] += '元';
+          // }
         } else {
           sums[index] = '';
         }

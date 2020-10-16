@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-13 17:37:06
+ * @LastEditTime: 2020-10-16 15:36:23
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalList.vue
@@ -93,8 +93,8 @@
         ></el-table-column>
         <!-- <el-table-column prop="modId" label="id编号" show-overflow-tooltip fixed="left"></el-table-column> -->
         <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="180"></el-table-column>
+        <el-table-column prop="brandName" label="品牌" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
         <el-table-column prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
           <template slot-scope="scope">
@@ -108,10 +108,10 @@
             <span>{{ scope.row.validDate | timeFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="licenceName" label="牌照商" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="licenceName" label="牌照商" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="cityName" label="城市" show-overflow-tooltip></el-table-column>
         <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip>
+        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span
             :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '2' ,

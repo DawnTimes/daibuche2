@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-09-30 09:31:41
+ * @LastEditTime: 2020-10-16 15:27:00
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -51,7 +51,7 @@
 
         <el-form-item label>
           <!-- <el-button type="primary" @click="importButton" v-show="rightControl.import">导入</el-button> -->
-          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出</el-button>
+          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出逾期记录</el-button>
         </el-form-item>
       </el-form>
 
@@ -82,7 +82,7 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="name" label="经销店名称" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="name" label="经销店名称" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="payDate" label="逾期开始日期" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.payDate | timeFormat }}</span>

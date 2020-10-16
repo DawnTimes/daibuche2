@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-10-15 18:03:11
+ * @LastEditTime: 2020-10-16 16:53:17
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -56,7 +56,7 @@
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-show="rightControl.export" @click="exportButton">导出</el-button>
+          <el-button type="primary" v-show="rightControl.export" @click="exportButton">导出支援金清单</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -103,12 +103,36 @@
             <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | payStatus }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="monthlyRent" label="租金" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="rentCardFee" label="牌照费" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="supportFund" label="车型支援金" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="licenceFund" label="牌照支援金" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="monthlyRent" label="租金" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.monthlyRent | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="rentCardFee" label="牌照费" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.rentCardFee | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.totalMonthlyRent | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="supportFund" label="车型支援金" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.supportFund | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="licenceFund" label="牌照支援金" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.licenceFund | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.totalFund | moneyFormat}}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="currentTotal" label="当期/总期数" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="surplus" label="剩余期数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="payer" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>

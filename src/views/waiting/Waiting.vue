@@ -59,9 +59,9 @@ export default {
       goldNumbers: 0, // 支援金审批数量
       invoiceNumbers: 0, // 通知单数量
       haveTodo: false,
-      rentShow: true,
-      goldShow: true,
-      invoiceShow: true,
+      rentShow: false,
+      goldShow: false,
+      invoiceShow: false,
       params: {
         turnPageBeginPos: '0',
         turnPageShowNum: '10',
@@ -88,8 +88,21 @@ export default {
       this.supportGoldWaitingTotal(res.ids);
 
       res.ids.forEach(function (val, index) {
+        // 判断是否有合同审批的菜单权限
         if (val == 161) {
           that.haveTodo = true;
+        }
+        // 判断是否有租金修改审批的菜单权限
+        if (val == 954) {
+          that.rentShow = true;
+        }
+        // 判断是否有支援金审批的菜单权限
+        if (val == 963) {
+          that.goldShow = true;
+        }
+        // 判断是否有开票明细的菜单权限
+        if (val == 991) {
+          that.invoiceShow = true;
         }
       });
     });

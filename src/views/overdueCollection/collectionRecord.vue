@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:25:10
- * @LastEditTime: 2020-10-13 14:37:16
+ * @LastEditTime: 2020-10-16 15:26:03
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\collectionRecord.vue
@@ -22,8 +22,8 @@
     <el-row :gutter="0">
       <el-col :xs="24" :sm="24" :md="24" :lg="20" :xl="18">
         <div class="exportBtn">
-          <el-button type="primary" size="medium" @click="importButton">导入</el-button>
-          <el-button type="primary" size="medium" plain @click="exportButton">导出</el-button>
+          <el-button type="primary" size="medium" @click="importButton">导入催收记录</el-button>
+          <el-button type="primary" size="medium" plain @click="exportButton">导出催收记录</el-button>
         </div>
         <div class="table">
           <el-table

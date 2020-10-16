@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-20 10:23:26
- * @LastEditTime: 2020-10-13 15:37:35
+ * @LastEditTime: 2020-10-16 17:38:35
  * @LastEditors: your name
  * @Description: 车辆支援金清单
  * @FilePath: \webcode2\src\views\supportGold\components\carListDialog.vue
@@ -43,14 +43,34 @@
 
           <el-table-column prop="monthlyRent" label="租金" show-overflow-tooltip>
             <template slot-scope="scope">
-              <span>{{ scope.row.monthlyRent }}</span>
+              <span>{{ scope.row.monthlyRent | moneyFormat }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="rentCardFee" label="牌照费" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="supportFund" label="车型支援金" show-overflow-tooltip width="100"></el-table-column>
-          <el-table-column prop="licenceFund" label="牌照支援金" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="rentCardFee" label="牌照费" show-overflow-tooltip>
+            <template slot-scope="scope">
+            <span>{{ scope.row.rentCardFee | moneyFormat}}</span>
+          </template>
+          </el-table-column>
+          <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip>
+            <template slot-scope="scope">
+            <span>{{ scope.row.totalMonthlyRent | moneyFormat}}</span>
+          </template>
+          </el-table-column>
+          <el-table-column prop="supportFund" label="车型支援金" show-overflow-tooltip width="100">
+            <template slot-scope="scope">
+            <span>{{ scope.row.supportFund | moneyFormat}}</span>
+          </template>
+          </el-table-column>
+          <el-table-column prop="licenceFund" label="牌照支援金" show-overflow-tooltip>
+            <template slot-scope="scope">
+            <span>{{ scope.row.licenceFund | moneyFormat}}</span>
+          </template>
+          </el-table-column>
+          <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip>
+            <template slot-scope="scope">
+            <span>{{ scope.row.totalFund | moneyFormat}}</span>
+          </template>
+          </el-table-column>
           <el-table-column prop="currentTotal" label="当期/总期数" show-overflow-tooltip width="120"></el-table-column>
           <el-table-column prop="surplus" label="剩余期数" show-overflow-tooltip></el-table-column>
         </el-table>
@@ -66,6 +86,8 @@
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+
+import { moneyFormat } from '@/common/moneyFormat.js';
 
 export default {
   name: '',
@@ -129,7 +151,8 @@ export default {
             }
           }, 0);
           if (index >= 7 && index <= 12) {
-            sums[index] += ' 元';
+            // 千分位格式化金额
+            sums[index] = moneyFormat(sums[index]);
           } else {
             sums[index] = '';
           }

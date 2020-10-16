@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-12 15:44:49
+ * @LastEditTime: 2020-10-16 18:08:35
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -141,24 +141,92 @@
         <!-- <el-table-column prop="" label="应收金额" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="已收金额" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="未收金额" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="totalMonthlyRent" label="应收租金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="principal" label="应收本金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="interest" label="应收利息" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="rentCardFee" label="应收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="commission" label="应收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="verAmount" label="已收金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="verPrincipal" label="已收本金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="verInterest" label="已收利息" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="verManagementFee" label="已收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="verCommission" label="已收手续费" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="totalMonthlyRent" label="应收租金" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.totalMonthlyRent | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="principal" label="应收本金" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.principal | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="interest" label="应收利息" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.interest | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="rentCardFee" label="应收管理费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.rentCardFee | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="commission" label="应收手续费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.commission | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="verAmount" label="已收金额" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.verAmount | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="verPrincipal" label="已收本金" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.verPrincipal | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="verInterest" label="已收利息" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.verInterest | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="verManagementFee" label="已收管理费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.verManagementFee | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="verCommission" label="已收手续费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.verCommission | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <!-- <el-table-column prop="" label="收到日期" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="notVerAmount" label="未收金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="notVerPrincipal" label="未收本金" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="未收利息" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="not_verManagementFee" label="未收管理费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="notCommission" label="未收手续费" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="Financing" label="融资额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="finalPayment" label="尾款" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="notVerAmount" label="未收金额" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.notVerAmount | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="notVerPrincipal" label="未收本金" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.notVerPrincipal | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="" label="未收利息" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.dueAmount | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="not_verManagementFee" label="未收管理费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.not_verManagementFee | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="notCommission" label="未收手续费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.notCommission | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="Financing" label="融资额" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.Financing | moneyFormat}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="finalPayment" label="尾款" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+          <span>{{ scope.row.finalPayment | moneyFormat}}</span>
+        </template>
+        </el-table-column>
         <el-table-column prop="" label="利率" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="accountName" label="收款账户" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="bankName" label="收款开户行" show-overflow-tooltip width="100"></el-table-column>
