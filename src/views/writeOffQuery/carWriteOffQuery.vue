@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-16 17:58:27
+ * @LastEditTime: 2020-10-19 12:42:20
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -157,10 +157,16 @@
           fixed
         ></el-table-column>
         <el-table-column
+          prop="frameNumber"
+          label="车架号"
+          show-overflow-tooltip
+          width="180"
+        ></el-table-column>
+        <el-table-column
           prop="name"
           label="经销店/牌照商"
           show-overflow-tooltip
-          width="150"
+          width="200"
         ></el-table-column>
         <!-- <el-table-column
           prop="licenceName"
@@ -172,26 +178,21 @@
           prop="contractNumber"
           label="合同编号"
           show-overflow-tooltip
-          width="150"
+          width="180"
         ></el-table-column>
         <el-table-column
           prop="nper"
           label="期数"
           show-overflow-tooltip
-          width="100"
+          width="80"
         ></el-table-column>
         <el-table-column
           prop="carModel"
           label="车型名称"
           show-overflow-tooltip
-          width="100"
+          width="150"
         ></el-table-column>
-        <el-table-column
-          prop="frameNumber"
-          label="车架号"
-          show-overflow-tooltip
-          width="120"
-        ></el-table-column>
+        
         <el-table-column
           prop="plateNumber"
           label="车牌号"
@@ -203,6 +204,13 @@
           label="发动机号"
           show-overflow-tooltip
           width="100"
+        ></el-table-column>
+
+        <el-table-column
+          prop="serialNumber"
+          label="银行单据号"
+          show-overflow-tooltip
+          width="120"
         ></el-table-column>
 
         <el-table-column
@@ -248,12 +256,7 @@
             <span>{{ scope.row.payDay | timeFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="serialNumber"
-          label="银行单据号"
-          show-overflow-tooltip
-          width="120"
-        ></el-table-column>
+        
         <el-table-column
           prop="backlash"
           label="反冲状态"

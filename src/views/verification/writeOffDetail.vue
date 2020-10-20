@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-16 10:29:28
+ * @LastEditTime: 2020-10-19 12:43:21
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
@@ -62,10 +62,16 @@
           fixed
         ></el-table-column>
         <el-table-column
+          prop="frameNumber"
+          label="车架号"
+          show-overflow-tooltip
+          width="180"
+        ></el-table-column>
+        <el-table-column
           prop="name"
           label="经销店/牌照商"
           show-overflow-tooltip
-          width="150"
+          width="180"
         ></el-table-column>
         <!-- <el-table-column
           prop="licenceName"
@@ -85,17 +91,12 @@
           show-overflow-tooltip
           width="100"
         ></el-table-column>
+        
         <el-table-column
           prop="carModel"
           label="车型名称"
           show-overflow-tooltip
-          width="100"
-        ></el-table-column>
-        <el-table-column
-          prop="frameNumber"
-          label="车架号"
-          show-overflow-tooltip
-          width="120"
+          width="160"
         ></el-table-column>
         <el-table-column
           prop="plateNumber"
@@ -108,6 +109,13 @@
           label="发动机号"
           show-overflow-tooltip
           width="100"
+        ></el-table-column>
+
+        <el-table-column
+          prop="serialNumber"
+          label="银行单据号"
+          show-overflow-tooltip
+          width="120"
         ></el-table-column>
 
         <el-table-column
@@ -153,12 +161,7 @@
             <span>{{ scope.row.payDay | timeFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="serialNumber"
-          label="银行单据号"
-          show-overflow-tooltip
-          width="120"
-        ></el-table-column>
+        
         <el-table-column
           prop="backlash"
           label="反冲状态"

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-10-16 17:49:06
+ * @LastEditTime: 2020-10-19 12:36:35
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -16,19 +16,19 @@
         </el-col>
         <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
           <span>收款金额：</span>
-          <span>{{ baseFrom.income || 0 }} 元</span>
+          <span>{{ baseFrom.income | moneyFormat }}</span>
         </el-col>
         <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
           <span>已核金额：</span>
-          <span>{{ baseFrom.haveVerLines || 0 }} 元</span>
+          <span>{{ baseFrom.haveVerLines | moneyFormat }}</span>
         </el-col>
         <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
           <span>未核金额：</span>
-          <span>{{ baseFrom.notVerLines || 0 }} 元</span>
+          <span>{{ baseFrom.notVerLines | moneyFormat }}</span>
         </el-col>
         <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
           <span>退款金额：</span>
-          <span>{{ baseFrom.refund || 0 }} 元</span>
+          <span>{{ baseFrom.refund | moneyFormat }}</span>
         </el-col>
       </el-row>
     </div>
@@ -79,7 +79,8 @@
       }"
       >
         <el-table-column width="50" align="center" label="序号" type="index" :index="indexMethod" fixed></el-table-column>
-        <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="name" label="经销店/牌照商" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="contractName" label="合同名称" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="contractNormalStatus" label="合同状态" show-overflow-tooltip>
           <template slot-scope="scope">
@@ -96,7 +97,7 @@
             >{{ scope.row.contractType | contractType }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="经销店/牌照商" show-overflow-tooltip width="200"></el-table-column>
+        
         <!-- <el-table-column prop="id"  label="牌照商名称" show-overflow-tooltip width="120"></el-table-column> -->
         <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip></el-table-column>
         <el-table-column prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
@@ -130,6 +131,11 @@
         <el-table-column prop="payDate" label="支付日" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.payDate | timeFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="repaymentStatus" label="核销状态" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span :class="{greenStatus: scope.row.repaymentStatus == 'FULL', blueColor: scope.row.repaymentStatus == 'PART', redStatus: scope.row.repaymentStatus == 'NOT'}">{{ scope.row.repaymentStatus | verState }}</span>
           </template>
         </el-table-column>
         
@@ -212,7 +218,7 @@
         <!-- <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column> -->
         <el-table-column label="操作" width="150" fixed="right">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="handleWriteOff(scope.row)">核销</el-button>
+            <el-button size="mini" type="primary" @click="handleWriteOff(scope.row)" :disabled="scope.row.repaymentStatus == 'FULL'">核销</el-button>
             <!-- <el-button size="mini" plain @click="queryCar(scope.row)">车辆清单</el-button> -->
           </template>
         </el-table-column>

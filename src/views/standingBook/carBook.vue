@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-16 18:08:35
+ * @LastEditTime: 2020-10-19 17:27:45
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -90,7 +90,7 @@
         <el-table-column prop="name" label="经销店/牌照商" show-overflow-tooltip width="120"></el-table-column>
         <!-- <el-table-column prop="" label="牌照商" show-overflow-tooltip width="100"></el-table-column> -->
         <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="modelCode" label="车型" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="plateNumber" label="车牌号" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="engineNumber" label="发动机号" show-overflow-tooltip width="100"></el-table-column>

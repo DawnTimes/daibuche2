@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-09-14 16:59:12
+ * @LastEditTime: 2020-10-19 12:57:51
  * @LastEditors: your name
  * @Description: 核销弹框
  * @FilePath: \webcode2\src\views\verification\components\writeOffDialog.vue

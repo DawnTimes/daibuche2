@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-16 17:23:25
+ * @LastEditTime: 2020-10-19 17:39:19
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -112,8 +112,8 @@
             <span>{{ scope.row.tradeDate | timeFormatTemp }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="income" label="收款金额" show-overflow-tooltip width="150">
+        <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="income" label="收款金额" show-overflow-tooltip width="140">
           <template slot-scope="scope">
             <span>{{ scope.row.income | moneyFormat }}</span>
           </template>
@@ -130,7 +130,7 @@
             >{{ scope.row.verState | verState }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="digest" label="摘要" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="digest" label="摘要" show-overflow-tooltip width="150"></el-table-column>
         <!-- <el-table-column prop="" label="是否代付" show-overflow-tooltip>
           <template slot-scope="scope">
             <span
@@ -187,7 +187,7 @@
               type="danger"
               @click="handleDelete(scope.row)"
               v-if="rightControl.delete"
-              :disabled="scope.row.verState == 'FULL'"
+              :disabled="scope.row.verState == 'FULL' || scope.row.verState == 'PART'"
             >删除</el-button>
           </template>
         </el-table-column>
@@ -408,7 +408,7 @@ export default {
       return index + order + 1;
     },
 
-    // 
+    // 选择交易日期
     changeTime(val) {
       // console.log(val);
       if (val) {

@@ -96,7 +96,7 @@ const Dictionary = {
       value: '1'
     },
     {
-      label: '待会计审批',
+      label: '待财务审批',
       value: '2'
     },
     {

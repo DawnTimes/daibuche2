@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-14 16:50:47
+ * @LastEditTime: 2020-10-19 18:22:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -18,16 +18,6 @@
         size="small"
         ref="ruleForm"
       >
-        <!-- <el-form-item label="生成时间:" prop="systemName">
-          <el-date-picker
-            v-model="formData.value1"
-            type="daterange"
-            value-format="yyyy-MM-dd"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          ></el-date-picker>
-        </el-form-item> -->
         <el-form-item label="购方名称:" prop="buyName">
           <el-input
             maxlength="50"
@@ -51,6 +41,17 @@
             clearable
             placeholder
           ></el-input>
+        </el-form-item>
+        <el-form-item label="生成时间:" prop="dateTime">
+          <el-date-picker
+            v-model="formData.dateTime"
+            type="daterange"
+            value-format="yyyy-MM-dd"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            @change="changeTime"
+          ></el-date-picker>
         </el-form-item>
 
         <el-form-item>
@@ -124,7 +125,7 @@
           fixed
         ></el-table-column>
         <el-table-column
-          width="50"
+          width="80"
           align="center"
           label="序号"
           type="index"
@@ -358,6 +359,9 @@ export default {
         buyCreditCode: '',
         buyName: '',
         remark: '',
+        dateTime: [],
+        startCreateTime: '',
+        endCreateTime: '',
         pageSize: 10,
         pageNum: 1,
       },
@@ -471,6 +475,20 @@ export default {
       return index + order + 1;
     },
 
+    // 选择生成日期
+    changeTime(val) {
+      console.log(val);
+      console.log(this.formData.startCreateTime = val[0]);
+      console.log(this.formData.endCreateTime = val[1]);
+      if (val) {
+        this.formData.startCreateTime = val[0];
+        this.formData.endCreateTime = val[1];
+      } else {
+        this.formData.startCreateTime = '';
+        this.formData.endCreateTime = '';
+      }
+    },
+
     // 获取分页数据
     getInvoiceNoticeListData() {
       const url = common.queryInvoiceNoticeDetailUrl;
@@ -478,6 +496,8 @@ export default {
         buyCreditCode: this.formData.buyCreditCode,
         buyName: this.formData.buyName,
         remark: this.formData.remark,
+        startCreateTime: this.formData.startCreateTime,
+        endCreateTime: this.formData.endCreateTime,
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
       };
@@ -501,7 +521,7 @@ export default {
 
     // 导入开票明细
     importButton() {
-      (this.invoiceUploadURL = common.importCollectionUrl),
+      (this.invoiceUploadURL = common.importSubcarInvoiceNoticeUrl),
         this.$refs.uploadDialog.isShow(true);
     },
 
@@ -514,7 +534,12 @@ export default {
         this.formData.buyName ? this.formData.buyName : ''
       }&buyCreditCode=${
         this.formData.buyCreditCode ? this.formData.buyCreditCode : ''
-      }&remark=${this.formData.remark ? this.formData.remark : ''}`;
+      }&remark=${
+        this.formData.remark ? this.formData.remark : ''
+      }&startCreateTime=${
+        this.formData.startCreateTime ? this.formData.startCreateTime : ''
+      }&endCreateTime=${
+        this.formData.endCreateTime ? this.formData.endCreateTime : ''}`;
 
       // setTimeout(() => {
       //   this.exportLoading = false;

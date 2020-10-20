@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:58:16
- * @LastEditTime: 2020-10-14 17:42:56
+ * @LastEditTime: 2020-10-19 10:55:47
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\addBankWater.vue
@@ -104,12 +104,13 @@ export default {
           paidLogo: '',
           notVerLines: '',
           newLedgerLogo: '',
+          remark: '',
         });
 
           setTimeout(() => {
-            // this.$router.push({
-            //   path: '/bankWaterList'
-            // });
+            this.$router.push({
+              path: '/bankWaterList'
+            });
           }, 1000);
           this.status.loading = false;
 
