@@ -136,7 +136,7 @@ export default {
     // 租金修改待办统计
     rentWaitingTotal(idsArr) {
       let type = '';
-      type = common.queryApprovalFlow(9541, idsArr, '1');
+      type = common.queryApprovalFlow(9541, idsArr, '1') || common.queryApprovalFlow(9542, idsArr, '2');
       // type = common.queryApprovalFlow(9542, idsArr, '2');
       const url = common.rentModificationSumUrl;
       const params = {
@@ -154,8 +154,8 @@ export default {
     // 支援金审批待办统计
     supportGoldWaitingTotal(idsArr) {
       let type = '';
-      // type = common.queryApprovalFlow(9631, idsArr, '1');
-      type = common.queryApprovalFlow(9632, idsArr, '2');
+      type = common.queryApprovalFlow(9631, idsArr, '1') || common.queryApprovalFlow(9632, idsArr, '2');
+      // type = common.queryApprovalFlow(9632, idsArr, '2');
       const url = common.supportApprovalSumUrl;
       const params = {
         type: type,

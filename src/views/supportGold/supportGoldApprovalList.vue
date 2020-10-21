@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-10-16 16:56:41
+ * @LastEditTime: 2020-10-20 09:40:23
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -256,7 +256,7 @@ export default {
 
     // 获取分页数据
     getSupportGoldApprovalListData() {
-      this.userApprovalType = common.queryApprovalFlow(9631, this.asideInfoIds, '1'); // 会计审批
+      this.userApprovalType = common.queryApprovalFlow(9631, this.asideInfoIds, '1') || common.queryApprovalFlow(9632, this.asideInfoIds, '2'); // 会计审批
       // this.userApprovalType = common.queryApprovalFlow(9632, this.asideInfoIds, '2'); // 资管部长审批
 
       this.tableLoading = true;

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-10-16 15:27:00
+ * @LastEditTime: 2020-10-20 18:20:05
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -52,6 +52,7 @@
         <el-form-item label>
           <!-- <el-button type="primary" @click="importButton" v-show="rightControl.import">导入</el-button> -->
           <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出逾期记录</el-button>
+          <el-button type="primary" @click="importButton" v-show="rightControl.import">导入催收记录</el-button>
         </el-form-item>
       </el-form>
 
@@ -89,13 +90,33 @@
           </template>
         </el-table-column>
         <el-table-column prop="maxdate" label="逾期天数" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="dueAmount" label="应还租金总额（含牌照费）" show-overflow-tooltip width="200"></el-table-column>
-        <el-table-column prop="yfwh" label="已发支援金/未付租金" show-overflow-tooltip width="160"></el-table-column>
+        <el-table-column prop="dueAmount" label="应还租金总额（含牌照费）" show-overflow-tooltip width="200">
+          <template slot-scope="scope">
+          <span>{{ scope.row.dueAmount | moneyFormat }}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="yfwh" label="已发支援金/未付租金" show-overflow-tooltip width="160">
+        <template slot-scope="scope">
+          <span>{{ scope.row.yfwh | moneyFormat }}</span>
+        </template>
+        </el-table-column>
         <el-table-column prop="yfwfday" label="已发未付对应月份" show-overflow-tooltip width="140"></el-table-column>
-        <el-table-column prop="wfwh" label="未发支援金/未付租金" show-overflow-tooltip width="160"></el-table-column>
+        <el-table-column prop="wfwh" label="未发支援金/未付租金" show-overflow-tooltip width="160">
+        <template slot-scope="scope">
+          <span>{{ scope.row.wfwh | moneyFormat }}</span>
+        </template>
+        </el-table-column>
         <el-table-column prop="wfwfday" label="未发未付对应月份" show-overflow-tooltip width="140"></el-table-column>
-        <el-table-column prop="" label="应还罚息金额" width="120"></el-table-column>
-        <el-table-column prop="outstandingAmount" label="应还金额合计" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="应还罚息金额" width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.amount | moneyFormat }}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="outstandingAmount" label="应还金额合计" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+          <span>{{ scope.row.outstandingAmount | moneyFormat }}</span>
+        </template>
+        </el-table-column>
         <el-table-column prop="storeManagerName" label="店总姓名" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="storeManagerTel" label="店总联系方式" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="sellName" label="售后经理姓名" show-overflow-tooltip width="120"></el-table-column>
@@ -137,7 +158,7 @@
 
 
     <!-- // 导入催收记录 -->
-    <upload-dialog ref="uploadDialog"></upload-dialog>
+    <upload-dialog ref="uploadDialog" :uploadURLStr="recordUploadURL"></upload-dialog>
   </div>
 </template>
 
@@ -189,6 +210,9 @@ export default {
         export: false,
         entry: false,
       },
+
+      // 导入URL
+      recordUploadURL: '',
     };
   },
   computed: {
@@ -324,6 +348,7 @@ export default {
 
     // 导入
     importButton() {
+      this.recordUploadURL = common.importCollectionUrl,
       this.$refs.uploadDialog.isShow(true);
     },
 

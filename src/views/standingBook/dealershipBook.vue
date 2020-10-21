@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-16 18:04:49
+ * @LastEditTime: 2020-10-20 16:44:27
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -30,17 +30,20 @@
         <el-form-item label="期数:" prop="nper">
           <el-input maxlength="10" v-model="formData.nper" placeholder></el-input>
         </el-form-item>
+        <el-form-item label="上牌地:" prop="cityName">
+          <el-input maxlength="10" v-model="formData.cityName" placeholder></el-input>
+        </el-form-item>
 
-        <!-- <el-form-item label="是否限牌:" prop="interfaceName">
-          <el-select v-model="formData.value" placeholder="请选择" style="width: 100%">
+        <el-form-item label="是否限牌:" prop="isLimitLicence">
+          <el-select v-model="formData.isLimitLicence" clearable placeholder="请选择" style="width: 100%">
             <el-option
-              v-for="item in limitStatus"
+              v-for="item in this.$options.filters.flagValue([])"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></el-option>
           </el-select>
-        </el-form-item> -->
+        </el-form-item>
 
         <el-form-item>
           <el-button type="primary" @click="queryForm">查询</el-button>
@@ -50,7 +53,7 @@
         </el-form-item>
 
         <el-form-item label="">
-          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出</el-button>
+          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出经销店台账</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -81,9 +84,9 @@
           fixed
         ></el-table-column>
         <!-- <el-table-column prop="" label="所属期间" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="name" label="经销店/牌照商" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="name" label="经销店/牌照商" show-overflow-tooltip width="200"></el-table-column>
         <!-- <el-table-column prop="" label="牌照商" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="160"></el-table-column>
         <el-table-column prop="nper" label="期数" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
           <template slot-scope="scope">
@@ -247,9 +250,11 @@ export default {
       total: 0,
       formData: {
         cityCode: '',
+        cityName: '',
         contractNumber: '',
         name: '',
         nper: '',
+        isLimitLicence: '',
         pageSize: 10,
         pageNum: 1,
       },
@@ -364,6 +369,8 @@ export default {
         cityCode        : this.formData.cityCode,
         contractNumber  : this.formData.contractNumber,
         name            : this.formData.name,
+        isLimitLicence  : this.formData.isLimitLicence,
+        cityName        : this.formData.cityName,
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum : this.formData.pageSize,
       };
@@ -382,7 +389,7 @@ export default {
       })
     },
 
-    // 导出经销店台账
+    // 导出经销店台账 isLimitLicence
     exportButton() {
       window.location.href = `/api/${
         common.exportAgentSBUrl
@@ -391,7 +398,9 @@ export default {
       }&contractNumber=${
         this.formData.contractNumber ? this.formData.contractNumber : ''
       }&nper=${
-        this.formData.nper ? this.formData.nper : ''}`;
+        this.formData.nper ? this.formData.nper : ''
+      }&isLimitLicence=${
+        this.formData.isLimitLicence ? this.formData.isLimitLicence : ''}`;
     },
 
     // 分页

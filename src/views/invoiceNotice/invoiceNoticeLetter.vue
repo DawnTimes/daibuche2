@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-10-10 13:51:28
+ * @LastEditTime: 2020-10-20 09:26:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -135,13 +135,41 @@
           </template>
         </el-table-column>
         <el-table-column prop="num" label="车辆台数" width="100" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="dueAmount" label="月租金合计" width="100" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="dueInterest" label="车辆租金" show-overflow-tooltip v-if="formData.leaseWay == 'OPERATING-LEASE'"></el-table-column>
-        <el-table-column prop="dueInterest" label="利息/手续费" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'"></el-table-column>
-        <el-table-column prop="duePrincipal" label="本金" show-overflow-tooltip v-if="formData.leaseWay == 'LEASE'"></el-table-column>
-        <el-table-column prop="duePrincipal" label="本金/保证金" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'"></el-table-column>
-        <el-table-column prop="dueInterest" label="利息" show-overflow-tooltip v-if="formData.leaseWay == 'LEASE'"></el-table-column>
-        <el-table-column prop="dueManagementFee" label="管理费" show-overflow-tooltip v-if="formData.leaseWay == 'OPERATING-LEASE' || formData.leaseWay == 'LEASE'"></el-table-column>
+        <el-table-column prop="dueAmount" label="月租金合计" width="100" show-overflow-tooltip>
+          <template slot-scope="scope">
+          <span>{{ scope.row.dueAmount | moneyFormat }}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="dueInterest" label="车辆租金" show-overflow-tooltip v-if="formData.leaseWay == 'OPERATING-LEASE'">
+          <template slot-scope="scope">
+          <span>{{ scope.row.dueInterest | moneyFormat }}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="dueInterest" label="利息/手续费" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'">
+        <template slot-scope="scope">
+          <span>{{ scope.row.dueInterest | moneyFormat }}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="duePrincipal" label="本金" show-overflow-tooltip v-if="formData.leaseWay == 'LEASE'">
+          <template slot-scope="scope">
+          <span>{{ scope.row.duePrincipal | moneyFormat }}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="duePrincipal" label="本金/保证金" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'">
+        <template slot-scope="scope">
+          <span>{{ scope.row.duePrincipal | moneyFormat }}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="dueInterest" label="利息" show-overflow-tooltip v-if="formData.leaseWay == 'LEASE'">
+          <template slot-scope="scope">
+          <span>{{ scope.row.dueInterest | moneyFormat }}</span>
+        </template>
+        </el-table-column>
+        <el-table-column prop="dueManagementFee" label="管理费" show-overflow-tooltip v-if="formData.leaseWay == 'OPERATING-LEASE' || formData.leaseWay == 'LEASE'">
+          <template slot-scope="scope">
+          <span>{{ scope.row.dueManagementFee | moneyFormat }}</span>
+        </template>
+        </el-table-column>
         <!-- <el-table-column prop="dueCommission" label="手续费" show-overflow-tooltip v-if="formData.leaseWay == 'OPERATING-LEASE' || formData.leaseWay == 'LEASE'"></el-table-column> -->
         <el-table-column prop="invoiceDate" label="开票日期" show-overflow-tooltip></el-table-column>
         <el-table-column prop="invoiceNumber" label="票据号码" show-overflow-tooltip></el-table-column>
@@ -169,6 +197,8 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 import moment from 'moment';
 import { mapState } from 'vuex';
+
+import { moneyFormat } from '@/common/moneyFormat.js';
 
 export default {
   name: 'invoiceNoticeLetter',
@@ -315,7 +345,7 @@ export default {
               return prev;
             }
           }, 0);
-          sums[index] += '';
+          sums[index] = moneyFormat(sums[index]);
         } else {
           sums[index] = 'N/A';
         }

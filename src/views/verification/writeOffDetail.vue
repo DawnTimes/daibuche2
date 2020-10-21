@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-19 12:43:21
+ * @LastEditTime: 2020-10-20 09:15:14
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
@@ -18,17 +18,29 @@
         ref="ruleForm"
       >
         <el-form-item label="合同编号:" prop="contractNumber">
-          <el-input maxlength="30" v-model="formData.contractNumber" clearable placeholder=""></el-input>
+          <el-input
+            maxlength="30"
+            v-model="formData.contractNumber"
+            clearable
+            placeholder=""
+          ></el-input>
         </el-form-item>
         <el-form-item label="期数:" prop="nper">
-          <el-input maxlength="50" v-model="formData.nper" clearable placeholder=""></el-input>
+          <el-input
+            maxlength="50"
+            v-model="formData.nper"
+            clearable
+            placeholder=""
+          ></el-input>
         </el-form-item>
 
         <el-form-item>
           <el-button type="primary" @click="queryForm">查询</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
+          <el-button type="primary" @click="resetForm('ruleForm')"
+            >重置</el-button
+          >
         </el-form-item>
         <el-form-item label="">
           <el-button @click="backButton" plain>返回</el-button>
@@ -91,7 +103,7 @@
           show-overflow-tooltip
           width="100"
         ></el-table-column>
-        
+
         <el-table-column
           prop="carModel"
           label="车型名称"
@@ -161,7 +173,7 @@
             <span>{{ scope.row.payDay | timeFormat }}</span>
           </template>
         </el-table-column>
-        
+
         <el-table-column
           prop="backlash"
           label="反冲状态"
@@ -186,7 +198,11 @@
         >
           <template slot-scope="scope">
             <span
-              :class="{greenStatus: scope.row.verState == 'FULL', blueColor: scope.row.verState == 'PART', redStatus: scope.row.verState == 'NOT'}"
+              :class="{
+                greenStatus: scope.row.verState == 'FULL',
+                blueColor: scope.row.verState == 'PART',
+                redStatus: scope.row.verState == 'NOT',
+              }"
               >{{ scope.row.verState | verState }}</span
             >
           </template>
@@ -215,101 +231,167 @@
           width="120"
         >
           <template slot-scope="scope">
-            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | payStatus }}</span>
+            <span
+              :class="{
+                greenStatus: scope.row.payStatus == 'HAVEGRANT',
+                redStatus: scope.row.payStatus == 'NOT',
+                blueColor: scope.row.payStatus == '2',
+              }"
+              >{{ scope.row.payStatus | payStatus }}</span
+            >
           </template>
         </el-table-column>
-        
 
         <el-table-column
           prop="dueAmount"
           label="应收金额"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.dueAmount | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="duePrincipal"
           label="应收本金"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.duePrincipal | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="dueInterest"
           label="应收利息"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.dueInterest | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="dueManagementFee"
           label="应收管理费"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.dueManagementFee | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="dueCommission"
           label="应收手续费"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.dueCommission | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="verAmount"
           label="已核金额"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.verAmount | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="verPrincipal"
           label="已核本金"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.verPrincipal | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="verInterest"
           label="已核利息"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.verInterest | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="verManagementFee"
           label="已核管理费"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.verManagementFee | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="verCommission"
           label="已核手续费"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.verCommission | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="notVerAmount"
           label="未核金额"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.notVerAmount | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="notVerPrincipal"
           label="未核本金"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.notVerPrincipal | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="notVerInterest"
           label="未核利息"
           show-overflow-tooltip
           width="100"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.notVerInterest | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="notVerManagementFee"
           label="未核管理费"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.notVerManagementFee | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="notCommission"
           label="未核手续费"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.notCommission | moneyFormat }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="remark"
           label="备注"
@@ -344,7 +426,12 @@
       ></el-pagination>
     </div>
 
-    <recoilModule ref="recoilModule" :recoilForm='recoilForm' :loading='status.loading' v-on:formDataSubmit="formDataSubmit"></recoilModule>
+    <recoilModule
+      ref="recoilModule"
+      :recoilForm="recoilForm"
+      :loading="status.loading"
+      v-on:formDataSubmit="formDataSubmit"
+    ></recoilModule>
   </div>
 </template>
 
@@ -358,9 +445,7 @@ import recoilModule from '@/components/recoilModule';
 
 export default {
   name: '',
-  props: {
-
-  },
+  props: {},
   components: {
     recoilModule,
   },
@@ -400,12 +485,8 @@ export default {
       },
     };
   },
-  computed: {
-
-  },
-  watch: {
-
-  },
+  computed: {},
+  watch: {},
   created() {
     this.formData.serialNumber = this.$route.query.serialNumber;
 
@@ -420,29 +501,31 @@ export default {
     });
 
     this.$nextTick(function () {
-      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
-      
+      this.tableHeight =
+        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+
       // 监听窗口大小变化
       let self = this;
-      window.onresize = function() {
-        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 120
-      }
-    })
+      window.onresize = function () {
+        self.tableHeight =
+          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+      };
+    });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
     //50表示你想要调整的表格距离底部的高度（你可以自己随意调整），因为我们一般都有放分页组件的，所以需要给它留一个高度
   },
 
   // 添加组件内的导航钩子，在跳转路由前，将监听窗口大小变化的函数清空
-  beforeRouteLeave (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     // 导航离开该组件的对应路由时调用
     // 可以访问组件实例 `this`
     // this.tableHeight = 500
-    window.onresize = function() {
+    window.onresize = function () {
       // console.log('离开了')
-    }
-    next()
+    };
+    next();
   },
-  
+
   mounted() {
     this.getCarWriteOffListData();
   },
@@ -465,7 +548,7 @@ export default {
     backButton() {
       this.$router.push({
         path: '/bankWaterList',
-      })
+      });
     },
 
     // 自定义列接口索引
@@ -529,22 +612,19 @@ export default {
       queryDict(data).then((res) => {
         if (res.code === '0') {
           const arrData = res.data.dictList;
-          
         }
-        
-      })
+      });
     },
 
     // 格式化状态
-    formatStatus(type, dictTemp = []) {      
+    formatStatus(type, dictTemp = []) {
       let columnValueDesc = '';
       dictTemp.forEach((v) => {
-        if ( type === v.columnValueCode) {
-          return columnValueDesc = v.columnValueDesc
+        if (type === v.columnValueCode) {
+          return (columnValueDesc = v.columnValueDesc);
         }
-      })
+      });
       return columnValueDesc;
-          
     },
 
     // 反冲
@@ -601,13 +681,10 @@ export default {
     },
   },
   filters: {
-    function() {
-
-    },
+    function() {},
   },
 };
 </script>
 
 <style scoped lang="scss">
-
 </style>

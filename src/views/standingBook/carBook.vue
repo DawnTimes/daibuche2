@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-19 17:27:45
+ * @LastEditTime: 2020-10-20 16:57:58
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -30,11 +30,15 @@
         <el-form-item label="期数:" prop="nper">
           <el-input maxlength="10" v-model="formData.nper" clearable placeholder></el-input>
         </el-form-item>
-        <!-- <el-form-item label="车型:" prop="systemName">
-          <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
-        </el-form-item> -->
+        <el-form-item label="车型名称:" prop="modelName">
+          <el-input maxlength="30" v-model="formData.modelName" clearable placeholder></el-input>
+        </el-form-item>
         <el-form-item label="车架号:" prop="frameNumber">
           <el-input maxlength="30" v-model="formData.frameNumber" clearable placeholder></el-input>
+        </el-form-item>
+
+        <el-form-item label="上牌地:" prop="cityName">
+          <el-input maxlength="10" v-model="formData.cityName" clearable placeholder></el-input>
         </el-form-item>
 
         <el-form-item label="是否限牌:" prop="isLimitLicence">
@@ -56,7 +60,7 @@
         </el-form-item>
 
         <el-form-item label="">
-          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出</el-button>
+          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出车辆台账</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -87,14 +91,14 @@
           fixed
         ></el-table-column>
         <!-- <el-table-column prop="" label="所属期间" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="name" label="经销店/牌照商" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="name" label="经销店/牌照商" show-overflow-tooltip width="200"></el-table-column>
         <!-- <el-table-column prop="" label="牌照商" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="160"></el-table-column>
+        <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="plateNumber" label="车牌号" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="engineNumber" label="发动机号" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="nper" label="期数" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="nper" label="期数" show-overflow-tooltip width="80"></el-table-column>
         <el-table-column prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
           <template slot-scope="scope">
             <span :class="{ blueColor: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue}}</span>
@@ -276,6 +280,8 @@ export default {
         modelCode: '',
         name: '',
         nper: '',
+        cityName: '',
+        modelName: '',
         pageSize: 10,
         pageNum: 1,
       },
@@ -394,6 +400,8 @@ export default {
         name            : this.formData.name,
         isLimitLicence  : this.formData.isLimitLicence,
         modelCode       : this.formData.modelCode,
+        modelName       : this.formData.modelName,
+        cityName        : this.formData.cityName,
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum : this.formData.pageSize,
       };

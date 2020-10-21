@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-19 18:22:44
+ * @LastEditTime: 2020-10-20 09:18:58
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -224,7 +224,11 @@
           prop="amount"
           label="金额"
           show-overflow-tooltip
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>{{ scope.row.amount | moneyFormat }}</span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="tax"
           label="税率"
