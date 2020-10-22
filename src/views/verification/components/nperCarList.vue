@@ -35,7 +35,7 @@
         }"
         >
           <el-table-column width="50" align="center" label="序号" type="index" fixed></el-table-column>
-          <!-- <el-table-column prop="" label="经销店/牌照商" show-overflow-tooltip width="150"></el-table-column>          -->
+          <!-- <el-table-column prop="" label="承租人/牌照商" show-overflow-tooltip width="150"></el-table-column>          -->
           <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
           <el-table-column prop="nper" label="期数" show-overflow-tooltip width="60"></el-table-column>
           <el-table-column prop="modelCode" label="车型" show-overflow-tooltip></el-table-column>

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-10-21 15:58:10
+ * @LastEditTime: 2020-10-22 17:19:13
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -280,6 +280,7 @@ export default {
 
       paramsForm: {
         tableData: [],
+        agentName: '',
       },
       carTableLoading: false,
 
@@ -484,6 +485,7 @@ export default {
     // 查询车辆清单
     queryCar(row) {
       this.$refs.carListDialog.isShow(true);
+      this.paramsForm.agentName = row.agentName;
       this.carTableLoading = true;
       const url = common.supportCarListByAgIdUrl;
       const params = {
@@ -494,6 +496,7 @@ export default {
         if (res.ec === '0') {
           const data = res.data;
           this.paramsForm.tableData = data.supportCarList;
+          
           this.carTableLoading = false;
         } else {
           this.carTableLoading = false;

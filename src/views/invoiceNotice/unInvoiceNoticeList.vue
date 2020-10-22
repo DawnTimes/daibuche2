@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-20 09:19:10
+ * @LastEditTime: 2020-10-22 11:58:35
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\unInvoiceNoticeList.vue
@@ -79,7 +79,7 @@
         <!-- <el-table-column prop="billingNo" label="单据号" show-overflow-tooltip width="100"></el-table-column> -->
         <el-table-column prop="createTime" label="生成时间" show-overflow-tooltip>
           <template slot-scope="scope">
-          <span>{{ scope.row.createTime | timeFormatTemp }}</span>
+          <span>{{ scope.row.createTime | timeFormat }}</span>
         </template>
         </el-table-column>
         <el-table-column prop="buyName" label="购方名称" show-overflow-tooltip></el-table-column>

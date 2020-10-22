@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-10-15 16:50:25
+ * @LastEditTime: 2020-10-22 14:43:17
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -13,7 +13,7 @@
         <el-form
           :model="formData"
           ref="formData"
-          label-width="120px"
+          label-width="130px"
           class="demo-ruleForm"
           :rules="rules"
           status-icon
@@ -86,7 +86,7 @@
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
-                label="收款名称"
+                label="收款账户名称"
                 prop="companyName"
                 v-show="!$formAtReadonly('companyName', formReadonly.hide)"
                 class="form-item"
@@ -103,7 +103,7 @@
 
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
-                label="收款开户行"
+                label="收款账户开户行"
                 prop="bankAccountName"
                 v-show="!$formAtReadonly('bankAccountName', formReadonly.hide)"
                 class="form-item"
@@ -119,7 +119,7 @@
             
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
-                label="汇款名称"
+                label="汇款账户名称"
                 prop="sideAccountName"
                 v-show="!$formAtReadonly('sideAccountName', formReadonly.hide)"
                 class="form-item"
@@ -363,14 +363,14 @@ export default {
         companyName: [
           { 
             required: true,
-            message: '请输入收款名称',
+            message: '请输入收款账户名称',
             trigger: ['blur', 'change'],
           }
         ],
         bankAccountName: [
           { 
             required: true,
-            message: '请输入收款开户行',
+            message: '请输入收款账户开户行',
             trigger: ['blur', 'change'],
           }
         ],
@@ -384,7 +384,7 @@ export default {
         sideAccountName: [
           { 
             required: true,
-            message: '请输入汇款名称',
+            message: '请输入汇款账户名称',
             trigger: 'blur',
           }
         ],

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-21 14:05:22
+ * @LastEditTime: 2020-10-22 16:22:49
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -20,10 +20,10 @@
         <el-form-item label="银行单据号:" prop="serialNumber">
           <el-input maxlength="30" v-model="formData.serialNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="收款名称:" prop="companyName">
+        <el-form-item label="收款账户名称:" prop="companyName">
           <el-input maxlength="30" v-model="formData.companyName" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="汇款名称:" prop="sideAccountName">
+        <el-form-item label="汇款账户名称:" prop="sideAccountName">
           <el-input maxlength="50" v-model="formData.sideAccountName" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="汇款账号:" prop="sideAccount">
@@ -118,10 +118,10 @@
             <span>{{ scope.row.income | moneyFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="companyName" label="收款名称" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="companyName" label="收款账户名称" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="bankAccountNo" label="收款账号" show-overflow-tooltip width="150"></el-table-column>
-        <el-table-column prop="bankAccountName" label="收款开户行" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="sideAccountName" label="汇款名称" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="bankAccountName" label="收款账户开户行" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="sideAccountName" label="汇款账户名称" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="sideAccount" label="汇款账号" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="verState" label="核销状态" show-overflow-tooltip>
           <template slot-scope="scope">
@@ -180,7 +180,7 @@
               type="warning"
               @click="handleRefund(scope.row)"
               v-if="rightControl.refund"
-              :disabled="scope.row.verState == 'FULL'"
+              :disabled="scope.row.verState == 'FULL' || scope.row.refund == scope.row.income"
             >退款</el-button>
             <el-button
               size="mini"
@@ -345,7 +345,7 @@ export default {
     }
   },
   created() {
-    console.log(moneyFormat('-192845565383.00000'));
+    // console.log(moneyFormat('-192845565383.00000'));
     this.getBankWaterListData();
 
     // 判断权限
@@ -634,11 +634,12 @@ export default {
 
     // 核销
     handleContract(row) {
+      // trim() 方法会删除一个字符串两端的空白字符。
       this.$router.push({
         path: '/contractListNper',
         query: {
           serialNumber: row.serialNumber,
-          name: row.sideAccountName,
+          name: row.sideAccountName.trim(),
         },
       })
     },

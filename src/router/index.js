@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-09-14 15:24:42
+ * @LastEditTime: 2020-10-22 13:51:37
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\router\index.js
@@ -598,7 +598,7 @@ const router = new Router({
           name: 'collectionRecord',
           component: collectionRecord,
           meta: {
-            title: '电催记录录入'
+            title: '催收记录录入'
           }
         },
 

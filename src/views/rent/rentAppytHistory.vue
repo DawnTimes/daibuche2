@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-16 16:42:11
+ * @LastEditTime: 2020-10-22 17:43:12
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentAppytHistory.vue
@@ -117,7 +117,7 @@
             >{{ scope.row.approvalStatus | approvalStatus }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="newMonthlyRent" label="新月租金" show-overflow-tooltip>
+        <el-table-column prop="newMonthlyRent" label="新月租金" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.newMonthlyRent | moneyFormat }}</span>
           </template>
@@ -133,7 +133,7 @@
             <span>{{ scope.row.newtotalMonthlyRent | moneyFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="monthlyRent" label="原月租金" show-overflow-tooltip>
+        <el-table-column prop="monthlyRent" label="原月租金" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.monthlyRent | moneyFormat }}</span>
           </template>

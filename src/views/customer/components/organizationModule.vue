@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-10-21 14:38:29
+ * @LastEditTime: 2020-10-22 14:12:03
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -203,7 +203,7 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="省份"
-                prop="provinceCode"
+                prop=""
                 v-show="!$formAtReadonly('provinceCode', formReadonly.hide)"
                 class="form-item"
               >
@@ -229,7 +229,7 @@
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="城市"
-                prop="cityCode"
+                prop=""
                 v-show="!$formAtReadonly('cityCode', formReadonly.hide)"
                 class="form-item"
               >

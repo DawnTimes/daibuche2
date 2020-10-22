@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-20 10:23:26
- * @LastEditTime: 2020-10-16 17:38:35
+ * @LastEditTime: 2020-10-22 17:26:49
  * @LastEditors: your name
  * @Description: 车辆支援金清单
  * @FilePath: \webcode2\src\views\supportGold\components\carListDialog.vue
@@ -9,7 +9,7 @@
 
 <template>
   <div class="carListDialog">
-    <el-dialog width="90%" :close-on-click-modal="false" :visible.sync="carDialogVisible">
+    <el-dialog width="90%" :close-on-click-modal="false" :visible.sync="carDialogVisible" :title="paramsForm.agentName + '支援金车辆清单'">
       <div class="table">
         <el-table
           :data="paramsForm.tableData"
@@ -191,7 +191,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .carListDialog {
   .backButton {
     padding: 20px;
@@ -199,6 +199,14 @@ export default {
 
   .dialog-footer {
     text-align: center;
+  }
+
+  .el-dialog__body {
+    padding: 10px 20px 10px 10px;
+  }
+
+  .el-dialog__title {
+    font-weight: bold;
   }
 }
 </style>

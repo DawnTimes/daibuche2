@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-21 11:58:11
+ * @LastEditTime: 2020-10-22 15:02:19
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -14,24 +14,24 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="110px"
+        label-width="120px"
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="经销店/牌照商:" prop="name">
-          <el-input maxlength="30" v-model="formData.name" placeholder></el-input>
+        <el-form-item label="承租人/牌照商:" prop="name">
+          <el-input maxlength="30" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
         <!-- <el-form-item label="牌照商:" prop="interfaceName">
           <el-input maxlength="30" v-model="formData.interfaceName" placeholder></el-input>
         </el-form-item> -->
         <el-form-item label="合同编号:" prop="contractNumber">
-          <el-input maxlength="30" v-model="formData.contractNumber" placeholder></el-input>
+          <el-input maxlength="30" v-model="formData.contractNumber" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="期数:" prop="nper">
-          <el-input maxlength="10" v-model="formData.nper" placeholder></el-input>
+          <el-input maxlength="10" v-model="formData.nper" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="上牌地:" prop="cityName">
-          <el-input maxlength="10" v-model="formData.cityName" placeholder></el-input>
+          <el-input maxlength="10" v-model="formData.cityName" clearable placeholder></el-input>
         </el-form-item>
 
         <el-form-item label="是否限牌:" prop="isLimitLicence">
@@ -84,7 +84,7 @@
           fixed
         ></el-table-column>
         <!-- <el-table-column prop="" label="所属期间" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="name" label="经销店/牌照商" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="name" label="承租人/牌照商" show-overflow-tooltip width="200"></el-table-column>
         <!-- <el-table-column prop="" label="牌照商" show-overflow-tooltip width="100"></el-table-column> -->
         <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="160"></el-table-column>
         <el-table-column prop="nper" label="期数" show-overflow-tooltip width="100"></el-table-column>

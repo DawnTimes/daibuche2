@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-10-20 09:26:06
+ * @LastEditTime: 2020-10-22 11:54:18
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -185,7 +185,7 @@
 
       <div class="footerBtn">
         <el-button size="medium" @click="handleBack()">返回</el-button>
-        <el-button type="primary" size="medium" @click="exportButton">导出</el-button>
+        <el-button type="primary" size="medium" @click="exportButton">导出通知单</el-button>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-21 14:04:22
+ * @LastEditTime: 2020-10-22 11:17:12
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -145,17 +145,17 @@
           prop="createTime"
           label="生成时间"
           show-overflow-tooltip
-          width="100"
+          width="120"
         >
           <template slot-scope="scope">
-            <span>{{ scope.row.createTime | timeFormatTemp }}</span>
+            <span>{{ scope.row.createTime | timeFormat }}</span>
           </template>
         </el-table-column>
         <el-table-column
           prop="buyName"
           label="购方名称"
           show-overflow-tooltip
-          width="150"
+          width="200"
         ></el-table-column>
         <!-- 自适应列宽 -->
         <!-- <af-table-column label="购方名称" prop="buyName"></af-table-column> -->
@@ -169,25 +169,25 @@
           prop="buyAddTel"
           label="购方地址电话"
           show-overflow-tooltip
-          width="120"
+          width="200"
         ></el-table-column>
         <el-table-column
           prop="buyBankNameNo"
           label="购方银行帐号"
           show-overflow-tooltip
-          width="120"
+          width="200"
         ></el-table-column>
         <el-table-column
           prop="sellName"
           label="销方地址电话"
           show-overflow-tooltip
-          width="120"
+          width="200"
         ></el-table-column>
         <el-table-column
           prop="sellBankNameNo"
           label="销方银行帐号"
           show-overflow-tooltip
-          width="120"
+          width="200"
         ></el-table-column>
         <el-table-column
           prop="remark"
@@ -199,7 +199,7 @@
           prop="tradeName"
           label="商品名称"
           show-overflow-tooltip
-          width="100"
+          width="150"
         ></el-table-column>
         <el-table-column
           prop=""
@@ -227,6 +227,7 @@
           prop="amount"
           label="金额"
           show-overflow-tooltip
+          width="120"
         >
         <template slot-scope="scope">
           <span>{{ scope.row.amount | moneyFormat }}</span>
@@ -275,11 +276,13 @@
           prop="invoiceNumber"
           label="发票号码"
           show-overflow-tooltip
+          width="120"
         ></el-table-column>
         <el-table-column
           prop="invoiceDate"
           label="开票时间"
           show-overflow-tooltip
+          width="120"
         ></el-table-column>
         <el-table-column label="操作" width="180" fixed="right">
           <template slot-scope="scope">

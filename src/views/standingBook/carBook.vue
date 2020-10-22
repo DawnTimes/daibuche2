@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-21 14:04:58
+ * @LastEditTime: 2020-10-22 14:46:43
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -18,7 +18,7 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="经销店/牌照商:" prop="name">
+        <el-form-item label="承租人/牌照商:" prop="name">
           <el-input maxlength="30" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
         <!-- <el-form-item label="牌照商:" prop="interfaceName">
@@ -91,7 +91,7 @@
           fixed
         ></el-table-column>
         <!-- <el-table-column prop="" label="所属期间" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="name" label="经销店/牌照商" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="name" label="承租人/牌照商" show-overflow-tooltip width="200"></el-table-column>
         <!-- <el-table-column prop="" label="牌照商" show-overflow-tooltip width="100"></el-table-column> -->
         <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="160"></el-table-column>
@@ -232,9 +232,9 @@
         </template>
         </el-table-column>
         <el-table-column prop="" label="利率" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="accountName" label="收款账户" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="bankName" label="收款开户行" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="accountName" label="收款账户名称" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="bankNo" label="收款账号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="bankName" label="收款账户开户行" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="" label="支援金" show-overflow-tooltip width="100"></el-table-column>
         <!-- <el-table-column prop="" label="差额" show-overflow-tooltip width="100"></el-table-column> -->
         <el-table-column prop="" label="支援金批次" show-overflow-tooltip width="100"></el-table-column>

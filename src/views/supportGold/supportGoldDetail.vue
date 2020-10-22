@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-10-21 17:44:33
+ * @LastEditTime: 2020-10-22 16:30:54
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldDetail.vue
@@ -12,7 +12,7 @@
   <div class="supportGoldDetail">
     <div class="wrapper">
       <el-tabs type="card" v-model="formTemp.activeName" class="noBorder">
-        <el-tab-pane class="title" name="first" label="原因说明">
+        <el-tab-pane class="title" name="first" label="支援金复核表">
           <supportGoldApproval-reason></supportGoldApproval-reason>
 
           <div style="padding: 20px 0 20px 0; text-align: center">

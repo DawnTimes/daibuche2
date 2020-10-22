@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-21 15:06:09
+ * @LastEditTime: 2020-10-22 17:42:23
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -104,7 +104,7 @@
           fixed
         ></el-table-column>
         <!-- <el-table-column prop="modId" label="任务id" show-overflow-tooltip fixed></el-table-column> -->
-        <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="brandName" label="品牌" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="seriesName" label="车系" show-overflow-tooltip></el-table-column>
@@ -130,7 +130,7 @@
             >{{ scope.row.approvalStatus | approvalStatus }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="newMonthlyRent" label="新月租金" show-overflow-tooltip>
+        <el-table-column prop="newMonthlyRent" label="新月租金" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.newMonthlyRent | moneyFormat }}</span>
           </template>
@@ -146,7 +146,7 @@
             <span>{{ scope.row.newtotalMonthlyRent | moneyFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="monthlyRent" label="原月租金" show-overflow-tooltip>
+        <el-table-column prop="monthlyRent" label="原月租金" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.monthlyRent | moneyFormat }}</span>
           </template>
@@ -163,7 +163,7 @@
             <span>{{ scope.row.totalMonthlyRent | moneyFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="modifier" label="修改人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="modifier" label="修改人" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="modifiedTime" label="修改时间" show-overflow-tooltip width="160">
           <template slot-scope="scope">
             <span>{{ scope.row.modifiedTime | timeFormatTemp }}</span>

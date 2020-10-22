@@ -25,7 +25,7 @@
         <el-form-item label="银行单据号" prop>
           <el-input v-model="refundForm.serialNumber" disabled></el-input>
         </el-form-item>
-        <el-form-item label="汇款名称" prop>
+        <el-form-item label="汇款账户名称" prop>
           <el-input v-model="refundForm.sideAccountName" disabled></el-input>
         </el-form-item>
         <el-form-item label="汇款账号" prop>

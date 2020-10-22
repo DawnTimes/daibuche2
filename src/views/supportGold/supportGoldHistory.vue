@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-10-16 16:57:36
+ * @LastEditTime: 2020-10-22 17:10:24
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldHistory.vue
@@ -112,7 +112,7 @@
         </el-table-column>
         <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.payStatus | payStatus }}</span>
+            <span>{{ scope.row.payStatus | paymentStatus }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="payer" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>

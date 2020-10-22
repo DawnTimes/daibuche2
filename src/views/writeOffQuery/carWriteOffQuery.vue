@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-21 18:34:58
+ * @LastEditTime: 2020-10-22 09:32:41
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -17,7 +17,7 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="经销店/牌照商:" prop="name">
+        <el-form-item label="承租人/牌照商:" prop="name">
           <el-input
             maxlength="30"
             v-model="formData.name"
@@ -165,7 +165,7 @@
         ></el-table-column>
         <el-table-column
           prop="name"
-          label="经销店/牌照商"
+          label="承租人/牌照商"
           show-overflow-tooltip
           width="200"
         ></el-table-column>
@@ -870,7 +870,7 @@ export default {
       if (status) {
         this.$notify.warning({
           title: '温馨提示',
-          message: '只能同时批量反冲合同编号相同的车辆！',
+          message: '只能同时反冲合同编号相同的车辆！',
         });
         return false;
       }

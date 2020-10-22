@@ -23,7 +23,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-            <el-form-item label="经销店/牌照商">
+            <el-form-item label="承租人/牌照商">
               <el-input v-model="writeOffForm.name" disabled></el-input>
             </el-form-item>
           </el-col>

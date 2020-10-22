@@ -81,7 +81,7 @@
         ></el-table-column>
         <el-table-column
           prop="name"
-          label="经销店/牌照商"
+          label="承租人/牌照商"
           show-overflow-tooltip
           width="180"
         ></el-table-column>

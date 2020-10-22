@@ -42,7 +42,7 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="经销店/牌照商:" prop="name">
+        <el-form-item label="承租人/牌照商:" prop="name">
           <el-input maxlength="30" clearable v-model="formData.name" placeholder></el-input>
         </el-form-item>
         <!-- <el-form-item label="牌照商名称:" prop="systemName">
@@ -79,7 +79,7 @@
       }"
       >
         <el-table-column width="50" align="center" label="序号" type="index" :index="indexMethod" fixed></el-table-column>
-        <el-table-column prop="name" label="经销店/牌照商" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="name" label="承租人/牌照商" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="contractName" label="合同名称" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="contractNormalStatus" label="合同状态" show-overflow-tooltip>
