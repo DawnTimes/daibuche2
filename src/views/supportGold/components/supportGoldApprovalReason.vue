@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-10-16 17:41:21
+ * @LastEditTime: 2020-10-21 15:58:10
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -191,7 +191,7 @@
           </template>
           </el-table-column>
       </el-table>
-      <p class="tipText">备注：金额负号表示已收齐，正号表示还尚欠额；金额单位：元。</p>
+      <p class="tipText">备注：欠款金额负号表示已收齐，正号表示还尚欠额；金额单位：元。</p>
     </div>
     <div class="page-layer">
       <el-pagination
@@ -423,9 +423,9 @@ export default {
             const value = Number(curr);
             if (!isNaN(value)) {
               // 千分位格式化金额
-              return moneyFormat(prev + curr);
+              return prev + curr;
             } else {
-              return moneyFormat(prev);
+              return prev;
             }
           }, 0);
           if (index === 3) {
@@ -434,9 +434,9 @@ export default {
           } else if (index === 8) {
             sums[index] = '';
           } 
-          // else {
-          //   sums[index] += '元';
-          // }
+          else {
+            sums[index] = moneyFormat(sums[index]);
+          }
         } else {
           sums[index] = '';
         }

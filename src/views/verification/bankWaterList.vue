@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-19 17:39:19
+ * @LastEditTime: 2020-10-21 14:05:22
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -73,10 +73,10 @@
           >新增银行流水单</el-button>
         </el-form-item>
         <el-form-item label="">
-          <el-button type="primary" @click="importButton" v-show="rightControl.import">导入银行流水单</el-button>
+          <el-button icon="el-icon-upload2" type="primary" @click="importButton" v-show="rightControl.import">导入银行流水单</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" id="exportButton"  @click="exportButton" :loading="exportLoading" v-show="rightControl.export">导出银行流水单</el-button>
+          <el-button icon="el-icon-download" type="primary" id="exportButton"  @click="exportButton" :loading="exportLoading" v-show="rightControl.export">导出银行流水单</el-button>
         </el-form-item>
         
       </el-form>

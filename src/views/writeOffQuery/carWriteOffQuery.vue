@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-19 12:42:20
+ * @LastEditTime: 2020-10-21 18:34:58
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -104,9 +104,10 @@
         <el-form-item label>
           <el-button
             type="primary"
+            icon="el-icon-download"
             @click="exportButton"
             v-show="rightControl.export"
-            >导出</el-button
+            >导出核销车辆</el-button
           >
         </el-form-item>
       </el-form>

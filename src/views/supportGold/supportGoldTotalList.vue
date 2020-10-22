@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-10-16 16:53:17
+ * @LastEditTime: 2020-10-21 16:43:09
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -56,7 +56,7 @@
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-show="rightControl.export" @click="exportButton">导出支援金清单</el-button>
+          <el-button icon="el-icon-download" type="primary" v-show="rightControl.export" @click="exportButton">导出支援金车辆清单</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -87,7 +87,7 @@
           fixed
         ></el-table-column>
         <el-table-column prop="agentCode" label="经销店编码" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="plateNumber" label="车牌号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="modelName" label="车型" show-overflow-tooltip width="120"></el-table-column>

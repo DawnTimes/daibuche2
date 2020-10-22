@@ -9,7 +9,7 @@
           :inline="true"
           :model="params"
           class="demo-form-inline"
-          label-width="124px"
+          label-width="130px"
           size="small"
           ref="params"
         >
@@ -72,10 +72,10 @@
             <el-button type="primary" @click="onSearch">查询</el-button>
             <el-button type="primary" @click="resetForm('params')">重置</el-button>
           </el-form-item>
-          <el-form-item label=" ">
+          <el-form-item label="">
             <el-button icon="el-icon-plus" type="primary" @click="addInfo">新增牌照商</el-button>
-            <el-button icon="el-icon-upload2" type="primary" @click="importButton">导入</el-button>
-            <el-button icon="el-icon-download" type="primary" @click="batchesDownload">导出</el-button>
+            <el-button icon="el-icon-upload2" type="primary" @click="importButton">导入牌照商</el-button>
+            <el-button icon="el-icon-download" type="primary" @click="batchesDownload">导出牌照商</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -109,14 +109,14 @@
         label="序号"
         :index="indexMethod"
         resizable
-        width="80"
+        width="60"
         align="center"
       ></el-table-column>
       <el-table-column
         fixed
         prop="licenceCode"
         label="牌照商代码"
-        width="100"
+        width="120"
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
@@ -160,7 +160,7 @@
       <el-table-column
         prop="socialCreditCode"
         label="社会统一信用代码"
-        width="150"
+        width="200"
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
@@ -314,6 +314,15 @@ export default {
 
       // 导入url
       rentUploadURL: '',
+
+      // 按钮权限
+      rightArray: [1111, 1112, 1113, 1114],
+      rightControl: {
+        add: false,
+        edit: false,
+        import: false,
+        export: false,
+      },
     };
   },
 
@@ -433,6 +442,16 @@ export default {
 
   created() {
     this.initData();
+
+    // 判断权限
+    this.rightArray.forEach((item, index, array) => {
+      common.checkRolePermission(
+        item,
+        this.$store.state.asideInfoIds,
+        Object.keys(this.rightControl)[index],
+        this.rightControl
+      );
+    });
 
     this.$nextTick(function () {
       this.tableHeight =

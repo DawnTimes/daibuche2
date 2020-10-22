@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-09-23 14:52:02
+ * @LastEditTime: 2020-10-21 17:57:17
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\baseInformationDetailModule.vue
@@ -57,29 +57,29 @@
       <el-row :gutter="0">
         <el-col :xs="24" :sm="22" :md="20" :lg="18" :xl="14">
           <el-timeline>
-            <el-timeline-item class="text_statr" timestamp="发起修改" placement="top" icon="el-icon-more" type="primary">
+            <el-timeline-item class="text_statr" timestamp="发起申请" placement="top" icon="el-icon-more" type="primary">
               <el-card>
                 <h4>
                   <span>修改时间：2020-08-09 12:12:12</span>
                   <span>修改人：admin</span>
                 </h4>
-                <p>备注：王小虎 提交于 2018/4/12 20:46</p>
+                <p>备注：</p>
               </el-card>
             </el-timeline-item>
             <el-timeline-item
-              :timestamp="formatStatus(value.appprovalOperation, dictOperationTemp)"
+              :timestamp="value.approvalOperation"
               :color="value.color"
               :icon="value.icon"
               :type="value.type"
-              :class="{ 'text_success': value.appprovalOperation == 'approved', 'text_error': value.appprovalOperation == 'refuse' }"
+              :class="{ 'text_success': value.approvalOperation == 'approved', 'text_error': value.approvalOperation == 'refuse' }"
               placement="top"
-              v-for="( value, index) in approvalProcessData"
+              v-for="( value, index) in baseInfoForm.suApprovalList"
               :key="index"
             >
               <el-card>
                 <h4>
                   <span>审批时间：{{ value.approvalTime }}</span>
-                  <span>审批人：{{ value.approvalUser }}</span>
+                  <span>审批人：{{ value.approvalPerson }}</span>
                 </h4>
                 <p>
                   <span>审批意见：</span>

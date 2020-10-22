@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-10-19 12:57:51
+ * @LastEditTime: 2020-10-21 18:10:19
  * @LastEditors: your name
  * @Description: 核销弹框
  * @FilePath: \webcode2\src\views\verification\components\writeOffDialog.vue
@@ -75,7 +75,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="writeOffFormVisible = false" size="medium" plain>取 消</el-button>
-        <el-button type="primary" @click="writeOffSubmit('writeOffForm')" :loading="loading" size="medium">核 销</el-button>
+        <el-button type="primary" @click="writeOffSubmit('writeOffForm')" :loading="loading" size="medium">确定核销</el-button>
       </div>
     </el-dialog>
   </div>

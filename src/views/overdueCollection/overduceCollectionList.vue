@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-10-20 18:20:05
+ * @LastEditTime: 2020-10-21 14:04:42
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -51,8 +51,8 @@
 
         <el-form-item label>
           <!-- <el-button type="primary" @click="importButton" v-show="rightControl.import">导入</el-button> -->
-          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出逾期记录</el-button>
-          <el-button type="primary" @click="importButton" v-show="rightControl.import">导入催收记录</el-button>
+          <el-button icon="el-icon-download" type="primary" @click="exportButton" v-show="rightControl.export">导出逾期记录</el-button>
+          <el-button icon="el-icon-upload2" type="primary" @click="importButton" v-show="rightControl.import">导入催收记录</el-button>
         </el-form-item>
       </el-form>
 
@@ -218,6 +218,7 @@ export default {
   computed: {
     ...mapState({
       userId: (store) => store.userId,
+      successStatus: (store) => store.successStatus,
     }),
   },
   watch: {
@@ -254,6 +255,13 @@ export default {
         }
       }
     },
+
+    // 监听是否导入成功，成功则刷新催收记录
+    successStatus(val) {
+      if (val) {
+        this.getOverduceCollectionListData();
+      }
+    }
   },
   created() {
     // 判断权限

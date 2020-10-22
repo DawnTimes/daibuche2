@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 11:25:57
- * @LastEditTime: 2020-10-10 10:28:48
+ * @LastEditTime: 2020-10-21 11:24:21
  * @LastEditors: your name
  * @Description: 文件上传弹窗
  * @FilePath: \webcode2\src\components\uploadDialog.vue
@@ -18,7 +18,7 @@
       <el-upload
         class="upload-demo"
         ref="upload"
-        :action="uploadURL()"
+        action="uploadURL()"
         :on-remove="handleRemove"
         multiple
         :limit="1"
@@ -30,6 +30,7 @@
         :before-upload="beforeAvatarUpload"
         :on-change="onChange"
         :file-list="fileList"
+        :http-request="uploadSectionFile"
       >
         <el-button size="small" type="primary">选取文件</el-button>
         <span slot="tip" class="el-upload__tip" style="padding-left: 10px; color: red">提示：只能上传xlsx/xls文件，且不超过10M</span>
@@ -43,6 +44,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapState, mapMutations } from 'vuex';
 
 export default {
@@ -128,7 +130,7 @@ export default {
 
     // 上传失败
     handleAvatarError(err, file, fileList) {
-      // console.log(err);
+      // console.log(JSON.parse(err.message));
       this.loading = false;
       this.$message.error(JSON.parse(err.message) || '上传错误，请重试');
     },
@@ -174,6 +176,58 @@ export default {
     isShow(isVisible) {
       this.uploadFormVisible = isVisible;
     },
+
+    // 覆盖默认的上传行为，可以自定义上传的实现
+    uploadSectionFile(params) {
+      // console.log(params);
+      const file = params.file;
+        // fileType = file.type,
+        // isImage = fileType.indexOf("image") != -1,
+        // isLt2M = file.size / 1024 / 1024 < 2;
+      // 这里常规检验，看项目需求而定
+      // if (!isImage) {
+      //   this.$message.error("只能上传图片格式png、jpg、gif!");
+      //   return;
+      // }
+      // if (!isLt2M) {
+      //   this.$message.error("只能上传图片大小小于2M");
+      //   return;
+      // }
+      // 根据后台需求数据格式
+      const form = new FormData();
+      // 文件对象
+      form.append("file", file);
+      // 本例子主要要在请求时添加特定属性，所以要用自己方法覆盖默认的action
+      // form.append("clientType", 'xxx');
+      // 项目封装的请求方法，下面做简单介绍
+      const url = this.uploadURLStr;
+      axios.post(url, form)
+        .then(res => {
+          // console.log(res);
+          //自行处理各种情况
+          if (res.ec === '0') {
+            this.$notify.success({
+              title: '温馨提示！',
+              message: '上传成功!'
+            });
+            this.loading = false;
+          } else {
+            this.loading = false;
+            this.$notify.error({
+              title: '温馨提示！',
+              message: res.em || '上传错误，请重试!'
+            });
+          }
+        })
+        .catch((err) => {
+          this.loading = false;
+          // console.log(err);
+          this.$notify.error({
+            title: '温馨提示！',
+            message: err.message || '上传错误，请重试!'
+          });
+        });
+    } 
   },
   filters: {
     function() {},

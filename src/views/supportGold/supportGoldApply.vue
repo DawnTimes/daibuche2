@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-10-15 15:35:28
+ * @LastEditTime: 2020-10-21 13:59:46
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -50,7 +50,7 @@
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="handleCreate" v-show="rightControl.add" >申请支援金</el-button>
+          <el-button type="primary" icon="el-icon-plus" @click="handleCreate" v-show="rightControl.add" >申请支援金</el-button>
         </el-form-item>
       </el-form>
     </div>

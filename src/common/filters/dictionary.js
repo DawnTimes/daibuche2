@@ -148,8 +148,8 @@ const Dictionary = {
   payStatus: [
     { label: '已发放', value: 'HAVEGRANT' },
     { label: '已申请', value: 'HAVEAPPLY' },
-    { label: '未申请', value: 'NOTAPPLY' },
-    { label: '未申请', value: '' },
+    { label: '未申请', value: 'NOTAPPLY' || '' },
+    // { label: '未申请', value: '' },
   ],
 
   // 核销状态

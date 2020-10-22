@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-10-16 17:52:05
+ * @LastEditTime: 2020-10-21 18:22:41
  * @LastEditors: your name
  * @Description: 查询期数下所有车辆
  * @FilePath: \webcode2\src\views\verification\components\nperCarList.vue
@@ -15,7 +15,7 @@
       width="90%"
       :close-on-click-modal="false"
       :visible.sync="carFormVisible"
-      title="车辆信息"
+      title="车辆还款计划"
     >
       <div class="table">
         <el-table

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-16 18:01:54
+ * @LastEditTime: 2020-10-21 18:35:05
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -46,7 +46,7 @@
         </el-form-item>
 
         <el-form-item label="">
-          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出</el-button>
+          <el-button icon="el-icon-download" type="primary" @click="exportButton" v-show="rightControl.export">导出核销经销店</el-button>
         </el-form-item>
       </el-form>
     </div>

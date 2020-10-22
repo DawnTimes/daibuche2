@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-20 16:57:58
+ * @LastEditTime: 2020-10-21 14:04:58
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -60,7 +60,7 @@
         </el-form-item>
 
         <el-form-item label="">
-          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出车辆台账</el-button>
+          <el-button icon="el-icon-download" type="primary" @click="exportButton" v-show="rightControl.export">导出车辆台账</el-button>
         </el-form-item>
       </el-form>
     </div>

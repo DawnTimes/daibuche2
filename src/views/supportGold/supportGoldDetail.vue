@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-09-23 18:37:32
+ * @LastEditTime: 2020-10-21 17:44:33
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldDetail.vue
@@ -45,6 +45,7 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 import { mapState } from 'vuex';
 import moment from 'moment';
+import _ from 'lodash';
 
 import supportGoldApprovalReason from './components/supportGoldApprovalReason';
 import baseInformationDetailModule from './components/baseInformationDetailModule';
@@ -65,6 +66,11 @@ export default {
       batch: '',
       baseInfoForm: {
         status: 'Y',
+        suApprovalList: [],
+        month: '',
+        batchNumber: '',
+        batch: '',
+        carNum: '',
       },
       formData: {
         status: 'Y',
@@ -111,7 +117,34 @@ export default {
       }
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
-          
+          this.baseInfoForm.suApprovalList = res.data.suApprovalList;
+          if (!_.isEmpty(this.baseInfoForm.suApprovalList)) {
+            this.baseInfoForm.suApprovalList.forEach((val) => {
+              val.color = '';
+              val.icon = '';
+              // if (val.approvalOperation === 'Y') {
+              //   val.color = '#0bbd87';
+              //   val.icon = 'el-icon-check';
+              // } else {
+              //   val.color = '#F56C6C';
+              //   val.icon = 'el-icon-close';
+              // }
+              if (
+                val.curStatus === '1' ||
+                val.curStatus === '2' ||
+                val.curStatus === '3'
+              ) {
+                val.color = '#409EFF';
+                val.icon = 'el-icon-more';
+              } else if (val.curStatus === '4') {
+                val.color = '#0bbd87';
+                val.icon = 'el-icon-check';
+              } else if (val.curStatus === '5') {
+                val.color = '#F56C6C';
+                val.icon = 'el-icon-close';
+              }
+            });
+          }
         }
       })
     },

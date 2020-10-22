@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-10-10 15:17:38
+ * @LastEditTime: 2020-10-21 14:38:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -214,6 +214,7 @@
                   clearable
                   placeholder="请选择"
                   @change="changeProvice"
+                  @focus="focusProvice"
                   :disabled="$formAtReadonly('provinceCode', formReadonly.readonly)"
                 >
                   <el-option
@@ -237,8 +238,10 @@
                   style="width: 100%"
                   filterable
                   clearable
+                  allow-create
                   placeholder="请选择"
                   @change="changeCity"
+                  @focus="focusCity"
                   :disabled="$formAtReadonly('cityCode', formReadonly.readonly)"
                 >
                   <el-option
@@ -605,7 +608,7 @@ export default {
   watch: {
     // 监听区域码的变化，获取省份list
     'formData.areaCode'(nval, oval) {
-      console.log(nval, oval);
+      // console.log(nval, oval);
       if (nval && this.$route.path === '/editOrganization') {
         const params = {
           areaCode: nval,
@@ -616,7 +619,7 @@ export default {
     
     // 监听省份码的变化，获取城市list
     'formData.provinceCode'(nval, oval) {
-      console.log(nval, oval);
+      // console.log(nval, oval);
       if (nval && this.$route.path === '/editOrganization') {
         const params = {
           provinceCode: nval,
@@ -684,6 +687,7 @@ export default {
 
     // 选择城市
     changeCity(val) {
+      console.log(val);
       if (!this.formData.provinceCode) {
         this.$notify.warning({
           title: '温馨提示',
@@ -692,6 +696,39 @@ export default {
       } else {
         // this.formData.cityCode = val;
         // this.$set(this.formData, 'cityCode', val);
+      }
+    },
+
+    // 聚焦省份
+    focusProvice(e) {
+      if (!this.formData.areaCode) {
+        this.$notify.warning({
+          title: '温馨提示',
+          message: '请先选择区域',
+        });
+        
+        return false
+      };
+    },
+
+    // 聚焦城市
+    focusCity(e) {
+      // console.log(e);
+      if (!this.formData.areaCode) {
+        this.$notify.warning({
+          title: '温馨提示',
+          message: '请先选择区域',
+        });
+        
+        return false
+      };
+      if (!this.formData.provinceCode) {
+        this.$notify.warning({
+          title: '温馨提示',
+          message: '请先选择省份',
+        });
+        
+        return false
       }
     },
 

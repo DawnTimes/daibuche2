@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-16 16:28:59
+ * @LastEditTime: 2020-10-21 15:06:09
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -73,7 +73,7 @@
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="createContract" :disabled="contractReadonly">生成合同</el-button>
+          <el-button type="primary" v-show="rightControl.createContract" @click="createContract" :disabled="contractReadonly">生成合同</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -255,11 +255,12 @@ export default {
       deleteId: null,
 
       // 按钮权限
-      rightArray: [9531, 9532, 9533],
+      rightArray: [9531, 9532, 9533, 9534],
       rightControl: {
         edit: false,
         detail: false,
         delete: false,
+        createContract: false,
       },
 
       // 数据字典集

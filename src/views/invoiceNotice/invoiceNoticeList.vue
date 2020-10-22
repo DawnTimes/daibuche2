@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-20 09:18:58
+ * @LastEditTime: 2020-10-21 14:04:22
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -72,6 +72,7 @@
         <el-button
           size="medium"
           type="primary"
+          icon="el-icon-plus"
           @click="createInvoice"
           v-show="rightControl.add"
           >生成开票明细</el-button
@@ -79,6 +80,7 @@
         <el-button
           size="medium"
           type="primary"
+          icon="el-icon-upload2"
           @click="importButton"
           v-show="rightControl.import"
           >导入开票明细</el-button
@@ -86,6 +88,7 @@
         <el-button
           size="medium"
           type="primary"
+          icon="el-icon-download"
           @click="exportButton"
           :loading="exportLoading"
           v-show="rightControl.export"

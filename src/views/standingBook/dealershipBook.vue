@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-20 16:44:27
+ * @LastEditTime: 2020-10-21 11:58:11
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -53,7 +53,7 @@
         </el-form-item>
 
         <el-form-item label="">
-          <el-button type="primary" @click="exportButton" v-show="rightControl.export">导出经销店台账</el-button>
+          <el-button icon="el-icon-download" type="primary" @click="exportButton" v-show="rightControl.export">导出经销店台账</el-button>
         </el-form-item>
       </el-form>
     </div>
