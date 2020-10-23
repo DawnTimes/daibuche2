@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-09-17 15:51:24
+ * @LastEditTime: 2020-10-23 10:58:40
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\layouts\components\Aside.vue
@@ -47,11 +47,21 @@ export default {
   data() {
     return {
       currMenu: '',
-      menuList: [],
+      // menuList: [],
     };
   },
   computed: {
     ...mapState(['roles', 'userId']),
+
+    menuList: {
+      get() {
+        return this.$store.state.asideInfo;
+      },
+
+      set(val) {
+
+      }
+    },
   },
   mounted() {
     this.getPath();
@@ -72,29 +82,62 @@ export default {
       } else {
         this.currMenu = '/' + str;
       }
-      console.log(this.currMenu);
+      // console.log(this.currMenu);
     },
 
     // 获取菜单
-    initData() {
+    // initData() {
+    //   let url = '';
+    //   if (this.userId === 'admin') {
+    //     url = common.allTreeUrl;
+    //   } else {
+    //     url = common.userMenuUrl;
+    //   }
+    //   axios.get(url, { roles: this.roles }).then((res) => {
+    //     // console.log(res.menus);
+    //     this.setAsideInfo(res.menus);
+    //     this.setAsideInfoIds(res.ids);
+    //     this.menuList = res.menus;
+    //   });
+    // },
+
+    // 获取用户菜单
+    getUserMenuList() {
       let url = '';
       if (this.userId === 'admin') {
         url = common.allTreeUrl;
       } else {
         url = common.userMenuUrl;
       }
-      axios.get(url, { roles: this.roles }).then((res) => {
-        // console.log(res.menus);
-        this.setAsideInfo(res.menus);
-        this.setAsideInfoIds(res.ids);
-        this.menuList = res.menus;
+
+      const roles = {
+        roles: this.roles
+      };
+      axios.get(url, roles).then(res => {
+        // 对菜单数据根据id进行排序
+        const menusArr = res.menus;
+        let menusList = [];
+        if (!_.isEmpty(menusArr)) {
+          menusList = menusArr.sort(this.sortUp);
+
+          menusList.forEach((val) => {
+            if (!_.isEmpty(val.children)) {
+              val = val.children.sort(this.sortUp);
+            }
+          })
+        }        
+        
+        this.$store.commit('setAsideInfo', menusList);
+        this.$store.commit('setAsideInfoIds', res.ids);
+
       });
     },
   },
   created() {
-    this.initData();
+    this.getUserMenuList();
+    // 权限更新之后 刷新页面重新获取菜单
     bus.$on('changeAside', () => {
-      this.initData();
+      this.getUserMenuList();
     });
   },
 };

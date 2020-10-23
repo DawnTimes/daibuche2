@@ -78,6 +78,8 @@ import { mapMutations } from 'vuex';
 import common from '@/common/common.js';
 // import axios from 'axios';
 import axios from '@/common/axios.js';
+import _ from 'lodash';
+
 export default {
   data() {
     return {
@@ -95,6 +97,8 @@ export default {
         userName: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
       },
+
+      menuList: [],
     };
   },
   created() {
@@ -168,6 +172,9 @@ export default {
                 this.setUserId(res.userId);
                 this.setPersonName(res.session_customerNameCN);
 
+                // 登录成功是清除掉原有的tabs导航标签
+                sessionStorage.removeItem('tagsArr');
+
                 this.$router.push('/common');
               }
             })
@@ -189,6 +196,54 @@ export default {
         'http://192.166.87.119:8888/carmanage-auth/code/' +
         this.loginForm.deviceID;
     },
+
+    // 获取用户菜单
+    getUserMenuList() {
+      let url = '';
+      if (this.userId === 'admin') {
+        url = common.allTreeUrl;
+      } else {
+        url = common.userMenuUrl;
+      }
+
+      const roles = {
+        roles: this.roles
+      };
+      axios.get(url, roles).then(res => {
+        // console.log(res)
+        // this.setAsideInfo(res.menus)
+        // this.setAsideInfoIds(res.ids)
+
+        // 对菜单数据根据id进行排序
+        const menusArr = res.menus;
+        if (!_.isEmpty(menusArr)) {
+          this.menuList = menusArr.sort(this.sortUp);
+
+          this.menuList.forEach(val => {
+            if (!_.isEmpty(val.children)) {
+              val = val.children.sort(this.sortUp);
+            }
+          });
+        }
+        // console.log(this.menuList);
+
+        this.$store.commit('setAsideInfo', this.menuList);
+        this.$store.commit('setAsideInfoIds', res.ids);
+
+        // this.setAsideInfo(this.menuList);
+        // this.setAsideInfoIds(res.ids);
+
+        // sessionStorage.setItem('asideInfo', JSON.stringify(res.data.menus));
+        // sessionStorage.setItem('asideInfoIds', JSON.stringify(res.data.ids));
+
+        // this.menuList = res.menus
+      });
+    },
+
+    // 升序排序
+    sortUp(x, y) {
+      return x.id - y.id;
+    }
   },
   mounted() {
     // this.getIdentifyingCode()

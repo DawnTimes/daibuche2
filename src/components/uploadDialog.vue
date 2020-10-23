@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 11:25:57
- * @LastEditTime: 2020-10-22 11:00:07
+ * @LastEditTime: 2020-10-23 09:11:01
  * @LastEditors: your name
  * @Description: 文件上传弹窗
  * @FilePath: \webcode2\src\components\uploadDialog.vue
@@ -203,7 +203,7 @@ export default {
       const url = this.uploadURLStr;
       axios.post(url, form)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           //自行处理各种情况
           if (res.ec === '0') {
             this.$notify.success({
@@ -216,16 +216,16 @@ export default {
             this.loading = false;
             this.$notify.error({
               title: '温馨提示！',
-              message: res.em || res.error || res.message || '上传错误，请重试123!'
+              message: res.em || res.error || res.message || '上传错误，请重试!'
             });
           }
         })
         .catch((err) => {
           this.loading = false;
-          console.log(err);
+          // console.log(err);
           this.$notify.error({
             title: '温馨提示！',
-            message: err.em || err.error || err.message || '上传错误，请重试000!'
+            message: err.em || err.error || err.message || '上传错误，请重试!'
           });
         });
     } 
