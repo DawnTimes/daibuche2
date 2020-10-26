@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-10-22 14:43:17
+ * @LastEditTime: 2020-10-23 18:57:30
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -178,7 +178,7 @@
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
-                label="新台账标志"
+                label="台账标志"
                 prop="newLedgerLogo"
                 v-show="!$formAtReadonly('newLedgerLogo', formReadonly.hide)"
                 class="form-item"

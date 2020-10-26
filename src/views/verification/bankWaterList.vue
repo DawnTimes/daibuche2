@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-22 16:22:49
+ * @LastEditTime: 2020-10-23 18:56:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -157,7 +157,7 @@
             <span>{{ scope.row.refund | moneyFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="newLedgerLogo" label="新台账标志" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="newLedgerLogo" label="台账标志" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="320" fixed="right">
           <template slot-scope="scope">
@@ -166,7 +166,7 @@
               type="primary"
               @click="handleContract(scope.row)"
               v-if="rightControl.writeOff"
-              :disabled="scope.row.verState == 'FULL'"
+              :disabled="scope.row.verState == 'FULL' || scope.row.refund == scope.row.income"
             >核销</el-button>
             <el-button
               size="mini"
@@ -187,7 +187,7 @@
               type="danger"
               @click="handleDelete(scope.row)"
               v-if="rightControl.delete"
-              :disabled="scope.row.verState == 'FULL' || scope.row.verState == 'PART'"
+              :disabled="scope.row.verState == 'FULL' || scope.row.verState == 'PART' || scope.row.refund != '0'"
             >删除</el-button>
           </template>
         </el-table-column>

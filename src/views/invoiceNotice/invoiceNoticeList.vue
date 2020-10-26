@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-22 11:17:12
+ * @LastEditTime: 2020-10-23 19:19:24
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -30,6 +30,14 @@
           <el-input
             maxlength="30"
             v-model="formData.buyCreditCode"
+            clearable
+            placeholder
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="销方名称:" prop="sellName">
+          <el-input
+            maxlength="50"
+            v-model="formData.sellName"
             clearable
             placeholder
           ></el-input>
@@ -63,12 +71,36 @@
           >
         </el-form-item>
 
-        <!-- <el-form-item label>
-          <el-button type="primary" @click="exportButton">导出</el-button>
-        </el-form-item>-->
+        <el-form-item label>
+          <el-button
+          size="medium"
+          type="primary"
+          icon="el-icon-plus"
+          @click="createInvoice"
+          v-show="rightControl.add"
+          >生成开票明细</el-button
+        >
+        <el-button
+          size="medium"
+          type="primary"
+          icon="el-icon-upload2"
+          @click="importButton"
+          v-show="rightControl.import"
+          >导入开票明细</el-button
+        >
+        <el-button
+          size="medium"
+          type="primary"
+          icon="el-icon-download"
+          @click="exportButton"
+          :loading="exportLoading"
+          v-show="rightControl.export"
+          >导出开票明细</el-button
+        >
+        </el-form-item>
       </el-form>
 
-      <div class="batchBtn">
+      <!-- <div class="batchBtn">
         <el-button
           size="medium"
           type="primary"
@@ -94,14 +126,14 @@
           v-show="rightControl.export"
           >导出开票明细</el-button
         >
-        <!-- <el-button
+        <el-button
           size="medium"
           type="primary"
           @click="exportButton"
           v-show="rightControl.exportBtn"
           >批量导出通知单</el-button
-        > -->
-      </div>
+        >
+      </div> -->
     </div>
 
     <div class="table">
@@ -179,6 +211,12 @@
         ></el-table-column>
         <el-table-column
           prop="sellName"
+          label="销方名称"
+          show-overflow-tooltip
+          width="200"
+        ></el-table-column>
+        <el-table-column
+          prop=""
           label="销方地址电话"
           show-overflow-tooltip
           width="200"
@@ -374,6 +412,7 @@ export default {
         endCreateTime: '',
         pageSize: 10,
         pageNum: 1,
+        sellName: '',
       },
 
       tableData: [],

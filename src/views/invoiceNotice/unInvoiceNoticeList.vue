@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-22 11:58:35
+ * @LastEditTime: 2020-10-23 19:20:09
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\unInvoiceNoticeList.vue
@@ -86,7 +86,8 @@
         <el-table-column prop="buyCreditCode" label="购方税号" show-overflow-tooltip></el-table-column>
         <el-table-column prop="buyAddTel" label="购方地址电话" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="buyBankNameNo" label="购方银行帐号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="sellName" label="销方地址电话" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="sellName" label="销方名称" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="" label="销方地址电话" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="sellBankNameNo" label="销方银行帐号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="remark" label="备注" width="300" show-overflow-tooltip></el-table-column>
         <el-table-column prop="tradeName" label="商品名称" show-overflow-tooltip width="100"></el-table-column>

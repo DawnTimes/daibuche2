@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 15:15:46
- * @LastEditTime: 2020-09-24 14:00:19
+ * @LastEditTime: 2020-10-23 19:11:38
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\components\createInvoiceDialog.vue
@@ -32,11 +32,20 @@
             v-model="invoiceForm.applyDate"
             value-format="yyyy-MM-dd"
             type="date"
-            :picker-options="pickerOptionsDate"
             placeholder="选择日期"
             style="width: 80%"
           ></el-date-picker>
         </el-form-item>
+        <!-- <el-form-item label="生成日期" prop="applyDate">
+          <el-date-picker
+            v-model="invoiceForm.applyDate"
+            value-format="yyyy-MM-dd"
+            type="date"
+            :picker-options="pickerOptionsDate"
+            placeholder="选择日期"
+            style="width: 80%"
+          ></el-date-picker>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="createInvoiceFormVisible = false" plain size="medium">取 消</el-button>

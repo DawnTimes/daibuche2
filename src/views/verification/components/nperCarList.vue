@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-10-21 18:22:41
+ * @LastEditTime: 2020-10-23 13:04:03
  * @LastEditors: your name
  * @Description: 查询期数下所有车辆
  * @FilePath: \webcode2\src\views\verification\components\nperCarList.vue
@@ -214,6 +214,10 @@ export default {
 
   .dialog-footer {
     text-align: center;
+  }
+
+  .el-dialog__title {
+    font-weight: bold;
   }
 }
 </style>

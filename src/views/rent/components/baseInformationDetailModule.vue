@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-10-10 15:24:41
+ * @LastEditTime: 2020-10-23 15:06:09
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\baseInformationDetailModule.vue
@@ -144,7 +144,8 @@
                 </h4>
                 <p>
                   <span>{{ index === 0 ? '备注' : '审批意见' }}：</span>
-                  <span>{{ value.approvalOpinion }}</span>                  
+                  <!-- <span>{{ value.approvalOpinion }}</span>                   -->
+                  <span>{{  }}</span>                  
                 </p>
               </el-card>
               <!-- <el-card>
@@ -248,7 +249,7 @@ export default {
 
       userTemp: [
         { value: '1', lable: '生成租金' },
-        { value: '2', lable: '待会计审批' },
+        { value: '2', lable: '生成租金' },
         { value: '3', lable: '待财务负责人审批' },
         { value: '4', lable: '生效' },
         { value: '5', lable: '审批拒绝' },

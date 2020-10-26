@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 18:11:48
- * @LastEditTime: 2020-09-22 17:36:25
+ * @LastEditTime: 2020-10-23 19:23:38
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldModule.vue
@@ -32,11 +32,23 @@
                     type="date"
                     placeholder="选择日期"
                     style="width: 100%"
-                    :picker-options="pickerOptionsDate"
                     @change="changeDate"
                   ></el-date-picker>
                 </el-form-item>
               </el-col>
+              <!-- <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+                <el-form-item label="申请日期:" prop="applyDate" class="form-item">
+                  <el-date-picker
+                    v-model="formData.applyDate"
+                    value-format="yyyy-MM-dd"
+                    type="date"
+                    placeholder="选择日期"
+                    style="width: 100%"
+                    :picker-options="pickerOptionsDate"
+                    @change="changeDate"
+                  ></el-date-picker>
+                </el-form-item>
+              </el-col> -->
               <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
                 <el-form-item label="支援金月份:" prop="" class="form-item">
                   <el-date-picker

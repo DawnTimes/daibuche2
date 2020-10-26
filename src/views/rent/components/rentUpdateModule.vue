@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 10:31:50
- * @LastEditTime: 2020-10-21 15:15:28
+ * @LastEditTime: 2020-10-23 19:24:24
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\rentUpdateModule.vue
@@ -133,8 +133,15 @@
                   value-format="yyyy-MM-dd"
                   :disabled="$formAtReadonly('validDate', formReadonly.readonly)"
                   placeholder="请选择生效日期"
-                  :picker-options="pickerOptionsDate"
                 ></el-date-picker>
+                <!-- <el-date-picker
+                  v-model="formData.validDate"
+                  type="date"
+                  value-format="yyyy-MM-dd"
+                  :disabled="$formAtReadonly('validDate', formReadonly.readonly)"
+                  placeholder="请选择生效日期"
+                  :picker-options="pickerOptionsDate"
+                ></el-date-picker> -->
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-10-21 16:43:09
+ * @LastEditTime: 2020-10-23 13:33:51
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -100,7 +100,7 @@
         </el-table-column>
         <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | payStatus }}</span>
+            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | paymentStatus }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="monthlyRent" label="租金" show-overflow-tooltip>

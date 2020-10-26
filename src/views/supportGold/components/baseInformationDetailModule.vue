@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-10-21 17:57:17
+ * @LastEditTime: 2020-10-23 15:02:20
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\baseInformationDetailModule.vue
@@ -73,13 +73,13 @@
               :type="value.type"
               :class="{ 'text_success': value.approvalOperation == 'approved', 'text_error': value.approvalOperation == 'refuse' }"
               placement="top"
-              v-for="( value, index) in baseInfoForm.suApprovalList"
+              v-for="( value, index) in approvalProcessData"
               :key="index"
             >
               <el-card>
                 <h4>
                   <span>审批时间：{{ value.approvalTime }}</span>
-                  <span>审批人：{{ value.approvalPerson }}</span>
+                  <span>审批人：{{ value.approvalUser }}</span>
                 </h4>
                 <p>
                   <span>审批意见：</span>
@@ -141,19 +141,19 @@ export default {
         {
           appprovalOperation: 'approved',
           approvalTime: '2020-08-09',
-          approvalUser: '会计',
+          approvalUser: '财务',
           approvalOpinion: '经审核无误，允许通过！',
           color: '#0bbd87',
           icon: 'el-icon-check',
         },
-        {
-          appprovalOperation: 'refuse',
-          approvalTime: '2020-08-09',
-          approvalUser: '资管负责人',
-          approvalOpinion: '经审核数据有误，拒绝通过！',
-          color: '#F56C6C',
-          icon: 'el-icon-close',
-        },
+        // {
+        //   appprovalOperation: 'refuse',
+        //   approvalTime: '2020-08-09',
+        //   approvalUser: '资管负责人',
+        //   approvalOpinion: '经审核数据有误，拒绝通过！',
+        //   color: '#F56C6C',
+        //   icon: 'el-icon-close',
+        // },
         // { appprovalOperation: '', approvalTime: '2020-08-09', approvalUser: 'admin', approvalOpinion: '经审核无误，允许通过！' },
       ],
 

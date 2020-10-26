@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-22 09:32:41
+ * @LastEditTime: 2020-10-23 15:19:43
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -248,17 +248,6 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="payDay"
-          label="支付日"
-          show-overflow-tooltip
-          width="120"
-        >
-          <template slot-scope="scope">
-            <span>{{ scope.row.payDay | timeFormat }}</span>
-          </template>
-        </el-table-column>
-        
-        <el-table-column
           prop="backlash"
           label="反冲状态"
           show-overflow-tooltip
@@ -274,6 +263,18 @@
             >
           </template>
         </el-table-column>
+        <el-table-column
+          prop="payDay"
+          label="支付日"
+          show-overflow-tooltip
+          width="120"
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.payDay | timeFormat }}</span>
+          </template>
+        </el-table-column>
+        
+        
         <el-table-column
           prop="verState"
           label="核销状态"

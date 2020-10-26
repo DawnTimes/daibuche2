@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-10-21 18:10:19
+ * @LastEditTime: 2020-10-23 13:03:44
  * @LastEditors: your name
  * @Description: 核销弹框
  * @FilePath: \webcode2\src\views\verification\components\writeOffDialog.vue
@@ -173,6 +173,10 @@ export default {
 
   .el-dialog__body {
     padding: 20px 20px 10px 10px;
+  }
+
+  .el-dialog__title {
+    font-weight: bold;
   }
 }
 </style>

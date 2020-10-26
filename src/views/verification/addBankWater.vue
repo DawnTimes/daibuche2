@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:58:16
- * @LastEditTime: 2020-10-19 10:55:47
+ * @LastEditTime: 2020-10-23 19:04:31
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\addBankWater.vue
@@ -53,9 +53,10 @@ export default {
         refund: '0',
         projectCategory: '',
         paidLogo: '',
-        notVerLines: '',
+        notVerLines: '0',
         newLedgerLogo: '',
         digest: '',
+        haveVerLines: '0',
       },
       formReadonly: {
         hide: [],
@@ -102,9 +103,11 @@ export default {
           digest: '',
           projectCategory: '',
           paidLogo: '',
-          notVerLines: '',
+          notVerLines: '0',
           newLedgerLogo: '',
           remark: '',
+          refund: '0',
+          haveVerLines: '0',
         });
 
           setTimeout(() => {
