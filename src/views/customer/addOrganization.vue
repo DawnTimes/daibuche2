@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-26 09:32:16
- * @LastEditTime: 2020-10-26 17:12:06
+ * @LastEditTime: 2020-10-27 14:49:13
  * @LastEditors: your name
  * @Description: 新增牌照商
  * @FilePath: \webcode2\src\views\customer\addOrganization.vue
@@ -70,7 +70,7 @@ export default {
         type: '1', // 1 新增； 2 编辑
       },
       formReadonly: {
-        hide: [],
+        hide: ['status'],
         readonly: ['status', 'isLimitLicen'],
       },
       status: {

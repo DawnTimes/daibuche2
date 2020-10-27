@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-26 17:32:21
+ * @LastEditTime: 2020-10-27 13:55:39
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -321,7 +321,7 @@
           prop="dueAmount"
           label="应收金额"
           show-overflow-tooltip
-          width="100"
+          width="120"
         >
         <template slot-scope="scope">
           <span>{{ scope.row.dueAmount | moneyFormat}}</span>
@@ -331,7 +331,7 @@
           prop="duePrincipal"
           label="应收本金"
           show-overflow-tooltip
-          width="100"
+          width="120"
         >
         <template slot-scope="scope">
           <span>{{ scope.row.duePrincipal | moneyFormat}}</span>
@@ -341,7 +341,7 @@
           prop="dueInterest"
           label="应收利息"
           show-overflow-tooltip
-          width="100"
+          width="120"
         >
         <template slot-scope="scope">
           <span>{{ scope.row.dueInterest | moneyFormat}}</span>
@@ -371,7 +371,7 @@
           prop="verAmount"
           label="已核金额"
           show-overflow-tooltip
-          width="100"
+          width="120"
         >
         <template slot-scope="scope">
           <span>{{ scope.row.verAmount | moneyFormat}}</span>
@@ -381,7 +381,7 @@
           prop="verPrincipal"
           label="已核本金"
           show-overflow-tooltip
-          width="100"
+          width="120"
         >
         <template slot-scope="scope">
           <span>{{ scope.row.verPrincipal | moneyFormat}}</span>
@@ -391,7 +391,7 @@
           prop="verInterest"
           label="已核利息"
           show-overflow-tooltip
-          width="100"
+          width="120"
         >
         <template slot-scope="scope">
           <span>{{ scope.row.verInterest | moneyFormat}}</span>
@@ -421,7 +421,7 @@
           prop="notVerAmount"
           label="未核金额"
           show-overflow-tooltip
-          width="100"
+          width="120"
         >
         <template slot-scope="scope">
           <span>{{ scope.row.notVerAmount | moneyFormat}}</span>
@@ -431,7 +431,7 @@
           prop="notVerPrincipal"
           label="未核本金"
           show-overflow-tooltip
-          width="100"
+          width="120"
         >
         <template slot-scope="scope">
           <span>{{ scope.row.notVerPrincipal | moneyFormat}}</span>
@@ -441,7 +441,7 @@
           prop="notVerInterest"
           label="未核利息"
           show-overflow-tooltip
-          width="100"
+          width="120"
         >
         <template slot-scope="scope">
           <span>{{ scope.row.notVerInterest | moneyFormat}}</span>

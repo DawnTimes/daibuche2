@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-10-26 11:04:30
+ * @LastEditTime: 2020-10-27 11:41:15
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -78,7 +78,7 @@
           <div class="contentItem1">
             <span>客户名称(全称)</span>
           </div>
-          <div class="contentItem4">
+          <div class="contentItem4 leftAlign">
             <span>{{ formData.name }}</span>
           </div>
         </div>
@@ -87,7 +87,7 @@
             <span>（机构）纳税人识别号</span>
             <span>（个人）身份证号码</span>
           </div>
-          <div class="contentItem4">
+          <div class="contentItem4 leftAlign">
             <span>{{ formData.creditCode }}</span>
           </div>
         </div>
@@ -96,7 +96,7 @@
             <span>（机构）地址\电话号码</span>
             <span>（个人）手机号码</span>
           </div>
-          <div class="contentItem4">
+          <div class="contentItem4 leftAlign">
             <span>{{ formData.addressTel }}</span>
           </div>
         </div>
@@ -104,7 +104,7 @@
           <div class="contentItem1">
             <span>（机构）开户行及账号</span>
           </div>
-          <div class="contentItem4">
+          <div class="contentItem4 leftAlign">
             <span>{{ formData.bankAccount }}</span>
           </div>
         </div>
@@ -112,7 +112,7 @@
           <div class="contentItem1">
             <span>电子邮箱地址</span>
           </div>
-          <div class="contentItem4">
+          <div class="contentItem4 leftAlign">
             <span>{{ formData.email }}</span>
           </div>
         </div>
@@ -145,8 +145,13 @@
           <span>{{ scope.row.dueInterest | moneyFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="dueInterest" label="利息/手续费" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'">
+        <el-table-column prop="dueInterest" label="利息 / 手续费 开票金额" width="118" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'">
         <template slot-scope="scope">
+          <span>{{ scope.row.dueInterest | moneyFormat }}</span>
+        </template>
+        </el-table-column>        
+        <el-table-column prop="dueInterest" label="利息" show-overflow-tooltip v-if="formData.leaseWay == 'LEASE'">
+          <template slot-scope="scope">
           <span>{{ scope.row.dueInterest | moneyFormat }}</span>
         </template>
         </el-table-column>
@@ -155,24 +160,21 @@
           <span>{{ scope.row.duePrincipal | moneyFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="duePrincipal" label="本金/保证金" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'">
-        <template slot-scope="scope">
-          <span>{{ scope.row.duePrincipal | moneyFormat }}</span>
-        </template>
-        </el-table-column>
-        <el-table-column prop="dueInterest" label="利息" show-overflow-tooltip v-if="formData.leaseWay == 'LEASE'">
-          <template slot-scope="scope">
-          <span>{{ scope.row.dueInterest | moneyFormat }}</span>
-        </template>
-        </el-table-column>
         <el-table-column prop="dueManagementFee" label="管理费" show-overflow-tooltip v-if="formData.leaseWay == 'OPERATING-LEASE' || formData.leaseWay == 'LEASE'">
           <template slot-scope="scope">
           <span>{{ scope.row.dueManagementFee | moneyFormat }}</span>
         </template>
         </el-table-column>
         <!-- <el-table-column prop="dueCommission" label="手续费" show-overflow-tooltip v-if="formData.leaseWay == 'OPERATING-LEASE' || formData.leaseWay == 'LEASE'"></el-table-column> -->
-        <el-table-column prop="invoiceDate" label="开票日期" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="invoiceNumber" label="票据号码" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="invoiceDate" label="发票开具日期" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="invoiceNumber" label="发票号码" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="duePrincipal" label="本金 / 保证金  开票金额" width="118" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'">
+          <template slot-scope="scope">
+            <span>{{ scope.row.duePrincipal | moneyFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="invoiceDate" label="收据开具日期" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'"></el-table-column>
+        <el-table-column prop="invoiceNumber" label="收据号码" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'"></el-table-column>
       </el-table>
       <div class="footerBox">
         <div class="agentBox">
@@ -244,6 +246,7 @@ export default {
       hzLeaseList: [
         { nper: '0' },
       ],
+
     };
   },
   computed: {},
@@ -298,6 +301,8 @@ export default {
         if (res.ec === '0') {
           const data = res.data;
           Object.assign(this.formData, data);
+          // this.formData.leaseWay = 'BACK-LEASE';
+          // this.formData.leaseWay = 'LEASE';
           
         } else {
 
@@ -339,8 +344,8 @@ export default {
             // console.log(prev, curr);
             const value = Number(curr);
             if (!isNaN(value)) {
-              // return prev + curr
-              return Math.round((prev + curr) * 100) / 100; // 保留2位小数
+              return prev + curr
+              // return Math.round((prev + curr) * 100) / 100; // 保留2位小数
             } else {
               return prev;
             }
@@ -554,7 +559,12 @@ export default {
           flex: 1;
           border-right: none;
           font-weight: bold;
+          
+        }
+
+        .leftAlign {
           justify-content: left;
+          text-indent: 10px;
         }
       }
 

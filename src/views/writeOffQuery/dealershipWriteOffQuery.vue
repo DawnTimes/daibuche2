@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-21 18:35:05
+ * @LastEditTime: 2020-10-27 13:54:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -13,18 +13,27 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="106px"
+        label-width="120px"
         size="small"
         ref="ruleForm"
       >
         <el-form-item label="承租人/牌照商:" prop="name">
-          <el-input maxlength="30" v-model="formData.name" placeholder></el-input>
+          <el-input maxlength="30" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="合同编号:" prop="contractNumber">
-          <el-input maxlength="30" v-model="formData.contractNumber" placeholder></el-input>
+          <el-input maxlength="30" v-model="formData.contractNumber" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="期数:" prop="nper">
-          <el-input maxlength="30" v-model="formData.nper" placeholder></el-input>
+          <el-input maxlength="30" v-model="formData.nper" clearable placeholder></el-input>
+        </el-form-item>
+
+        <el-form-item label="银行单据号:" prop="serialNumber">
+          <el-input
+            maxlength="30"
+            v-model="formData.serialNumber"
+            clearable
+            placeholder
+          ></el-input>
         </el-form-item>
 
         <el-form-item label="是否限牌:" prop="isLimitLicence">
@@ -103,25 +112,25 @@
             >{{ scope.row.repaymentStatus | verState }}</span>
           </template>
         </el-table-column>
-        <!-- <el-table-column prop="" label="核销人" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="银行单据号" show-overflow-tooltip width="120"></el-table-column> -->
+        <!-- <el-table-column prop="" label="核销人" show-overflow-tooltip width="100"></el-table-column> -->
+        <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="payStatus" label="支援金状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | payStatus }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column prop="dueAmount" label="应收金额" show-overflow-tooltip width="100">
+        <el-table-column prop="dueAmount" label="应收金额" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.dueAmount | moneyFormat}}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="duePrincipal" label="应收本金" show-overflow-tooltip width="100">
+        <el-table-column prop="duePrincipal" label="应收本金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.duePrincipal | moneyFormat}}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="dueInterest" label="应收利息" show-overflow-tooltip width="100">
+        <el-table-column prop="dueInterest" label="应收利息" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.dueInterest | moneyFormat}}</span>
         </template>
@@ -136,17 +145,17 @@
           <span>{{ scope.row.dueCommission | moneyFormat}}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="verAmount" label="已核金额" show-overflow-tooltip width="100">
+        <el-table-column prop="verAmount" label="已核金额" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.verAmount | moneyFormat}}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="verPrincipal" label="已核本金" show-overflow-tooltip width="100">
+        <el-table-column prop="verPrincipal" label="已核本金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.verPrincipal | moneyFormat}}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="verInterest" label="已核利息" show-overflow-tooltip width="100">
+        <el-table-column prop="verInterest" label="已核利息" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.verInterest | moneyFormat}}</span>
         </template>
@@ -161,17 +170,17 @@
           <span>{{ scope.row.verCommission | moneyFormat}}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="outstandingAmount" label="未核金额" show-overflow-tooltip width="100">
+        <el-table-column prop="outstandingAmount" label="未核金额" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.outstandingAmount | moneyFormat}}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="outstandingPrincipal" label="未核本金" show-overflow-tooltip width="100">
+        <el-table-column prop="outstandingPrincipal" label="未核本金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.outstandingPrincipal | moneyFormat}}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="outstandingInterest" label="未核利息" show-overflow-tooltip width="100">
+        <el-table-column prop="outstandingInterest" label="未核利息" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.outstandingInterest | moneyFormat}}</span>
         </template>
@@ -224,6 +233,7 @@ export default {
         contractNumber: '',
         isLimitLicence: '',
         nper: '',
+        serialNumber: '',
         pageSize: 10,
         pageNum: 1,
       },
@@ -316,6 +326,7 @@ export default {
         contractNumber  : this.formData.contractNumber,
         isLimitLicence  : this.formData.isLimitLicence,
         name            : this.formData.name,
+        serialNumber    : this.formData.serialNumber,
         turnPageShowNum : this.formData.pageSize,
         turnPageBeginPos: this.formData.pageNum,
       };

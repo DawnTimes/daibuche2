@@ -164,6 +164,13 @@
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
+      <el-table-column
+        prop="email"
+        label="Email地址"
+        width="200"
+        :show-overflow-tooltip="true"
+        resizable
+      ></el-table-column>
 
       <el-table-column
         prop="legalRepresentative"

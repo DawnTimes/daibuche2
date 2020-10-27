@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-23 19:20:09
+ * @LastEditTime: 2020-10-27 14:01:04
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\unInvoiceNoticeList.vue
@@ -77,25 +77,25 @@
           fixed
         ></el-table-column>
         <!-- <el-table-column prop="billingNo" label="单据号" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="createTime" label="生成时间" show-overflow-tooltip>
+        <el-table-column prop="createTime" label="生成时间" show-overflow-tooltip width="100">
           <template slot-scope="scope">
           <span>{{ scope.row.createTime | timeFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="buyName" label="购方名称" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="buyCreditCode" label="购方税号" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="buyAddTel" label="购方地址电话" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="buyBankNameNo" label="购方银行帐号" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="sellName" label="销方名称" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="" label="销方地址电话" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="sellBankNameNo" label="销方银行帐号" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="buyName" label="购方名称" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="buyCreditCode" label="购方税号" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="buyAddTel" label="购方地址电话" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="buyBankNameNo" label="购方银行帐号" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="sellName" label="销方名称" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="" label="销方地址电话" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="sellBankNameNo" label="销方银行帐号" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="remark" label="备注" width="300" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="tradeName" label="商品名称" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="tradeName" label="商品名称" show-overflow-tooltip width="150"></el-table-column>
         <!-- <el-table-column prop="" label="规格" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="商品编码" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="计量单位" show-overflow-tooltip></el-table-column> -->
         <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="amount" label="金额" show-overflow-tooltip width="100">
+        <el-table-column prop="amount" label="金额" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.amount | moneyFormat }}</span>
         </template>
@@ -107,7 +107,7 @@
         <el-table-column prop="" label="扣除额" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="特殊票种" show-overflow-tooltip width="100"></el-table-column> -->
 
-        <el-table-column prop="receiverAddr" label="接收人邮件" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="receiverAddr" label="接收人邮件" show-overflow-tooltip width="160"></el-table-column>
         <!-- <el-table-column prop="invoiceNumber" label="发票号码" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="invoiceDate" label="开票时间" show-overflow-tooltip width="100"></el-table-column> -->
       </el-table>

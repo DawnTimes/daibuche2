@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-18 11:23:35
- * @LastEditTime: 2020-10-26 16:03:18
+ * @LastEditTime: 2020-10-27 17:40:43
  * @LastEditors: your name
  * @Description: 经销店弹窗
  * @FilePath: \webcode2\src\views\supportGold\components\dealerTableDialog.vue
@@ -10,7 +10,7 @@
 
 <template>
   <div class="dealerTableDialog">
-    <el-dialog width="80%" :close-on-click-modal="false" title :visible.sync="dealerFormVisible">
+    <el-dialog width="80%" destroy-on-close :close-on-click-modal="false" title :visible.sync="dealerFormVisible">
       <el-form :model="paramForm" label-width="100px" :inline="true" size="medium">
         <el-form-item label="经销店名称">
           <el-input v-model="paramForm.agentName" clearable placeholder></el-input>
@@ -47,7 +47,7 @@
             ></el-table-column>
             <el-table-column prop="agentShortName" label="经销店简称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="agentFullName" label="经销店名称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="isGacShop" label="商贸店" show-overflow-tooltip>
+            <el-table-column prop="isGacShop" label="是否商贸全资" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{ scope.row.isGacShop | flagValue }}</span>
               </template>
@@ -161,7 +161,13 @@ export default {
     };
   },
   computed: {},
-  watch: {},
+  watch: {
+    // dealerFormVisible(newVal) {
+    //   if (newVal == true) {
+    //     this.getDealerListData();
+    //   }
+    // }
+  },
   created() {},
   mounted() {
     this.getDealerListData();
@@ -215,8 +221,9 @@ export default {
           })
         });
       }
-      // const params = this.multipleSelection;
-      console.log(params);
+      // 清空选中
+      this.multipleSelection = [];
+      // console.log(params);
       this.$emit('formDataSure', {
         data: params,
       });

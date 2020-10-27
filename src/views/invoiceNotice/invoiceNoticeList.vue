@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-26 17:19:30
+ * @LastEditTime: 2020-10-27 10:49:56
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -318,7 +318,19 @@
         ></el-table-column>
         <el-table-column
           prop="invoiceDate"
-          label="开票时间"
+          label="发票开具时间"
+          show-overflow-tooltip
+          width="120"
+        ></el-table-column>
+        <el-table-column
+          prop=""
+          label="收据号码"
+          show-overflow-tooltip
+          width="120"
+        ></el-table-column>
+        <el-table-column
+          prop=""
+          label="收据开具时间"
           show-overflow-tooltip
           width="120"
         ></el-table-column>

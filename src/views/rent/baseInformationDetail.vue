@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-09-11 11:15:28
+ * @LastEditTime: 2020-10-27 14:37:50
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\baseInformationDetail.vue
@@ -136,6 +136,7 @@ export default {
             this.formReadonly.hide.push(
               'cityName',
               'licenceCode',
+              'licenceName',
               'newLicenceFee',
               'newtotalMonthlyRent',
               'rentLicenceFee',

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 11:28:29
- * @LastEditTime: 2020-09-24 14:27:30
+ * @LastEditTime: 2020-10-27 10:42:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\components\invoiceRegisterDialog.vue
@@ -20,7 +20,7 @@
         :model="registerForm"
         ref="registerForm"
         :rules="rules"
-        label-width="80px"
+        label-width="110px"
         size="medium"
       >
         <!-- <el-form-item label="购方名称">
@@ -41,7 +41,19 @@
         <el-form-item label="发票号码" prop="invoiceNumber">
           <el-input maxlength="50" v-model="registerForm.invoiceNumber"></el-input>
         </el-form-item>
-        <el-form-item label="开票时间" prop="invoiceDate">
+        <el-form-item label="发票开具时间" prop="invoiceDate">
+          <el-date-picker
+            v-model="registerForm.invoiceDate"
+            value-format="yyyy-MM-dd"
+            style="width: 100%"
+            type="date"
+            placeholder="选择日期"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="收据号码" prop="">
+          <el-input maxlength="50" v-model="registerForm.invoiceNumber"></el-input>
+        </el-form-item>
+        <el-form-item label="收据开具时间" prop="">
           <el-date-picker
             v-model="registerForm.invoiceDate"
             value-format="yyyy-MM-dd"
@@ -88,7 +100,7 @@ export default {
         invoiceDate: [
           {
             required: true,
-            message: '请选择开票日期',
+            message: '请选择发票开具日期',
             trigger: 'change',
           },
         ],

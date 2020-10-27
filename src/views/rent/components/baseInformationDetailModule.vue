@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-10-23 15:06:09
+ * @LastEditTime: 2020-10-27 14:27:51
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\baseInformationDetailModule.vue
@@ -76,37 +76,43 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>生效日期：</span>
-                <span>{{ baseInfoForm.validDate }}</span>
+                <span>{{ baseInfoForm.validDate | timeFormat }}</span>
+              </div>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+              <div class="tempBox">
+                <span>原月租金：</span>
+                <span>{{ baseInfoForm.monthlyRent | moneyFormat }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox" v-show="!$formAtReadonly('rentLicenceFee', formReadonly.hide)">
                 <span>原牌照费：</span>
-                <span>{{ baseInfoForm.rentLicenceFee }} 元</span>
+                <span>{{ baseInfoForm.rentLicenceFee | moneyFormat }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox" v-show="!$formAtReadonly('totalMonthlyRent', formReadonly.hide)">
                 <span>原月租金合计：</span>
-                <span>{{ baseInfoForm.totalMonthlyRent }} 元</span>
+                <span>{{ baseInfoForm.totalMonthlyRent | moneyFormat }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>新月租金：</span>
-                <span>{{ baseInfoForm.newMonthlyRent }} 元</span>
+                <span>{{ baseInfoForm.newMonthlyRent | moneyFormat }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox" v-show="!$formAtReadonly('newLicenceFee', formReadonly.hide)">
                 <span>新牌照费：</span>
-                <span>{{ baseInfoForm.newLicenceFee }} 元</span>
+                <span>{{ baseInfoForm.newLicenceFee | moneyFormat }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox" v-show="!$formAtReadonly('newtotalMonthlyRent', formReadonly.hide)">
                 <span>新月租金合计：</span>
-                <span>{{ baseInfoForm.newtotalMonthlyRent }} 元</span>
+                <span>{{ baseInfoForm.newtotalMonthlyRent | moneyFormat }}</span>
               </div>
             </el-col>
           </el-row>

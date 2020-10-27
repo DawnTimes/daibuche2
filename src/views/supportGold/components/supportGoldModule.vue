@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 18:11:48
- * @LastEditTime: 2020-10-26 16:02:52
+ * @LastEditTime: 2020-10-27 16:35:12
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldModule.vue
@@ -107,7 +107,7 @@
             <!-- <el-table-column prop="agId" label="经销店id" show-overflow-tooltip></el-table-column> -->
             <el-table-column prop="agentShortName" label="经销店简称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="agentFullName" label="经销店名称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="isGacShop" label="商贸店" show-overflow-tooltip>
+            <el-table-column prop="isGacShop" label="是否商贸全资" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{ scope.row.isGacShop | flagValue }}</span>
               </template>
@@ -187,7 +187,7 @@
           </el-table>
         </el-form>
       </div>
-      <p class="tipText">提示：申请支援金时经销店不是必选的；在特殊情况下（如：租金未交齐，但是上级批示可以申请支援金）申请支援金时才需要选经销店。</p>
+      <p class="tipText">提示：申请支援金时经销店不是必选的；在特殊情况下申请支援金时才需要选经销店。</p>
     </div>
 
     <el-row :gutter="10">

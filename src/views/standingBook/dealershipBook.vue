@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-26 16:44:08
+ * @LastEditTime: 2020-10-27 14:10:32
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -93,7 +93,7 @@
             <span :class="{ blueColor: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="isGacShop" label="商贸店" show-overflow-tooltip>
+        <el-table-column prop="isGacShop" label="是否商贸全资" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span :class="{ blueColor: scope.row.isGacShop == 'Y' , redStatus: scope.row.isGacShop == 'N' }">{{ scope.row.isGacShop | flagValue}}</span>
           </template>

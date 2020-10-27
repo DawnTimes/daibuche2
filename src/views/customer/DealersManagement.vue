@@ -77,11 +77,11 @@
       border
       :height="GLOBAL.height"
       :header-cell-style="{
-    'text-align':'center',
-    'font-weight':'bold',  
-    'background':'#627CAF',    
-    'color': '#fff',
-}"
+        'text-align':'center',
+        'font-weight':'bold',  
+        'background':'#627CAF',    
+        'color': '#fff',
+    }"
     >
       <el-table-column
         fixed
@@ -108,6 +108,7 @@
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
+      <el-table-column fixed prop="isGacShop" label="商贸店" width="80"></el-table-column>
       <el-table-column
         prop="agentFullName"
         label="经销店名称"
@@ -122,7 +123,7 @@
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
-      <el-table-column fixed prop="isGacShop" label="商贸店" width="80"></el-table-column>
+      
       <el-table-column
         prop="areaName"
         label="区域"

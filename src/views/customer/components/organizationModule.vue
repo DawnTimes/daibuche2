@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-10-26 15:26:17
+ * @LastEditTime: 2020-10-27 15:17:53
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -255,29 +255,20 @@
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
-                label="状态"
-                prop="status"
-                v-show="!$formAtReadonly('status', formReadonly.hide)"
+                label="Email地址"
+                prop="email"
+                v-show="!$formAtReadonly('email', formReadonly.hide)"
                 class="form-item"
               >
-                <el-radio-group
-                  v-model="formData.status"
-                  :disabled="$formAtReadonly('status', formReadonly.readonly)"
-                >
-                  <el-radio label="Y">有效</el-radio>
-                  <el-radio label="N">无效</el-radio>
-                </el-radio-group>
-
-                <!-- <el-select v-model="formData.status" clearable placeholder="请选择">
-                  <el-option
-                    v-for="item in this.$options.filters.status([])"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select> -->
+                <el-input
+                  v-model="formData.email"
+                  maxlength="60"
+                  placeholder
+                  :disabled="$formAtReadonly('email', formReadonly.readonly)"
+                ></el-input>
               </el-form-item>
             </el-col>
+            
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="开户银行账号"
@@ -319,6 +310,22 @@
                   maxlength="11"
                   :disabled="$formAtReadonly('billingPhone', formReadonly.readonly)"
                 ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-form-item
+                label="状态"
+                prop="status"
+                v-show="!$formAtReadonly('status', formReadonly.hide)"
+                class="form-item"
+              >
+                <el-radio-group
+                  v-model="formData.status"
+                  :disabled="$formAtReadonly('status', formReadonly.readonly)"
+                >
+                  <el-radio label="Y">有效</el-radio>
+                  <el-radio label="N">无效</el-radio>
+                </el-radio-group>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
@@ -456,6 +463,22 @@ export default {
         callback();
       }
     };
+
+    // 邮箱验证
+      const validateEmail = (rule, value, callback) => {
+        if (value) {
+          if (value !== '') {
+            // const reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/; // 名称允许汉字、字母、数字，域名只允许英文域名
+            const reg = /^[A-Za-z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/; // 只允许英文字母、数字、下划线、英文句号、以及中划线组成
+            if (!reg.test(value)) {
+              callback(new Error('请输入正确的邮箱地址'));
+            }
+          }
+          callback();
+        } else {
+          callback();
+        }
+      };
 
     return {
       areaArr: [
@@ -598,6 +621,13 @@ export default {
           {
             required: false,
             validator: checkPhone2,
+            trigger: 'blur',
+          },
+        ],
+        email: [
+          {
+            required: false,
+            validator: validateEmail,
             trigger: 'blur',
           },
         ],
