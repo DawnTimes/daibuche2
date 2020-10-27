@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-26 09:32:16
- * @LastEditTime: 2020-10-21 13:49:57
+ * @LastEditTime: 2020-10-26 17:12:31
  * @LastEditors: your name
  * @Description: 新增牌照商
  * @FilePath: \webcode2\src\views\customer\editOrganization.vue
@@ -72,7 +72,7 @@ export default {
       },
       formReadonly: {
         hide: [],
-        readonly: [],
+        readonly: ['licenCode', 'socialCreditCode', 'isGalcComp', 'isLimitLicen'],
       },
       status: {
         loading: false,
@@ -166,14 +166,14 @@ export default {
           this.status.loading = false;
           this.$notify.error({
             title: '温馨提示！',
-            message: res.em || '更新失败!'
+            message: res.em || err.error || res.message || '更新失败!'
           });
         }
       }).catch(err => {
         this.status.loading = false;
         this.$notify.error({
           title: '温馨提示！',
-          message: err ? err.em : '更新失败，请联系管理员!',
+          message: err.em || err.error || err.message || '更新失败，请联系管理员!',
         });
       });
     },

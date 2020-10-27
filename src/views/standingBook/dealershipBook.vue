@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-22 15:02:19
+ * @LastEditTime: 2020-10-26 16:44:08
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -93,12 +93,12 @@
             <span :class="{ blueColor: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="isGacShop" label="是否商贸" show-overflow-tooltip>
+        <el-table-column prop="isGacShop" label="商贸店" show-overflow-tooltip>
           <template slot-scope="scope">
             <span :class="{ blueColor: scope.row.isGacShop == 'Y' , redStatus: scope.row.isGacShop == 'N' }">{{ scope.row.isGacShop | flagValue}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="isGalcCompany" label="是否广汽租赁" show-overflow-tooltip width="120">
+        <el-table-column prop="isGalcCompany" label="是否租赁公司" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span :class="{ blueColor: scope.row.isGalcCompany == 'Y' , redStatus: scope.row.isGalcCompany == 'N' }">{{ scope.row.isGalcCompany | flagValue}}</span>
           </template>
@@ -389,7 +389,7 @@ export default {
       })
     },
 
-    // 导出经销店台账 isLimitLicence
+    // 导出经销店台账 isLimitLicence cityName
     exportButton() {
       window.location.href = `/api/${
         common.exportAgentSBUrl
@@ -400,7 +400,9 @@ export default {
       }&nper=${
         this.formData.nper ? this.formData.nper : ''
       }&isLimitLicence=${
-        this.formData.isLimitLicence ? this.formData.isLimitLicence : ''}`;
+        this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
+      }&cityName=${
+        this.formData.cityName ? this.formData.cityName : ''}`;
     },
 
     // 分页

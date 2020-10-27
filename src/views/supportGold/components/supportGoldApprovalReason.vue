@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-10-22 17:19:13
+ * @LastEditTime: 2020-10-26 16:02:08
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -35,7 +35,7 @@
             ></el-option>
           </el-select>
         </el-form-item> -->
-        <el-form-item label="是否商贸:" prop="isGacShop">
+        <el-form-item label="商贸店:" prop="isGacShop">
           <el-select v-model="reasonForm.isGacShop" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in isCommerce"
@@ -109,7 +109,7 @@
           </template>
         </el-table-column>
         
-        <el-table-column prop="isGacShop" label="是否商贸" show-overflow-tooltip>
+        <el-table-column prop="isGacShop" label="商贸店" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.isGacShop | flagValue }}</span>
           </template>

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-10-22 16:30:54
+ * @LastEditTime: 2020-10-26 18:33:27
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldDetail.vue
@@ -71,6 +71,9 @@ export default {
         batchNumber: '',
         batch: '',
         carNum: '',
+        rentCount: '',
+        LicenceFee: '',
+        rentTotalCount: '',
       },
       formData: {
         status: 'Y',

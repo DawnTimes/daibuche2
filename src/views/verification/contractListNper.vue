@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-10-19 12:36:35
+ * @LastEditTime: 2020-10-26 17:55:36
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -42,19 +42,34 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="承租人/牌照商:" prop="name">
+        <el-form-item label="承租人/牌照商:" prop="">
           <el-input maxlength="30" clearable v-model="formData.name" placeholder></el-input>
         </el-form-item>
         <!-- <el-form-item label="牌照商名称:" prop="systemName">
           <el-input maxlength="30" clearable v-model="formData.systemName" placeholder=""></el-input>
         </el-form-item>-->
 
+        <el-form-item label="上牌地:" prop="cityName">
+          <el-input maxlength="10" v-model="formData.cityName" clearable placeholder></el-input>
+        </el-form-item>
+
+        <el-form-item label="核销状态:" prop="repaymentStatus">
+          <el-select v-model="formData.repaymentStatus" clearable placeholder="请选择" style="width: 100%">
+            <el-option
+              v-for="item in this.$options.filters.verState([])"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
         <el-form-item>
           <el-button type="primary" @click="queryForm">查询</el-button>
         </el-form-item>
-        <!-- <el-form-item>
+        <el-form-item>
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item> -->
+        </el-form-item>
         <el-form-item label>
           <el-button @click="backButton" plain>返回</el-button>
         </el-form-item>
@@ -105,7 +120,7 @@
             <span :class="{ greenStatus: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="isGalcCompany" label="是否广汽租赁" show-overflow-tooltip width="120">
+        <el-table-column prop="isGalcCompany" label="是否租赁公司" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span :class="{ greenStatus: scope.row.isGalcCompany == 'Y' , redStatus: scope.row.isGalcCompany == 'N' }">{{ scope.row.isGalcCompany | flagValue }}</span>
           </template>
@@ -281,6 +296,8 @@ export default {
       total: 0,
       formData: {
         name: '',
+        cityName: '',
+        repaymentStatus: '',
         pageSize: 10,
         pageNum: 1,
       },
@@ -399,6 +416,8 @@ export default {
       const url = common.queryContractRepayUrl;
       const params = {
         name: this.formData.name,
+        cityName: this.formData.cityName,
+        repaymentStatus: this.formData.repaymentStatus,
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
       };

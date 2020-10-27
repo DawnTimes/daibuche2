@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-10-22 14:12:03
+ * @LastEditTime: 2020-10-26 15:26:17
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -69,7 +69,7 @@
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
-                label="是否广汽租赁"
+                label="是否租赁公司"
                 prop="isGalcComp"
                 v-show="!$formAtReadonly('isGalcComp', formReadonly.hide)"
                 class="form-item"
@@ -418,7 +418,7 @@ export default {
   data() {
     // 匹配银行卡号
     const checkBankCode = (rule, value, callback) => {
-      const reg = /^([1-9]{1})[0-9]+$/;
+      const reg = /^[0-9]+$/;
       if (!value) {
         return callback(new Error('银行账号不能为空'));
       }
@@ -541,7 +541,7 @@ export default {
         isGalcComp: [
           {
             required: true,
-            message: '请选择是否广汽租赁',
+            message: '请选择是否租赁公司',
             trigger: 'change',
           },
         ],

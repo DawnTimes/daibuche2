@@ -53,7 +53,7 @@
               <span>{{ scope.row.leaseWay | leaseWay }}</span>
             </template>
           </el-table-column>
-          <!-- <el-table-column prop="" label="是否广汽租赁" show-overflow-tooltip width="110"></el-table-column> -->
+          <!-- <el-table-column prop="" label="是否租赁公司" show-overflow-tooltip width="110"></el-table-column> -->
 
           <!-- <el-table-column prop="" label="核销状态" show-overflow-tooltip width="100">
             <template slot-scope="scope">

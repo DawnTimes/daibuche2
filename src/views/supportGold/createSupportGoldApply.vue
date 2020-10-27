@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-18 10:04:11
- * @LastEditTime: 2020-09-22 10:07:06
+ * @LastEditTime: 2020-10-26 17:18:41
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\createSupportGoldApply.vue
@@ -64,7 +64,7 @@ export default {
       const url = common.supportFundUrl;
       this.status.loading = true;
       axios.post(url, data).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.ec === '0') {
           this.status.loading = false;
           this.$notify.success({
@@ -85,14 +85,14 @@ export default {
           this.status.loading = false;
           this.$notify.error({
             title: '温馨提示！',
-            message: res.em || '申请失败，请联系管理员1111！'
+            message: res.em || res.error || res.message || '申请失败，请联系管理员！'
           })
         }
       }).catch((err) => {
         this.status.loading = false;
         this.$notify.error({
           title: '温馨提示！',
-          message: err.em || '申请失败，请联系管理员！'
+          message: err.em || err.error || err.message || '申请失败，请联系管理员！'
         })
       })
     },

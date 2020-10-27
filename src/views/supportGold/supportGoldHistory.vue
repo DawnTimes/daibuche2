@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-10-22 17:10:24
+ * @LastEditTime: 2020-10-26 18:34:35
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldHistory.vue
@@ -67,13 +67,13 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="" label="支援金月份" show-overflow-tooltip width="120">
+        <el-table-column prop="" label="支援金月份" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.year + '-' + scope.row.month }}</span>
           </template>
         </el-table-column>
         <!-- <el-table-column prop label="期数" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="batch" label="批次" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.Batch | batchFormat }}</span>
@@ -81,12 +81,12 @@
         </el-table-column>
         <el-table-column prop="" label="店数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="rentCount" label="支援金" show-overflow-tooltip>
+        <el-table-column prop="rentCount" label="支援金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.rentCount | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="LicenceFee" label="牌照费" show-overflow-tooltip>
+        <el-table-column prop="LicenceFee" label="牌照费" show-overflow-tooltip width="110">
           <template slot-scope="scope">
             <span>{{ scope.row.LicenceFee | moneyFormat}}</span>
           </template>
@@ -105,12 +105,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="creater" label="申请人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip>
+        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip width="160">
           <template slot-scope="scope">
             <span>{{ scope.row.create_time | timeFormatTemp }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="120">
+        <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.payStatus | paymentStatus }}</span>
           </template>
@@ -118,11 +118,11 @@
         <el-table-column prop="payer" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="payDate" label="支付时间" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.payDate | timeFormatTemp }}</span>
+            <span>{{ scope.row.payDate | timeFormat }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" width="150" fixed="right">
+        <el-table-column label="操作" width="100" fixed="right">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleDetail(scope.row)" v-show="rightControl.detail">详情</el-button>
           </template>
@@ -323,6 +323,9 @@ export default {
           type       : this.userApprovalType,
           carNum     : row.carNum,
           batchNumber: row.batchNumber,
+          rentCount: row.rentCount,
+          LicenceFee: row.LicenceFee,
+          rentTotalCount: row.rentTotalCount,
         },
       })
     },

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:58:16
- * @LastEditTime: 2020-10-23 19:04:31
+ * @LastEditTime: 2020-10-26 17:15:59
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\addBankWater.vue
@@ -121,14 +121,14 @@ export default {
           this.status.loading = false;
           this.$notify.error({
             title: '温馨提示！',
-            message: res.em || '新增失败!'
+            message: res.em || err.error || res.message || '新增失败!'
           });
         }
       }).catch(err => {
         this.status.loading = false;
         this.$notify.error({
           title: '温馨提示！',
-          message: err ? err.em : '新增失败，请联系管理员!',
+          message: err.em || err.error || err.message || '新增失败，请联系管理员!',
         });
       });
     },

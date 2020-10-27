@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 11:25:57
- * @LastEditTime: 2020-10-23 09:11:01
+ * @LastEditTime: 2020-10-26 14:29:14
  * @LastEditors: your name
  * @Description: 文件上传弹窗
  * @FilePath: \webcode2\src\components\uploadDialog.vue
@@ -81,11 +81,19 @@ export default {
     // }),
     
   },
-  watch: {},
-  created() {
-    // console.log(this.uploadURLStr);
+  watch: {
+    uploadFormVisible(newVal) {
+      if (newVal == false) {
+        this.fileList = [];
+      }
+    }
   },
-  mounted() {},
+  created() {
+    console.log(this.fileList);
+  },
+  mounted() {
+    console.log(this.fileList);
+  },
   methods: {
     ...mapMutations({
       setSuccessStatus: 'setSuccessStatus'
@@ -211,7 +219,8 @@ export default {
               message: '上传成功!'
             });
             this.loading = false;
-            this.fileList = [];
+            this.uploadFormVisible = false;
+            // this.fileList = [];
           } else {
             this.loading = false;
             this.$notify.error({
@@ -222,6 +231,7 @@ export default {
         })
         .catch((err) => {
           this.loading = false;
+          // this.fileList = [];
           // console.log(err);
           this.$notify.error({
             title: '温馨提示！',

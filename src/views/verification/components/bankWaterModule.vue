@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-10-23 18:57:30
+ * @LastEditTime: 2020-10-26 15:29:32
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -293,7 +293,7 @@ export default {
   data() {
     // 匹配银行卡号
     const checkBankCode = (rule, value, callback) => {
-      const reg = /^([1-9]{1})[0-9]+$/;
+      const reg = /^[0-9]+$/;
       if (!value) {
         return callback(new Error('银行账号不能为空'));
       }

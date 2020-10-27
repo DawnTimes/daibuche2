@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-26 09:32:16
- * @LastEditTime: 2020-09-28 14:33:16
+ * @LastEditTime: 2020-10-26 17:12:06
  * @LastEditors: your name
  * @Description: 新增牌照商
  * @FilePath: \webcode2\src\views\customer\addOrganization.vue
@@ -71,7 +71,7 @@ export default {
       },
       formReadonly: {
         hide: [],
-        readonly: ['status'],
+        readonly: ['status', 'isLimitLicen'],
       },
       status: {
         loading: false,
@@ -148,14 +148,14 @@ export default {
           this.status.loading = false;
           this.$notify.error({
             title: '温馨提示！',
-            message: res.em || '新增失败!'
+            message: res.em || err.error || res.message || '新增失败!'
           });
         }
       }).catch(err => {
         this.status.loading = false;
         this.$notify.error({
           title: '温馨提示！',
-          message: err ? err.em : '新增失败，请联系管理员!',
+          message: err.em || err.error || err.message || '新增失败，请联系管理员!',
         });
       });
     },

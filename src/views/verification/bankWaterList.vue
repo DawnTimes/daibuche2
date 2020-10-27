@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-23 18:56:52
+ * @LastEditTime: 2020-10-26 17:55:28
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -90,6 +90,7 @@
         border
         stripe
         :max-height="tableHeight"
+        :default-sort = "{prop: 'tradeDate', order: 'descending'}"
         ref="table"
         style="width: 100%"
         :header-cell-style="{

@@ -147,7 +147,7 @@
         resizable
       >
         <template slot-scope="scope">
-          <span>{{ scope.row.isLimitLicence | flagValue }}</span>
+          <span>{{ scope.row.isGalcCompany | flagValue }}</span>
         </template>
       </el-table-column>
       <el-table-column

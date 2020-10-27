@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 18:11:48
- * @LastEditTime: 2020-10-23 19:23:38
+ * @LastEditTime: 2020-10-26 16:02:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldModule.vue
@@ -107,7 +107,7 @@
             <!-- <el-table-column prop="agId" label="经销店id" show-overflow-tooltip></el-table-column> -->
             <el-table-column prop="agentShortName" label="经销店简称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="agentFullName" label="经销店名称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="isGacShop" label="是否商贸" show-overflow-tooltip>
+            <el-table-column prop="isGacShop" label="商贸店" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{ scope.row.isGacShop | flagValue }}</span>
               </template>

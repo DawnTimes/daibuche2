@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-23 15:19:43
+ * @LastEditTime: 2020-10-26 17:32:21
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -298,10 +298,10 @@
           prop="verDate"
           label="核销时间"
           show-overflow-tooltip
-          width="100"
+          width="160"
         >
           <template slot-scope="scope">
-            <span>{{ scope.row.verDate | timeFormat }}</span>
+            <span>{{ scope.row.verDate | timeFormatTemp }}</span>
           </template>
         </el-table-column>
 

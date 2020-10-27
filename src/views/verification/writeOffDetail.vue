@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-20 09:15:14
+ * @LastEditTime: 2020-10-26 17:32:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
@@ -217,10 +217,10 @@
           prop="verDate"
           label="核销时间"
           show-overflow-tooltip
-          width="100"
+          width="160"
         >
           <template slot-scope="scope">
-            <span>{{ scope.row.verDate | timeFormat }}</span>
+            <span>{{ scope.row.verDate | timeFormatTemp }}</span>
           </template>
         </el-table-column>
 

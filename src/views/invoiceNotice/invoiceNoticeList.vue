@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-23 19:19:24
+ * @LastEditTime: 2020-10-26 17:19:30
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -14,7 +14,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="80px"
+        label-width="100px"
         size="small"
         ref="ruleForm"
       >
@@ -690,6 +690,7 @@ export default {
           if (res.ec === '0') {
             this.status.createLoading = false;
             this.$refs.createInvoiceDialog.isShow(false);
+            this.invoiceForm.applyDate = '';
             this.$notify.success({
               title: '温馨提示',
               message: '生成开票明细成功',
@@ -699,7 +700,7 @@ export default {
             this.status.createLoading = false;
             this.$notify.error({
               title: '温馨提示',
-              message: res.em || '生成开票明细失败',
+              message: res.em || err.error || res.message || '生成开票明细失败',
             });
           }
         })
@@ -707,7 +708,7 @@ export default {
           this.status.createLoading = false;
           this.$notify.error({
             title: '温馨提示',
-            message: err ? err.em : '生成开票明细失败',
+            message: err.em || err.error || err.message || '生成开票明细失败',
           });
         });
     },

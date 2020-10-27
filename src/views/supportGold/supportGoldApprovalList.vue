@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-10-20 09:40:23
+ * @LastEditTime: 2020-10-26 18:34:45
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -311,6 +311,9 @@ export default {
           type       : this.userApprovalType,
           carNum     : row.carNum,
           batchNumber: row.batchNumber,
+          rentCount: row.rentCount,
+          LicenceFee: row.LicenceFee,
+          rentTotalCount: row.rentTotalCount,
         },
       })
     },

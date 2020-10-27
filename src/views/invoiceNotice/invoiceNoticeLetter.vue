@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-10-22 11:54:18
+ * @LastEditTime: 2020-10-26 11:04:30
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -135,7 +135,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="num" label="车辆台数" width="100" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="dueAmount" label="月租金合计" width="100" show-overflow-tooltip>
+        <el-table-column prop="dueAmount" label="月租金合计" width="120" show-overflow-tooltip>
           <template slot-scope="scope">
           <span>{{ scope.row.dueAmount | moneyFormat }}</span>
         </template>
@@ -554,8 +554,11 @@ export default {
           flex: 1;
           border-right: none;
           font-weight: bold;
+          justify-content: left;
         }
       }
+
+      
 
       .contentBox:nth-last-child(1) {
         border-bottom: none;

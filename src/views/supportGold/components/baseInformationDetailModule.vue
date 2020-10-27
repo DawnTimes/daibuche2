@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-10-23 15:02:20
+ * @LastEditTime: 2020-10-26 18:36:16
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\baseInformationDetailModule.vue
@@ -46,6 +46,24 @@
               <div class="tempBox">
                 <span>车辆数量：</span>
                 <span>{{ baseInfoForm.carNum }}</span>
+              </div>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+              <div class="tempBox">
+                <span>支援金：</span>
+                <span>{{ baseInfoForm.rentCount | moneyFormat }}</span>
+              </div>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+              <div class="tempBox">
+                <span>牌照费：</span>
+                <span>{{ baseInfoForm.LicenceFee | moneyFormat }}</span>
+              </div>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+              <div class="tempBox">
+                <span>总支援金：</span>
+                <span>{{ baseInfoForm.rentTotalCount | moneyFormat }}</span>
               </div>
             </el-col>
           </el-row>
