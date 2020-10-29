@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-28 16:28:22
+ * @LastEditTime: 2020-10-29 15:37:33
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentAppytHistory.vue
@@ -13,7 +13,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="80px"
+        label-width=""
         size="small"
         ref="ruleForm"
       >
@@ -159,7 +159,7 @@
         <el-table-column prop="remark" label="备注" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column
           label="操作"
-          width="150"
+          width="80"
           fixed="right"
         >
           <template slot-scope="scope">

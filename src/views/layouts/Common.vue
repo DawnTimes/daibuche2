@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-10-28 17:18:33
+ * @LastEditTime: 2020-10-29 14:56:34
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\layouts\Common.vue
@@ -12,7 +12,7 @@
       <Header></Header>
     </el-header>
     <el-container>
-      <el-aside width="200px">
+      <el-aside width="220px">
         <Aside></Aside>
       </el-aside>
       <el-main>

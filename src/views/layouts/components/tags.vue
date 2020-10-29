@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-28 15:58:57
- * @LastEditTime: 2020-09-11 17:59:27
+ * @LastEditTime: 2020-10-29 15:19:29
  * @LastEditors: your name
  * @Description: 导航标签
  * @FilePath: \webcode2\src\views\layouts\components\tags.vue
@@ -204,7 +204,7 @@ export default {
     .tags_li {
       height: 30px;
       line-height: 30px;
-      margin: 5px 5px 5px 3px;
+      margin: 3px;
       float: left;
       padding: 0 5px 0 12px;
       font-size: 12px;

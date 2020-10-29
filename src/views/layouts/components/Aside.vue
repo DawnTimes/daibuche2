@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-10-23 10:58:40
+ * @LastEditTime: 2020-10-29 15:30:14
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\layouts\components\Aside.vue
@@ -145,12 +145,12 @@ export default {
 
 <style>
 .aside .el-submenu .el-menu-item {
-  height: 44px;
-  line-height: 44px;
+  height: 40px;
+  line-height: 40px;
 }
 
 .aside .el-submenu .el-submenu__title {
-  height: 52px;
-  line-height: 52px;
+  height: 46px;
+  line-height: 46px;
 }
 </style>

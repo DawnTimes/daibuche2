@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-10-26 17:55:36
+ * @LastEditTime: 2020-10-29 15:44:09
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -38,7 +38,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="110px"
+        label-width="106px"
         size="small"
         ref="ruleForm"
       >
@@ -231,7 +231,7 @@
           </template>
         </el-table-column>
         <!-- <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column> -->
-        <el-table-column label="操作" width="150" fixed="right">
+        <el-table-column label="操作" width="100" fixed="right">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="handleWriteOff(scope.row)" :disabled="scope.row.repaymentStatus == 'FULL'">核销</el-button>
             <!-- <el-button size="mini" plain @click="queryCar(scope.row)">车辆清单</el-button> -->

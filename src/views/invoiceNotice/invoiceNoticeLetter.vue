@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-10-28 17:54:06
+ * @LastEditTime: 2020-10-29 16:11:12
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -67,7 +67,7 @@
             <span>纳税人类型</span>
           </div>
           <div class="contentItem4">
-            <el-checkbox-group v-model="formData.checkList" :max="1">
+            <el-checkbox-group v-model="formData.checkList" :max="1" disabled>
               <el-checkbox :label="1">一般纳税人</el-checkbox>
               <el-checkbox :label="2">小规模纳税人</el-checkbox>
               <el-checkbox :label="3">个人</el-checkbox>
@@ -255,39 +255,39 @@ export default {
     })
   },
   watch: {
-    'formData.leaseWay'(val) {
-      if (val == 'LEASE') {
-        Object.assign(this.letterForm, {
-          rate: '13%',
-          incoiceType: '利息/本金/管理费',
-          margin: '保证金',
-          letterContent: '*融资租赁*有形动产融资租赁服务',
-        })
-        this.formData.invoiceDetail = _.concat(this.zzLeaseList, this.formData.invoiceDetail);
-      }
-      if (val == 'BACK-LEASE') {
-        Object.assign(this.letterForm, {
-          rate: '6%',
-          incoiceType: '利息/手续费',
-          margin: '本金/保证金',
-          letterContent: '*金融服务*有形动产融资性售后回租',
-        })
-        this.formData.invoiceDetail = _.concat(this.hzLeaseList, this.formData.invoiceDetail);
-      }
-      if (val == 'OPERATING-LEASE') {
-        Object.assign(this.letterForm, {
-          rate: '13%',
-          incoiceType: '车辆租金',
-          margin: '违章保证金',
-          letterContent: '*经营租赁*车辆租金',
-        })
-        this.formData.invoiceDetail = _.concat(this.jzLeaseList, this.formData.invoiceDetail);
-      }
-    } 
+    // 'formData.leaseWay'(val) {
+    //   if (val == 'LEASE') {
+    //     Object.assign(this.letterForm, {
+    //       rate: '13%',
+    //       incoiceType: '利息/本金/管理费',
+    //       margin: '保证金',
+    //       letterContent: '*融资租赁*有形动产融资租赁服务',
+    //     })
+    //     this.formData.invoiceDetail = _.concat(this.zzLeaseList, this.formData.invoiceDetail);
+    //   }
+    //   if (val == 'BACK-LEASE') {
+    //     Object.assign(this.letterForm, {
+    //       rate: '6%',
+    //       incoiceType: '利息/手续费',
+    //       margin: '本金/保证金',
+    //       letterContent: '*金融服务*有形动产融资性售后回租',
+    //     })
+    //     this.formData.invoiceDetail = _.concat(this.hzLeaseList, this.formData.invoiceDetail);
+    //   }
+    //   if (val == 'OPERATING-LEASE') {
+    //     Object.assign(this.letterForm, {
+    //       rate: '13%',
+    //       incoiceType: '车辆租金',
+    //       margin: '违章保证金',
+    //       letterContent: '*经营租赁*车辆租金',
+    //     })
+    //     this.formData.invoiceDetail = _.concat(this.jzLeaseList, this.formData.invoiceDetail);
+    //   }
+    // } 
   },
   created() {
     
-    this.letterForm.currentDate = moment().format('YYYY-MM-DD')
+    this.letterForm.currentDate = moment().format('YYYY-MM-DD');
     this.contractId = this.$route.query.contractId;
     // console.log(this.contractId);
   },

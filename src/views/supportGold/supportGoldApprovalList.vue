@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-10-26 18:34:45
+ * @LastEditTime: 2020-10-29 15:40:26
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -120,7 +120,7 @@
         <el-table-column
           align="center"
           label="操作"
-          width="150"
+          width="100"
           fixed="right"
         >
           <template slot-scope="scope">

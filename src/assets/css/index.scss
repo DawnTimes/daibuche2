@@ -4,12 +4,16 @@
 
 
 .page-layer {
-  padding-top: 20px;
+  padding-top: 10px;
   text-align: right;
 }
 
 .hearderBox {
-  padding: 20px 0 0 20px;
+  padding: 10px 0 0 10px;
+}
+
+.hearderBox .el-form-item--mini.el-form-item, .hearderBox .el-form-item--small.el-form-item {
+  margin-bottom: 12px;
 }
 
 .greenStatus {

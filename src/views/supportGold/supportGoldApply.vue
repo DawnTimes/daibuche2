@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-10-26 18:31:19
+ * @LastEditTime: 2020-10-29 15:39:48
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -135,7 +135,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" width="160" fixed="right">
+        <el-table-column label="操作" width="150" fixed="right">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleRegister(scope.row)" v-if="rightControl.register" :disabled="!(scope.row.approvalStatus == '4')">登记</el-button>
             <el-button size="mini" @click="handleDetail(scope.row)" v-if="rightControl.detail">详情</el-button>

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-28 15:58:27
+ * @LastEditTime: 2020-10-29 15:41:00
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalList.vue
@@ -13,7 +13,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="80px"
+        label-width=""
         size="small"
         ref="ruleForm"
       >
@@ -24,10 +24,10 @@
         <!-- <el-form-item label="车型代码:" prop="modelCode">
           <el-input maxlength="50" v-model="formData.modelCode" placeholder=""></el-input>
         </el-form-item> -->
-        <el-form-item label="车型名称:" prop="modelName">
+        <el-form-item label="车型名称" prop="modelName">
           <el-input maxlength="50" v-model="formData.modelName" clearable placeholder=""></el-input>
         </el-form-item>
-        <el-form-item label="是否限牌:" prop="isLimitLicence">
+        <el-form-item label="是否限牌" prop="isLimitLicence">
           <el-select v-model="formData.isLimitLicence" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in this.$options.filters.flagValue([])"
@@ -38,14 +38,14 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="城市:" prop="cityName">
+        <el-form-item label="城市" prop="cityName">
           <el-select v-model="formData.cityName" placeholder="请选择">
             <el-option value label style="height:240px; overflow-y: auto; background-color:#fff; color: #606266; font-weight: normal">
               <el-tree :props="defaultProps" :load="loadNode" lazy @node-click="handleNodeClick" highlight-current accordion></el-tree>
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="牌照商:" prop="licenceCode">
+        <el-form-item label="牌照商" prop="licenceCode">
           <!-- <el-input maxlength="50" v-model="formData.licenceCode" placeholder></el-input> -->
           <el-select v-model="formData.licenceCode" filterable clearable  placeholder="请选择">
             <el-option
@@ -130,7 +130,8 @@
 
         <el-table-column
           label="操作"
-          width="150"
+          align="center"
+          width="100"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -310,8 +311,8 @@ export default {
       //   })
       // }
       // console.log(this.asideInfoIds)
-      this.userApprovalType = common.queryApprovalFlow(9541, this.asideInfoIds, '1') || common.queryApprovalFlow(9541, this.asideInfoIds, '2'); // 会计审批
-      // this.userApprovalType = common.queryApprovalFlow(9541, this.asideInfoIds, '2'); // 财务审批
+      this.userApprovalType = common.queryApprovalFlow(9541, this.asideInfoIds, '1') || common.queryApprovalFlow(9542, this.asideInfoIds, '2'); // 会计审批
+      // this.userApprovalType = common.queryApprovalFlow(9542, this.asideInfoIds, '2'); // 财务审批
       // console.log(this.userApprovalType);
 
       const params = {

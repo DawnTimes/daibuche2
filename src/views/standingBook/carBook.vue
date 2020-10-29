@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-27 13:57:37
+ * @LastEditTime: 2020-10-29 15:10:58
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -14,7 +14,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="120px"
+        label-width="106px"
         size="small"
         ref="ruleForm"
       >
@@ -120,7 +120,7 @@
             <span>{{ scope.row.payDay | timeFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="" label="支付方式" show-overflow-tooltip width="100"></el-table-column>
+        <!-- <el-table-column prop="" label="支付方式" show-overflow-tooltip width="100"></el-table-column> -->
         <el-table-column prop="verState" label="核销状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span
@@ -221,7 +221,7 @@
           <span>{{ scope.row.notCommission | moneyFormat}}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="Financing" label="融资额" show-overflow-tooltip width="120">
+        <el-table-column prop="financing" label="融资额" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.Financing | moneyFormat}}</span>
         </template>

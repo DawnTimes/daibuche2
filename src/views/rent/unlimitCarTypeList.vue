@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-16 16:20:01
+ * @LastEditTime: 2020-10-29 15:39:03
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeList.vue
@@ -71,7 +71,7 @@
         <!-- <el-table-column prop="" label="尾款" show-overflow-tooltip></el-table-column> -->
         <el-table-column
           label="操作"
-          width="150"
+          width="110"
           fixed="right"
         >
           <template slot-scope="scope">

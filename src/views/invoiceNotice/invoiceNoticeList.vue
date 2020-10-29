@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-28 17:28:52
+ * @LastEditTime: 2020-10-29 16:09:11
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -28,7 +28,7 @@
         </el-form-item>
         <el-form-item label="购方税号:" prop="buyCreditCode">
           <el-input
-            maxlength="30"
+            maxlength="50"
             v-model="formData.buyCreditCode"
             clearable
             placeholder
@@ -230,7 +230,7 @@
         <el-table-column
           prop="remark"
           label="备注"
-          width="300"
+          width="400"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
@@ -334,7 +334,7 @@
           show-overflow-tooltip
           width="120"
         ></el-table-column>
-        <el-table-column label="操作" width="180" fixed="right">
+        <el-table-column label="操作" width="160" fixed="right">
           <template slot-scope="scope">
             <el-button
               size="mini"
