@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-09-23 15:00:52
+ * @LastEditTime: 2020-10-28 15:25:39
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalOperation.vue
@@ -21,7 +21,7 @@
             <el-col :xs="24" :sm="22" :md="20" :lg="18" :xl="14">
               <div style="padding: 20px 0 20px 0; text-align: center">
                 <el-button @click="handleGoToBack()" size="medium">返 回</el-button>
-                <el-button type="primary" size="medium" @click="handleGoToApproval()">去审批</el-button>
+                <el-button type="primary" size="medium" @click="handleGoToApproval()">下一步</el-button>
               </div>
             </el-col>
           </el-row>
@@ -124,7 +124,8 @@ export default {
           const data = res.data;
           this.baseInfoForm = data;
           if (!_.isEmpty(this.baseInfoForm.rentApprovalList)) {
-            this.baseInfoForm.rentApprovalList.forEach((val) => {
+            this.baseInfoForm.rentApprovalList.forEach((val, index) => {
+              
               val.color = '';
               val.icon = '';
               // if (val.approvalOperation === 'Y') {
@@ -144,6 +145,16 @@ export default {
                 val.color = '#F56C6C';
                 val.icon = 'el-icon-close';
               }
+
+              // if (index === 0 && val.curStatus !== '1') {
+              //   this.baseInfoForm.rentApprovalList.unshift({
+              //     approvalOperation: '',
+              //     approvalOpinion: '',
+              //     approvalPerson: val.approvalPerson,
+              //     approvalTime: val.approvalTime,
+              //     curStatus: '1',
+              //   })
+              // }
               
             })
           }

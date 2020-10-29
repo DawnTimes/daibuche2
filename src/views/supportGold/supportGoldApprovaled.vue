@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-10-26 18:35:24
+ * @LastEditTime: 2020-10-28 10:14:08
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovaled.vue
@@ -31,7 +31,7 @@
               <div style="padding: 20px 0 20px 0; text-align: center">
                 <el-button @click="handleGoToBack()" size="medium">取 消</el-button>
                 <el-button type="primary" plain size="medium" @click="prevToStep()">上一步</el-button>
-                <el-button type="primary" size="medium" @click="handleGoToApproval()">去审批</el-button>
+                <el-button type="primary" size="medium" @click="handleGoToApproval()">下一步</el-button>
               </div>
             </el-col>
           </el-row>

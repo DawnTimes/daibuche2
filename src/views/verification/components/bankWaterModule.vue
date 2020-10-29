@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-10-26 15:29:32
+ * @LastEditTime: 2020-10-28 13:50:42
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -28,8 +28,8 @@
               >
                 <el-date-picker
                   v-model="formData.tradeDate"
-                  type="datetime"
-                  value-format="yyyy-MM-dd HH:mm:ss"
+                  type="date"
+                  value-format="yyyy-MM-dd"
                   style="width: 100%"
                   :disabled="$formAtReadonly('tradeDate', formReadonly.readonly)"
                   placeholder="选择日期">

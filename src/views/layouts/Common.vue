@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-09-01 10:44:52
+ * @LastEditTime: 2020-10-28 17:18:33
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\layouts\Common.vue
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log('submit!');
+      // console.log('submit!');
     },
   },
 };

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-10-27 14:27:51
+ * @LastEditTime: 2020-10-28 15:43:57
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\baseInformationDetailModule.vue
@@ -140,21 +140,22 @@
               :type="value.type"
               :class="{ 'text_success': value.approvalOperation == 'Y', 'text_error': value.approvalOperation == 'N' }"
               placement="top"
-              v-for="( value, index) in baseInfoForm.rentApprovalList"
+              v-for="(value, index) in baseInfoForm.rentApprovalList"
               :key="index"
             >
-              <el-card>
+              <!-- <el-card>
                 <h4>
                   <span>{{ index === 0 ? '修改时间' : '审批时间' }}：{{ value.approvalTime | timeFormatTemp }}</span>
                   <span>{{ index === 0 ? '修改人' : '审批人' }}：{{ value.approvalPerson }}</span>
                 </h4>
                 <p>
                   <span>{{ index === 0 ? '备注' : '审批意见' }}：</span>
-                  <!-- <span>{{ value.approvalOpinion }}</span>                   -->
-                  <span>{{  }}</span>                  
+                  <span>{{ value.approvalOpinion }}</span>                  
                 </p>
-              </el-card>
-              <!-- <el-card>
+              </el-card> -->
+
+
+              <el-card>
                 <h4>
                   <span>审批时间：{{ value.approvalTime | timeFormatTemp }}</span>
                   <span>审批人：{{ value.approvalPerson }}</span>
@@ -163,7 +164,7 @@
                   <span>审批意见：</span>
                   <span>{{ value.approvalOpinion }}</span>                  
                 </p>
-              </el-card> -->
+              </el-card>
             </el-timeline-item>
           </el-timeline>
         </el-col>
@@ -255,9 +256,9 @@ export default {
 
       userTemp: [
         { value: '1', lable: '生成租金' },
-        { value: '2', lable: '生成租金' },
+        { value: '2', lable: '待会计审批' },
         { value: '3', lable: '待财务负责人审批' },
-        { value: '4', lable: '生效' },
+        { value: '4', lable: '审批通过' },
         { value: '5', lable: '审批拒绝' },
       ],
     };

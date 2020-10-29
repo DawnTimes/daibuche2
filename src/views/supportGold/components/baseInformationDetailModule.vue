@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-10-26 18:36:16
+ * @LastEditTime: 2020-10-28 15:43:48
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\baseInformationDetailModule.vue
@@ -75,7 +75,7 @@
       <el-row :gutter="0">
         <el-col :xs="24" :sm="22" :md="20" :lg="18" :xl="14">
           <el-timeline>
-            <el-timeline-item class="text_statr" timestamp="发起申请" placement="top" icon="el-icon-more" type="primary">
+            <!-- <el-timeline-item class="text_statr" timestamp="发起申请" placement="top" icon="el-icon-more" type="primary">
               <el-card>
                 <h4>
                   <span>修改时间：2020-08-09 12:12:12</span>
@@ -84,6 +84,7 @@
                 <p>备注：</p>
               </el-card>
             </el-timeline-item>
+            
             <el-timeline-item
               :timestamp="value.approvalOperation"
               :color="value.color"
@@ -91,13 +92,47 @@
               :type="value.type"
               :class="{ 'text_success': value.approvalOperation == 'approved', 'text_error': value.approvalOperation == 'refuse' }"
               placement="top"
-              v-for="( value, index) in approvalProcessData"
+              v-for="( value, index) in baseInfoForm.suApprovalList"
               :key="index"
             >
               <el-card>
                 <h4>
-                  <span>审批时间：{{ value.approvalTime }}</span>
-                  <span>审批人：{{ value.approvalUser }}</span>
+                  <span>审批时间：{{ value.approvalTime | timeFormatTemp }}</span>
+                  <span>审批人：{{ value.approvalPerson }}</span>
+                </h4>
+                <p>
+                  <span>审批意见：</span>
+                  <span>{{ value.approvalOpinion }}</span>                  
+                </p>
+              </el-card>
+            </el-timeline-item> -->
+            
+            <el-timeline-item
+              :timestamp="formatUser(value.curStatus, userTemp)"
+              :color="value.color"
+              :icon="value.icon"
+              :type="value.type"
+              :class="{ 'text_success': value.approvalOperation == 'Y', 'text_error': value.approvalOperation == 'N' }"
+              placement="top"
+              v-for="(value, index) in baseInfoForm.suApprovalList"
+              :key="index"
+            >
+              <!-- <el-card>
+                <h4>
+                  <span>{{ index === 0 ? '修改时间' : '审批时间' }}：{{ value.approvalTime | timeFormatTemp }}</span>
+                  <span>{{ index === 0 ? '修改人' : '审批人' }}：{{ value.approvalPerson }}</span>
+                </h4>
+                <p>
+                  <span>{{ index === 0 ? '备注' : '审批意见' }}：</span>
+                  <span>{{ value.approvalOpinion }}</span>                  
+                </p>
+              </el-card> -->
+
+
+              <el-card>
+                <h4>
+                  <span>审批时间：{{ value.approvalTime | timeFormatTemp }}</span>
+                  <span>审批人：{{ value.approvalPerson }}</span>
                 </h4>
                 <p>
                   <span>审批意见：</span>
@@ -191,6 +226,14 @@ export default {
           createTime: '2020-04-27 00:00:00.0',
           tabName: 'UNIFY_SYSTEM_INTERFACE',
         },
+      ],
+
+      userTemp: [
+        { value: '1', lable: '生成支援金' },
+        { value: '2', lable: '待财务审批' },
+        { value: '3', lable: '待资管负责人审批' },
+        { value: '4', lable: '审批通过' },
+        { value: '5', lable: '审批拒绝' },
       ],
     };
   },

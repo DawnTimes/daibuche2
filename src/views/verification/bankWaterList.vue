@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-26 17:55:28
+ * @LastEditTime: 2020-10-28 17:04:59
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -108,9 +108,9 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="tradeDate" label="交易时间" show-overflow-tooltip width="160">
+        <el-table-column prop="tradeDate" label="交易时间" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.tradeDate | timeFormatTemp }}</span>
+            <span>{{ scope.row.tradeDate | timeFormat }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="150"></el-table-column>
@@ -119,10 +119,10 @@
             <span>{{ scope.row.income | moneyFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="companyName" label="收款账户名称" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="companyName" label="收款账户名称" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="bankAccountNo" label="收款账号" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="bankAccountName" label="收款账户开户行" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="sideAccountName" label="汇款账户名称" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="sideAccountName" label="汇款账户名称" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="sideAccount" label="汇款账号" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="verState" label="核销状态" show-overflow-tooltip>
           <template slot-scope="scope">
@@ -143,12 +143,12 @@
         <el-table-column prop="projectCategory" label="项目类别" show-overflow-tooltip></el-table-column>
         <!-- <el-table-column prop="" label="是否虚拟收款" show-overflow-tooltip width="150"></el-table-column> -->
         
-        <el-table-column prop="haveVerLines" label="已核销额" show-overflow-tooltip width="150">
+        <el-table-column prop="haveVerLines" label="已核销金额" show-overflow-tooltip width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.haveVerLines | moneyFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="notVerLines" label="未核销额" show-overflow-tooltip width="150">
+        <el-table-column prop="notVerLines" label="未核销金额" show-overflow-tooltip width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.notVerLines | moneyFormat }}</span>
           </template>

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-26 17:32:29
+ * @LastEditTime: 2020-10-28 13:56:09
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
@@ -101,7 +101,7 @@
           prop="nper"
           label="期数"
           show-overflow-tooltip
-          width="100"
+          width="80"
         ></el-table-column>
 
         <el-table-column

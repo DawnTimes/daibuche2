@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-10-27 11:41:15
+ * @LastEditTime: 2020-10-28 17:54:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -198,7 +198,7 @@ import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 import moment from 'moment';
-import { mapState } from 'vuex';
+import { mapState, Store } from 'vuex';
 
 import { moneyFormat } from '@/common/moneyFormat.js';
 
@@ -249,7 +249,11 @@ export default {
 
     };
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      letterContractId: (store) => store.letterContractId,
+    })
+  },
   watch: {
     'formData.leaseWay'(val) {
       if (val == 'LEASE') {
@@ -285,7 +289,7 @@ export default {
     
     this.letterForm.currentDate = moment().format('YYYY-MM-DD')
     this.contractId = this.$route.query.contractId;
-    // console.log(this.formData.leaseWay);
+    // console.log(this.contractId);
   },
   mounted() {
     this.queryNoticeLetterDetail();
@@ -295,7 +299,8 @@ export default {
     queryNoticeLetterDetail() {
       const url = common.queryInvoiceByContractIdUrl;
       const params = {
-        contractId: this.contractId,
+        // contractId: this.contractId,  // bug：多次切换tabs标签时，会返回第一次打开页面时的数据
+        contractId: this.letterContractId,
       };
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {

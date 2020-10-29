@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-27 10:49:56
+ * @LastEditTime: 2020-10-28 17:28:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -638,6 +638,8 @@ export default {
           contractId: row.contractId,
         },
       });
+
+      this.$store.commit('setLetterContractId', row.contractId);
     },
 
     // 登记弹窗

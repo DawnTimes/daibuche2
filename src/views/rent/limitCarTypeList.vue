@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-16 16:21:10
+ * @LastEditTime: 2020-10-28 16:27:56
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeList.vue
@@ -21,7 +21,7 @@
           <el-input maxlength="30" v-model="formData.modelCode" placeholder></el-input>
         </el-form-item> -->
         <el-form-item label="车型名称:" prop="modelName">
-          <el-input maxlength="30" v-model="formData.modelName" placeholder></el-input>
+          <el-input maxlength="30" v-model="formData.modelName" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="城市:" prop="cityName">
           <!-- <el-input maxlength="50" v-model="formData.cityCode" placeholder=""></el-input> -->
@@ -39,7 +39,7 @@
         </el-form-item>
         <el-form-item label="牌照商:" prop="licenceCode">
           <!-- <el-input maxlength="50" v-model="formData.licenceCode" placeholder></el-input> -->
-          <el-select v-model="formData.licenceCode" filterable allow-create clearable  placeholder="请选择">
+          <el-select v-model="formData.licenceCode" filterable clearable  placeholder="请选择">
             <el-option
               v-for="item in licenceOptions"
               :key="item.licenceCode"
