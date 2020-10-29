@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-10-27 14:37:50
+ * @LastEditTime: 2020-10-29 17:43:35
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\baseInformationDetail.vue
@@ -116,17 +116,18 @@ export default {
               // }
               if (
                 val.curStatus === '1' ||
-                val.curStatus === '2' ||
-                val.curStatus === '3'
+                val.curStatus === '2' 
+                // val.curStatus === '3'
               ) {
                 val.color = '#409EFF';
                 val.icon = 'el-icon-more';
-              } else if (val.curStatus === '4') {
+              } else if (val.curStatus === '3' || val.curStatus === '4') {
                 val.color = '#0bbd87';
                 val.icon = 'el-icon-check';
               } else if (val.curStatus === '5') {
                 val.color = '#F56C6C';
                 val.icon = 'el-icon-close';
+                val.approvalOperation = 'N';  // 返回的数据为Y,是错误的，修改为N
               }
             });
           }

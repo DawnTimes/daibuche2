@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-29 15:10:58
+ * @LastEditTime: 2020-10-29 18:13:39
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -206,7 +206,7 @@
           <span>{{ scope.row.notVerPrincipal | moneyFormat}}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="" label="未收利息" show-overflow-tooltip width="120">
+        <el-table-column prop="notVerInterest" label="未收利息" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.dueAmount | moneyFormat}}</span>
         </template>

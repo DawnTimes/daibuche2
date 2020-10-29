@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-10-28 15:25:39
+ * @LastEditTime: 2020-10-29 17:39:09
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalOperation.vue
@@ -20,8 +20,15 @@
           <el-row :gutter="10">
             <el-col :xs="24" :sm="22" :md="20" :lg="18" :xl="14">
               <div style="padding: 20px 0 20px 0; text-align: center">
-                <el-button @click="handleGoToBack()" size="medium">返 回</el-button>
-                <el-button type="primary" size="medium" @click="handleGoToApproval()">下一步</el-button>
+                <el-button @click="handleGoToBack()" size="medium"
+                  >返 回</el-button
+                >
+                <el-button
+                  type="primary"
+                  size="medium"
+                  @click="handleGoToApproval()"
+                  >下一步</el-button
+                >
               </div>
             </el-col>
           </el-row>
@@ -90,7 +97,7 @@ export default {
   },
   computed: {
     ...mapState({
-      userId: store => store.userId
+      userId: (store) => store.userId,
     }),
   },
   watch: {},
@@ -103,7 +110,7 @@ export default {
     this.id = query.id;
     this.formData.type = query.type;
     this.formData.id = query.id;
-     this.getBaseInforDetail();
+    this.getBaseInforDetail();
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -125,7 +132,6 @@ export default {
           this.baseInfoForm = data;
           if (!_.isEmpty(this.baseInfoForm.rentApprovalList)) {
             this.baseInfoForm.rentApprovalList.forEach((val, index) => {
-              
               val.color = '';
               val.icon = '';
               // if (val.approvalOperation === 'Y') {
@@ -135,15 +141,20 @@ export default {
               //   val.color = '#F56C6C';
               //   val.icon = 'el-icon-close';
               // }
-              if (val.curStatus === '1' || val.curStatus === '2' || val.curStatus === '3') {
+              if (
+                val.curStatus === '1' ||
+                val.curStatus === '2' 
+                // val.curStatus === '3'
+              ) {
                 val.color = '#409EFF';
                 val.icon = 'el-icon-more';
-              } else if (val.curStatus === '4') {
+              } else if (val.curStatus === '3' || val.curStatus === '4') {
                 val.color = '#0bbd87';
                 val.icon = 'el-icon-check';
-              } else if(val.curStatus === '5') {
+              } else if (val.curStatus === '5') {
                 val.color = '#F56C6C';
                 val.icon = 'el-icon-close';
+                val.approvalOperation = 'N'; // 返回的数据为Y,是错误的，修改为N
               }
 
               // if (index === 0 && val.curStatus !== '1') {
@@ -155,53 +166,64 @@ export default {
               //     curStatus: '1',
               //   })
               // }
-              
-            })
+            });
           }
-          // this.baseInfoForm.rentApprovalList.splice(0, 1); 
+          // this.baseInfoForm.rentApprovalList.splice(0, 1);
           // 判断是否限牌
           if (this.baseInfoForm.isLimitLicence === 'N') {
-            this.formReadonly.hide.push('cityName', 'licenceCode', 'newLicenceFee', 'newtotalMonthlyRent', 'rentLicenceFee', 'totalMonthlyRent')
+            this.formReadonly.hide.push(
+              'cityName',
+              'licenceCode',
+              'newLicenceFee',
+              'newtotalMonthlyRent',
+              'rentLicenceFee',
+              'totalMonthlyRent'
+            );
           } else {
-            this.baseInfoForm.totalMonthlyRent = this.baseInfoForm.monthlyRent * 1 + this.baseInfoForm.rentLicenceFee * 1 + '';
+            this.baseInfoForm.totalMonthlyRent =
+              this.baseInfoForm.monthlyRent * 1 +
+              this.baseInfoForm.rentLicenceFee * 1 +
+              '';
           }
         }
-      })
+      });
     },
-
 
     handleFormDataSubmit(obj) {
       const data = obj.data;
       const url = common.rentApprovalOperationUrl;
       this.status.loading = true;
 
-      axios.post(url, data).then((res) => {
-        if (res.ec === '0') {
-          this.status.loading = false;
-          this.$notify.success({
-            title: '温馨提示！',
-            message: '提交成功！'
-          });
-
-          setTimeout(() => {
-            this.$router.push({
-              path: '/rentApprovalList'
+      axios
+        .post(url, data)
+        .then((res) => {
+          if (res.ec === '0') {
+            this.status.loading = false;
+            this.$notify.success({
+              title: '温馨提示！',
+              message: '提交成功！',
             });
-          }, 1000);
-        } else {
+
+            setTimeout(() => {
+              this.$router.push({
+                path: '/rentApprovalList',
+              });
+            }, 1000);
+          } else {
+            this.status.loading = false;
+            this.$notify.error({
+              title: '温馨提示！',
+              message: res.em || '提交失败，请联系管理员!',
+            });
+          }
+        })
+        .catch((err) => {
           this.status.loading = false;
           this.$notify.error({
             title: '温馨提示！',
-            message: res.em || '提交失败，请联系管理员!'
+            message: err ? err.em : '提交失败，请联系管理员!',
           });
-        }
-      }).catch((err) => {
-        this.status.loading = false;
-        this.$notify.error({
-          title: '温馨提示！',
-          message: err ? err.em : '提交失败，请联系管理员!',
         });
-      })
     },
 
     // 上一步

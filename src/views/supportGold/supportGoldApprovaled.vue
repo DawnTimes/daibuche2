@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-10-28 10:14:08
+ * @LastEditTime: 2020-10-29 17:50:59
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovaled.vue
@@ -163,12 +163,12 @@ export default {
               // }
               if (
                 val.curStatus === '1' ||
-                val.curStatus === '2' ||
-                val.curStatus === '3'
+                val.curStatus === '2' 
+                // val.curStatus === '3'
               ) {
                 val.color = '#409EFF';
                 val.icon = 'el-icon-more';
-              } else if (val.curStatus === '4') {
+              } else if (val.curStatus === '3' || val.curStatus === '4') {
                 val.color = '#0bbd87';
                 val.icon = 'el-icon-check';
               } else if (val.curStatus === '5') {
