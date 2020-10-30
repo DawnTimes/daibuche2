@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-29 15:41:00
+ * @LastEditTime: 2020-10-29 18:54:12
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalList.vue
@@ -103,7 +103,7 @@
         </el-table-column>
         <!-- <el-table-column prop="brandName" label="品牌" show-overflow-tooltip></el-table-column>
         <el-table-column prop="seriesName" label="车系" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop="validDate" label="生效日期" show-overflow-tooltip>
+        <el-table-column prop="validDate" label="生效日期" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.validDate | timeFormat }}</span>
           </template>
@@ -120,7 +120,40 @@
             >{{ scope.row.approvalStatus | approvalStatus }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="modifier" label="修改人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="newMonthlyRent" label="新月租金" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.newMonthlyRent | moneyFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="newLicenceFee" label="新月牌照费" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+            <!-- <span>{{ scope.row.newLicenceFee && scope.row.newLicenceFee != '0' ? scope.row.newLicenceFee + '元' : scope.row.newLicenceFee }}</span> -->
+            <span>{{ scope.row.newLicenceFee | moneyFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="newtotalMonthlyRent" label="新月租金合计" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.newtotalMonthlyRent | moneyFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="monthlyRent" label="原月租金" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+            <span>{{ scope.row.monthlyRent | moneyFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="rentLicenceFee" label="原月牌照费" show-overflow-tooltip width="100">
+          <template slot-scope="scope">
+            <!-- <span>{{ scope.row.rentLicenceFee && scope.row.rentLicenceFee != '0' ? scope.row.rentLicenceFee + '元' : scope.row.rentLicenceFee }}</span> -->
+            <span>{{ scope.row.rentLicenceFee | moneyFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="totalMonthlyRent" label="原月租金合计" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <!-- <span>{{ scope.row.monthlyRent * 1 + scope.row.rentLicenceFee * 1 }}</span> -->
+            <span>{{ scope.row.totalMonthlyRent | moneyFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="modifier" label="修改人" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="modifiedTime" label="修改时间" show-overflow-tooltip width="160">
           <template slot-scope="scope">
             <span>{{ scope.row.modifiedTime | timeFormatTemp }}</span>
