@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-10-21 14:04:42
+ * @LastEditTime: 2020-10-30 13:38:34
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -362,7 +362,7 @@ export default {
 
     // 导出
     exportButton() {
-      window.location.href = `/api/${common.exportCollectionUrl}?name=${
+      window.location.href = `/api${common.exportCollectionUrl}?name=${
         this.formData.name ? this.formData.name : ''
       }&beginDay=${
         this.formData.beginDay ? this.formData.beginDay : ''

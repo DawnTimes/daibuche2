@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-29 18:54:12
+ * @LastEditTime: 2020-10-30 10:26:42
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalList.vue
@@ -149,8 +149,8 @@
         </el-table-column>
         <el-table-column prop="totalMonthlyRent" label="原月租金合计" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <!-- <span>{{ scope.row.monthlyRent * 1 + scope.row.rentLicenceFee * 1 }}</span> -->
-            <span>{{ scope.row.totalMonthlyRent | moneyFormat }}</span>
+            <span>{{ (scope.row.monthlyRent * 1 + scope.row.rentLicenceFee * 1) | moneyFormat }}</span>
+            <!-- <span>{{ scope.row.totalMonthlyRent | moneyFormat }}</span> -->
           </template>
         </el-table-column>
         <el-table-column prop="modifier" label="修改人" show-overflow-tooltip width="120"></el-table-column>

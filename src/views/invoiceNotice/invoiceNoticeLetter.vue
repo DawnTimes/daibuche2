@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-10-29 16:11:12
+ * @LastEditTime: 2020-10-30 18:01:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -366,7 +366,7 @@ export default {
 
     // 导出
     exportButton() {
-      window.location.href = `/api/${common.exportSubcarInvoiceNoticeUrl}?contractId=${this.contractId ? this.contractId : ''}`;
+      window.location.href = `/api${common.exportSubcarInvoiceNoticeUrl}?contractId=${this.contractId ? this.contractId : ''}`;
       
     },
 

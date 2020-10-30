@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-10-29 15:06:40
+ * @LastEditTime: 2020-10-30 18:00:18
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -310,7 +310,7 @@ export default {
 
     // 导出
     exportButton() {
-      window.location.href = `/api/${
+      window.location.href = `/api${
         common.supportOutputExcelUrl
       }?agentName=${
         this.formData.agentName ? this.formData.agentName : ''

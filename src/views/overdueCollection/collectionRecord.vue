@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:25:10
- * @LastEditTime: 2020-10-21 14:04:33
+ * @LastEditTime: 2020-10-30 18:02:07
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\collectionRecord.vue
@@ -220,7 +220,7 @@ export default {
 
     // 导出
     exportButton() {
-      window.location.href = `/api/${
+      window.location.href = `/api${
         common.exportCollectionByAgentIdUrl
       }?id=${
         this.soldId ? this.soldId : ''

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-29 18:13:39
+ * @LastEditTime: 2020-10-30 18:02:20
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -92,7 +92,7 @@
         ></el-table-column>
         <!-- <el-table-column prop="" label="所属期间" show-overflow-tooltip width="100"></el-table-column> -->
         <el-table-column prop="name" label="承租人/牌照商" show-overflow-tooltip width="200"></el-table-column>
-        <!-- <el-table-column prop="" label="牌照商" show-overflow-tooltip width="100"></el-table-column> -->
+        <el-table-column prop="parentContractNumber" label="主合同编号" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="160"></el-table-column>
         <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="180"></el-table-column>
@@ -422,7 +422,7 @@ export default {
 
     // 导出车辆台账
     exportButton() {
-      window.location.href = `/api/${
+      window.location.href = `/api${
         common.exportCarSBUrl
       }?name=${
         this.formData.name ? this.formData.name : ''

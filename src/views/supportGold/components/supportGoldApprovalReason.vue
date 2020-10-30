@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-10-27 16:12:00
+ * @LastEditTime: 2020-10-30 13:39:12
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -35,7 +35,7 @@
             ></el-option>
           </el-select>
         </el-form-item> -->
-        <el-form-item label="是否商贸全资:" prop="isGacShop">
+        <el-form-item label="是否商贸店:" prop="isGacShop">
           <el-select v-model="reasonForm.isGacShop" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in isCommerce"
@@ -109,7 +109,7 @@
           </template>
         </el-table-column>
         
-        <el-table-column prop="isGacShop" label="是否商贸全资" show-overflow-tooltip>
+        <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.isGacShop | flagValue }}</span>
           </template>
@@ -274,9 +274,9 @@ export default {
         { value: 'N', label: '否' },
       ],
       isCommerce: [
-        { value: 'NN', label: '非商贸' },
-        { value: 'YY', label: '商贸全资' },
-        { value: 'YN', label: '商贸非全资' },
+        { value: 'N', label: '否' },
+        { value: 'Y', label: '是' },
+        // { value: 'YN', label: '商贸非全资' },
       ],
 
       paramsForm: {

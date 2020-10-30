@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-29 15:42:23
+ * @LastEditTime: 2020-10-30 18:01:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -669,7 +669,7 @@ export default {
 
     // 导出车辆核销清单
     exportButton() {
-      window.location.href = `/api/${common.exportVerCarExcelUrl}?nper=${
+      window.location.href = `/api${common.exportVerCarExcelUrl}?nper=${
         this.formData.nper ? this.formData.nper : ''
       }&contractNumber=${
         this.formData.contractNumber ? this.formData.contractNumber : ''

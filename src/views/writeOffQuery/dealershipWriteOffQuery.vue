@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-27 13:54:44
+ * @LastEditTime: 2020-10-30 18:01:36
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -347,7 +347,7 @@ export default {
 
     // 导出经销店核销清单
     exportButton() {
-      window.location.href = `/api/${common.exportVerCarExcelUrl}?nper=${
+      window.location.href = `/api${common.exportVerCarExcelUrl}?nper=${
         this.formData.nper ? this.formData.nper : ''
       }&contractNumber=${
         this.formData.contractNumber ? this.formData.contractNumber : ''

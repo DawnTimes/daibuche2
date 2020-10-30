@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 11:25:57
- * @LastEditTime: 2020-10-26 14:29:14
+ * @LastEditTime: 2020-10-30 11:16:27
  * @LastEditors: your name
  * @Description: 文件上传弹窗
  * @FilePath: \webcode2\src\components\uploadDialog.vue
@@ -133,6 +133,10 @@ export default {
       // 更新上传成功的状态
       this.setSuccessStatus(true);
       // this.$store.commit('setSuccessStatus', true);
+      this.$notify.success({
+        title: '温馨提示！',
+        message: '导入成功!'
+      });
 
     },
 
@@ -211,12 +215,12 @@ export default {
       const url = this.uploadURLStr;
       axios.post(url, form)
         .then(res => {
-          // console.log(res);
+          console.log(res);
           //自行处理各种情况
-          if (res.ec === '0') {
+          if (res.status == 200) {
             this.$notify.success({
               title: '温馨提示！',
-              message: '上传成功!'
+              message: res.data || '导入成功!'
             });
             this.loading = false;
             this.uploadFormVisible = false;
@@ -232,7 +236,7 @@ export default {
         .catch((err) => {
           this.loading = false;
           // this.fileList = [];
-          // console.log(err);
+          console.log(err);
           this.$notify.error({
             title: '温馨提示！',
             message: err.em || err.error || err.message || '上传错误，请重试!'

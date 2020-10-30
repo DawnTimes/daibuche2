@@ -419,7 +419,7 @@ export default {
     // 导出
     batchesDownload() {
       // console.log('batchesDownload!');
-      window.location.href = `/api/${common.licenceExportExcelUrl}?areaCode=${
+      window.location.href = `/api${common.licenceExportExcelUrl}?areaCode=${
         this.params.areaCode ? this.params.areaCode : ''
       }&licenceName=${
         this.params.licenceName ? this.params.licenceName : ''

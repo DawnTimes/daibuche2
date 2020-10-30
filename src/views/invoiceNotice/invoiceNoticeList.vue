@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-29 16:09:11
+ * @LastEditTime: 2020-10-30 18:00:56
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -73,7 +73,6 @@
 
         <el-form-item label>
           <el-button
-          size="medium"
           type="primary"
           icon="el-icon-plus"
           @click="createInvoice"
@@ -81,7 +80,6 @@
           >生成开票明细</el-button
         >
         <el-button
-          size="medium"
           type="primary"
           icon="el-icon-upload2"
           @click="importButton"
@@ -89,7 +87,6 @@
           >导入开票明细</el-button
         >
         <el-button
-          size="medium"
           type="primary"
           icon="el-icon-download"
           @click="exportButton"
@@ -589,7 +586,7 @@ export default {
     // 导出明细
     exportButton() {
       // this.exportLoading = true;
-      window.location.href = `/api/${
+      window.location.href = `/api${
         common.exportSubcarInvoiceListUrl
       }?buyName=${
         this.formData.buyName ? this.formData.buyName : ''

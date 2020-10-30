@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-27 14:10:32
+ * @LastEditTime: 2020-10-30 18:02:35
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -85,15 +85,15 @@
         ></el-table-column>
         <!-- <el-table-column prop="" label="所属期间" show-overflow-tooltip width="100"></el-table-column> -->
         <el-table-column prop="name" label="承租人/牌照商" show-overflow-tooltip width="200"></el-table-column>
-        <!-- <el-table-column prop="" label="牌照商" show-overflow-tooltip width="100"></el-table-column> -->
+        <el-table-column prop="parentContractNumber" label="主合同编号" show-overflow-tooltip width="160"></el-table-column>
         <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="160"></el-table-column>
-        <el-table-column prop="nper" label="期数" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="nper" label="期数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
           <template slot-scope="scope">
             <span :class="{ blueColor: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="isGacShop" label="是否商贸全资" show-overflow-tooltip width="120">
+        <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span :class="{ blueColor: scope.row.isGacShop == 'Y' , redStatus: scope.row.isGacShop == 'N' }">{{ scope.row.isGacShop | flagValue}}</span>
           </template>
@@ -391,7 +391,7 @@ export default {
 
     // 导出经销店台账 isLimitLicence cityName
     exportButton() {
-      window.location.href = `/api/${
+      window.location.href = `/api${
         common.exportAgentSBUrl
       }?name=${
         this.formData.name ? this.formData.name : ''
