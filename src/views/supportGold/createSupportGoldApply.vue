@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-18 10:04:11
- * @LastEditTime: 2020-10-26 17:18:41
+ * @LastEditTime: 2020-11-02 10:27:35
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\createSupportGoldApply.vue
@@ -40,6 +40,7 @@ export default {
       formData: {
         creater: '',
         applyDate: '',
+        yearMonth: '',
         agList: [],
       },
       status: {

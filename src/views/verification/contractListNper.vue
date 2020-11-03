@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-10-29 15:44:09
+ * @LastEditTime: 2020-11-02 13:52:29
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -430,10 +430,10 @@ export default {
           this.total = data.turnPageTotalNum * 1;
           this.tableLoading = false;
         } else {
-          his.tableLoading = false;
+          this.tableLoading = false;
         }
       }).catch(() => {
-        his.tableLoading = false;
+        this.tableLoading = false;
       })
     },
 

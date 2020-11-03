@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-10-29 15:40:26
+ * @LastEditTime: 2020-11-02 11:03:43
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -79,7 +79,7 @@
             <span>{{ scope.row.Batch | batchFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="" label="店数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="counts" label="店数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="rentCount" label="支援金" show-overflow-tooltip>
           <template slot-scope="scope">
@@ -107,7 +107,7 @@
         <el-table-column prop="creater" label="申请人" show-overflow-tooltip></el-table-column>
         <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip>
           <template slot-scope="scope">
-            <span>{{ scope.row.create_time | timeFormatTemp }}</span>
+            <span>{{ scope.row.create_time | timeFormat }}</span>
           </template>
         </el-table-column>
         <!-- <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="120">
@@ -314,6 +314,7 @@ export default {
           rentCount: row.rentCount,
           LicenceFee: row.LicenceFee,
           rentTotalCount: row.rentTotalCount,
+          counts: row.counts,
         },
       })
     },

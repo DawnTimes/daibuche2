@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-10-22 13:51:37
+ * @LastEditTime: 2020-11-02 17:55:31
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\router\index.js
@@ -124,7 +124,7 @@ const bankAccountList = resolve => require(['@/views/bankAccount/bankAccountList
 
 Vue.use(Router)
 const router = new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [{
       path: '/',
       name: 'LogIn',

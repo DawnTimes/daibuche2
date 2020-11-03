@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-10-29 17:50:00
+ * @LastEditTime: 2020-11-02 14:47:13
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\baseInformationDetailModule.vue
@@ -39,7 +39,7 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>店数：</span>
-                <span>{{ baseInfoForm.carNum }}</span>
+                <span>{{ baseInfoForm.counts }}</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
@@ -272,6 +272,16 @@ export default {
     // 去审批
     handleGoToApproval() {
       
+    },
+
+    formatUser(val, userTemp = []) {
+      let lable = '';
+      userTemp.forEach((v) => {
+        if (val === v.value) {
+          return (lable = v.lable);
+        }
+      })
+      return lable;
     },
 
     // 返回

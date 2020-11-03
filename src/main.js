@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-10-09 10:21:27
+ * @LastEditTime: 2020-11-02 18:33:46
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\main.js
@@ -16,7 +16,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // import './assets/css/global.css'
 import './assets/css/index.scss';
-// import './assets/fonts/iconfont.css';
+import './assets/fonts/iconfont.css';
 import './assets/fonts2/iconfont.css';
 import store from './store'
 import global_ from './common/media' //引用文件

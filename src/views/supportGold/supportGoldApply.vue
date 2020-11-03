@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-10-29 17:11:06
+ * @LastEditTime: 2020-11-02 11:03:22
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -92,7 +92,7 @@
             <span>{{ scope.row.Batch | batchFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="" label="店数" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="counts" label="店数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="rentCount" label="支援金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
@@ -118,9 +118,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="creater" label="申请人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip width="160">
+        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.create_time | timeFormatTemp }}</span>
+            <span>{{ scope.row.create_time | timeFormat }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="" label="支付状态" show-overflow-tooltip>
@@ -370,6 +370,7 @@ export default {
           rentCount: row.rentCount,
           LicenceFee: row.LicenceFee,
           rentTotalCount: row.rentTotalCount,
+          counts: row.counts,
         },
       })
     },

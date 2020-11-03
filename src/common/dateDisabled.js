@@ -1,13 +1,13 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-27 11:46:30
- * @LastEditTime: 2020-10-12 16:57:17
+ * @LastEditTime: 2020-11-02 10:19:39
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\common\dateDisabled.js
  */
 
-// 只能选每月4号和19号
+// 支援金申请日期；只能选每月4号和19号
 export const dateDisabled = (inputDate) => {
   // var year = inputDate.getFullYear();
   // var month = (inputDate.getMonth() + 1).toString();
@@ -28,6 +28,27 @@ export const dateDisabled = (inputDate) => {
   }
 }
 
+// 支援金申请日期不能选小于当前月份的日期
+export const supportApplyDate = (inputDate) => {
+  var time = new Date();
+  var year = time.getFullYear();
+  var month = time.getMonth() + 1;
+
+  // 小于今年的禁用
+  if (inputDate.getFullYear() < year) {
+    return true
+  } else if (inputDate.getFullYear() == year) {
+    // 小于当月的禁用
+    if (inputDate.getMonth() + 1 < month) {
+      return true
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+}
+
 // 只能选每年一月一号
 export const effectDate = (inputDate) => {
   const month = inputDate.getMonth() + 1;
@@ -44,7 +65,7 @@ export const effectDate = (inputDate) => {
   }
 }
 
-// 不能选大于当月的月份
+// 支援金月份不能选大于当月的月份
 export const monthDisabled = (inputDate) => {
   var time = new Date();
   var year = time.getFullYear();

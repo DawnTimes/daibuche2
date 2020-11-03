@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-10-29 17:50:59
+ * @LastEditTime: 2020-11-02 11:04:43
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovaled.vue
@@ -97,6 +97,7 @@ export default {
         rentCount: '',
         LicenceFee: '',
         rentTotalCount: '',
+        counts: '',
       },
       formData: {
         type: '',

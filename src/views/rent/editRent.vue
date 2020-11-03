@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-10-10 15:20:16
+ * @LastEditTime: 2020-11-02 14:08:47
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\editRent.vue
@@ -30,6 +30,7 @@ import rentUpdateModule from './components/rentUpdateModule';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 import { mapState } from 'vuex';
+import moment from 'moment';
 
 export default {
   name: 'editRent',
@@ -116,8 +117,17 @@ export default {
       // delete data.cityName;
       this.status.loading = true;
       const url = common.updateRentUrl;
+      const params = {
+        id: data.id,
+        approvalStatus: data.approvalStatus,
+        modifier: data.modifier,
+        newLicenceFee: data.newLicenceFee,
+        newMonthlyRent: data.newMonthlyRent,
+        newtotalMonthlyRent: data.newtotalMonthlyRent,
+        validDate:  moment(data.validDate).format('YYYY-MM-DD'),
+      };
 
-      axios.post(url, data).then(res => {
+      axios.post(url, params).then(res => {
         if (res.ec === '0') {
           this.$notify.success({
             title: '温馨提示！',

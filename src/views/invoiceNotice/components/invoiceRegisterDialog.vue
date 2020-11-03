@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 11:28:29
- * @LastEditTime: 2020-10-27 10:42:44
+ * @LastEditTime: 2020-11-02 15:22:10
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\components\invoiceRegisterDialog.vue
@@ -50,7 +50,7 @@
             placeholder="选择日期"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="收据号码" prop="">
+        <!-- <el-form-item label="收据号码" prop="">
           <el-input maxlength="50" v-model="registerForm.invoiceNumber"></el-input>
         </el-form-item>
         <el-form-item label="收据开具时间" prop="">
@@ -61,7 +61,7 @@
             type="date"
             placeholder="选择日期"
           ></el-date-picker>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="invoiceRegisterFormVisible = false" plain size="medium">取 消</el-button>

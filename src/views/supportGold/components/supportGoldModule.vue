@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 18:11:48
- * @LastEditTime: 2020-10-27 16:35:12
+ * @LastEditTime: 2020-11-02 10:27:16
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldModule.vue
@@ -24,7 +24,7 @@
             size="medium"
           >
             <el-row :gutter="0">
-              <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <!-- <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
                 <el-form-item label="申请日期:" prop="applyDate" class="form-item">
                   <el-date-picker
                     v-model="formData.applyDate"
@@ -35,8 +35,8 @@
                     @change="changeDate"
                   ></el-date-picker>
                 </el-form-item>
-              </el-col>
-              <!-- <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              </el-col> -->
+              <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
                 <el-form-item label="申请日期:" prop="applyDate" class="form-item">
                   <el-date-picker
                     v-model="formData.applyDate"
@@ -48,13 +48,13 @@
                     @change="changeDate"
                   ></el-date-picker>
                 </el-form-item>
-              </el-col> -->
+              </el-col>
               <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
-                <el-form-item label="支援金月份:" prop="" class="form-item">
+                <el-form-item label="支援金月份:" prop="yearMonth" class="form-item">
                   <el-date-picker
                     v-model="formData.monthTime"
                     value-format="yyyy-MM"
-                    type="month"
+                    type="yearMonth"
                     placeholder="选择月份"
                     style="width: 100%"
                     :picker-options="pickerOptionsMonth"
@@ -226,7 +226,7 @@ import _ from 'lodash';
 import moment from 'moment';
 
 import dealerTableDialog from './dealerTableDialog';
-import { dateDisabled, monthDisabled } from '@/common/dateDisabled.js';
+import { dateDisabled, monthDisabled, supportApplyDate } from '@/common/dateDisabled.js';
 
 export default {
   name: 'supportGoldModule',
@@ -264,7 +264,8 @@ export default {
       // 只能选择4号或19号
       pickerOptionsDate: {
         disabledDate: (time) => {
-          return dateDisabled(time);
+          // return dateDisabled(time);
+          return supportApplyDate(time);
         },
       },
       // 只能选择当月之前的月份
@@ -283,7 +284,7 @@ export default {
             trigger: 'change',
           },
         ],
-        monthTime: [
+        yearMonth: [
           {
             required: true,
             message: '请选择月份',

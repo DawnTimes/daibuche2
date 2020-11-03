@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-10-30 18:00:18
+ * @LastEditTime: 2020-11-02 14:58:43
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -41,7 +41,7 @@
         <el-form-item label="支付状态:" prop="payStatus">
           <el-select v-model="formData.payStatus" clearable placeholder="请选择" style="width: 100%">
             <el-option
-              v-for="item in this.$options.filters.payStatus([])"
+              v-for="item in this.$options.filters.paymentStatus([])"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -138,7 +138,7 @@
         <el-table-column prop="payer" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="payDate" label="支付时间" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.payDate | timeFormatTemp }}</span>
+            <span>{{ scope.row.payDate | timeFormat }}</span>
           </template>
         </el-table-column>
         <!-- <el-table-column prop="remark" label="备注" show-overflow-tooltip ></el-table-column> -->

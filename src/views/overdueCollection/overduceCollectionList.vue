@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-10-30 13:38:34
+ * @LastEditTime: 2020-11-02 16:59:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -373,6 +373,14 @@ export default {
       }&endAmount=${
         this.formData.endAmount ? this.formData.endAmount : ''
       }`;
+
+    //   const url = common.exportCollectionUrl;
+    //   const params = {
+    //     name:''
+    //   };
+    //   axios.get(url, params).then((res) => {
+    //     console.log(res);
+    //   })
     },
 
     // 分页

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-30 18:00:56
+ * @LastEditTime: 2020-11-02 15:21:27
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -319,7 +319,7 @@
           show-overflow-tooltip
           width="120"
         ></el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop=""
           label="收据号码"
           show-overflow-tooltip
@@ -330,7 +330,7 @@
           label="收据开具时间"
           show-overflow-tooltip
           width="120"
-        ></el-table-column>
+        ></el-table-column> -->
         <el-table-column label="操作" width="160" fixed="right">
           <template slot-scope="scope">
             <el-button
