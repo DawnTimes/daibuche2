@@ -83,7 +83,7 @@ export default {
       url = common.userMenuUrl;
     }
     axios.get(url, { roles: this.roles }).then((res) => {
-      
+      // console.log(res.ids);
       res.ids.forEach(function (val, index) {
         // 判断是否有合同审批的菜单权限
         if (val == 161) {
@@ -93,17 +93,17 @@ export default {
         // 判断是否有租金修改审批的菜单权限
         if (val == 954) {
           that.rentShow = true;
-          this.rentWaitingTotal(res.ids);
+          that.rentWaitingTotal(res.ids);
         }
         // 判断是否有支援金审批的菜单权限
         if (val == 963) {
           that.goldShow = true;
-          this.supportGoldWaitingTotal(res.ids);
+          that.supportGoldWaitingTotal(res.ids);
         }
         // 判断是否有开票明细的菜单权限
         if (val == 991) {
           that.invoiceShow = true;
-          this.InvoiceWaitingTotal();
+          that.InvoiceWaitingTotal();
         }
       });
     });

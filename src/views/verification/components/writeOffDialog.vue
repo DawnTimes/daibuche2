@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-10-23 13:03:44
+ * @LastEditTime: 2020-11-04 16:04:40
  * @LastEditors: your name
  * @Description: 核销弹框
  * @FilePath: \webcode2\src\views\verification\components\writeOffDialog.vue
@@ -54,7 +54,7 @@
             <!-- <el-form-item label="车辆数量">
           <el-input v-model="writeOffForm.name" disabled></el-input>
             </el-form-item>-->
-            <el-form-item label="代付标志" v-show="writeOffForm.isDebt == 'Y'">
+            <el-form-item label="代付标志" prop="debtIdentification" v-if="writeOffForm.isDebt == 'Y'">
               <el-input
                 v-model="writeOffForm.debtIdentification"
                 type="textarea"
@@ -117,6 +117,13 @@ export default {
             required: true,
             message: '请选择是否代付',
             trigger: ['blur', 'change'],
+          },
+        ],
+        debtIdentification: [
+          {
+            required: true,
+            message: '请输入代付标志',
+            trigger: 'blur',
           },
         ],
       },

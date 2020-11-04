@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-03 10:42:00
+ * @LastEditTime: 2020-11-04 15:00:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
@@ -17,7 +17,7 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="合同编号:" prop="contractNumber">
+        <el-form-item label="合同编号" prop="contractNumber">
           <el-input
             maxlength="30"
             v-model="formData.contractNumber"
@@ -25,7 +25,7 @@
             placeholder=""
           ></el-input>
         </el-form-item>
-        <el-form-item label="期数:" prop="nper">
+        <el-form-item label="期数" prop="nper">
           <el-input
             maxlength="50"
             v-model="formData.nper"
@@ -48,7 +48,7 @@
       </el-form>
     </div>
 
-    <div class="batchBtn">
+    <!-- <div class="batchBtn">
       <el-button
         type="primary"
         size="small"
@@ -56,7 +56,7 @@
         v-show="rightControl.recoil"
         >批量反冲</el-button
       >
-    </div>
+    </div> -->
 
     <div class="table">
       <el-table

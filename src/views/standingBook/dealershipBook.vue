@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-03 11:48:17
+ * @LastEditTime: 2020-11-04 14:56:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -18,23 +18,23 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="承租人/牌照商:" prop="name">
+        <el-form-item label="承租人/牌照商" prop="name">
           <el-input maxlength="30" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
-        <!-- <el-form-item label="牌照商:" prop="interfaceName">
+        <!-- <el-form-item label="牌照商" prop="interfaceName">
           <el-input maxlength="30" v-model="formData.interfaceName" placeholder></el-input>
         </el-form-item> -->
-        <el-form-item label="合同编号:" prop="contractNumber">
+        <el-form-item label="合同编号" prop="contractNumber">
           <el-input maxlength="30" v-model="formData.contractNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="期数:" prop="nper">
+        <el-form-item label="期数" prop="nper">
           <el-input maxlength="10" v-model="formData.nper" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="上牌地:" prop="cityName">
+        <el-form-item label="上牌地" prop="cityName">
           <el-input maxlength="10" v-model="formData.cityName" clearable placeholder></el-input>
         </el-form-item>
 
-        <el-form-item label="是否限牌:" prop="isLimitLicence">
+        <el-form-item label="是否限牌" prop="isLimitLicence">
           <el-select v-model="formData.isLimitLicence" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in this.$options.filters.flagValue([])"

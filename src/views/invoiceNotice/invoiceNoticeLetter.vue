@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-10-30 18:01:06
+ * @LastEditTime: 2020-11-04 09:59:48
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -187,7 +187,7 @@
 
       <div class="footerBtn">
         <el-button size="medium" @click="handleBack()">返回</el-button>
-        <el-button type="primary" size="medium" @click="exportButton">导出通知单</el-button>
+        <el-button type="primary" size="medium" v-show="rightControl.exportBtn" @click="exportButton">导出通知单</el-button>
       </div>
     </div>
   </div>
@@ -247,6 +247,12 @@ export default {
         { nper: '0' },
       ],
 
+      // 按钮权限
+      rightArray: [9916],
+      rightControl: {
+        exportBtn: false,
+      },
+
     };
   },
   computed: {
@@ -286,6 +292,16 @@ export default {
     // } 
   },
   created() {
+
+    // 判断权限
+    this.rightArray.forEach((item, index, array) => {
+      common.checkRolePermission(
+        item,
+        this.$store.state.asideInfoIds,
+        Object.keys(this.rightControl)[index],
+        this.rightControl
+      );
+    });
     
     this.letterForm.currentDate = moment().format('YYYY-MM-DD');
     this.contractId = this.$route.query.contractId;

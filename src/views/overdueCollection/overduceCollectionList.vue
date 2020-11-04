@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-11-02 16:59:44
+ * @LastEditTime: 2020-11-04 10:24:30
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -123,7 +123,7 @@
         <el-table-column prop="sellTel" label="售后经理联系方式" show-overflow-tooltip width="140"></el-table-column>
         <el-table-column label="催收记录查询" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <el-link type="primary" @click="queryRecord(scope.row)" v-show="rightControl.entry">查看催收记录</el-link>
+            <el-link type="primary" @click="queryRecord(scope.row)" v-show="rightControl.check">查看催收记录</el-link>
           </template>
         </el-table-column>
         <el-table-column prop="electricDate" label="电催日期" show-overflow-tooltip width="100">
@@ -204,11 +204,12 @@ export default {
       invoiceForm: {},
 
       // 按钮权限
-      rightArray: [9011, 9012, 9013],
+      rightArray: [9011, 9012, 9013, 9015],
       rightControl: {
         import: false,
         export: false,
         entry: false,
+        check: false,
       },
 
       // 导入URL

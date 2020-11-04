@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-10-28 16:46:20
+ * @LastEditTime: 2020-11-04 17:00:39
  * @LastEditors: your name
  * @Description: 退款弹框
  * @FilePath: \webcode2\src\views\verification\components\refundDialog.vue
@@ -19,7 +19,7 @@
         :model="refundForm"
         ref="refundForm"
         :rules="rules"
-        label-width="100px"
+        label-width="120px"
         size="medium"
       >
         <el-form-item label="银行单据号" prop>
@@ -30,6 +30,9 @@
         </el-form-item>
         <el-form-item label="汇款账号" prop>
           <el-input v-model="refundForm.sideAccount" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="最大可退金额" prop>
+          <el-input v-model="refundForm.notVerLines" disabled></el-input>
         </el-form-item>
         <el-form-item label="退款金额" prop="refund">
           <el-input v-model="refundForm.refund"></el-input>

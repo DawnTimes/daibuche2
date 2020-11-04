@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-28 17:04:59
+ * @LastEditTime: 2020-11-04 16:59:38
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -17,24 +17,24 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="银行单据号:" prop="serialNumber">
+        <el-form-item label="银行单据号" prop="serialNumber">
           <el-input maxlength="30" v-model="formData.serialNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="收款账户名称:" prop="companyName">
+        <el-form-item label="收款账户名称" prop="companyName">
           <el-input maxlength="30" v-model="formData.companyName" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="汇款账户名称:" prop="sideAccountName">
+        <el-form-item label="汇款账户名称" prop="sideAccountName">
           <el-input maxlength="50" v-model="formData.sideAccountName" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="汇款账号:" prop="sideAccount">
+        <el-form-item label="汇款账号" prop="sideAccount">
           <el-input maxlength="30" v-model="formData.sideAccount" clearable placeholder></el-input>
         </el-form-item>
         
-        <!-- <el-form-item label="收款账号:" prop="companyName">
+        <!-- <el-form-item label="收款账号" prop="companyName">
           <el-input maxlength="30" v-model="formData.companyName" clearable placeholder></el-input>
         </el-form-item> -->
 
-        <el-form-item label="核销状态:" prop="verState">
+        <el-form-item label="核销状态" prop="verState">
           <el-select v-model="formData.verState" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in this.$options.filters.verState([])"
@@ -45,7 +45,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="交易日期:" prop="dateTime">
+        <el-form-item label="交易日期" prop="dateTime">
           <el-date-picker
             v-model="formData.dateTime"
             type="daterange"
@@ -121,7 +121,7 @@
         </el-table-column>
         <el-table-column prop="companyName" label="收款账户名称" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="bankAccountNo" label="收款账号" show-overflow-tooltip width="150"></el-table-column>
-        <el-table-column prop="bankAccountName" label="收款账户开户行" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="bankAccountName" label="收款账户开户行" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="sideAccountName" label="汇款账户名称" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="sideAccount" label="汇款账号" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="verState" label="核销状态" show-overflow-tooltip>
@@ -295,6 +295,7 @@ export default {
         sideAccountName: '',
         sideAccount: '',
         refund: '',
+        notVerLines: '',
         remark: '',
       },
       // 未核销额
@@ -693,6 +694,7 @@ export default {
       this.refundForm.serialNumber = row.serialNumber;
       this.refundForm.sideAccountName = row.sideAccountName;
       this.refundForm.sideAccount = row.sideAccount;
+      this.refundForm.notVerLines = row.notVerLines || 0;
       // this.refundForm.refund = row.refund;
       // this.refundForm.remark = row.remark;
       this.notVerLines = row.notVerLines * 1 || 0;

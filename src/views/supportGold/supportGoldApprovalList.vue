@@ -14,7 +14,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="90px"
+        label-width="100px"
         size="small"
         ref="ruleForm"
       >

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-30 18:02:20
+ * @LastEditTime: 2020-11-04 15:01:19
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -14,34 +14,34 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="106px"
+        label-width="120px"
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="承租人/牌照商:" prop="name">
+        <el-form-item label="承租人/牌照商" prop="name">
           <el-input maxlength="30" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
-        <!-- <el-form-item label="牌照商:" prop="interfaceName">
+        <!-- <el-form-item label="牌照商" prop="interfaceName">
           <el-input maxlength="30" v-model="formData.interfaceName" clearable placeholder></el-input>
         </el-form-item> -->
-        <el-form-item label="合同编号:" prop="contractNumber">
+        <el-form-item label="合同编号" prop="contractNumber">
           <el-input maxlength="30" v-model="formData.contractNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="期数:" prop="nper">
+        <el-form-item label="期数" prop="nper">
           <el-input maxlength="10" v-model="formData.nper" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="车型名称:" prop="modelName">
+        <el-form-item label="车型名称" prop="modelName">
           <el-input maxlength="30" v-model="formData.modelName" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="车架号:" prop="frameNumber">
+        <el-form-item label="车架号" prop="frameNumber">
           <el-input maxlength="30" v-model="formData.frameNumber" clearable placeholder></el-input>
         </el-form-item>
 
-        <el-form-item label="上牌地:" prop="cityName">
+        <el-form-item label="上牌地" prop="cityName">
           <el-input maxlength="10" v-model="formData.cityName" clearable placeholder></el-input>
         </el-form-item>
 
-        <el-form-item label="是否限牌:" prop="isLimitLicence">
+        <el-form-item label="是否限牌" prop="isLimitLicence">
           <el-select v-model="formData.isLimitLicence" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in this.$options.filters.flagValue([])"

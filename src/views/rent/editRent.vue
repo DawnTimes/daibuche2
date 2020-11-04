@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-11-02 14:08:47
+ * @LastEditTime: 2020-11-04 17:44:28
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\editRent.vue
@@ -53,12 +53,12 @@ export default {
         cityCode: '',
         cityName: '',
         monthlyRent: '',
-        rentLicenceFee: '',
+        rentLicenceFee: '0',
         totalMonthlyRent: '',
         seriesName: '',
         num: '',
         approvalStatus: '1',
-        newLicenceFee: '',
+        newLicenceFee: '0',
         newMonthlyRent: '',
         newtotalMonthlyRent: '',
         brandName: '',
@@ -150,12 +150,12 @@ export default {
             cityCode: '',
             cityName: '',
             monthlyRent: '',
-            rentLicenceFee: '',
+            rentLicenceFee: '0',
             totalMonthlyRent: '',
             seriesName: '',
             num: '',
             approvalStatus: '1',
-            newLicenceFee: '',
+            newLicenceFee: '0',
             newMonthlyRent: '',
             newtotalMonthlyRent: '',
             brandName: '',

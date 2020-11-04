@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-11-02 13:52:29
+ * @LastEditTime: 2020-11-04 15:58:41
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -38,22 +38,22 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="106px"
+        label-width=""
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="承租人/牌照商:" prop="">
+        <el-form-item label="承租人/牌照商" prop="">
           <el-input maxlength="30" clearable v-model="formData.name" placeholder></el-input>
         </el-form-item>
         <!-- <el-form-item label="牌照商名称:" prop="systemName">
           <el-input maxlength="30" clearable v-model="formData.systemName" placeholder=""></el-input>
         </el-form-item>-->
 
-        <el-form-item label="上牌地:" prop="cityName">
+        <el-form-item label="上牌地" prop="cityName">
           <el-input maxlength="10" v-model="formData.cityName" clearable placeholder></el-input>
         </el-form-item>
 
-        <el-form-item label="核销状态:" prop="repaymentStatus">
+        <el-form-item label="核销状态" prop="repaymentStatus">
           <el-select v-model="formData.repaymentStatus" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in this.$options.filters.verState([])"
@@ -566,7 +566,7 @@ export default {
     border-bottom: 1px solid #eee;
 
     span {
-      line-height: 40px;
+      line-height: 34px;
       font-weight: bold;
     }
   }

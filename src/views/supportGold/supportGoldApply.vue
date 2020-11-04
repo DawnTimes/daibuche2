@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-11-02 11:03:22
+ * @LastEditTime: 2020-11-04 15:03:40
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -14,7 +14,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="90px"
+        label-width="100px"
         size="small"
         ref="ruleForm"
       >

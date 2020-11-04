@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 18:11:48
- * @LastEditTime: 2020-11-03 18:31:26
+ * @LastEditTime: 2020-11-04 14:45:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldModule.vue
@@ -52,7 +52,7 @@
               <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
                 <el-form-item label="支援金月份:" prop="yearMonth" class="form-item">
                   <el-date-picker
-                    v-model="formData.monthTime"
+                    v-model="formData.yearMonth"
                     value-format="yyyy-MM"
                     type="month"
                     placeholder="选择月份"
@@ -62,7 +62,7 @@
                   ></el-date-picker>
                 </el-form-item>
               </el-col>
-              <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+              <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
                 <el-form-item label="备注:" prop class="form-item">
                   <el-input
                     type="textarea"
@@ -103,11 +103,12 @@
               prop="agentCode"
               label="经销店代码"
               show-overflow-tooltip
+              min-width="120"
             ></el-table-column>
             <!-- <el-table-column prop="agId" label="经销店id" show-overflow-tooltip></el-table-column> -->
-            <el-table-column prop="agentShortName" label="经销店简称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="agentFullName" label="经销店名称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip>
+            <!-- <el-table-column prop="agentShortName" label="经销店简称" show-overflow-tooltip min-width="120"></el-table-column> -->
+            <el-table-column prop="agentFullName" label="经销店名称" show-overflow-tooltip min-width="120"></el-table-column>
+            <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip min-width="120">
               <template slot-scope="scope">
                 <span>{{ scope.row.isGacShop | flagValue }}</span>
               </template>
@@ -160,7 +161,7 @@
               prop="reason"
               label="申请原因"
               show-overflow-tooltip
-              width="400"
+              min-width="400"
             >
               <template slot-scope="scope">
                 <el-form-item
@@ -190,7 +191,7 @@
       <p class="tipText">提示：申请支援金时经销店不是必选的；在特殊情况下申请支援金时才需要选经销店。</p>
     </div>
 
-    <el-row :gutter="10">
+    <el-row :gutter="0">
       <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
         <div style="padding: 20px 0 20px 0; text-align: center">
           <el-button size="medium" @click="handleGoToBack()">取 消</el-button>
@@ -492,10 +493,10 @@ export default {
   }
 
   .tableBox {
-    padding: 20px 0 0 20px;
+    padding: 10px 0 0 20px;
 
     .choiceBtn {
-      padding-bottom: 20px;
+      padding-bottom: 10px;
     }
   }
 }
