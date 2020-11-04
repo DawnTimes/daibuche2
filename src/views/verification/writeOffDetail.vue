@@ -1,13 +1,13 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-28 13:56:09
+ * @LastEditTime: 2020-11-03 10:42:00
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
 -->
 <template>
-  <div>
+  <div class="writeOffDetail">
     <div class="hearderBox">
       <el-form
         :inline="true"
@@ -48,6 +48,16 @@
       </el-form>
     </div>
 
+    <div class="batchBtn">
+      <el-button
+        type="primary"
+        size="small"
+        @click="batchRecoil"
+        v-show="rightControl.recoil"
+        >批量反冲</el-button
+      >
+    </div>
+
     <div class="table">
       <el-table
         :data="tableData"
@@ -56,6 +66,8 @@
         border
         stripe
         :max-height="tableHeight"
+        @selection-change="handleSelectionChange"
+        @select="handleSelect"
         ref="table"
         style="width: 100%"
         :header-cell-style="{
@@ -65,6 +77,12 @@
           color: '#fff',
         }"
       >
+        <el-table-column
+          width="50"
+          align="center"
+          type="selection"
+          fixed
+        ></el-table-column>
         <el-table-column
           width="50"
           align="center"
@@ -95,13 +113,13 @@
           prop="contractNumber"
           label="合同编号"
           show-overflow-tooltip
-          width="150"
+          width="180"
         ></el-table-column>
         <el-table-column
           prop="nper"
           label="期数"
           show-overflow-tooltip
-          width="80"
+          width=""
         ></el-table-column>
 
         <el-table-column
@@ -129,6 +147,22 @@
           show-overflow-tooltip
           width="120"
         ></el-table-column>
+        <el-table-column
+          prop="backlash"
+          label="反冲状态"
+          show-overflow-tooltip
+          width="100"
+        >
+          <template slot-scope="scope">
+            <span
+              :class="{
+                greenStatus: scope.row.backlash == 'Y',
+                blueColor: scope.row.backlash == 'N',
+              }"
+              >{{ scope.row.backlash | recoilStatus }}</span
+            >
+          </template>
+        </el-table-column>
 
         <el-table-column
           prop="isLimitLicence"
@@ -174,22 +208,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column
-          prop="backlash"
-          label="反冲状态"
-          show-overflow-tooltip
-          width="100"
-        >
-          <template slot-scope="scope">
-            <span
-              :class="{
-                greenStatus: scope.row.backlash == 'Y',
-                blueColor: scope.row.backlash == 'N',
-              }"
-              >{{ scope.row.backlash | recoilStatus }}</span
-            >
-          </template>
-        </el-table-column>
+        
         <el-table-column
           prop="verState"
           label="核销状态"
@@ -483,6 +502,7 @@ export default {
       rightControl: {
         recoil: false,
       },
+      multipleSelection: [], // 批量选择
     };
   },
   computed: {},
@@ -667,7 +687,7 @@ export default {
             // this.status.loading = false;
             this.$notify.error({
               title: '温馨提示！',
-              message: res.em || '反冲失败！',
+              message: res.em || res.error || res.message || '反冲失败！',
             });
           }
         })
@@ -675,9 +695,118 @@ export default {
           // this.status.loading = false;
           this.$notify.error({
             title: '温馨提示！',
-            message: err ? err.em : '反冲失败！',
+            message: err.em || err.error || err.message || '反冲失败！',
           });
         });
+    },
+
+    // 选择单条数据， 反冲状态为已反冲的不能勾选
+    handleSelect(val, row) {
+      if (row.backlash == 'Y') {
+        this.$notify.warning({
+          title: '温馨提示！',
+          message: '该车辆已经反冲，不能再次反冲！',
+          duration: 2000,
+        });
+        this.$refs.table.toggleRowSelection(row, false);
+      }
+    },
+
+    // 批量选择 全选， 反冲状态为已反冲的不能勾选
+    handleSelectionChange(val) {
+      // console.log(val);
+      this.multipleSelection = val;
+      if (val) {
+        val.forEach((item, index) => {
+          if (item.backlash == 'Y') {
+            this.$refs.table.toggleRowSelection(item, false);
+          } 
+        });
+      }
+      
+      // this.toggleSelection();
+      // console.log(this.multipleSelection);
+    },
+
+    // 批量反冲
+    batchRecoil() {
+      
+      // 批量反冲时，每次操作只能选择同一合同编号的车辆进行
+      let arrTem = [];
+      let bacthCarIdArr = [];
+      this.multipleSelection.forEach((v, i) => {
+        // 获取未反冲状态的车辆id
+        if (v.backlash === 'N') {
+          bacthCarIdArr.push({
+            id: v.id,
+          });
+          arrTem.push(v.contractNumber);
+        } else {
+          // 删除已反冲的项
+          this.multipleSelection.splice(i, 1);
+        }
+      });
+
+      if (_.isEmpty(this.multipleSelection)) {
+        this.$notify.warning({
+          title: '温馨提示',
+          message: '请选择需要反冲的车辆',
+        });
+        return false;
+      }
+      
+      // console.log(arrTem);
+      // some() 方法用于检测数组中的元素是否满足指定条件（函数提供）。
+      // some() 方法会依次执行数组的每个元素：
+      // 如果有一个元素满足条件，则表达式返回true , 剩余的元素不会再执行检测。
+      // 如果没有满足条件的元素，则返回false。
+      // 注意： some() 不会对空数组进行检测。
+      // 注意： some() 不会改变原始数组。
+      const status = arrTem.some((val) => {
+        return val !== arrTem[0];
+      });
+      // console.log(status);
+      if (status) {
+        this.$notify.warning({
+          title: '温馨提示',
+          message: '只能同时反冲合同编号相同的车辆！',
+        });
+        return false;
+      }
+
+      this.$confirm('是否确定反冲选中的车辆? 反冲后不可恢复！', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          // const url = common.backlashDealUrl;
+          // let idArr = [];
+          // // 合并数组
+          // // idArr = _.concat(bacthCarIdArr, idArr);
+          // // // 去重
+          // idArr = this.unique(bacthCarIdArr);
+          // console.log(idArr);
+
+          // 对json数组去重， 使用js hash去重；js中使用hash去重，需要建立在对象的基础之上，因为对象的存储采用的是hash表
+          /*
+          * hash去重：不是自己去写hash算法  利用对象属性的添加内部应用了hash算法
+          * 思路：将元素 作为对象的属性进行添加 当对象内没有此属性时   将此元素作为属性添加  否则不添加
+          * hash表：线性表+链表
+          * 功能：无论查找还是添加都非常快
+          */
+          let hash = {};
+          bacthCarIdArr = bacthCarIdArr.reduce((temp, item) => {
+            hash[item.id] ? '' : hash[item.id] = true && temp.push(item)
+            return temp
+          }, []);
+
+          // console.log(bacthCarIdArr);
+
+          this.formDataSubmit(bacthCarIdArr);
+          
+        })
+        .catch(() => {});
     },
   },
   filters: {
@@ -687,4 +816,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.writeOffDetail {
+  .batchBtn {
+    padding: 0 0 5px 10px;
+  }
+}
 </style>

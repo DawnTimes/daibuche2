@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-10-30 13:39:12
+ * @LastEditTime: 2020-11-03 11:49:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -109,7 +109,7 @@
           </template>
         </el-table-column>
         
-        <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip>
+        <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.isGacShop | flagValue }}</span>
           </template>

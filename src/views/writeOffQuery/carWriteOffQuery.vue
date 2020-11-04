@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-30 18:01:29
+ * @LastEditTime: 2020-11-03 10:32:26
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -769,7 +769,7 @@ export default {
             // this.status.loading = false;
             this.$notify.error({
               title: '温馨提示！',
-              message: res.em || '反冲失败！',
+              message: res.em || res.error || res.message || '反冲失败！',
             });
           }
         })
@@ -777,7 +777,7 @@ export default {
           // this.status.loading = false;
           this.$notify.error({
             title: '温馨提示！',
-            message: err ? err.em : '反冲失败！',
+            message: err.em || err.error || err.message || '反冲失败！',
           });
         });
     },
@@ -796,7 +796,7 @@ export default {
 
     // 批量选择 全选， 反冲状态为已反冲的不能勾选
     handleSelectionChange(val) {
-      console.log(val);
+      // console.log(val);
       this.multipleSelection = val;
       if (val) {
         val.forEach((item, index) => {
@@ -841,7 +841,9 @@ export default {
       this.multipleSelection.forEach((v, i) => {
         // 获取未反冲状态的车辆id
         if (v.backlash === 'N') {
-          bacthCarIdArr.push(v.id);
+          bacthCarIdArr.push({
+            id: v.id,
+          });
           arrTem.push(v.contractNumber);
         } else {
           // 删除已反冲的项
@@ -883,13 +885,29 @@ export default {
       })
         .then(() => {
           // const url = common.backlashDealUrl;
-          let idArr = [];
-          // 合并数组
-          // idArr = _.concat(bacthCarIdArr, idArr);
-          // // 去重
-          idArr = this.unique(bacthCarIdArr);
+          // let idArr = [];
+          // // 合并数组
+          // // idArr = _.concat(bacthCarIdArr, idArr);
+          // // // 去重
+          // idArr = this.unique(bacthCarIdArr);
+          // console.log(idArr);
 
-          this.formDataSubmit(idArr);
+          // 对json数组去重， 使用js hash去重；js中使用hash去重，需要建立在对象的基础之上，因为对象的存储采用的是hash表
+          /*
+          * hash去重：不是自己去写hash算法  利用对象属性的添加内部应用了hash算法
+          * 思路：将元素 作为对象的属性进行添加 当对象内没有此属性时   将此元素作为属性添加  否则不添加
+          * hash表：线性表+链表
+          * 功能：无论查找还是添加都非常快
+          */
+          let hash = {};
+          bacthCarIdArr = bacthCarIdArr.reduce((temp, item) => {
+            hash[item.id] ? '' : hash[item.id] = true && temp.push(item)
+            return temp
+          }, []);
+
+          // console.log(bacthCarIdArr);
+
+          this.formDataSubmit(bacthCarIdArr);
           
           // const params = {
           //   backList: idArr,

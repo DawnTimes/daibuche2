@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 18:11:48
- * @LastEditTime: 2020-11-02 10:27:16
+ * @LastEditTime: 2020-11-03 18:31:26
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldModule.vue
@@ -54,7 +54,7 @@
                   <el-date-picker
                     v-model="formData.monthTime"
                     value-format="yyyy-MM"
-                    type="yearMonth"
+                    type="month"
                     placeholder="选择月份"
                     style="width: 100%"
                     :picker-options="pickerOptionsMonth"
@@ -365,7 +365,7 @@ export default {
 
     // 选择经销店确定
     formDataSure(obj) {
-      console.log(obj);
+      // console.log(obj);
       // this.$set(this.formData, 'agList', obj.data);
       // this.formData
       this.$nextTick(() => {
