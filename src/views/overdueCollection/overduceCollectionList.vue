@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-11-04 10:24:30
+ * @LastEditTime: 2020-11-05 15:00:08
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -172,7 +172,7 @@ import { mapState } from 'vuex';
 import uploadDialog from '@/components/uploadDialog';  // 上传弹框
 
 export default {
-  name: '',
+  name: 'overduceCollectionList',
   props: {},
   components: {
     uploadDialog,

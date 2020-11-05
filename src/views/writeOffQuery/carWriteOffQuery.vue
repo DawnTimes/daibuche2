@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-03 10:32:26
+ * @LastEditTime: 2020-11-05 19:36:20
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -519,7 +519,7 @@ import recoilModule from '@/components/recoilModule';
 import LogInVue from '../login/LogIn.vue';
 
 export default {
-  name: '',
+  name: 'carWriteOffQuery',
   props: {},
   components: {
     recoilModule,

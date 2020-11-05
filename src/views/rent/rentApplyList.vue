@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-29 15:38:06
+ * @LastEditTime: 2020-11-05 15:02:39
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -72,9 +72,9 @@
         <el-form-item>
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
-        <el-form-item>
+        <!-- <el-form-item>
           <el-button type="primary" v-show="rightControl.createContract" @click="createContract" :disabled="contractReadonly">生成合同</el-button>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
     </div>
 
@@ -215,7 +215,7 @@ import eventBus from '@/common/eventBus.js';
 import { mapState, mapMutations } from 'vuex';
 
 export default {
-  name: '',
+  name: 'rentApplyList',
   props: {
 
   },

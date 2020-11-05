@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-11-04 15:03:40
+ * @LastEditTime: 2020-11-05 15:01:47
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -185,7 +185,7 @@ import { mapState } from 'vuex';
 import moment from 'moment';
 
 export default {
-  name: '',
+  name: 'supportGoldApply',
   props: {},
   components: {
     confirmBox,

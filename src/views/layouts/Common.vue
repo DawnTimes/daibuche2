@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-10-29 14:56:34
+ * @LastEditTime: 2020-11-05 20:20:11
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\layouts\Common.vue
@@ -17,7 +17,9 @@
       </el-aside>
       <el-main>
         <Tags></Tags>
-        <keep-alive include="addOrganization, addBankWater">
+        <keep-alive
+          include="addOrganization,addBankWater,bankWaterList,carBook,dealershipBook,dealershipWriteOffQuery,overduceCollectionList,invoiceNoticeList,supportGoldApply,rentApplyList,carWriteOffQuery,contractListNper,writeOffDetail"
+        >
           <router-view />
         </keep-alive>
       </el-main>

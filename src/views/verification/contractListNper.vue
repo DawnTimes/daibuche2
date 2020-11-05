@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-11-04 15:58:41
+ * @LastEditTime: 2020-11-05 19:38:00
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -265,7 +265,7 @@
 </template>
 
 <script>
-import { queryDict } from '@/api/index.js';
+// import { queryDict } from '@/api/index.js';
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
@@ -276,7 +276,7 @@ import nperCarList from './components/nperCarList';
 import { mapState, Store } from 'vuex';
 
 export default {
-  name: '',
+  name: 'contractListNper',
   props: {},
   components: {
     writeOffDialog,
@@ -414,6 +414,7 @@ export default {
     // 查询分页列表
     getContractRepayListData() {
       const url = common.queryContractRepayUrl;
+      this.tableData = [];
       const params = {
         name: this.formData.name,
         cityName: this.formData.cityName,
@@ -431,6 +432,10 @@ export default {
           this.tableLoading = false;
         } else {
           this.tableLoading = false;
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '承租人或牌照商不能为空！'
+          });
         }
       }).catch(() => {
         this.tableLoading = false;
@@ -483,7 +488,7 @@ export default {
 
     // 核销弹框
     handleWriteOff(row) {
-      this.writeOffForm.replanId = row.replanId;
+        this.writeOffForm.replanId = row.replanId;
         this.writeOffForm.contractId = row.contractId;
         this.writeOffForm.oldContractId = row.oldContractId;
         this.writeOffForm.nper = row.nper;

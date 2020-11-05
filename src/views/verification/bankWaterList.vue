@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-04 16:59:38
+ * @LastEditTime: 2020-11-05 14:49:10
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -243,7 +243,7 @@ import { mapState } from 'vuex';
 import { moneyFormat } from '@/common/moneyFormat.js';
 
 export default {
-  name: '',
+  name: 'bankWaterList',
   props: {
 
   },

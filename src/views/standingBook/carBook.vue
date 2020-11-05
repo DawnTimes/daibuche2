@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-04 15:01:19
+ * @LastEditTime: 2020-11-05 20:17:36
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -145,7 +145,7 @@
         <!-- <el-table-column prop="" label="应收金额" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="已收金额" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="未收金额" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="totalMonthlyRent" label="应收租金" show-overflow-tooltip width="120">
+        <el-table-column prop="totalMonthlyRent" label="应收金额" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.totalMonthlyRent | moneyFormat}}</span>
         </template>
@@ -208,7 +208,7 @@
         </el-table-column>
         <el-table-column prop="notVerInterest" label="未收利息" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-          <span>{{ scope.row.dueAmount | moneyFormat}}</span>
+          <span>{{ scope.row.notVerInterest | moneyFormat}}</span>
         </template>
         </el-table-column>
         <el-table-column prop="not_verManagementFee" label="未收管理费" show-overflow-tooltip width="120">
@@ -264,7 +264,7 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 
 export default {
-  name: '',
+  name: 'carBook',
   props: {},
   components: {},
   data() {

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-02 15:21:27
+ * @LastEditTime: 2020-11-05 15:00:51
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -400,7 +400,7 @@ import createInvoiceDialog from './components/createInvoiceDialog'; // 生成开
 import uploadDialog from '@/components/uploadDialog'; // 上传弹框
 
 export default {
-  name: '',
+  name: 'invoiceNoticeList',
   props: {},
   components: {
     invoiceRegisterDialog,

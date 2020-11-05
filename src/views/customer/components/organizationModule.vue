@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-10-27 15:17:53
+ * @LastEditTime: 2020-11-05 10:17:19
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -138,7 +138,7 @@
               >
                 <el-input
                   v-model="formData.legalPhone"
-                  maxlength="11"
+                  maxlength="13"
                   placeholder
                   :disabled="$formAtReadonly('legalPhone', formReadonly.readonly)"
                 ></el-input>
@@ -169,7 +169,7 @@
               >
                 <el-input
                   v-model="formData.contactPersonPhone"
-                  maxlength="11"
+                  maxlength="13"
                   placeholder
                   :disabled="$formAtReadonly('contactPersonPhone', formReadonly.readonly)"
                 ></el-input>
@@ -307,7 +307,7 @@
               >
                 <el-input
                   v-model="formData.billingPhone"
-                  maxlength="11"
+                  maxlength="13"
                   :disabled="$formAtReadonly('billingPhone', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
@@ -339,7 +339,7 @@
                   v-model="formData.billingAddr"
                   type="textarea"
                   maxlength="100"
-                  :autosize="{ minRows: 3, maxRows: 3}"
+                  :autosize="{ minRows: 2, maxRows: 3}"
                   :disabled="$formAtReadonly('billingAddr', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
@@ -356,7 +356,7 @@
                   v-model="formData.registerAddr"
                   type="textarea"
                   maxlength="100"
-                  :autosize="{ minRows: 3, maxRows: 3}"
+                  :autosize="{ minRows: 2, maxRows: 3}"
                   :disabled="$formAtReadonly('registerAddr', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
@@ -454,8 +454,9 @@ export default {
     const checkPhone2 = (rule, value, callback) => {
       if (value && value !== '') {
         const phoneReg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
-        if (!phoneReg.test(value)) {
-          callback(new Error('请输入正确的11位手机号码'));
+        const telReg = /^([0-9]{3,4}-)?[0-9]{5,8}$/;
+        if (!phoneReg.test(value) && !telReg.test(value)) {
+          callback(new Error('请输入正确的11位手机号码或固定电话'));
         } else {
           callback();
         }

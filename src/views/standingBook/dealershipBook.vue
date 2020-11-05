@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-04 14:56:06
+ * @LastEditTime: 2020-11-05 20:18:00
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -239,7 +239,7 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 
 export default {
-  name: '',
+  name: 'dealershipBook',
   props: {},
   components: {},
   data() {

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-04 15:00:44
+ * @LastEditTime: 2020-11-05 20:20:03
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
@@ -463,7 +463,7 @@ import common from '@/common/common.js';
 import recoilModule from '@/components/recoilModule';
 
 export default {
-  name: '',
+  name: 'writeOffDetail',
   props: {},
   components: {
     recoilModule,

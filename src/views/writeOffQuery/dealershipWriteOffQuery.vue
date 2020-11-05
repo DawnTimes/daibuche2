@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-30 18:01:36
+ * @LastEditTime: 2020-11-05 20:18:32
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -220,7 +220,7 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 
 export default {
-  name: '',
+  name: 'dealershipWriteOffQuery',
   props: {},
   components: {},
   data() {

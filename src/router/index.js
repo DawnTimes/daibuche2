@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-11-02 17:55:31
+ * @LastEditTime: 2020-11-05 14:02:58
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\router\index.js
@@ -49,6 +49,8 @@ const writeOffContractList = resolve => require(['@/views/verification/writeOffC
 const contractListNper = resolve => require(['@/views/verification/contractListNper'], resolve);
 // 车辆清单
 // const nperCarList = resolve => require(['@/views/verification/nperCarList'], resolve);
+
+const sortable = resolve => require(['@/views/verification/sortable'], resolve);
 
 // 租金修改
 // 限牌车型列表
@@ -628,6 +630,15 @@ const router = new Router({
           component: bankAccountList,
           meta: {
             title: '账户管理'
+          }
+        },
+
+        {
+          path: '/sortable',
+          name: 'sortable',
+          component: sortable,
+          meta: {
+            title: '拖拽列表'
           }
         },
       ]
