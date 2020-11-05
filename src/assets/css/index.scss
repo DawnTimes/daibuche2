@@ -1,0 +1,57 @@
+@import './reset.scss';
+@import './global.css';
+@import './media.scss';
+
+
+.page-layer {
+  padding-top: 10px;
+  text-align: right;
+}
+
+.hearderBox {
+  padding: 10px 0 0 10px;
+}
+
+.hearderBox .el-form-item--mini.el-form-item, .hearderBox .el-form-item--small.el-form-item {
+  margin-bottom: 12px;
+}
+
+.greenStatus {
+  color: #67C23A;
+}
+
+.redStatus {
+  color: #F56C6C;
+}
+
+.blueColor {
+  color: #409EFF;
+}
+
+.yellowColor {
+  color: #E6A23C;
+}
+
+.skyblueColor {
+  color: #22d1ef;
+}
+
+.gutter {
+  background: #627CAF !important;
+}
+
+.el-table__fixed-right-patch {
+  background: #627CAF !important;
+}
+
+
+.tipText {
+  font-size: 14px;
+  color: #666;
+  font-weight: bold;
+  padding: 10px 0 0 20px;
+}
+
+.invoiceNoticeLetter .gutter {
+  background: #fff !important;
+}

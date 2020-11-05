@@ -1,0 +1,88 @@
+{
+    "data":{
+        "tableData": [{
+            "id": 11,
+            "batch": "000011",
+            "code": 100000,
+            "vehicleType": "旧款GS4200T G-DCT两驱精英版",
+            "handOrAuto": "手动",
+            "licensePlate": "粤Bx98356",
+            "shorterForm": "广汽传祺",
+            "sureState": "确认待合同生效",
+            "tailMoney":"4863"
+        },{
+            "id": 11,
+            "batch": "000011",
+            "code": 100000,
+            "vehicleType": "旧款GS4200T G-DCT两驱精英版",
+            "handOrAuto": "手动",
+            "licensePlate": "粤Bx98356",
+            "shorterForm": "广汽传祺",
+            "sureState": "预调剂",
+            "tailMoney":"4863"
+        },{
+            "id": 11,
+            "batch": "000011",
+            "code": 100000,
+            "vehicleType": "旧款GS4200T G-DCT两驱精英版",
+            "handOrAuto": "手动",
+            "licensePlate": "粤Bx98356",
+            "shorterForm": "广汽传祺",
+            "sureState": "已生成",
+            "tailMoney":"4863"
+        },{
+            "id": 11,
+            "batch": "000011",
+            "code": 100000,
+            "vehicleType": "旧款GS4200T G-DCT两驱精英版",
+            "handOrAuto": "手动",
+            "licensePlate": "粤Bx98356",
+            "shorterForm": "广汽传祺",
+            "sureState": "确认待合同生效",
+            "tailMoney":"4863"
+        },{
+            "id": 11,
+            "batch": "000011",
+            "code": 100000,
+            "vehicleType": "旧款GS4200T G-DCT两驱精英版",
+            "handOrAuto": "手动",
+            "licensePlate": "粤Bx98356",
+            "shorterForm": "广汽传祺",
+            "sureState": "确认待合同生效",
+            "tailMoney":"4863"
+        },{
+            "id": 11,
+            "batch": "000011",
+            "code": 100000,
+            "vehicleType": "旧款GS4200T G-DCT两驱精英版",
+            "handOrAuto": "手动",
+            "licensePlate": "粤Bx98356",
+            "shorterForm": "广汽传祺",
+            "sureState": "确认待合同生效",
+            "tailMoney":"4863"
+        },{
+            "id": 11,
+            "batch": "000011",
+            "code": 100000,
+            "vehicleType": "旧款GS4200T G-DCT两驱精英版",
+            "handOrAuto": "手动",
+            "licensePlate": "粤Bx98356",
+            "shorterForm": "广汽传祺",
+            "sureState": "确认待合同生效",
+            "tailMoney":"4863"
+        },{
+            "id": 11,
+            "batch": "000011",
+            "code": 100000,
+            "vehicleType": "旧款GS4200T G-DCT两驱精英版",
+            "handOrAuto": "手动",
+            "licensePlate": "粤Bx98356",
+            "shorterForm": "广汽传祺",
+            "sureState": "确认待合同生效",
+            "tailMoney":"4863"
+        }],
+        "total": 9
+    },
+    "em":"Success!"
+}
+  

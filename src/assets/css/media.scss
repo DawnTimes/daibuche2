@@ -1,0 +1,65 @@
+@media screen and (min-width:1600px) and (max-width:1920px) {
+
+  .recoilDialog .el-dialog,
+  .refundDialog .el-dialog,
+  .uploadDialog .el-dialog,
+  .registerDialog .el-dialog,
+  .invoiceRegisterDialog .el-dialog,
+  .bankAccountDialog .el-dialog,
+  .createInvoiceDialog .el-dialog {
+    width: 30% !important;
+  }
+}
+
+@media screen and (min-width:1200px) and (max-width:1600px) {
+
+  .recoilDialog .el-dialog,
+  .refundDialog .el-dialog,
+  .uploadDialog .el-dialog,
+  .registerDialog .el-dialog,
+  .invoiceRegisterDialog .el-dialog,
+  .bankAccountDialog .el-dialog,
+  .createInvoiceDialog .el-dialog {
+    width: 40% !important;
+  }
+}
+
+@media screen and (min-width:992px) and (max-width:1200px) {
+
+  .recoilDialog .el-dialog,
+  .refundDialog .el-dialog,
+  .uploadDialog .el-dialog,
+  .registerDialog .el-dialog,
+  .invoiceRegisterDialog .el-dialog,
+  .bankAccountDialog .el-dialog,
+  .createInvoiceDialog .el-dialog {
+    width: 50% !important;
+  }
+}
+
+@media screen and (min-width:768px) and (max-width:992px) {
+
+  .recoilDialog .el-dialog,
+  .refundDialog .el-dialog,
+  .uploadDialog .el-dialog,
+  .registerDialog .el-dialog,
+  .invoiceRegisterDialog .el-dialog,
+  .bankAccountDialog .el-dialog,
+  .createInvoiceDialog .el-dialog {
+    width: 70% !important;
+  }
+}
+
+@media screen and (max-width:768px) {
+
+  .recoilDialog .el-dialog,
+  .refundDialog .el-dialog,
+  .uploadDialog .el-dialog,
+  .registerDialog .el-dialog,
+  .invoiceRegisterDialog .el-dialog,
+  .createInvoiceDialog .el-dialog,
+  .bankAccountDialog .el-dialog,
+  .writeOffDialog .el-dialog {
+    width: 80% !important;
+  }
+}
