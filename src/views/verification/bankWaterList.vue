@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-05 14:49:10
+ * @LastEditTime: 2020-11-06 19:22:31
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -98,7 +98,11 @@
         'font-weight':'bold',  
         'background':'#627CAF',    
         'color': '#fff',
+        'font-size': '12px'
       }"
+        :cell-style="{
+          'font-size': '12px'
+        }"
       >
         <el-table-column
           width="50"
@@ -641,6 +645,7 @@ export default {
         path: '/contractListNper',
         query: {
           serialNumber: row.serialNumber,
+          companyName: row.companyName,
           name: row.sideAccountName.trim(),
         },
       })

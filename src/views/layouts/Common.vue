@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-11-05 20:20:11
+ * @LastEditTime: 2020-11-06 13:38:50
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\layouts\Common.vue
@@ -18,7 +18,7 @@
       <el-main>
         <Tags></Tags>
         <keep-alive
-          include="addOrganization,addBankWater,bankWaterList,carBook,dealershipBook,dealershipWriteOffQuery,overduceCollectionList,invoiceNoticeList,supportGoldApply,rentApplyList,carWriteOffQuery,contractListNper,writeOffDetail"
+          include="addOrganization,addBankWater,bankWaterList,overduceCollectionList,invoiceNoticeList"
         >
           <router-view />
         </keep-alive>
@@ -46,6 +46,10 @@ export default {
       },
     };
   },
+  created() {
+    
+  },
+
   methods: {
     onSubmit() {
       // console.log('submit!');

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:58:16
- * @LastEditTime: 2020-10-26 17:15:59
+ * @LastEditTime: 2020-11-06 15:45:21
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\addBankWater.vue
@@ -51,7 +51,7 @@ export default {
         tradeDate: '',
         verState: 'NOT',
         refund: '0',
-        projectCategory: '',
+        projectCategory: '代步车项目',
         paidLogo: '',
         notVerLines: '0',
         newLedgerLogo: '',
@@ -101,7 +101,7 @@ export default {
           // tradeDate: '',
           verState: 'NOT',
           digest: '',
-          projectCategory: '',
+          projectCategory: '代步车项目',
           paidLogo: '',
           notVerLines: '0',
           newLedgerLogo: '',

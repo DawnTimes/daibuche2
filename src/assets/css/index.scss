@@ -52,6 +52,18 @@
   padding: 10px 0 0 10px;
 }
 
+.el-table__footer-wrapper {
+  font-size: 12px;
+}
+
+.el-table .cell {
+  font-size: 13px;
+}
+
+// .el-table th>.cell {
+//   font-size: 13px;
+// }
+
 .invoiceNoticeLetter .gutter {
   background: #fff !important;
 }

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-10-28 13:50:42
+ * @LastEditTime: 2020-11-06 15:43:40
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -385,6 +385,13 @@ export default {
           { 
             required: true,
             message: '请输入汇款账户名称',
+            trigger: 'blur',
+          }
+        ],
+        projectCategory: [
+          { 
+            required: true,
+            message: '请输入项目类别',
             trigger: 'blur',
           }
         ],

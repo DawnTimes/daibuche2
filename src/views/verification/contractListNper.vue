@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-11-05 19:38:00
+ * @LastEditTime: 2020-11-06 19:21:49
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -10,23 +10,27 @@
   <div class="contractListNper">
     <div class="baseInfo">
       <el-row :gutter="0">
-        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
+        <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="4">
           <span>银行单据号：</span>
           <span>{{ baseFrom.serialNumber }}</span>
+        </el-col>
+        <el-col :xs="12" :sm="12" :md="12" :lg="10" :xl="6">
+          <span>收款账户：</span>
+          <span>{{ baseFrom.companyName }}</span>
         </el-col>
         <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
           <span>收款金额：</span>
           <span>{{ baseFrom.income | moneyFormat }}</span>
         </el-col>
-        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
+        <el-col :xs="12" :sm="12" :md="6" :lg="8" :xl="4">
           <span>已核金额：</span>
           <span>{{ baseFrom.haveVerLines | moneyFormat }}</span>
         </el-col>
-        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
+        <el-col :xs="12" :sm="12" :md="6" :lg="10" :xl="3">
           <span>未核金额：</span>
           <span>{{ baseFrom.notVerLines | moneyFormat }}</span>
         </el-col>
-        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
+        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="3">
           <span>退款金额：</span>
           <span>{{ baseFrom.refund | moneyFormat }}</span>
         </el-col>
@@ -45,9 +49,9 @@
         <el-form-item label="承租人/牌照商" prop="">
           <el-input maxlength="30" clearable v-model="formData.name" placeholder></el-input>
         </el-form-item>
-        <!-- <el-form-item label="牌照商名称:" prop="systemName">
-          <el-input maxlength="30" clearable v-model="formData.systemName" placeholder=""></el-input>
-        </el-form-item>-->
+        <el-form-item label="期数:" prop="nper">
+          <el-input maxlength="30" clearable v-model="formData.nper" placeholder=""></el-input>
+        </el-form-item>
 
         <el-form-item label="上牌地" prop="cityName">
           <el-input maxlength="10" v-model="formData.cityName" clearable placeholder></el-input>
@@ -83,6 +87,8 @@
         element-loading-text="拼命加载中"
         border
         stripe
+        show-summary
+        :summary-method="getSummaries"
         ref="table"
         style="width: 100%"
         :max-height="tableHeight"
@@ -91,7 +97,11 @@
         'font-weight':'bold',  
         'background':'#627CAF',    
         'color': '#fff',
+        'font-size': '13px'
       }"
+        :cell-style="{
+          'font-size': '12px'
+        }"
       >
         <el-table-column width="50" align="center" label="序号" type="index" :index="indexMethod" fixed></el-table-column>
         <el-table-column prop="name" label="承租人/牌照商" show-overflow-tooltip width="200"></el-table-column>
@@ -273,7 +283,8 @@ import common from '@/common/common.js';
 import writeOffDialog from './components/writeOffDialog';
 import nperCarList from './components/nperCarList';
 
-import { mapState, Store } from 'vuex';
+import { mapState } from 'vuex';
+import { moneyFormat } from '@/common/moneyFormat.js';
 
 export default {
   name: 'contractListNper',
@@ -289,6 +300,7 @@ export default {
         income: '',
         notVerLines: '',
         haveVerLines: '',
+        companyName: '',
         refund: '',
       },
       pageSize: 10,
@@ -297,6 +309,7 @@ export default {
       formData: {
         name: '',
         cityName: '',
+        nper: '',
         repaymentStatus: '',
         pageSize: 10,
         pageNum: 1,
@@ -338,6 +351,7 @@ export default {
   created() {
     this.formData.name = this.$route.query.name;
     this.baseFrom.serialNumber = this.$route.query.serialNumber;
+    this.baseFrom.companyName = this.$route.query.companyName;
     
     this.$nextTick(function () {
       this.tableHeight =
@@ -418,6 +432,7 @@ export default {
       const params = {
         name: this.formData.name,
         cityName: this.formData.cityName,
+        nper: this.formData.nper,
         repaymentStatus: this.formData.repaymentStatus,
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
@@ -553,6 +568,47 @@ export default {
       })
       
     },
+
+    // 合计
+    getSummaries(param) {
+      // console.log(param);
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '合计';
+          return;
+        }
+
+        // if (column.property == 'nper' || column.property == 'num') {
+        //   sums[index] = moneyFormat(sums[index]);
+        //   return
+        // }
+        
+        const values = data.map(item => Number(item[column.property]));
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+          // 千分位格式化金额
+          if (column.property == 'nper' || column.property == 'num') {
+            sums[index] = moneyFormat(sums[index], 0);
+          } else {
+            sums[index] = moneyFormat(sums[index]);
+          }
+          
+        } else {
+          sums[index] = 'N/A';
+        }
+      });
+
+      return sums;
+    }
   },
   filters: {
     function() {},
@@ -569,6 +625,7 @@ export default {
   .baseInfo {
     padding: 10px 0 10px 20px;
     border-bottom: 1px solid #eee;
+    font-size: 14px;
 
     span {
       line-height: 34px;

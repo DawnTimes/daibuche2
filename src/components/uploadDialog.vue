@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 11:25:57
- * @LastEditTime: 2020-10-30 11:16:27
+ * @LastEditTime: 2020-11-06 18:09:18
  * @LastEditors: your name
  * @Description: 文件上传弹窗
  * @FilePath: \webcode2\src\components\uploadDialog.vue
@@ -222,6 +222,8 @@ export default {
               title: '温馨提示！',
               message: res.data || '导入成功!'
             });
+            // 保存成功的状态，页面根据状态刷新列表数据
+            this.setSuccessStatus(true);
             this.loading = false;
             this.uploadFormVisible = false;
             // this.fileList = [];
