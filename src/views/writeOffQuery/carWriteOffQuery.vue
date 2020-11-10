@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-05 19:36:20
+ * @LastEditTime: 2020-11-09 17:49:19
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -17,7 +17,7 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="承租人/牌照商:" prop="name">
+        <el-form-item label="承租人/牌照商" prop="name">
           <el-input
             maxlength="30"
             v-model="formData.name"
@@ -25,7 +25,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <!-- <el-form-item label="牌照商:" prop="licenceName">
+        <!-- <el-form-item label="牌照商" prop="licenceName">
           <el-input
             maxlength="50"
             v-model="formData.licenceName"
@@ -33,7 +33,7 @@
             placeholder
           ></el-input>
         </el-form-item> -->
-        <el-form-item label="合同编号:" prop="contractNumber">
+        <el-form-item label="合同编号" prop="contractNumber">
           <el-input
             maxlength="30"
             v-model="formData.contractNumber"
@@ -41,7 +41,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="期数:" prop="nper">
+        <el-form-item label="期数" prop="nper">
           <el-input
             maxlength="30"
             v-model="formData.nper"
@@ -50,7 +50,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item label="是否限牌:" prop="isLimitLicence">
+        <el-form-item label="是否限牌" prop="isLimitLicence">
           <el-select
             v-model="formData.isLimitLicence"
             clearable
@@ -67,7 +67,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="车型名称:" prop="carModel">
+        <el-form-item label="车型名称" prop="carModel">
           <el-input
             maxlength="30"
             v-model="formData.carModel"
@@ -75,7 +75,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="车架号:" prop="frameNumber">
+        <el-form-item label="车架号" prop="frameNumber">
           <el-input
             maxlength="30"
             v-model="formData.frameNumber"
@@ -83,7 +83,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="银行单据号:" prop="serialNumber">
+        <el-form-item label="银行单据号" prop="serialNumber">
           <el-input
             maxlength="30"
             v-model="formData.serialNumber"
@@ -144,7 +144,7 @@
         }"
       >
         <el-table-column
-          width="50"
+          width="40"
           align="center"
           type="selection"
           fixed
@@ -640,13 +640,13 @@ export default {
       this.tableLoading = true;
       const url = common.selectVerCarStatementUrl;
       const params = {
-        nper: this.formData.nper,
-        contractNumber: this.formData.contractNumber,
+        nper: this.formData.nper.trim(),
+        contractNumber: this.formData.contractNumber.trim(),
         isLimitLicence: this.formData.isLimitLicence,
-        name: this.formData.name,
-        frameNumber: this.formData.frameNumber,
-        serialNumber: this.formData.serialNumber,
-        carModel: this.formData.carModel,
+        name: this.formData.name.trim(),
+        frameNumber: this.formData.frameNumber.trim(),
+        serialNumber: this.formData.serialNumber.trim(),
+        carModel: this.formData.carModel.trim(),
         turnPageShowNum: this.formData.pageSize,
         turnPageBeginPos: this.formData.pageNum,
       };

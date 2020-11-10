@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-18 11:23:35
- * @LastEditTime: 2020-10-27 17:40:43
+ * @LastEditTime: 2020-11-09 17:18:53
  * @LastEditors: your name
  * @Description: 经销店弹窗
  * @FilePath: \webcode2\src\views\supportGold\components\dealerTableDialog.vue
@@ -250,7 +250,7 @@ export default {
       const url = common.agentListUrl;
       const params = {
         agentCode2: this.paramForm.agentCode2,
-        agentName: this.paramForm.agentName,
+        agentName: this.paramForm.agentName.trim(),
         isGacShop: this.paramForm.isGacShop,
         socialCreditCode: this.paramForm.socialCreditCode,
         status: this.paramForm.status,

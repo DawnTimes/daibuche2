@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-05 20:17:36
+ * @LastEditTime: 2020-11-09 17:16:07
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -394,14 +394,14 @@ export default {
       this.tableLoading = true;
       const url = common.queryCarStandingBookUrl;
       const params = {
-        nper            : this.formData.nper,
-        frameNumber     : this.formData.frameNumber,
-        contractNumber  : this.formData.contractNumber,
-        name            : this.formData.name,
+        nper            : this.formData.nper.trim(),
+        frameNumber     : this.formData.frameNumber.trim(),
+        contractNumber  : this.formData.contractNumber.trim(),
+        name            : this.formData.name.trim(),
         isLimitLicence  : this.formData.isLimitLicence,
         modelCode       : this.formData.modelCode,
-        modelName       : this.formData.modelName,
-        cityName        : this.formData.cityName,
+        modelName       : this.formData.modelName.trim(),
+        cityName        : this.formData.cityName.trim(),
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum : this.formData.pageSize,
       };

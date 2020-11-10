@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-11-05 13:58:19
- * @LastEditTime: 2020-11-06 19:19:54
+ * @LastEditTime: 2020-11-09 14:18:59
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\sortable.vue
@@ -29,21 +29,22 @@
       align="left"
       
     >
-      <af-table-column
+      <el-table-column
         v-for="(item, index) in rowCol"
         :key="`rowCol_${index}`"
         :prop="dropCol[index].prop"
         :label="item.label"
         show-overflow-tooltip
+        :width="item.width"
       >
         <template slot-scope="scope">
           <span v-if="dropCol[index].prop != 'num'">{{ scope.row[dropCol[index].prop] }}</span>
           <!-- <span v-if="dropCol[index].prop == 'num'">{{ scope.row[dropCol[index].prop] }}</span> -->
           <el-tooltip content="点击查询" placement="top" effect="light" v-if="dropCol[index].prop == 'num'">
-              <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.num }}</el-link>
-            </el-tooltip>
+            <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.num }}</el-link>
+          </el-tooltip>
         </template>
-      </af-table-column>
+      </el-table-column>
     </el-table>
     <!-- <pre style="text-align: left">
       {{dropCol}}
@@ -190,7 +191,7 @@ export default {
 
   computed: {
     ...mapState({
-      rowCol: store => store.dropCol,
+      rowCol: store => store.rowCol,
       dropCol: store => store.dropCol,
     })
   },
@@ -202,7 +203,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      // setRowCol: 'setRowCol',
+      setRowCol: 'setRowCol',
       setDropCol: 'setDropCol',
     }),
 
@@ -234,6 +235,7 @@ export default {
           // localStorage.setItem('dropCol', JSON.stringify(this.dropCol))
           // 保存修改的列排序
           this.setDropCol(this.dropCol);
+          this.setRowCol(this.dropCol);
           // console.log(this.dropCol);
           // console.log(this.rowCol);
           // console.log(localStorage.getItem('dropCol'));
@@ -344,6 +346,12 @@ export default {
       return sums;
     }
   },
+
+  destroyed() {
+    // localStorage.removeItem('rowCol');
+    // localStorage.removeItem('dropCol');
+    // console.log(123);
+  }
 };
 </script>
 

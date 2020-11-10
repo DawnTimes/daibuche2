@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-05 20:18:00
+ * @LastEditTime: 2020-11-09 17:17:46
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -365,12 +365,12 @@ export default {
       this.tableLoading = true;
       const url = common.queryAgentStandingBookUrl;
       const params = {
-        nper            : this.formData.nper,
+        nper            : this.formData.nper.trim(),
         cityCode        : this.formData.cityCode,
-        contractNumber  : this.formData.contractNumber,
-        name            : this.formData.name,
+        contractNumber  : this.formData.contractNumber.trim(),
+        name            : this.formData.name.trim(),
         isLimitLicence  : this.formData.isLimitLicence,
-        cityName        : this.formData.cityName,
+        cityName        : this.formData.cityName.trim(),
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum : this.formData.pageSize,
       };

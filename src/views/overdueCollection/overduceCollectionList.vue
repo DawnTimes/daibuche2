@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-11-05 15:00:08
+ * @LastEditTime: 2020-11-09 17:14:51
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -332,7 +332,7 @@ export default {
     getOverduceCollectionListData() {
       const url = common.collectionListUrl;
       const params = {
-        name            : this.formData.name,
+        name            : this.formData.name.trim(),
         beginAmount     : this.formData.beginAmount,
         endAmount       : this.formData.endAmount,
         beginDay        : this.formData.beginDay,

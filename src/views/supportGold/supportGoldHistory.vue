@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-11-04 15:03:21
+ * @LastEditTime: 2020-11-09 17:22:07
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldHistory.vue
@@ -276,7 +276,7 @@ export default {
       const url = common.supporFundHisListUrl;
       const params = {
         month: this.formData.month ? moment(this.formData.month).format('MM') : '',
-        batchNumber: this.formData.batchNumber,
+        batchNumber: this.formData.batchNumber.trim(),
         year: this.formData.month ? moment(this.formData.month).format('YYYY') : '',
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,

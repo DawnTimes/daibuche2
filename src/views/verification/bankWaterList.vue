@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-06 19:22:31
+ * @LastEditTime: 2020-11-09 17:35:31
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -430,10 +430,10 @@ export default {
     getBankWaterListData() {
       const url = common.queryBankStatementUrl;
       const params = {
-        companyName: this.formData.companyName,
-        serialNumber: this.formData.serialNumber,
-        sideAccount: this.formData.sideAccount,
-        sideAccountName: this.formData.sideAccountName,
+        companyName: this.formData.companyName.trim(),
+        serialNumber: this.formData.serialNumber.trim(),
+        sideAccount: this.formData.sideAccount.trim(),
+        sideAccountName: this.formData.sideAccountName.trim(),
         startTradeDate: this.formData.startTradeDate,
         endTradeDate: this.formData.endTradeDate,
         verState: this.formData.verState,

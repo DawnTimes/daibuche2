@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-10-29 17:39:09
+ * @LastEditTime: 2020-11-09 17:04:39
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalOperation.vue
@@ -168,7 +168,8 @@ export default {
               // }
             });
           }
-          // this.baseInfoForm.rentApprovalList.splice(0, 1);
+          // 排序
+          this.baseInfoForm.rentApprovalList.sort(this.sortFunc);
           // 判断是否限牌
           if (this.baseInfoForm.isLimitLicence === 'N') {
             this.formReadonly.hide.push(
@@ -187,6 +188,10 @@ export default {
           }
         }
       });
+    },
+    // 按审批时间排序
+    sortFunc(a, b) {
+      return a.approvalTime > b.approvalTime ? 1 : -1
     },
 
     handleFormDataSubmit(obj) {

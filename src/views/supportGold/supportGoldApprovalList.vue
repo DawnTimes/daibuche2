@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-11-02 11:03:43
+ * @LastEditTime: 2020-11-09 17:20:18
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -263,7 +263,7 @@ export default {
 
       const url = common.spprotWaitListUrl;
       const params = {
-        batchNumber: this.formData.batchNumber,
+        batchNumber: this.formData.batchNumber.trim(),
         month: this.formData.month ? moment(this.formData.month).format('MM') : '',
         year: this.formData.month ? moment(this.formData.month).format('YYYY') : '',
         type: this.userApprovalType,

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-27 14:01:04
+ * @LastEditTime: 2020-11-09 17:51:42
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\unInvoiceNoticeList.vue
@@ -28,13 +28,13 @@
             end-placeholder="结束日期"
           ></el-date-picker>
         </el-form-item> -->
-        <el-form-item label="购方名称:" prop="buyName">
+        <el-form-item label="购方名称" prop="buyName">
           <el-input maxlength="50" v-model="formData.buyName" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="购方税号:" prop="buyCreditCode">
+        <el-form-item label="购方税号" prop="buyCreditCode">
           <el-input maxlength="30" v-model="formData.buyCreditCode" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="备注:" prop="remark">
+        <el-form-item label="备注" prop="remark">
           <el-input maxlength="200" v-model="formData.remark" clearable placeholder></el-input>
         </el-form-item>
 
@@ -228,9 +228,9 @@ export default {
     getUninvoiceNoticeListData() {
       const url = common.queryNotInvoiceNoticeDetailUrl;
       const params = {
-        buyCreditCode   : this.formData.buyCreditCode,
-        buyName         : this.formData.buyName,
-        remark          : this.formData.remark,
+        buyCreditCode   : this.formData.buyCreditCode.trim(),
+        buyName         : this.formData.buyName.trim(),
+        remark          : this.formData.remark.trim(),
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum : this.formData.pageSize,
       };

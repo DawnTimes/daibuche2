@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-29 15:39:03
+ * @LastEditTime: 2020-11-09 18:02:59
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeList.vue
@@ -18,10 +18,10 @@
         ref="ruleForm"
       >
         <el-form-item label="车型名称:" prop="modelName">
-          <el-input maxlength="30" v-model="formData.modelName" placeholder=""></el-input>
+          <el-input maxlength="30" v-model="formData.modelName" clearable placeholder=""></el-input>
         </el-form-item>
         <el-form-item label="品牌名称:" prop="brandName">
-          <el-input maxlength="30" v-model="formData.brandName" placeholder=""></el-input>
+          <el-input maxlength="30" v-model="formData.brandName" clearable placeholder=""></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="queryForm">查询</el-button>

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-05 20:18:32
+ * @LastEditTime: 2020-11-09 17:49:40
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -17,17 +17,17 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="承租人/牌照商:" prop="name">
+        <el-form-item label="承租人/牌照商" prop="name">
           <el-input maxlength="30" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="合同编号:" prop="contractNumber">
+        <el-form-item label="合同编号" prop="contractNumber">
           <el-input maxlength="30" v-model="formData.contractNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="期数:" prop="nper">
+        <el-form-item label="期数" prop="nper">
           <el-input maxlength="30" v-model="formData.nper" clearable placeholder></el-input>
         </el-form-item>
 
-        <el-form-item label="银行单据号:" prop="serialNumber">
+        <el-form-item label="银行单据号" prop="serialNumber">
           <el-input
             maxlength="30"
             v-model="formData.serialNumber"
@@ -36,7 +36,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item label="是否限牌:" prop="isLimitLicence">
+        <el-form-item label="是否限牌" prop="isLimitLicence">
           <el-select v-model="formData.isLimitLicence" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in this.$options.filters.flagValue([])"
@@ -322,11 +322,11 @@ export default {
     getDealersShipWriteOffListData() {
       const url = common.selectVerContractStementUrl;
       const params = {
-        nper            : this.formData.nper,
-        contractNumber  : this.formData.contractNumber,
+        nper            : this.formData.nper.trim(),
+        contractNumber  : this.formData.contractNumber.trim(),
         isLimitLicence  : this.formData.isLimitLicence,
-        name            : this.formData.name,
-        serialNumber    : this.formData.serialNumber,
+        name            : this.formData.name.trim(),
+        serialNumber    : this.formData.serialNumber.trim(),
         turnPageShowNum : this.formData.pageSize,
         turnPageBeginPos: this.formData.pageNum,
       };

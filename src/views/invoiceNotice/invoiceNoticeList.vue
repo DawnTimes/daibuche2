@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-05 15:00:51
+ * @LastEditTime: 2020-11-09 17:51:31
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -18,7 +18,7 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="购方名称:" prop="buyName">
+        <el-form-item label="购方名称" prop="buyName">
           <el-input
             maxlength="50"
             v-model="formData.buyName"
@@ -26,7 +26,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="购方税号:" prop="buyCreditCode">
+        <el-form-item label="购方税号" prop="buyCreditCode">
           <el-input
             maxlength="50"
             v-model="formData.buyCreditCode"
@@ -34,7 +34,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="销方名称:" prop="sellName">
+        <el-form-item label="销方名称" prop="sellName">
           <el-input
             maxlength="50"
             v-model="formData.sellName"
@@ -42,7 +42,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="备注:" prop="remark">
+        <el-form-item label="备注" prop="remark">
           <el-input
             maxlength="200"
             v-model="formData.remark"
@@ -50,7 +50,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="生成时间:" prop="dateTime">
+        <el-form-item label="生成时间" prop="dateTime">
           <el-date-picker
             v-model="formData.dateTime"
             type="daterange"
@@ -551,9 +551,9 @@ export default {
     getInvoiceNoticeListData() {
       const url = common.queryInvoiceNoticeDetailUrl;
       const params = {
-        buyCreditCode: this.formData.buyCreditCode,
-        buyName: this.formData.buyName,
-        remark: this.formData.remark,
+        buyCreditCode: this.formData.buyCreditCode.trim(),
+        buyName: this.formData.buyName.trim(),
+        remark: this.formData.remark.trim(),
         startCreateTime: this.formData.startCreateTime,
         endCreateTime: this.formData.endCreateTime,
         turnPageBeginPos: this.formData.pageNum,

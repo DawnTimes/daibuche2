@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-10-29 17:25:42
+ * @LastEditTime: 2020-11-09 17:02:18
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\baseInformationDetailModule.vue

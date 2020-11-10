@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-11-06 19:21:49
+ * @LastEditTime: 2020-11-09 17:36:02
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -89,6 +89,7 @@
         stripe
         show-summary
         :summary-method="getSummaries"
+        @cell-click="cellClick"
         ref="table"
         style="width: 100%"
         :max-height="tableHeight"
@@ -121,9 +122,7 @@
             yellowColor: scope.row.contractType == ''}"
             >{{ scope.row.contractType | contractType }}</span>
           </template>
-        </el-table-column>
-        
-        <!-- <el-table-column prop="id"  label="牌照商名称" show-overflow-tooltip width="120"></el-table-column> -->
+        </el-table-column>       
         <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip></el-table-column>
         <el-table-column prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
           <template slot-scope="scope">
@@ -162,9 +161,7 @@
           <template slot-scope="scope">
             <span :class="{greenStatus: scope.row.repaymentStatus == 'FULL', blueColor: scope.row.repaymentStatus == 'PART', redStatus: scope.row.repaymentStatus == 'NOT'}">{{ scope.row.repaymentStatus | verState }}</span>
           </template>
-        </el-table-column>
-        
-        
+        </el-table-column>        
         <el-table-column prop="dueAmount" label="应收金额" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.dueAmount | moneyFormat}}</span>
@@ -240,7 +237,25 @@
             <span>{{ scope.row.outstandingCommission | moneyFormat}}</span>
           </template>
         </el-table-column>
+
         <!-- <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column> -->
+
+        <!-- 列可拖拽 -->
+        <!-- <af-table-column
+          v-for="(item, index) in rowCol"
+          :key="`rowCol_${index}`"
+          :prop="dropCol[index].prop"
+          :label="item.label"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <span v-if="dropCol[index].prop != 'num'">{{ scope.row[dropCol[index].prop] }}</span>
+            <el-tooltip content="点击查询" placement="top" effect="light" v-if="dropCol[index].prop == 'num'">
+                <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.num }}</el-link>
+              </el-tooltip>
+          </template>
+        </af-table-column> -->
+        
         <el-table-column label="操作" width="100" fixed="right">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="handleWriteOff(scope.row)" :disabled="scope.row.repaymentStatus == 'FULL'">核销</el-button>
@@ -283,8 +298,9 @@ import common from '@/common/common.js';
 import writeOffDialog from './components/writeOffDialog';
 import nperCarList from './components/nperCarList';
 
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { moneyFormat } from '@/common/moneyFormat.js';
+import Sortable from 'sortablejs';
 
 export default {
   name: 'contractListNper',
@@ -344,7 +360,9 @@ export default {
   },
   computed: {
     ...mapState({
-      userId: store => store.userId
+      userId: store => store.userId,
+      rowCol: store => store.dropCol,
+      dropCol: store => store.dropCol,
     })
   },
   watch: {},
@@ -381,8 +399,15 @@ export default {
   mounted() {
     this.getBySerialNumberData();
     this.getContractRepayListData();
+    this.rowDrop();
+    this.columnDrop();
   },
   methods: {
+    ...mapMutations({
+      // setRowCol: 'setRowCol',
+      setDropCol: 'setDropCol',
+    }),
+
     // 查询
     queryForm() {
       // 重置当前页
@@ -430,9 +455,9 @@ export default {
       const url = common.queryContractRepayUrl;
       this.tableData = [];
       const params = {
-        name: this.formData.name,
-        cityName: this.formData.cityName,
-        nper: this.formData.nper,
+        name: this.formData.name.trim(),
+        cityName: this.formData.cityName.trim(),
+        nper: this.formData.nper.trim(),
         repaymentStatus: this.formData.repaymentStatus,
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
@@ -455,6 +480,43 @@ export default {
       }).catch(() => {
         this.tableLoading = false;
       })
+    },
+
+    // 格式化合同状态
+    contractNormalStatus(val) {
+      if (val == 'Y') {}
+    },
+
+    //行拖拽
+    rowDrop() {
+      const tbody = document.querySelector('.el-table__body-wrapper tbody');
+      const _this = this;
+      Sortable.create(tbody, {
+        onEnd({ newIndex, oldIndex }) {
+          const currRow = _this.tableData.splice(oldIndex, 1)[0];
+          _this.tableData.splice(newIndex, 0, currRow);
+        },
+      });
+    },
+    //列拖拽
+    columnDrop() {
+      const wrapperTr = document.querySelector('.el-table__header-wrapper tr');
+      this.sortable = Sortable.create(wrapperTr, {
+        animation: 180,
+        delay: 0,
+        onEnd: (evt) => {
+          const oldItem = this.dropCol[evt.oldIndex];
+          this.dropCol.splice(evt.oldIndex, 1);
+          this.dropCol.splice(evt.newIndex, 0, oldItem);
+          // localStorage.setItem('dropCol', JSON.stringify(this.dropCol))
+          // 保存修改的列排序
+          this.setDropCol(this.dropCol);
+          // console.log(this.dropCol);
+          // console.log(this.rowCol);
+          // console.log(localStorage.getItem('dropCol'));
+        },
+      });
+      
     },
 
     // 获取状态数据字典
@@ -596,8 +658,10 @@ export default {
             }
           }, 0);
           // 千分位格式化金额
-          if (column.property == 'nper' || column.property == 'num') {
+          if (column.property == 'num') {
             sums[index] = moneyFormat(sums[index], 0);
+          } else if (column.property == 'nper') {
+            sums[index] = 'N/A';
           } else {
             sums[index] = moneyFormat(sums[index]);
           }
@@ -608,6 +672,11 @@ export default {
       });
 
       return sums;
+    },
+
+    // 选中单元格
+    cellClick(row, column, cell, event) {
+      // console.log(row, column, cell, event);
     }
   },
   filters: {

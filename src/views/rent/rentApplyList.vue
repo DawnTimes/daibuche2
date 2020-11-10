@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-05 15:02:39
+ * @LastEditTime: 2020-11-09 18:04:11
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -48,22 +48,23 @@
         </el-form-item>
 
         <el-form-item label="城市" prop="cityName">
-          <el-select v-model="formData.cityName" placeholder="请选择">
+          <el-input maxlength="30" v-model="formData.cityName" clearable placeholder=""></el-input>
+          <!-- <el-select v-model="formData.cityName" placeholder="请选择">
             <el-option value label style="height:240px; overflow-y: auto; background-color:#fff; color: #606266; font-weight: normal">
               <el-tree :props="defaultProps" :load="loadNode" lazy @node-click="handleNodeClick" highlight-current accordion></el-tree>
             </el-option>
-          </el-select>
+          </el-select> -->
         </el-form-item>
-        <el-form-item label="牌照商" prop="licenceCode">
-          <!-- <el-input maxlength="50" v-model="formData.licenceCode" placeholder></el-input> -->
-          <el-select v-model="formData.licenceCode" filterable clearable  placeholder="请选择">
+        <el-form-item label="牌照商" prop="licenceName">
+          <el-input maxlength="50" v-model="formData.licenceName" clearable placeholder></el-input>
+          <!-- <el-select v-model="formData.licenceCode" filterable clearable  placeholder="请选择">
             <el-option
               v-for="item in licenceOptions"
               :key="item.licenceCode"
               :label="item.licenceName"
               :value="item.licenceCode">
             </el-option>
-          </el-select>
+          </el-select> -->
         </el-form-item>
 
         <el-form-item>
@@ -234,6 +235,8 @@ export default {
         licenceCode: '',
         modelCode: '',
         modelName: '',
+        cityName: '',
+        licenceName: '',
         pageSize: 10,
         pageNum: 1,
       },
@@ -439,11 +442,13 @@ export default {
     // 获取分页数据
     getRentApplyListData() {
       const params = {
-        cityCode: this.formData.cityCode,
-        licenceCode: this.formData.licenceCode,
-        modelCode: this.formData.modelCode,
-        modelName: this.formData.modelName,
-        isLimitLicence: this.formData.isLimitLicence,
+        cityCode: this.formData.cityCode.trim(),
+        cityName: this.formData.cityName.trim(),
+        licenceName: this.formData.licenceName.trim(),
+        licenceCode: this.formData.licenceCode.trim(),
+        modelCode: this.formData.modelCode.trim(),
+        modelName: this.formData.modelName.trim(),
+        isLimitLicence: this.formData.isLimitLicence.trim(),
         state: '2',
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,

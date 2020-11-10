@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-11-02 14:58:43
+ * @LastEditTime: 2020-11-09 17:50:37
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -26,19 +26,19 @@
             placeholder="选择日期"
           ></el-date-picker>
         </el-form-item> -->
-        <el-form-item label="经销店名称:" prop="agentName">
+        <el-form-item label="经销店名称" prop="agentName">
           <el-input maxlength="50" v-model="formData.agentName" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="车架号:" prop="frameNumber">
+        <el-form-item label="车架号" prop="frameNumber">
           <el-input maxlength="50" v-model="formData.frameNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="批次号:" prop="batchNumber">
+        <el-form-item label="批次号" prop="batchNumber">
           <el-input maxlength="50" v-model="formData.batchNumber" clearable placeholder></el-input>
         </el-form-item>
-        <!-- <el-form-item label="期数:" prop="systemName">
+        <!-- <el-form-item label="期数" prop="systemName">
           <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
         </el-form-item> -->
-        <el-form-item label="支付状态:" prop="payStatus">
+        <el-form-item label="支付状态" prop="payStatus">
           <el-select v-model="formData.payStatus" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in this.$options.filters.paymentStatus([])"
@@ -273,9 +273,9 @@ export default {
       this.tableLoading = true;
       const url = common.supportCarListUrl;
       const params = {
-        agentName: this.formData.agentName,
-        batchNumber: this.formData.batchNumber,
-        frameNumber: this.formData.frameNumber,
+        agentName: this.formData.agentName.trim(),
+        batchNumber: this.formData.batchNumber.trim(),
+        frameNumber: this.formData.frameNumber.trim(),
         payStatus: this.formData.payStatus,
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,

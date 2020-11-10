@@ -441,7 +441,10 @@ export default {
       this.$router.push({
         path: '/editOrganization',
         query: {
-          id: row.licenceCode,
+          licenceCode: row.licenceCode,
+          licenceName: row.licenceName,
+          lessor: row.lessor,
+          socialCreditCode: row.socialCreditCode,
         },
       });
     },

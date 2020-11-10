@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-11-05 15:01:47
+ * @LastEditTime: 2020-11-09 17:19:48
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -320,8 +320,8 @@ export default {
       this.tableLoading = true;
       const url = common.supportApplyListUrl;
       const params = {
-        batchNumber: this.formData.batchNumber,
-        approvalStatus: this.formData.approvalStatus,
+        batchNumber: this.formData.batchNumber.trim(),
+        approvalStatus: this.formData.approvalStatus.trim(),
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
       };
