@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-09 17:49:40
+ * @LastEditTime: 2020-11-10 17:13:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -13,7 +13,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="120px"
+        label-width=""
         size="small"
         ref="ruleForm"
       >
@@ -27,14 +27,14 @@
           <el-input maxlength="30" v-model="formData.nper" clearable placeholder></el-input>
         </el-form-item>
 
-        <el-form-item label="银行单据号" prop="serialNumber">
+        <!-- <el-form-item label="银行单据号" prop="serialNumber">
           <el-input
             maxlength="30"
             v-model="formData.serialNumber"
             clearable
             placeholder
           ></el-input>
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item label="是否限牌" prop="isLimitLicence">
           <el-select v-model="formData.isLimitLicence" clearable placeholder="请选择" style="width: 100%">
@@ -54,9 +54,9 @@
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
 
-        <el-form-item label="">
+        <!-- <el-form-item label="">
           <el-button icon="el-icon-download" type="primary" @click="exportButton" v-show="rightControl.export">导出核销经销店</el-button>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
     </div>
 
@@ -94,7 +94,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="num" label="车辆数量" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="num" label="核销车辆次数" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="leaseWay" label="租赁方式" show-overflow-tooltip width="100">
           <template slot-scope="scope">
               <span>{{ scope.row.leaseWay | leaseWay }}</span>
@@ -113,7 +113,8 @@
           </template>
         </el-table-column>
         <!-- <el-table-column prop="" label="核销人" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="120"></el-table-column>
+        
+        <!-- <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="120"></el-table-column> -->
         <el-table-column prop="payStatus" label="支援金状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | payStatus }}</span>

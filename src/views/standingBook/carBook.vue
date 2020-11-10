@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-09 17:16:07
+ * @LastEditTime: 2020-11-10 18:05:19
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -223,7 +223,7 @@
         </el-table-column>
         <el-table-column prop="financing" label="融资额" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-          <span>{{ scope.row.Financing | moneyFormat}}</span>
+          <span>{{ scope.row.financing | moneyFormat}}</span>
         </template>
         </el-table-column>
         <el-table-column prop="finalPayment" label="尾款" show-overflow-tooltip width="120">
@@ -420,7 +420,7 @@ export default {
       })
     },
 
-    // 导出车辆台账
+    // 导出车辆台账 
     exportButton() {
       window.location.href = `/api${
         common.exportCarSBUrl
@@ -433,7 +433,11 @@ export default {
       }&frameNumber=${
         this.formData.frameNumber ? this.formData.frameNumber : ''
       }&isLimitLicence=${
-        this.formData.isLimitLicence ? this.formData.isLimitLicence : ''}`;
+        this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
+      }&cityName=${
+        this.formData.cityName ? this.formData.cityName : ''
+      }&modelName=${
+        this.formData.modelName ? this.formData.modelName : ''}`;
     },
 
     // 分页

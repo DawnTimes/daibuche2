@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-05 20:20:03
+ * @LastEditTime: 2020-11-10 11:22:32
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
@@ -77,12 +77,12 @@
           color: '#fff',
         }"
       >
-        <el-table-column
+        <!-- <el-table-column
           width="50"
           align="center"
           type="selection"
           fixed
-        ></el-table-column>
+        ></el-table-column> -->
         <el-table-column
           width="50"
           align="center"

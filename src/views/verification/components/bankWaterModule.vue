@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-11-06 15:43:40
+ * @LastEditTime: 2020-11-10 11:49:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -17,6 +17,7 @@
           class="demo-ruleForm"
           :rules="rules"
           status-icon
+          size="medium"
         >
           <el-row :gutter="0">
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
@@ -243,11 +244,11 @@
         </el-form>
       </el-col>
     </el-row>
-    <el-row :gutter="10">
+    <el-row :gutter="0">
       <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="16">
-        <div style="padding: 20px 0 20px 0; text-align: center">
-          <el-button @click="handleGoToBack()">取 消</el-button>
-          <el-button
+        <div style="padding: 10px 0 10px 0; text-align: center">
+          <el-button size="medium" @click="handleGoToBack()">取 消</el-button>
+          <el-button size="medium"
             v-show="!$formAtReadonly('saveBtn', formReadonly.hide)"
             type="primary"
             @click="handleSubmit('formData')"

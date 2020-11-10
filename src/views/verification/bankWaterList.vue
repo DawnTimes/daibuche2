@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-09 17:35:31
+ * @LastEditTime: 2020-11-10 11:51:24
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -143,8 +143,8 @@
             >{{ formatStatus(scope.row.status, paidTemp) }}</span>
           </template>
         </el-table-column> -->
-        <el-table-column prop="paidLogo" label="代付标志" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="projectCategory" label="项目类别" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="paidLogo" label="代付标志" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="projectCategory" label="项目类别" show-overflow-tooltip width="100"></el-table-column>
         <!-- <el-table-column prop="" label="是否虚拟收款" show-overflow-tooltip width="150"></el-table-column> -->
         
         <el-table-column prop="haveVerLines" label="已核销金额" show-overflow-tooltip width="150">

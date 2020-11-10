@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-11-02 14:47:13
+ * @LastEditTime: 2020-11-10 09:52:00
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\baseInformationDetailModule.vue
@@ -15,7 +15,7 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>支援金月份：</span>
-                <span>{{ baseInfoForm.month }}</span>
+                <span>{{ baseInfoForm.year + '-' + baseInfoForm.month }}</span>
               </div>
             </el-col>
             <!-- <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
@@ -300,13 +300,13 @@ export default {
 <style lang="scss">
 .baseInformationDetailModule {
   .baseInfor {
-    padding: 10px 0 10px 10px;
+    padding: 0px 0 10px 0px;
     border-bottom: 1px solid #eee;
     .tempBox {
-      height: 36px;
+      height: 30px;
       color: #000;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 14px;
 
       :nth-child(1) {
         display: inline-block;

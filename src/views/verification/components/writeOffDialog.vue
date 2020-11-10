@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-11-04 16:04:40
+ * @LastEditTime: 2020-11-10 11:13:16
  * @LastEditors: your name
  * @Description: 核销弹框
  * @FilePath: \webcode2\src\views\verification\components\writeOffDialog.vue
@@ -185,5 +185,9 @@ export default {
   .el-dialog__title {
     font-weight: bold;
   }
+}
+
+.writeOffDialog .el-form-item__label, .hearderBoxNerp .el-input__inner {
+  font-size: 13px;
 }
 </style>

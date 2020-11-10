@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-11-09 17:36:02
+ * @LastEditTime: 2020-11-10 17:46:22
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -37,7 +37,7 @@
       </el-row>
     </div>
 
-    <div class="hearderBox">
+    <div class="hearderBox hearderBoxNerp">
       <el-form
         :inline="true"
         :model="formData"
@@ -47,14 +47,14 @@
         ref="ruleForm"
       >
         <el-form-item label="承租人/牌照商" prop="">
-          <el-input maxlength="30" clearable v-model="formData.name" placeholder></el-input>
+          <el-input maxlength="50" clearable v-model="formData.name" placeholder></el-input>
         </el-form-item>
-        <el-form-item label="期数:" prop="nper">
-          <el-input maxlength="30" clearable v-model="formData.nper" placeholder=""></el-input>
+        <el-form-item label="期数" prop="nper">
+          <el-input maxlength="50" v-model="formData.nper" placeholder=""></el-input>
         </el-form-item>
 
         <el-form-item label="上牌地" prop="cityName">
-          <el-input maxlength="10" v-model="formData.cityName" clearable placeholder></el-input>
+          <el-input maxlength="30" v-model="formData.cityName" placeholder></el-input>
         </el-form-item>
 
         <el-form-item label="核销状态" prop="repaymentStatus">
@@ -399,8 +399,8 @@ export default {
   mounted() {
     this.getBySerialNumberData();
     this.getContractRepayListData();
-    this.rowDrop();
-    this.columnDrop();
+    // this.rowDrop();
+    // this.columnDrop();
   },
   methods: {
     ...mapMutations({
@@ -661,13 +661,15 @@ export default {
           if (column.property == 'num') {
             sums[index] = moneyFormat(sums[index], 0);
           } else if (column.property == 'nper') {
-            sums[index] = 'N/A';
+            // sums[index] = 'N/A';
+            sums[index] = '';
           } else {
             sums[index] = moneyFormat(sums[index]);
           }
           
         } else {
-          sums[index] = 'N/A';
+          // sums[index] = 'N/A';
+          sums[index] = '';
         }
       });
 
@@ -701,5 +703,17 @@ export default {
       font-weight: bold;
     }
   }
+}
+</style>
+
+<style lang="scss">
+.hearderBoxNerp .el-form-item__label, .hearderBoxNerp .el-input__inner {
+  font-size: 12px;
+}
+.contractListNper .el-table .cell {
+  font-size: 12px;
+}
+.contractListNper .el-table th>.cell {
+  font-size: 13px;
 }
 </style>

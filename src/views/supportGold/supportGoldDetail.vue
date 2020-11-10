@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-11-02 14:45:42
+ * @LastEditTime: 2020-11-10 09:48:26
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldDetail.vue
@@ -68,6 +68,7 @@ export default {
         status: 'Y',
         suApprovalList: [],
         month: '',
+        year: '',
         batchNumber: '',
         batch: '',
         carNum: '',

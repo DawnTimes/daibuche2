@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:25:10
- * @LastEditTime: 2020-11-04 10:27:54
+ * @LastEditTime: 2020-11-10 11:43:38
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\collectionRecord.vue
@@ -22,8 +22,8 @@
     <el-row :gutter="0">
       <el-col :xs="24" :sm="24" :md="24" :lg="20" :xl="18">
         <div class="exportBtn">
-          <el-button icon="el-icon-upload2" type="primary" size="medium" @click="importButton" v-show="rightControl.import">导入催收记录</el-button>
-          <el-button icon="el-icon-download" type="primary" size="medium" plain @click="exportButton" v-show="rightControl.export">导出催收记录</el-button>
+          <el-button icon="el-icon-upload2" type="primary" size="small" @click="importButton" v-show="rightControl.import">导入催收记录</el-button>
+          <el-button icon="el-icon-download" type="primary" size="small" plain @click="exportButton" v-show="rightControl.export">导出催收记录</el-button>
         </div>
         <div class="table">
           <el-table
@@ -274,8 +274,8 @@ export default {
 <style scoped lang="scss">
 .collectionRecord {
   .addBox {
-    padding-top: 30px;
-    padding-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
 
 }
 

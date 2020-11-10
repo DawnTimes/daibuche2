@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-11-09 17:14:51
+ * @LastEditTime: 2020-11-10 11:35:48
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -83,7 +83,7 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="name" label="经销店名称" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="name" label="经销店名称" show-overflow-tooltip width="250"></el-table-column>
         <el-table-column prop="payDate" label="逾期开始日期" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.payDate | timeFormat }}</span>
@@ -126,13 +126,13 @@
             <el-link type="primary" @click="queryRecord(scope.row)" v-show="rightControl.check">查看催收记录</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="electricDate" label="电催日期" show-overflow-tooltip width="100">
+        <el-table-column prop="electricDate" label="电催日期" show-overflow-tooltip width="200">
           <template slot-scope="scope">
             <span>{{ scope.row.electricDate | timeFormatTemp }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="overdueReason" label="逾期原因" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="electricCatalysis" label="电催情况" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="overdueReason" label="逾期原因" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="electricCatalysis" label="电催情况" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column label="操作" show-overflow-tooltip fixed="right" width="100">
           <template slot-scope="scope">
             <!-- <el-link type="primary" @click="queryRecord(scope.row)" v-if="rightControl.entry">查看催收记录</el-link> -->

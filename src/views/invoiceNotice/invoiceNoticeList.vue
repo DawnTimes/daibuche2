@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-09 17:51:31
+ * @LastEditTime: 2020-11-10 16:32:55
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -35,6 +35,14 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="销方名称" prop="sellName">
+          <el-input
+            maxlength="50"
+            v-model="formData.sellName"
+            clearable
+            placeholder
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="开票状态" prop="sellName">
           <el-input
             maxlength="50"
             v-model="formData.sellName"
@@ -150,12 +158,12 @@
           color: '#fff',
         }"
       >
-        <el-table-column
-          width="50"
+        <!-- <el-table-column
+          width="40"
           align="center"
           type="selection"
           fixed
-        ></el-table-column>
+        ></el-table-column> -->
         <el-table-column
           width="80"
           align="center"

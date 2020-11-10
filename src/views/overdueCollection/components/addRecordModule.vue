@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:02:13
- * @LastEditTime: 2020-09-25 14:39:28
+ * @LastEditTime: 2020-11-10 11:43:12
  * @LastEditors: your name
  * @Description: 新增电催记录
  * @FilePath: \webcode2\src\views\overdueCollection\components\addRecordModule.vue
@@ -18,6 +18,7 @@
           class="demo-ruleForm"
           :rules="rules"
           status-icon
+          size="medium"
         >
           <el-row :gutter="0">
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
@@ -97,7 +98,7 @@
                   v-model="formData.overdueReason"
                   type="textarea"
                   maxlength="300"
-                  :autosize="{ minRows: 3, maxRows: 5}"
+                  :autosize="{ minRows: 2, maxRows: 5}"
                   :disabled="$formAtReadonly('overdueReason', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
@@ -113,7 +114,7 @@
                   v-model="formData.electricCatalysis"
                   type="textarea"
                   maxlength="300"
-                  :autosize="{ minRows: 3, maxRows: 5}"
+                  :autosize="{ minRows: 2, maxRows: 5}"
                   :disabled="$formAtReadonly('electricCatalysis', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
@@ -125,8 +126,8 @@
     <el-row :gutter="0">
       <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="16">
         <div style="padding: 5px 0 5px 0; text-align: center">
-          <el-button @click="handleGoToBack()">退 出</el-button>
-          <el-button
+          <el-button size="medium" @click="handleGoToBack()">退 出</el-button>
+          <el-button size="medium"
             v-show="!$formAtReadonly('saveBtn', formReadonly.hide)"
             type="primary"
             @click="handleSubmit('formData')"

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-10-28 09:24:20
+ * @LastEditTime: 2020-11-10 17:40:41
  * @LastEditors: your name
  * @Description: 查询期数下所有车辆
  * @FilePath: \webcode2\src\views\verification\components\nperCarList.vue
@@ -38,7 +38,7 @@
           <!-- <el-table-column prop="" label="承租人/牌照商" show-overflow-tooltip width="150"></el-table-column>          -->
           <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="100"></el-table-column>
           <el-table-column prop="nper" label="期数" show-overflow-tooltip width="60"></el-table-column>
-          <el-table-column prop="modelCode" label="车型名称" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="modelCode" label="车型" show-overflow-tooltip></el-table-column>
           <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip></el-table-column>
           <el-table-column prop="plateNumber" label="车牌号" show-overflow-tooltip></el-table-column>
           <el-table-column prop="engineNumber" label="发动机号" show-overflow-tooltip></el-table-column>
