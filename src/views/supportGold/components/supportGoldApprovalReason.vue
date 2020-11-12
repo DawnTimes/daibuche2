@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-11-03 11:49:29
+ * @LastEditTime: 2020-11-11 19:08:43
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -84,7 +84,7 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="agentCode" label="经销店代码" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="agentCode" label="经销店代码" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="carNum" label="车辆数" sortable show-overflow-tooltip width="90" :sort-method="(row1, row2) => sortMethod(row1, row2, 'carNum')">
           <template slot-scope="scope">
@@ -98,12 +98,12 @@
             <span>{{ scope.row.supportFund | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="licenceFund" label="牌照费" sortable show-overflow-tooltip width="120" :sort-method="(row1, row2) => sortMethod(row1, row2, 'licenceFund')">
+        <el-table-column prop="licenceFund" label="牌照费" sortable show-overflow-tooltip width="110" :sort-method="(row1, row2) => sortMethod(row1, row2, 'licenceFund')">
           <template slot-scope="scope">
             <span>{{ scope.row.licenceFund | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="totalFund" label="支援金总额" sortable show-overflow-tooltip width="120" :sort-method="(row1, row2) => sortMethod(row1, row2, 'totalFund')">
+        <el-table-column prop="totalFund" label="支援金总额" sortable show-overflow-tooltip width="140" :sort-method="(row1, row2) => sortMethod(row1, row2, 'totalFund')">
           <template slot-scope="scope">
             <span>{{ scope.row.totalFund | moneyFormat}}</span>
           </template>
@@ -119,27 +119,27 @@
         <!-- <el-table-column prop="" label="数据来源" show-overflow-tooltip></el-table-column> -->
         <el-table-column prop="remark" label="申请原因" show-overflow-tooltip></el-table-column>
         <el-table-column
-            prop="twoN"
+            prop="threeN"
             :label="setMonthTotal(2)"
             show-overflow-tooltip
-            width="140"
-            sortable
-            :sort-method="(row1, row2) => sortMethod(row1, row2, 'twoN')"
-          >
-          <template slot-scope="scope">
-            <span>{{ scope.row.twoN | moneyFormat}}</span>
-          </template>
-          </el-table-column>
-          <el-table-column
-            prop="threeN"
-            :label="setMonthTotal(3)"
-            show-overflow-tooltip
-            width="140"
+            width="150"
             sortable
             :sort-method="(row1, row2) => sortMethod(row1, row2, 'threeN')"
           >
           <template slot-scope="scope">
             <span>{{ scope.row.threeN | moneyFormat}}</span>
+          </template>
+          </el-table-column>
+          <el-table-column
+            prop="twoN"
+            :label="setMonthTotal(3)"
+            show-overflow-tooltip
+            width="150"
+            sortable
+            :sort-method="(row1, row2) => sortMethod(row1, row2, 'twoN')"
+          >
+          <template slot-scope="scope">
+            <span>{{ scope.row.twoN | moneyFormat}}</span>
           </template>
           </el-table-column>
           <el-table-column
@@ -308,12 +308,12 @@ export default {
     this.batchNumber = params.batchNumber;
 
     this.$nextTick(function () {
-      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 110;
       
       // 监听窗口大小变化
       let self = this;
       window.onresize = function() {
-        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 120
+        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 110
       }
     })
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -356,6 +356,7 @@ export default {
 
     // 获取分页数据
     getSupportGoldReasonListData() {
+      this.tableData = [];
       this.tableLoading = true;
       const url = common.supportAgListUrl;
       const params = {
@@ -523,12 +524,12 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px 0 30px 0;
+      padding: 10px 0 20px 0;
       border-bottom: 1px solid #eee;
       span {
         color: #000;
         font-weight: bold;
-        font-size: 24px;
+        font-size: 20px;
       }
     }
 

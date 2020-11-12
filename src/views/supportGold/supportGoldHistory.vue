@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-11-09 17:22:07
+ * @LastEditTime: 2020-11-11 18:46:38
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldHistory.vue
@@ -122,7 +122,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" width="80" fixed="right">
+        <el-table-column label="操作" align="center" width="80" fixed="right">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleDetail(scope.row)" v-show="rightControl.detail">详情</el-button>
           </template>
@@ -222,13 +222,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -272,6 +272,7 @@ export default {
 
     // 获取分页数据
     getSupportGoldHistoryListData() {
+      this.tableData = [];
       this.tableLoading = true;
       const url = common.supporFundHisListUrl;
       const params = {
@@ -319,7 +320,8 @@ export default {
           year       : row.year,
           month      : row.month,
           batch      : row.Batch,
-          applyDate  : moment(row.create_time).format('YYYY-MM-DD'),
+          // applyDate  : moment(row.create_time).format('YYYY-MM-DD'),
+          applyDate  : row.year + '-' + row.month,
           type       : this.userApprovalType,
           carNum     : row.carNum,
           batchNumber: row.batchNumber,

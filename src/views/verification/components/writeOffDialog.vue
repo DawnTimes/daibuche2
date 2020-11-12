@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-11-10 11:13:16
+ * @LastEditTime: 2020-11-11 17:26:36
  * @LastEditors: your name
  * @Description: 核销弹框
  * @FilePath: \webcode2\src\views\verification\components\writeOffDialog.vue
@@ -15,7 +15,7 @@
       :visible.sync="writeOffFormVisible"
       :destroy-on-close="true"
     >
-      <el-form :model="writeOffForm" ref="writeOffForm" :rules="rules" label-width="110px" size="medium">
+      <el-form :model="writeOffForm" ref="writeOffForm" :rules="rules" label-width="120px" size="medium">
         <el-row :gutter="0">
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
             <el-form-item label="银行单据号">
@@ -179,7 +179,7 @@ export default {
   }
 
   .el-dialog__body {
-    padding: 20px 20px 10px 10px;
+    padding: 10px;
   }
 
   .el-dialog__title {

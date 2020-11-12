@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-09 18:05:28
+ * @LastEditTime: 2020-11-11 18:25:24
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentAppytHistory.vue
@@ -162,6 +162,7 @@
           label="操作"
           width="80"
           fixed="right"
+          align="center"
         >
           <template slot-scope="scope">
             <el-button size="mini" plain @click="handleDetail(scope.row)" v-show="rightControl.detail">详情</el-button>
@@ -279,12 +280,12 @@ export default {
     });
 
     this.$nextTick(function () {
-      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 110;
       
       // 监听窗口大小变化
       let self = this;
       window.onresize = function() {
-        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 120
+        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 110
       }
     })
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -329,6 +330,7 @@ export default {
 
     // 获取分页数据
     getRentApplyListData() {
+      this.tableData = [];
       const params = {
         cityCode: this.formData.cityCode.trim(),
         cityName: this.formData.cityName.trim(),

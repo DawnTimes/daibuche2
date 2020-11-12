@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-11-10 14:57:35
+ * @LastEditTime: 2020-11-11 13:43:55
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -254,7 +254,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+            <!-- <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
                 label="Email地址"
                 prop="email"
@@ -268,7 +268,7 @@
                   :disabled="$formAtReadonly('email', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
-            </el-col>
+            </el-col> -->
             
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item

@@ -57,7 +57,7 @@
 }
 
 .el-table .cell {
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .el-table th>.cell {
@@ -70,4 +70,8 @@
 
 .el-table__footer-wrapper .cell {
   font-size: 12px !important;
+}
+
+.el-table td {
+  padding: 10px 0;
 }

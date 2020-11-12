@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-11-09 17:20:18
+ * @LastEditTime: 2020-11-11 18:30:58
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -208,12 +208,12 @@ export default {
     });
     
     this.$nextTick(function () {
-      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 110;
       
       // 监听窗口大小变化
       let self = this;
       window.onresize = function() {
-        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 120
+        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 110
       }
     })
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -260,6 +260,7 @@ export default {
       // this.userApprovalType = common.queryApprovalFlow(9632, this.asideInfoIds, '2'); // 资管部长审批
 
       this.tableLoading = true;
+      this.tableData = [];
 
       const url = common.spprotWaitListUrl;
       const params = {
@@ -307,7 +308,8 @@ export default {
           year       : row.year,
           month      : row.month,
           batch      : row.Batch,
-          applyDate  : moment(row.create_time).format('YYYY-MM-DD'),
+          // applyDate  : moment(row.create_time).format('YYYY-MM-DD'),
+          applyDate  : row.year + '-' + row.month,
           type       : this.userApprovalType,
           carNum     : row.carNum,
           batchNumber: row.batchNumber,

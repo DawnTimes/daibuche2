@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-11-09 17:19:48
+ * @LastEditTime: 2020-11-11 18:39:19
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -80,7 +80,7 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="" label="支援金月份" show-overflow-tooltip width="100">
+        <el-table-column prop="" label="支援金月份" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.year + '-' + scope.row.month }}</span>
           </template>
@@ -118,7 +118,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="creater" label="申请人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip width="120">
+        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.create_time | timeFormat }}</span>
           </template>
@@ -135,7 +135,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" width="150" fixed="right">
+        <el-table-column label="操作" width="170" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleRegister(scope.row)" v-if="rightControl.register" :disabled="!(scope.row.approvalStatus == '4')">登记</el-button>
             <el-button size="mini" @click="handleDetail(scope.row)" v-if="rightControl.detail">详情</el-button>
@@ -260,13 +260,13 @@ export default {
     
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -317,6 +317,7 @@ export default {
 
     // 获取分页数据
     getSupportGoldApplyListData() {
+      this.tableData = [];
       this.tableLoading = true;
       const url = common.supportApplyListUrl;
       const params = {
@@ -363,7 +364,8 @@ export default {
           year       : row.year,
           month      : row.month,
           batch      : row.Batch,
-          applyDate  : moment(row.create_time).format('YYYY-MM-DD'),
+          // applyDate  : moment(row.create_time).format('YYYY-MM-DD'),
+          applyDate  : row.year + '-' + row.month,
           type       : this.userApprovalType,
           carNum     : row.carNum,
           batchNumber: row.batchNumber,

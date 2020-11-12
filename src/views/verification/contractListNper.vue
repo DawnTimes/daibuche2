@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-11-10 17:46:22
+ * @LastEditTime: 2020-11-11 18:46:58
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -48,6 +48,9 @@
       >
         <el-form-item label="承租人/牌照商" prop="">
           <el-input maxlength="50" clearable v-model="formData.name" placeholder></el-input>
+        </el-form-item>
+        <el-form-item label="合同编号" prop="contractNumber">
+          <el-input maxlength="50" v-model="formData.contractNumber" placeholder></el-input>
         </el-form-item>
         <el-form-item label="期数" prop="nper">
           <el-input maxlength="50" v-model="formData.nper" placeholder=""></el-input>
@@ -98,10 +101,10 @@
         'font-weight':'bold',  
         'background':'#627CAF',    
         'color': '#fff',
-        'font-size': '13px'
+        'font-size': '13px',
       }"
         :cell-style="{
-          'font-size': '12px'
+          'font-size': '12px',
         }"
       >
         <el-table-column width="50" align="center" label="序号" type="index" :index="indexMethod" fixed></el-table-column>
@@ -256,9 +259,9 @@
           </template>
         </af-table-column> -->
         
-        <el-table-column label="操作" width="100" fixed="right">
+        <el-table-column label="操作" align="center" width="100" fixed="right">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="handleWriteOff(scope.row)" :disabled="scope.row.repaymentStatus == 'FULL'">核销</el-button>
+            <el-button size="mini" type="primary" @click="handleWriteOff(scope.row)" :disabled="scope.row.repaymentStatus == 'FULL'|| baseFrom.notVerLines == '0'">核销</el-button>
             <!-- <el-button size="mini" plain @click="queryCar(scope.row)">车辆清单</el-button> -->
           </template>
         </el-table-column>
@@ -326,6 +329,7 @@ export default {
         name: '',
         cityName: '',
         nper: '',
+        contractNumber: '',
         repaymentStatus: '',
         pageSize: 10,
         pageNum: 1,
@@ -373,13 +377,13 @@ export default {
     
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -458,6 +462,7 @@ export default {
         name: this.formData.name.trim(),
         cityName: this.formData.cityName.trim(),
         nper: this.formData.nper.trim(),
+        contractNumber: this.formData.contractNumber.trim(),
         repaymentStatus: this.formData.repaymentStatus,
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
@@ -583,7 +588,7 @@ export default {
       const url = common.selectCarRepayListUrl;
       const params = {
         nper: row.nper,
-        oldContractId: row.contractId,
+        oldContractId: row.oldContractId,
       };
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
@@ -694,12 +699,12 @@ export default {
   }
 
   .baseInfo {
-    padding: 10px 0 10px 20px;
+    padding: 5px 0 5px 10px;
     border-bottom: 1px solid #eee;
-    font-size: 14px;
+    font-size: 13px;
 
     span {
-      line-height: 34px;
+      line-height: 30px;
       font-weight: bold;
     }
   }

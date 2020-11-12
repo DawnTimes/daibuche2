@@ -140,13 +140,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度

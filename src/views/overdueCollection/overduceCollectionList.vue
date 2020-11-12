@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-11-10 11:35:48
+ * @LastEditTime: 2020-11-11 18:24:43
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -22,13 +22,13 @@
           <el-input maxlength="50" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="逾期天数:" prop="beginDay">
-          <el-input maxlength="5" v-model="formData.beginDay" clearable placeholder="请输入整数" style="width: 130px"></el-input> -
-          <el-input maxlength="5" v-model="formData.endDay" clearable placeholder="请输入整数" style="width: 130px"></el-input> 天
+          <el-input maxlength="5" v-model="formData.beginDay" clearable placeholder="请输入整数" style="width: 120px"></el-input> -
+          <el-input maxlength="5" v-model="formData.endDay" clearable placeholder="请输入整数" style="width: 120px"></el-input> 天
         </el-form-item>
 
         <el-form-item label="逾期金额:" prop="beginAmount">
-          <el-input maxlength="10" v-model="formData.beginAmount" clearable placeholder="请输入整数" style="width: 130px"></el-input> -
-          <el-input maxlength="10" v-model="formData.endAmount" clearable placeholder="请输入整数" style="width: 130px"></el-input> 元
+          <el-input maxlength="10" v-model="formData.beginAmount" clearable placeholder="请输入整数" style="width: 120px"></el-input> -
+          <el-input maxlength="10" v-model="formData.endAmount" clearable placeholder="请输入整数" style="width: 120px"></el-input> 元
         </el-form-item>
 
         <!-- <el-form-item label="电催日期:" prop="systemName">
@@ -84,7 +84,7 @@
           fixed
         ></el-table-column>
         <el-table-column prop="name" label="经销店名称" show-overflow-tooltip width="250"></el-table-column>
-        <el-table-column prop="payDate" label="逾期开始日期" show-overflow-tooltip width="120">
+        <el-table-column prop="payDate" label="逾期开始日期" show-overflow-tooltip width="140">
           <template slot-scope="scope">
             <span>{{ scope.row.payDate | timeFormat }}</span>
           </template>
@@ -95,33 +95,33 @@
           <span>{{ scope.row.dueAmount | moneyFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="yfwh" label="已发支援金/未付租金" show-overflow-tooltip width="160">
+        <el-table-column prop="yfwh" label="已发支援金/未付租金" show-overflow-tooltip width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.yfwh | moneyFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="yfwfday" label="已发未付对应月份" show-overflow-tooltip width="140"></el-table-column>
-        <el-table-column prop="wfwh" label="未发支援金/未付租金" show-overflow-tooltip width="160">
+        <el-table-column prop="yfwfday" label="已发未付对应月份" show-overflow-tooltip width="160"></el-table-column>
+        <el-table-column prop="wfwh" label="未发支援金/未付租金" show-overflow-tooltip width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.wfwh | moneyFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="wfwfday" label="未发未付对应月份" show-overflow-tooltip width="140"></el-table-column>
-        <el-table-column prop="" label="应还罚息金额" width="120">
+        <el-table-column prop="wfwfday" label="未发未付对应月份" show-overflow-tooltip width="160"></el-table-column>
+        <el-table-column prop="" label="应还罚息金额" width="140">
           <template slot-scope="scope">
           <span>{{ scope.row.amount | moneyFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="outstandingAmount" label="应还金额合计" show-overflow-tooltip width="120">
+        <el-table-column prop="outstandingAmount" label="应还金额合计" show-overflow-tooltip width="160">
           <template slot-scope="scope">
           <span>{{ scope.row.outstandingAmount | moneyFormat }}</span>
         </template>
         </el-table-column>
         <el-table-column prop="storeManagerName" label="店总姓名" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="storeManagerTel" label="店总联系方式" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="sellName" label="售后经理姓名" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="sellTel" label="售后经理联系方式" show-overflow-tooltip width="140"></el-table-column>
-        <el-table-column label="催收记录查询" show-overflow-tooltip width="120">
+        <el-table-column prop="storeManagerTel" label="店总联系方式" show-overflow-tooltip width="140"></el-table-column>
+        <el-table-column prop="sellName" label="售后经理姓名" show-overflow-tooltip width="140"></el-table-column>
+        <el-table-column prop="sellTel" label="售后经理联系方式" show-overflow-tooltip width="160"></el-table-column>
+        <el-table-column label="催收记录查询" show-overflow-tooltip width="140">
           <template slot-scope="scope">
             <el-link type="primary" @click="queryRecord(scope.row)" v-show="rightControl.check">查看催收记录</el-link>
           </template>
@@ -133,10 +133,10 @@
         </el-table-column>
         <el-table-column prop="overdueReason" label="逾期原因" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="electricCatalysis" label="电催情况" show-overflow-tooltip width="200"></el-table-column>
-        <el-table-column label="操作" show-overflow-tooltip fixed="right" width="100">
+        <el-table-column label="操作" align="center" show-overflow-tooltip fixed="right" width="140">
           <template slot-scope="scope">
             <!-- <el-link type="primary" @click="queryRecord(scope.row)" v-if="rightControl.entry">查看催收记录</el-link> -->
-            <el-link type="primary" @click="entryRecord(scope.row)" v-if="rightControl.entry">录入催收记录</el-link>
+            <el-button size="mini" type="primary" @click="entryRecord(scope.row)" v-if="rightControl.entry">录入催收记录</el-button>
             <!-- <el-button size="mini" @click="queryRecord(scope.row)" v-if="rightControl.entry">查看催收记录</el-button>
             <el-button size="mini" @click="entryRecord(scope.row)" v-if="rightControl.entry">录入</el-button> -->
           </template>
@@ -277,13 +277,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -330,6 +330,7 @@ export default {
 
     // 获取分页数据
     getOverduceCollectionListData() {
+      this.tableData = [];
       const url = common.collectionListUrl;
       const params = {
         name            : this.formData.name.trim(),

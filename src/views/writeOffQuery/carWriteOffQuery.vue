@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-09 17:49:19
+ * @LastEditTime: 2020-11-11 18:47:15
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -13,7 +13,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="110px"
+        label-width="120px"
         size="small"
         ref="ruleForm"
       >
@@ -116,7 +116,7 @@
     <div class="batchBtn">
       <el-button
         type="primary"
-        size="small"
+        size="mini"
         @click="batchRecoil"
         v-show="rightControl.recoil"
         >批量反冲</el-button
@@ -470,10 +470,11 @@
         <el-table-column
           prop="remark"
           label="备注"
+          width="160"
           show-overflow-tooltip
         ></el-table-column>
 
-        <el-table-column label="操作" width="80" fixed="right">
+        <el-table-column label="操作" align="center" width="100" fixed="right">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -588,13 +589,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -637,6 +638,7 @@ export default {
 
     // 获取分页数据
     getCarWriteOffListData() {
+      this.tableData = [];
       this.tableLoading = true;
       const url = common.selectVerCarStatementUrl;
       const params = {

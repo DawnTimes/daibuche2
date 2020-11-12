@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-10 17:13:52
+ * @LastEditTime: 2020-11-11 14:00:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -272,13 +272,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -321,6 +321,7 @@ export default {
 
     // 获取分页数据
     getDealersShipWriteOffListData() {
+      this.tableData = [];
       const url = common.selectVerContractStementUrl;
       const params = {
         nper            : this.formData.nper.trim(),

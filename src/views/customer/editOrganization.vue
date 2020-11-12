@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-26 09:32:16
- * @LastEditTime: 2020-11-09 15:42:32
+ * @LastEditTime: 2020-11-11 14:56:01
  * @LastEditors: your name
  * @Description: 新增牌照商
  * @FilePath: \webcode2\src\views\customer\editOrganization.vue
@@ -89,9 +89,9 @@ export default {
   created() {
     // console.log(this.$route);
     this.id = this.$route.query.licenceCode;
-    this.formData.licenceName = this.$route.query.licenceName;
-    this.formData.lessor = this.$route.query.lessor;
-    this.formData.socialCreditCode = this.$route.query.socialCreditCode;
+    // this.formData.licenceName = this.$route.query.licenceName;
+    // this.formData.lessor = this.$route.query.lessor;
+    // this.formData.socialCreditCode = this.$route.query.socialCreditCode;
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -123,6 +123,8 @@ export default {
     // 编辑提交
     handleFormDataSubmit(object) {
       const data = object.data;
+      data.createT = moment(data.createT).format('YYYY-MM-DD HH:mm:ss');
+      data.lastModifiedT = moment(data.lastModifiedT).format('YYYY-MM-DD HH:mm:ss');
       this.status.loading = true;
       const url = common.addOrUpdateLicenceUrl;
 

@@ -9,7 +9,7 @@
           :inline="true"
           :model="params"
           class="demo-form-inline"
-          label-width="130px"
+          label-width=""
           size="small"
           ref="params"
         >
@@ -38,6 +38,7 @@
               v-model="params.licenceName"
               placeholder="牌照商"
               size="small"
+              clearable
             ></el-input>
           </el-form-item>
           <el-form-item label="状态" prop="status">
@@ -58,6 +59,7 @@
               v-model="params.lessor"
               placeholder="出租方"
               size="small"
+              clearable
             ></el-input>
           </el-form-item>
           <el-form-item label="社会统一信用代码" prop="socialCreditCode">
@@ -66,6 +68,7 @@
               v-model="params.socialCreditCode"
               placeholder="社会统一信用代码"
               size="small"
+              clearable
             ></el-input>
           </el-form-item>
           <el-form-item>
@@ -164,13 +167,13 @@
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="email"
         label="Email地址"
         width="200"
         :show-overflow-tooltip="true"
         resizable
-      ></el-table-column>
+      ></el-table-column> -->
 
       <el-table-column
         prop="legalRepresentative"
@@ -276,7 +279,7 @@
       :current-page="currentPage"
       :page-sizes="[10, 20, 50, 100, 500]"
       :page-size="pageSize"
-      layout="total, prev, pager, next, sizes, jumper"
+      layout="total, sizes, prev, pager, next, jumper"
       :total="totalCount"
     ></el-pagination>
 
@@ -442,9 +445,9 @@ export default {
         path: '/editOrganization',
         query: {
           licenceCode: row.licenceCode,
-          licenceName: row.licenceName,
-          lessor: row.lessor,
-          socialCreditCode: row.socialCreditCode,
+          // licenceName: row.licenceName,
+          // lessor: row.lessor,
+          // socialCreditCode: row.socialCreditCode,
         },
       });
     },
@@ -465,13 +468,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -505,7 +508,8 @@ export default {
 
 <style scoped>
 .paginationClass {
-  margin-top: 1%;
+  /* margin-top: 1%; */
+  padding-top: 10px;
   float: right;
 }
 .userPage {

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-09 18:04:11
+ * @LastEditTime: 2020-11-11 18:23:20
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -173,8 +173,9 @@
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
         <el-table-column
           label="操作"
-          width="220"
+          width="250"
           fixed="right"
+          align="center"
         >
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleEdit(scope.row)" v-if="rightControl.edit" :disabled="scope.row.approvalStatus == '2' || scope.row.approvalStatus == '3' || scope.row.approvalStatus == '4'">编辑</el-button>
@@ -339,12 +340,12 @@ export default {
     });
 
     this.$nextTick(function () {
-      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 110;
       
       // 监听窗口大小变化
       let self = this;
       window.onresize = function() {
-        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       }
     })
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -441,6 +442,7 @@ export default {
 
     // 获取分页数据
     getRentApplyListData() {
+      this.tableData = [];
       const params = {
         cityCode: this.formData.cityCode.trim(),
         cityName: this.formData.cityName.trim(),

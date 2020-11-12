@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-09 18:05:16
+ * @LastEditTime: 2020-11-11 18:26:05
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalList.vue
@@ -165,7 +165,7 @@
         <el-table-column
           label="操作"
           align="center"
-          width="100"
+          width="80"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -288,12 +288,12 @@ export default {
     });
 
     this.$nextTick(function () {
-      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 110;
       
       // 监听窗口大小变化
       let self = this;
       window.onresize = function() {
-        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 120
+        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 110
       }
     })
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -350,6 +350,8 @@ export default {
       this.userApprovalType = common.queryApprovalFlow(9541, this.asideInfoIds, '1') || common.queryApprovalFlow(9542, this.asideInfoIds, '2'); // 会计审批
       // this.userApprovalType = common.queryApprovalFlow(9542, this.asideInfoIds, '2'); // 财务审批
       // console.log(this.userApprovalType);
+
+      this.tableData = [];
 
       const params = {
         cityCode: this.formData.cityCode.trim(),

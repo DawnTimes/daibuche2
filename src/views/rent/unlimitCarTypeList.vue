@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-09 18:02:59
+ * @LastEditTime: 2020-11-11 18:45:53
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeList.vue
@@ -73,6 +73,7 @@
           label="操作"
           width="110"
           fixed="right"
+          align="center"
         >
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleUpdate(scope.row)" v-show="rightControl.edit">租金修改</el-button>
@@ -153,12 +154,12 @@ export default {
     });
 
     this.$nextTick(function () {
-      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 110;
       
       // 监听窗口大小变化
       let self = this;
       window.onresize = function() {
-        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 120
+        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 110
       }
     })
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -202,6 +203,7 @@ export default {
 
     // 获取非限牌车型列表
     getUnLimitCarTypeList() {
+      this.tableData = [];
       const params = {
         brandName: this.formData.brandName,
         modelName: this.formData.modelName,

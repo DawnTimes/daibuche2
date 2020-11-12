@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-10 16:32:55
+ * @LastEditTime: 2020-11-11 18:23:33
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -34,7 +34,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="销方名称" prop="sellName">
+        <!-- <el-form-item label="销方名称" prop="sellName">
           <el-input
             maxlength="50"
             v-model="formData.sellName"
@@ -49,7 +49,7 @@
             clearable
             placeholder
           ></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="备注" prop="remark">
           <el-input
             maxlength="200"
@@ -295,13 +295,13 @@
           prop=""
           label="折扣金额"
           show-overflow-tooltip
-          width="100"
+          width="120"
         ></el-table-column>
         <el-table-column
           prop=""
           label="扣除额"
           show-overflow-tooltip
-          width="100"
+          width="120"
         ></el-table-column>
         <el-table-column
           prop=""
@@ -313,7 +313,7 @@
           prop="receiverAddr"
           label="接收人邮件"
           show-overflow-tooltip
-          width="100"
+          width="140"
         ></el-table-column>
         <el-table-column
           prop="invoiceNumber"
@@ -325,7 +325,7 @@
           prop="invoiceDate"
           label="发票开具时间"
           show-overflow-tooltip
-          width="120"
+          width="150"
         ></el-table-column>
         <!-- <el-table-column
           prop=""
@@ -339,7 +339,7 @@
           show-overflow-tooltip
           width="120"
         ></el-table-column> -->
-        <el-table-column label="操作" width="160" fixed="right">
+        <el-table-column label="操作" width="180" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -494,13 +494,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -543,9 +543,9 @@ export default {
 
     // 选择生成日期
     changeTime(val) {
-      console.log(val);
-      console.log(this.formData.startCreateTime = val[0]);
-      console.log(this.formData.endCreateTime = val[1]);
+      // console.log(val);
+      // console.log(this.formData.startCreateTime = val[0]);
+      // console.log(this.formData.endCreateTime = val[1]);
       if (val) {
         this.formData.startCreateTime = val[0];
         this.formData.endCreateTime = val[1];
@@ -557,6 +557,7 @@ export default {
 
     // 获取分页数据
     getInvoiceNoticeListData() {
+      this.tableData = [];
       const url = common.queryInvoiceNoticeDetailUrl;
       const params = {
         buyCreditCode: this.formData.buyCreditCode.trim(),

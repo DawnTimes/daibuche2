@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-10 11:51:24
+ * @LastEditTime: 2020-11-11 18:22:03
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -13,7 +13,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="100px"
+        label-width="110px"
         size="small"
         ref="ruleForm"
       >
@@ -164,14 +164,14 @@
         </el-table-column>
         <el-table-column prop="newLedgerLogo" label="台账标志" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" width="320" fixed="right">
+        <el-table-column label="操作" align="center" width="350" fixed="right">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="primary"
               @click="handleContract(scope.row)"
               v-if="rightControl.writeOff"
-              :disabled="scope.row.verState == 'FULL' || scope.row.refund == scope.row.income"
+              :disabled="scope.row.refund == scope.row.income"
             >核销</el-button>
             <el-button
               size="mini"
@@ -365,12 +365,12 @@ export default {
     });
 
     this.$nextTick(function () {
-      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 110;
       
       // 监听窗口大小变化
       let self = this;
       window.onresize = function() {
-        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       }
     })
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -428,6 +428,7 @@ export default {
 
     // 查询分页列表
     getBankWaterListData() {
+      this.tableData = [];
       const url = common.queryBankStatementUrl;
       const params = {
         companyName: this.formData.companyName.trim(),
@@ -580,7 +581,7 @@ export default {
       }&startTradeDate=${this.formData.startTradeDate ? this.formData.startTradeDate : ''
       }&endTradeDate=${this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_parent')
       // .addEventListener('beforeunload', (e) => {
-      //   console.log(e);
+      //   console.log(1223333);
       //   this.exportLoading = false;
       // })
 
@@ -595,14 +596,15 @@ export default {
       //   this.formData.sideAccount ? this.formData.sideAccount : ''
       // }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`;
       // window.open(hurl, '_parent').addEventListener("beforeunload", (e) => {
-      //   console.log(e);
-      //     clearTimeout(downloadTimer);
+      //   console.log(12345,e);
+      //     clearTimeout(downloadTimer); // 清除定时器
       //     exportButton.innerHTML = '导出银行流水单';
       //     exportButton.removeAttribute("disabled");
       // });
       // var downloadTimer = setInterval(() => {
       //     exportButton.children[0].innerText = ++itime;
       // }, 1000);
+
 
       // const arr = [
       //   {id: '123'},

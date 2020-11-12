@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-11-09 17:50:37
+ * @LastEditTime: 2020-11-11 16:18:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -69,6 +69,8 @@
         border
         stripe
         :max-height="tableHeight"
+        show-summary
+        :summary-method="getSummaries"
         ref="table"
         style="width: 100%"
         :header-cell-style="{
@@ -79,7 +81,7 @@
       }"
       >
         <el-table-column
-          width="50"
+          width="80"
           align="center"
           label="序号"
           type="index"
@@ -88,52 +90,52 @@
         ></el-table-column>
         <el-table-column prop="agentCode" label="经销店编码" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="200"></el-table-column>
-        <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="plateNumber" label="车牌号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="modelName" label="车型" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="batch" label="批次" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.batch | batchFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="120">
+        <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | paymentStatus }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="monthlyRent" label="租金" show-overflow-tooltip>
+        <el-table-column prop="monthlyRent" label="租金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.monthlyRent | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="rentCardFee" label="牌照费" show-overflow-tooltip>
+        <el-table-column prop="rentCardFee" label="牌照费" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.rentCardFee | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip width="120">
+        <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip width="140">
           <template slot-scope="scope">
             <span>{{ scope.row.totalMonthlyRent | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="supportFund" label="车型支援金" show-overflow-tooltip width="120">
+        <el-table-column prop="supportFund" label="车型支援金" show-overflow-tooltip width="140">
           <template slot-scope="scope">
             <span>{{ scope.row.supportFund | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="licenceFund" label="牌照支援金" show-overflow-tooltip width="120">
+        <el-table-column prop="licenceFund" label="牌照支援金" show-overflow-tooltip width="140">
           <template slot-scope="scope">
             <span>{{ scope.row.licenceFund | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip width="120">
+        <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip width="140">
           <template slot-scope="scope">
             <span>{{ scope.row.totalFund | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="currentTotal" label="当期/总期数" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="currentTotal" label="当期/总期数" show-overflow-tooltip width="130"></el-table-column>
         <el-table-column prop="surplus" label="剩余期数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="payer" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="payDate" label="支付时间" show-overflow-tooltip width="120">
@@ -150,7 +152,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[10, 20, 50, 100, 200]"
+        :page-sizes="[10, 20, 50, 100, 500, 1000]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -164,7 +166,7 @@
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
-
+import { moneyFormat } from '@/common/moneyFormat.js';
 
 export default {
   name: '',
@@ -219,13 +221,13 @@ export default {
     
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -270,6 +272,7 @@ export default {
 
     // 获取分页数据
     getSupportGoldTotalListData() {
+      this.tableData = [];
       this.tableLoading = true;
       const url = common.supportCarListUrl;
       const params = {
@@ -320,6 +323,48 @@ export default {
         this.formData.batchNumber ? this.formData.batchNumber : ''
       }&payStatus=${
         this.formData.payStatus ? this.formData.payStatus : ''}`;
+    },
+
+    // 合计
+    getSummaries(param) {
+      // console.log(param);
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '合计';
+          return;
+        }
+
+        // if (column.property == 'nper' || column.property == 'num') {
+        //   sums[index] = moneyFormat(sums[index]);
+        //   return
+        // }
+        
+        const values = data.map(item => Number(item[column.property]));
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+          // 千分位格式化金额
+          if (index >= 10 && index <= 15) {
+            sums[index] = moneyFormat(sums[index]);
+          } else {
+            sums[index] = '';
+          }
+          
+        } else {
+          // sums[index] = 'N/A';
+          sums[index] = '';
+        }
+      });
+
+      return sums;
     },
 
   },

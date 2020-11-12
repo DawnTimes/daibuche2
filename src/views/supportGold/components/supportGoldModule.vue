@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 18:11:48
- * @LastEditTime: 2020-11-04 14:45:06
+ * @LastEditTime: 2020-11-11 16:34:33
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldModule.vue
@@ -24,7 +24,7 @@
             size="medium"
           >
             <el-row :gutter="0">
-              <!-- <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
                 <el-form-item label="申请日期:" prop="applyDate" class="form-item">
                   <el-date-picker
                     v-model="formData.applyDate"
@@ -35,8 +35,8 @@
                     @change="changeDate"
                   ></el-date-picker>
                 </el-form-item>
-              </el-col> -->
-              <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              </el-col>
+              <!-- <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
                 <el-form-item label="申请日期:" prop="applyDate" class="form-item">
                   <el-date-picker
                     v-model="formData.applyDate"
@@ -48,7 +48,7 @@
                     @change="changeDate"
                   ></el-date-picker>
                 </el-form-item>
-              </el-col>
+              </el-col> -->
               <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
                 <el-form-item label="支援金月份:" prop="yearMonth" class="form-item">
                   <el-date-picker
@@ -81,7 +81,7 @@
 
     <div class="tableBox">
       <div class="choiceBtn">
-        <el-button type="primary" size="medium" @click="handleChoose">选择经销店</el-button>
+        <el-button type="primary" size="mini" @click="handleChoose">选择经销店</el-button>
       </div>
       <div class="table dealerFrom">
         <el-form :rules="rules" :model="formData" ref="formData1" status-icon>
@@ -188,21 +188,21 @@
           </el-table>
         </el-form>
       </div>
-      <p class="tipText">提示：申请支援金时经销店不是必选的；在特殊情况下申请支援金时才需要选经销店。</p>
+      <p class="tipText">提示：申请支援金时经销店不是必选的；存在特殊情况下申请支援金时才需要选经销店。</p>
     </div>
 
     <el-row :gutter="0">
       <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
         <div style="padding: 20px 0 20px 0; text-align: center">
-          <el-button size="medium" @click="handleGoToBack()">取 消</el-button>
+          <el-button size="small" @click="handleGoToBack()">取 消</el-button>
           <!-- <el-button
-            size="medium"
+            size="small"
             type="primary"
             plain
             @click="handleSave('formData', 'formData1')"
           >保存</el-button>-->
           <el-button
-            size="medium"
+            size="small"
             type="primary"
             @click="handleSubmit('formData', 'formData1')"
             :loading="loading"

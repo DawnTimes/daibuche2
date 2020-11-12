@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-11-10 17:40:41
+ * @LastEditTime: 2020-11-11 10:07:40
  * @LastEditors: your name
  * @Description: 查询期数下所有车辆
  * @FilePath: \webcode2\src\views\verification\components\nperCarList.vue
@@ -24,15 +24,17 @@
           element-loading-text="拼命加载中"
           border
           stripe
+          show-summary
+          :summary-method="getSummaries"
           ref="table"
           style="width: 100%"
-          max-height="430px"
+          max-height="450px"
           :header-cell-style="{
-          'text-align':'center',
-          'font-weight':'bold',  
-          'background':'#627CAF',    
-          'color': '#fff',
-        }"
+            'text-align':'center',
+            'font-weight':'bold',  
+            'background':'#627CAF',    
+            'color': '#fff',
+          }"
         >
           <el-table-column width="50" align="center" label="序号" type="index" fixed></el-table-column>
           <!-- <el-table-column prop="" label="承租人/牌照商" show-overflow-tooltip width="150"></el-table-column>          -->
@@ -121,6 +123,7 @@ import { queryDict } from '@/api/index.js';
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+import { moneyFormat } from '@/common/moneyFormat.js';
 
 export default {
   name: '',
@@ -199,6 +202,51 @@ export default {
     isShow(isVisible) {
       this.carFormVisible = isVisible;
     },
+
+    // 合计
+    getSummaries(param) {
+      // console.log(param);
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '合计';
+          return;
+        }
+
+        // if (column.property == 'nper' || column.property == 'num') {
+        //   sums[index] = moneyFormat(sums[index]);
+        //   return
+        // }
+        
+        const values = data.map(item => Number(item[column.property]));
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+          // 千分位格式化金额
+          if (column.property == 'num') {
+            sums[index] = moneyFormat(sums[index], 0);
+          } else if (column.property == 'nper' || column.property == 'modelCode') {
+            // sums[index] = 'N/A';
+            sums[index] = '';
+          } else {
+            sums[index] = moneyFormat(sums[index]);
+          }
+          
+        } else {
+          // sums[index] = 'N/A';
+          sums[index] = '';
+        }
+      });
+
+      return sums;
+    },
   },
   filters: {
     function() {},
@@ -224,6 +272,6 @@ export default {
 
 <style>
 .nperCarList .el-dialog__body {
-  padding: 0 15px 15px !important;
+  padding: 0 10px 5px !important;
 }
 </style>

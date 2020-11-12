@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-09 18:02:30
+ * @LastEditTime: 2020-11-11 18:25:02
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeList.vue
@@ -109,7 +109,7 @@
           </template>
         </el-table-column>
         <!-- <el-table-column prop="" label="尾款" show-overflow-tooltip></el-table-column> -->
-        <el-table-column label="操作" width="110" fixed="right">
+        <el-table-column label="操作" align="center" width="110" fixed="right">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -222,13 +222,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -427,6 +427,7 @@ export default {
 
     // 获取限牌车型列表
     getLimitCarTypeList() {
+      this.tableData = [];
       const params = {
         // cityCode: this.formData.cityCode.pop() || '',
         cityCode: this.formData.cityCode.trim(),

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:25:10
- * @LastEditTime: 2020-11-10 11:43:38
+ * @LastEditTime: 2020-11-11 14:04:10
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\collectionRecord.vue
@@ -180,6 +180,7 @@ export default {
   methods: {
     // 获取分页数据
     getCollectionRecordListData() {
+      this.tableData = [];
       const url = common.collectionQueryListUrl;
       const params = {
         soldId            : this.soldId,

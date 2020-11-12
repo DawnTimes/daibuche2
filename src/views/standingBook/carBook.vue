@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-10 18:05:19
+ * @LastEditTime: 2020-11-11 13:57:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -342,13 +342,13 @@ export default {
     
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -391,6 +391,7 @@ export default {
 
     // 查询分页列表
     getCarBookListData() {
+      this.tableData = [];
       this.tableLoading = true;
       const url = common.queryCarStandingBookUrl;
       const params = {
@@ -438,6 +439,23 @@ export default {
         this.formData.cityName ? this.formData.cityName : ''
       }&modelName=${
         this.formData.modelName ? this.formData.modelName : ''}`;
+
+        // window.open(`/api${
+        //   common.exportCarSBUrl
+        // }?name=${
+        //   this.formData.name ? this.formData.name : ''
+        // }&contractNumber=${
+        //   this.formData.contractNumber ? this.formData.contractNumber : ''
+        // }&nper=${
+        //   this.formData.nper ? this.formData.nper : ''
+        // }&frameNumber=${
+        //   this.formData.frameNumber ? this.formData.frameNumber : ''
+        // }&isLimitLicence=${
+        //   this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
+        // }&cityName=${
+        //   this.formData.cityName ? this.formData.cityName : ''
+        // }&modelName=${
+        //   this.formData.modelName ? this.formData.modelName : ''}`, '_parent')
     },
 
     // 分页

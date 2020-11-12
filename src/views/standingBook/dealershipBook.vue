@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-10 17:37:14
+ * @LastEditTime: 2020-11-11 15:31:30
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -313,13 +313,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -362,6 +362,7 @@ export default {
 
     // 查询分页列表
     getDealerBookListData() {
+      this.tableData = [];
       this.tableLoading = true;
       const url = common.queryAgentStandingBookUrl;
       const params = {

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-09 17:51:42
+ * @LastEditTime: 2020-11-11 14:04:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\unInvoiceNoticeList.vue
@@ -177,13 +177,13 @@ export default {
   created() {
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -226,6 +226,7 @@ export default {
 
     // 获取分页数据
     getUninvoiceNoticeListData() {
+      this.tableData = [];
       const url = common.queryNotInvoiceNoticeDetailUrl;
       const params = {
         buyCreditCode   : this.formData.buyCreditCode.trim(),

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-18 11:23:35
- * @LastEditTime: 2020-11-09 17:18:53
+ * @LastEditTime: 2020-11-11 16:43:10
  * @LastEditors: your name
  * @Description: 经销店弹窗
  * @FilePath: \webcode2\src\views\supportGold\components\dealerTableDialog.vue
@@ -11,12 +11,12 @@
 <template>
   <div class="dealerTableDialog">
     <el-dialog width="80%" destroy-on-close :close-on-click-modal="false" title :visible.sync="dealerFormVisible">
-      <el-form :model="paramForm" label-width="100px" :inline="true" size="medium">
+      <el-form :model="paramForm" label-width="100px" :inline="true" size="small">
         <el-form-item label="经销店名称">
           <el-input v-model="paramForm.agentName" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="dealerQuery" size="medium">查 询</el-button>
+          <el-button type="primary" @click="dealerQuery" size="small">查 询</el-button>
         </el-form-item>
 
         <div class="table">
@@ -105,8 +105,8 @@
       ></el-pagination>
     </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dealerFormVisible = false" size="medium" plain>取 消</el-button>
-        <el-button type="primary" @click="dealerSubmit" size="medium">确 定</el-button>
+        <el-button @click="dealerFormVisible = false" size="small" plain>取 消</el-button>
+        <el-button type="primary" @click="dealerSubmit" size="small">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -305,5 +305,14 @@ export default {
   .el-dialog__header {
     padding: 0;
   }
+  
+}
+
+.dealerTableDialog .el-form-item--small.el-form-item {
+    margin-bottom: 10px;
+}
+
+.dealerTableDialog .el-dialog__footer {
+  padding: 0px 0px 20px;
 }
 </style>
