@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-11-11 13:43:55
+ * @LastEditTime: 2020-11-13 09:27:21
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -239,7 +239,6 @@
                   style="width: 100%"
                   filterable
                   clearable
-                  allow-create
                   placeholder="请选择"
                   @change="changeCity"
                   @focus="focusCity"

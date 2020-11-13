@@ -233,7 +233,7 @@
       ></el-table-column>
       <el-table-column prop="status" label="状态" width="80" :show-overflow-tooltip="true" resizable>
         <template slot-scope="scope">
-          <span>{{ scope.row.isLimitLicence | status }}</span>
+          <span>{{ scope.row.status | status }}</span>
         </template>
       </el-table-column>
       <el-table-column

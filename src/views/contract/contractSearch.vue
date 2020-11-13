@@ -317,6 +317,7 @@ export default {
   },
   methods: {
     downLoad(contractPath) {
+      console.log(contractPath);
       //  window.location.href = `http://192.166.87.119:8899/api/carmanage-admin/contract/downloadContract?fileName=${contractNumber}.pdf`
       //  window.location.href = `/api/carmanage-admin/contract/downloadContract?fileName=${contractNumber}.pdf`
       //  window.location.href = contractPath

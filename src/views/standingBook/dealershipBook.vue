@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-11 15:31:30
+ * @LastEditTime: 2020-11-13 09:22:51
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -76,7 +76,7 @@
       }"
       >
         <el-table-column
-          width="80"
+          width="70"
           align="center"
           label="序号"
           type="index"

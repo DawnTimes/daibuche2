@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-11-11 18:24:43
+ * @LastEditTime: 2020-11-12 18:21:08
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -223,6 +223,7 @@ export default {
     }),
   },
   watch: {
+    // 监听查询条件 逾期天数和逾期金额 正则匹配
     'formData.beginDay'(newVal, oldVal) {
       var reg = /^(0|[1-9][0-9]*)$/;
       if (newVal != '') {
@@ -259,6 +260,7 @@ export default {
 
     // 监听是否导入成功，成功则刷新催收记录
     successStatus(val) {
+      // console.log(val);
       if (val) {
         this.getOverduceCollectionListData();
       }

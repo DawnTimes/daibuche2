@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-11-11 15:43:29
+ * @LastEditTime: 2020-11-13 09:11:37
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldDetail.vue
@@ -150,8 +150,14 @@ export default {
               }
             });
           }
+          this.baseInfoForm.suApprovalList.sort(this.sortFunc);
         }
       })
+    },
+
+    // 按审批时间排序
+    sortFunc(a, b) {
+      return a.approvalTime > b.approvalTime ? 1 : -1
     },
 
     handleFormDataSubmit() {},

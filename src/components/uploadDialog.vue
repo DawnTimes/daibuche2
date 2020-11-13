@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 11:25:57
- * @LastEditTime: 2020-11-06 18:09:18
+ * @LastEditTime: 2020-11-12 18:17:35
  * @LastEditors: your name
  * @Description: 文件上传弹窗
  * @FilePath: \webcode2\src\components\uploadDialog.vue
@@ -33,7 +33,7 @@
         :http-request="uploadSectionFile"
       >
         <el-button size="small" type="primary">选取文件</el-button>
-        <span slot="tip" class="el-upload__tip" style="padding-left: 10px; color: red">提示：只能上传xlsx/xls文件，且不超过10M</span>
+        <span slot="tip" class="el-upload__tip" style="padding-left: 10px; color: red">提示：只能上传xlsx/xls文件，且不超过20M</span>
       </el-upload>
       <div slot="footer" class="dialog-footer">
         <el-button @click="uploadFormVisible = false" plain size="medium">取 消</el-button>
@@ -89,10 +89,10 @@ export default {
     }
   },
   created() {
-    console.log(this.fileList);
+    // console.log(this.fileList);
   },
   mounted() {
-    console.log(this.fileList);
+    // console.log(this.fileList);
   },
   methods: {
     ...mapMutations({
@@ -155,17 +155,17 @@ export default {
       const isXLSX = file.name.substring(file.name.lastIndexOf('.') + 1) === 'xlsx';
 
       // 大小
-      const isLt10M = file.size / 1024 / 1024 < 10;
+      const isLt20M = file.size / 1024 / 1024 < 20;
 
       if (!isXLS && !isXLSX) {
         this.$message.error('上传的文件是能是xlsx或xls格式!');
         this.loading = false;
       }
-      if (!isLt10M) {
-        this.$message.error('上传的文件大小不能超过 10MB!');
+      if (!isLt20M) {
+        this.$message.error('上传的文件大小不能超过 20MB!');
         this.loading = false;
       }
-      return (isXLS || isXLSX) && isLt10M;
+      return (isXLS || isXLSX) && isLt20M;
     },
 
     // 删除
@@ -215,7 +215,7 @@ export default {
       const url = this.uploadURLStr;
       axios.post(url, form)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           //自行处理各种情况
           if (res.status == 200) {
             this.$notify.success({
@@ -231,7 +231,7 @@ export default {
             this.loading = false;
             this.$notify.error({
               title: '温馨提示！',
-              message: res.em || res.error || res.message || '上传错误，请重试!'
+              message: res.em || res.message || res.error || '上传错误，请重试!'
             });
           }
         })
@@ -241,7 +241,7 @@ export default {
           console.log(err);
           this.$notify.error({
             title: '温馨提示！',
-            message: err.em || err.error || err.message || '上传错误，请重试!'
+            message: err.em || err.message || err.error || '上传错误，请重试!'
           });
         });
     } 

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:25:10
- * @LastEditTime: 2020-11-11 14:04:10
+ * @LastEditTime: 2020-11-12 18:27:20
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\collectionRecord.vue
@@ -20,7 +20,7 @@
     </div>
 
     <el-row :gutter="0">
-      <el-col :xs="24" :sm="24" :md="24" :lg="20" :xl="18">
+      <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="20">
         <div class="exportBtn">
           <el-button icon="el-icon-upload2" type="primary" size="small" @click="importButton" v-show="rightControl.import">导入催收记录</el-button>
           <el-button icon="el-icon-download" type="primary" size="small" plain @click="exportButton" v-show="rightControl.export">导出催收记录</el-button>
@@ -146,6 +146,7 @@ export default {
   watch: {
     // 监听是否导入成功，成功则刷新催收记录
     successStatus(val) {
+      // console.log(val);
       if (val) {
         this.getCollectionRecordListData();
       }

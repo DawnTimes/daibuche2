@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-11 18:22:03
+ * @LastEditTime: 2020-11-13 09:20:54
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -105,20 +105,20 @@
         }"
       >
         <el-table-column
-          width="50"
+          width="70"
           align="center"
           label="序号"
           type="index"
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="tradeDate" label="交易时间" show-overflow-tooltip width="120">
+        <el-table-column prop="tradeDate" label="交易时间" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.tradeDate | timeFormat }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="150"></el-table-column>
-        <el-table-column prop="income" label="收款金额" show-overflow-tooltip width="140">
+        <el-table-column prop="income" label="收款金额" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.income | moneyFormat }}</span>
           </template>

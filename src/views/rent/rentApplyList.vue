@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-11 18:23:20
+ * @LastEditTime: 2020-11-12 19:20:49
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -73,9 +73,10 @@
         <el-form-item>
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
-        <!-- <el-form-item>
+        <el-form-item>
           <el-button type="primary" v-show="rightControl.createContract" @click="createContract" :disabled="contractReadonly">生成合同</el-button>
-        </el-form-item> -->
+          <!-- <el-button type="primary" v-show="rightControl.createContract" @click="createContract">生成合同</el-button> -->
+        </el-form-item>
       </el-form>
     </div>
 
@@ -204,6 +205,12 @@
       v-on:submitForm="deleteSubmit"
       v-on:cancelbox="cancelBack"
     ></confirmBox>
+    <confirmBoxTip
+      v-if="showCreateContractBox"
+      :msgConfirBox="createContractInfoText"
+      v-on:submitForm="createContractSubmit"
+      v-on:cancelbox="createCancelBack"
+    ></confirmBoxTip>
   </div>
 </template>
 
@@ -212,6 +219,7 @@ import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 import confirmBox from '@/components/confirmBox';  // 删除弹框
+import confirmBoxTip from '@/components/confirmBox';  // 生成合同弹框
 import { queryDict } from '@/api/index.js';
 import eventBus from '@/common/eventBus.js';
 import { mapState, mapMutations } from 'vuex';
@@ -223,6 +231,7 @@ export default {
   },
   components: {
     confirmBox,
+    confirmBoxTip
   },
   data() {
     let _that = this;
@@ -273,6 +282,13 @@ export default {
 
       // 生成合同按钮是否禁用
       contractReadonly: false,
+      showCreateContractBox: false,
+      // 生成合同提示文本
+      createContractInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认生成租金修改后的合同？',
+        consecond: '提示：请确定所有租金修改审批完成后再生成合同！'
+      },
 
       defaultProps: {
         children: 'children',
@@ -416,22 +432,43 @@ export default {
 
     // 生成合同
     createContract() {
-      this.$confirm('是否生成租金修改后的合同?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$notify({
-          title: '温馨提示',
-          type: 'success',
-          message: '生成合同成功!'
-        });
-      }).catch(() => {
-        // this.$notify({
-        //   type: 'info',
-        //   message: '已取消'
-        // });          
-      });
+      this.showCreateContractBox = true;
+      
+      // this.$confirm('是否生成租金修改后的合同?', '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   type: 'warning'
+      // }).then(() => {
+        
+      // }).catch(() => {
+        
+      // });
+    },
+
+    // 生成合同确定提交
+    createContractSubmit() {
+      const url = common.changeContarctOpenSomethingUrl;
+      axios.get(url).then((res) => {
+        // console.log(res);
+        if (res == 'success') {
+          this.$notify({
+            title: '温馨提示',
+            type: 'success',
+            message: '生成合同成功!'
+          });
+        } else {
+          this.$notify({
+            title: '温馨提示',
+            type: 'error',
+            message: res ? res : '生成合同失败!，请联系管理员'
+          });
+        }
+      })
+    },
+
+    // 取消生成
+    createCancelBack() {
+      this.showCreateContractBox = false;
     },
 
     // 自定义列接口索引

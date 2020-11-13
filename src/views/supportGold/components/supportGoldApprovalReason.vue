@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-11-11 19:08:43
+ * @LastEditTime: 2020-11-12 19:33:55
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -199,7 +199,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[10, 20, 50, 100, 500]"
+        :page-sizes="[5, 10, 20, 50, 100, 500]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -360,7 +360,7 @@ export default {
       this.tableLoading = true;
       const url = common.supportAgListUrl;
       const params = {
-        agentName: this.reasonForm.agentName,
+        agentName: this.reasonForm.agentName.trim(),
         isGacShop: this.reasonForm.isGacShop,
         id: this.reasonForm.id,
         applyDate: this.reasonForm.applyDate,

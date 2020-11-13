@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-11-11 18:46:58
+ * @LastEditTime: 2020-11-12 18:41:43
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -47,13 +47,13 @@
         ref="ruleForm"
       >
         <el-form-item label="承租人/牌照商" prop="">
-          <el-input maxlength="50" clearable v-model="formData.name" placeholder></el-input>
+          <el-input maxlength="50" v-model="formData.name" placeholder></el-input>
         </el-form-item>
         <el-form-item label="合同编号" prop="contractNumber">
           <el-input maxlength="50" v-model="formData.contractNumber" placeholder></el-input>
         </el-form-item>
         <el-form-item label="期数" prop="nper">
-          <el-input maxlength="50" v-model="formData.nper" placeholder=""></el-input>
+          <el-input maxlength="3" v-model="formData.nper" placeholder=""></el-input>
         </el-form-item>
 
         <el-form-item label="上牌地" prop="cityName">
@@ -274,7 +274,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[10, 20, 50, 100, 500]"
+        :page-sizes="[5, 10, 20, 50, 100, 500]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -365,11 +365,25 @@ export default {
   computed: {
     ...mapState({
       userId: store => store.userId,
-      rowCol: store => store.dropCol,
+      // rowCol: store => store.rowCol,
       dropCol: store => store.dropCol,
-    })
+    }),
+    rowCol: {
+      get() {
+        return this.$store.state.rowCol
+      },
+      set(val) {
+        this.$store.state.rowCol = val
+      }
+    },
   },
-  watch: {},
+  watch: {
+    dropCol(nVal, oVal) {
+      console.log(nVal, oVal);
+      this.rowCol = this.$store.state.rowCol
+    }
+  },
+  
   created() {
     this.formData.name = this.$route.query.name;
     this.baseFrom.serialNumber = this.$route.query.serialNumber;
@@ -408,7 +422,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      // setRowCol: 'setRowCol',
+      setRowCol: 'setRowCol',
       setDropCol: 'setDropCol',
     }),
 
@@ -516,9 +530,8 @@ export default {
           // localStorage.setItem('dropCol', JSON.stringify(this.dropCol))
           // 保存修改的列排序
           this.setDropCol(this.dropCol);
-          // console.log(this.dropCol);
-          // console.log(this.rowCol);
-          // console.log(localStorage.getItem('dropCol'));
+          this.setRowCol(this.dropCol);
+
         },
       });
       

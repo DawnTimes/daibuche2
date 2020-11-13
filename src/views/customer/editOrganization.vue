@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-26 09:32:16
- * @LastEditTime: 2020-11-11 14:56:01
+ * @LastEditTime: 2020-11-12 18:50:55
  * @LastEditors: your name
  * @Description: 新增牌照商
  * @FilePath: \webcode2\src\views\customer\editOrganization.vue
@@ -101,8 +101,8 @@ export default {
   },
   mounted() {
     // this.formData.createUse = this.userId;
-    this.formData.lastModifie = this.userId;
-    this.formData.lastModifiedT = moment().format('YYYY-MM-DD HH:mm:ss');
+    // this.formData.lastModifie = this.userId;
+    // this.formData.lastModifiedT = moment().format('YYYY-MM-DD HH:mm:ss');
     this.getLicenceDetail();
   },
   methods: {
@@ -124,7 +124,8 @@ export default {
     handleFormDataSubmit(object) {
       const data = object.data;
       data.createT = moment(data.createT).format('YYYY-MM-DD HH:mm:ss');
-      data.lastModifiedT = moment(data.lastModifiedT).format('YYYY-MM-DD HH:mm:ss');
+      data.lastModifiedT = moment().format('YYYY-MM-DD HH:mm:ss');
+      data.lastModifie = this.userId;
       this.status.loading = true;
       const url = common.addOrUpdateLicenceUrl;
 

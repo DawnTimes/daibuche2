@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-11-11 17:26:36
+ * @LastEditTime: 2020-11-13 09:18:14
  * @LastEditors: your name
  * @Description: 核销弹框
  * @FilePath: \webcode2\src\views\verification\components\writeOffDialog.vue
@@ -15,7 +15,7 @@
       :visible.sync="writeOffFormVisible"
       :destroy-on-close="true"
     >
-      <el-form :model="writeOffForm" ref="writeOffForm" :rules="rules" label-width="120px" size="medium">
+      <el-form :model="writeOffForm" ref="writeOffForm" :rules="rules" label-width="120px" size="small">
         <el-row :gutter="0">
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
             <el-form-item label="银行单据号">
@@ -27,11 +27,6 @@
               <el-input v-model="writeOffForm.name" disabled></el-input>
             </el-form-item>
           </el-col>
-          <!-- <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-            <el-form-item label="牌照商">
-              <el-input v-model="writeOffForm.name" disabled></el-input>
-            </el-form-item>
-          </el-col> -->
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
             <el-form-item label="合同编号">
               <el-input v-model="writeOffForm.contractNumber" disabled></el-input>
@@ -74,8 +69,8 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="writeOffFormVisible = false" size="medium" plain>取 消</el-button>
-        <el-button type="primary" @click="writeOffSubmit('writeOffForm')" :loading="loading" size="medium">确定核销</el-button>
+        <el-button @click="writeOffFormVisible = false" size="small" plain>取 消</el-button>
+        <el-button type="primary" @click="writeOffSubmit('writeOffForm')" :loading="loading" size="small">确定核销</el-button>
       </div>
     </el-dialog>
   </div>
