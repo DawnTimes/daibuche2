@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-08-19 15:23:43
+ * @LastEditTime: 2020-11-13 12:40:40
  * @LastEditors: your name
  * @Description: 删除弹窗
  * @FilePath: \webcode2\src\components\confirmBox.vue
@@ -15,23 +15,24 @@
       <i class="icon iconfont" :class="msgConfirBox.icon"></i>
       <p class="first">{{msgConfirBox.confirst}}</p>
       <p class="last">{{msgConfirBox.consecond}}</p>
-      <button type="button" class="el-button el-button--default el-button--small" @click="cancel()">
-        <span>取消</span>
-      </button>
-      <button
-        type="button"
-        class="el-button el-button--default el-button--small el-button--primary"
+      <el-button plain size="small" @click="cancel()">
+        取 消
+      </el-button>
+      <el-button
+        type="primary"
+        size="small"
         @click="sure()"
+        :loading="loading"
       >
-        <span>确 定</span>
-      </button>
+       确 定
+      </el-button>
     </div>
   </div>
 </template>
 <script>
 export default {
   name: 'confirmBox',
-  props: ['msgConfirBox'],
+  props: ['msgConfirBox', 'loading'],
   data() {
     return {};
   },
@@ -87,8 +88,9 @@ export default {
   color: #3973e7;
 }
 .mshbox .msgbox_contant p.last {
-  color: #9b9b9b;
+  color: #F56C6C;
   margin-bottom: 20px;
+  font-size: 14px;
 }
 .mshbox .msgbox_contant .el-button--small,
 .mshbox .msgbox_contant .el-button--small.is-round {

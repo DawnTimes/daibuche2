@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-11 18:26:05
+ * @LastEditTime: 2020-11-13 09:48:23
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApprovalList.vue
@@ -92,7 +92,7 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <!-- <el-table-column prop="modId" label="id编号" show-overflow-tooltip fixed="left"></el-table-column> -->
+        <el-table-column prop="modId" label="ID" show-overflow-tooltip fixed="left"></el-table-column>
         <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
         <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="brandName" label="品牌" show-overflow-tooltip width="180"></el-table-column>
@@ -313,7 +313,7 @@ export default {
   
   mounted() {
     this.getRentApprovalListData();
-    this.getLicenceList();
+    // this.getLicenceList();
   },
   methods: {
     // 查询

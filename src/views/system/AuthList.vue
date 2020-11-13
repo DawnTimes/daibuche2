@@ -4,10 +4,10 @@
       <!-- <header class="car-management-header">角 色 管 理</header> -->
       <el-form :inline="true" label-width="80px" :model="params" class="demo-form-inline fl" size="small">
         <el-form-item label="角色名称">
-          <el-input v-model="params.roleName" placeholder="角色名称"></el-input>
+          <el-input v-model="params.roleName" clearable placeholder="角色名称"></el-input>
         </el-form-item>
         <el-form-item label="角色代码">
-          <el-input v-model="params.roleCode" placeholder="角色代码"></el-input>
+          <el-input v-model="params.roleCode" clearable placeholder="角色代码"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">查询</el-button>

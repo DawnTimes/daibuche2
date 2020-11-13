@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-11-10 11:49:44
+ * @LastEditTime: 2020-11-13 17:42:17
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -461,6 +461,17 @@ export default {
 
     // 组件通讯
     handleEmitData() {
+      this.formData.serialNumber    = this.formData.serialNumber.trim();
+      this.formData.bankAccountName = this.formData.bankAccountName.trim();
+      this.formData.bankAccountNo   = this.formData.bankAccountNo.trim();
+      this.formData.companyName     = this.formData.companyName.trim();
+      this.formData.sideAccount     = this.formData.sideAccount.trim();
+      this.formData.sideAccountName = this.formData.sideAccountName.trim();
+      this.formData.projectCategory = this.formData.projectCategory.trim();
+      this.formData.paidLogo        = this.formData.paidLogo.trim();
+      this.formData.newLedgerLogo   = this.formData.newLedgerLogo.trim();
+      this.formData.digest          = this.formData.digest.trim();
+      this.formData.remark          = this.formData.remark.trim();
       this.$emit('formDataSubmit', {
         data: this.formData,
       });

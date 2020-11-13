@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:58:16
- * @LastEditTime: 2020-11-06 15:45:21
+ * @LastEditTime: 2020-11-13 17:43:02
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\addBankWater.vue
@@ -57,6 +57,7 @@ export default {
         newLedgerLogo: '',
         digest: '',
         haveVerLines: '0',
+        remark: '',
       },
       formReadonly: {
         hide: [],

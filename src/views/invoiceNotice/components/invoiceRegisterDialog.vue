@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 11:28:29
- * @LastEditTime: 2020-11-02 15:22:10
+ * @LastEditTime: 2020-11-13 18:53:14
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\components\invoiceRegisterDialog.vue
@@ -139,6 +139,7 @@ export default {
 
     // 组件通讯
     handleEmitData() {
+      this.registerForm.invoiceNumber = this.registerForm.invoiceNumber.trim();
       this.$emit('formDataSubmit', {
         data: this.registerForm,
       });

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-11 18:25:24
+ * @LastEditTime: 2020-11-13 09:48:35
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentAppytHistory.vue
@@ -91,7 +91,7 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <!-- <el-table-column prop="modId" label="任务id" show-overflow-tooltip></el-table-column> -->
+        <el-table-column prop="modId" label="ID" show-overflow-tooltip></el-table-column>
         <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
         <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="brandName" label="品牌" show-overflow-tooltip width="180"></el-table-column>
@@ -267,7 +267,7 @@ export default {
   },
   created() {
     this.getRentApplyListData();
-    this.getLicenceList();
+    // this.getLicenceList();
     
     // 判断权限
     this.rightArray.forEach((item, index, array) => {

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-11-05 13:58:19
- * @LastEditTime: 2020-11-09 14:18:59
+ * @LastEditTime: 2020-11-13 10:28:58
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\sortable.vue
@@ -67,6 +67,8 @@ import nperCarList from './components/nperCarList';
 import { mapState, mapMutations } from 'vuex';
 
 import { moneyFormat } from '@/common/moneyFormat.js';
+
+import draggable from "vuedraggable";
 
 export default {
   components: {

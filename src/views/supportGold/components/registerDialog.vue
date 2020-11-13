@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 15:27:34
- * @LastEditTime: 2020-10-22 15:54:09
+ * @LastEditTime: 2020-11-13 18:51:07
  * @LastEditors: your name
  * @Description: 登记弹窗
  * @FilePath: \webcode2\src\views\supportGold\components\registerDialog.vue
@@ -89,6 +89,7 @@ export default {
 
     // 组件通讯
     handleEmitData() {
+      this.registerForm.payer = this.registerForm.payer.trim();
       this.$emit('formDataSubmit', {
         data: this.registerForm,
       });

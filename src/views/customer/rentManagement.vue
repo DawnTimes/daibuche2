@@ -362,11 +362,11 @@ export default {
     initData() {
       this.tableData = [];
       const params = {
-        areaCode: this.params.areaCode,
-        licenceName: this.params.licenceName,
+        areaCode: this.params.areaCode.trim(),
+        licenceName: this.params.licenceName.trim(),
         status: this.params.status,
-        lessor: this.params.lessor,
-        socialCreditCode: this.params.socialCreditCode,
+        lessor: this.params.lessor.trim(),
+        socialCreditCode: this.params.socialCreditCode.trim(),
         turnPageBeginPos: this.params.turnPageBeginPos, // 开始是数据的序号，后台需要
         turnPageShowNum: this.params.turnPageShowNum, // 每页展示的条数
       };

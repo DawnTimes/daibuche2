@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-11-09 17:02:18
+ * @LastEditTime: 2020-11-13 10:02:55
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\baseInformationDetailModule.vue
@@ -337,14 +337,14 @@ export default {
 <style lang="scss">
 .baseInformationDetailModule {
   .baseInfor {
-    padding: 10px 0 10px 10px;
+    padding: 5px 0 0px 5px;
     border-bottom: 1px solid #eee;
     .tempBox {
       position: relative;
-      height: 36px;
+      height: 30px;
       color: #000;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 13px;
       width: 100%;
 
       :nth-child(1) {
@@ -370,8 +370,8 @@ export default {
     padding: 20px 0 0 20px;
 
     h4 {
-      padding-top: 5px;
-      padding-bottom: 24px;
+      // padding-top: 5px;
+      padding-bottom: 20px;
       display: flex;
 
       span {

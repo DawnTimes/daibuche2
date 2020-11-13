@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-12 19:20:49
+ * @LastEditTime: 2020-11-13 12:34:18
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -74,8 +74,8 @@
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-show="rightControl.createContract" @click="createContract" :disabled="contractReadonly">生成合同</el-button>
-          <!-- <el-button type="primary" v-show="rightControl.createContract" @click="createContract">生成合同</el-button> -->
+          <!-- <el-button type="primary" v-show="rightControl.createContract" @click="createContract" :disabled="contractReadonly">生成合同</el-button> -->
+          <el-button type="primary" v-show="rightControl.createContract" @click="createContract">生成合同</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -105,7 +105,7 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <!-- <el-table-column prop="modId" label="任务id" show-overflow-tooltip fixed></el-table-column> -->
+        <el-table-column prop="modId" label="ID" show-overflow-tooltip fixed></el-table-column>
         <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="brandName" label="品牌" show-overflow-tooltip width="180"></el-table-column>
@@ -208,6 +208,7 @@
     <confirmBoxTip
       v-if="showCreateContractBox"
       :msgConfirBox="createContractInfoText"
+      :loading="createContractLoading"
       v-on:submitForm="createContractSubmit"
       v-on:cancelbox="createCancelBack"
     ></confirmBoxTip>
@@ -283,6 +284,7 @@ export default {
       // 生成合同按钮是否禁用
       contractReadonly: false,
       showCreateContractBox: false,
+      createContractLoading: false,
       // 生成合同提示文本
       createContractInfoText: {
         icon: 'icon-jinggao',
@@ -343,7 +345,7 @@ export default {
     
     this.getRentApplyListData();
 
-    this.getLicenceList();
+    // this.getLicenceList();
 
     // 判断权限
     this.rightArray.forEach((item, index, array) => {
@@ -448,6 +450,7 @@ export default {
     // 生成合同确定提交
     createContractSubmit() {
       const url = common.changeContarctOpenSomethingUrl;
+      this.createContractLoading = true;
       axios.get(url).then((res) => {
         // console.log(res);
         if (res == 'success') {
@@ -456,13 +459,18 @@ export default {
             type: 'success',
             message: '生成合同成功!'
           });
+          this.showCreateContractBox = false;
+          this.createContractLoading = false;
         } else {
+          this.createContractLoading = false;
           this.$notify({
             title: '温馨提示',
             type: 'error',
             message: res ? res : '生成合同失败!，请联系管理员'
           });
         }
+      }).catch(() => {
+        this.createContractLoading = false;
       })
     },
 

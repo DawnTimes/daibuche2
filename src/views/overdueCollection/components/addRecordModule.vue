@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:02:13
- * @LastEditTime: 2020-11-10 11:43:12
+ * @LastEditTime: 2020-11-13 19:17:40
  * @LastEditors: your name
  * @Description: 新增电催记录
  * @FilePath: \webcode2\src\views\overdueCollection\components\addRecordModule.vue
@@ -208,6 +208,9 @@ export default {
 
     // 组件通讯
     handleEmitData() {
+      this.formData.newLink           = this.formData.newLink.trim();
+      this.formData.overdueReason     = this.formData.overdueReason.trim();
+      this.formData.electricCatalysis = this.formData.electricCatalysis.trim();
       this.$emit('formDataSubmit', {
         data: this.formData,
       });

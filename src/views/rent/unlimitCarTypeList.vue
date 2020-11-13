@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-11 18:45:53
+ * @LastEditTime: 2020-11-13 18:27:02
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeList.vue
@@ -205,10 +205,10 @@ export default {
     getUnLimitCarTypeList() {
       this.tableData = [];
       const params = {
-        brandName: this.formData.brandName,
-        modelName: this.formData.modelName,
-        seriesName: this.formData.seriesName,
-        modelCode: this.formData.modelCode,
+        brandName: this.formData.brandName.trim(),
+        modelName: this.formData.modelName.trim(),
+        seriesName: this.formData.seriesName.trim(),
+        modelCode: this.formData.modelCode.trim(),
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
       };

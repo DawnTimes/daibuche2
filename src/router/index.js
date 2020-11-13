@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-11-05 14:02:58
+ * @LastEditTime: 2020-11-13 14:34:28
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\router\index.js
@@ -51,6 +51,7 @@ const contractListNper = resolve => require(['@/views/verification/contractListN
 // const nperCarList = resolve => require(['@/views/verification/nperCarList'], resolve);
 
 const sortable = resolve => require(['@/views/verification/sortable'], resolve);
+const dragFather = resolve => require(['@/views/verification/dragFather'], resolve);
 
 // 租金修改
 // 限牌车型列表
@@ -639,6 +640,14 @@ const router = new Router({
           component: sortable,
           meta: {
             title: '拖拽列表'
+          }
+        },
+        {
+          path: '/dragFather',
+          name: 'dragFather',
+          component: dragFather,
+          meta: {
+            title: '拖拽列表1'
           }
         },
       ]

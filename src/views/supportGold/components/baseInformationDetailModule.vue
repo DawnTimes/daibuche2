@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-11-10 09:52:00
+ * @LastEditTime: 2020-11-13 10:04:37
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\baseInformationDetailModule.vue
@@ -306,7 +306,7 @@ export default {
       height: 30px;
       color: #000;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 13px;
 
       :nth-child(1) {
         display: inline-block;
@@ -322,8 +322,8 @@ export default {
     padding: 20px 0 0 20px;
 
     h4 {
-      padding-top: 5px;
-      padding-bottom: 24px;
+      // padding-top: 5px;
+      padding-bottom: 20px;
       display: flex;
 
       span {

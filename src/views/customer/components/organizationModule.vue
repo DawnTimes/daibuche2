@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-11-13 09:27:21
+ * @LastEditTime: 2020-11-13 17:41:09
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -783,6 +783,19 @@ export default {
 
     // 组件通讯
     handleEmitData() {
+      this.formData.licenCode          = this.formData.licenCode.trim();
+      this.formData.licenceName        = this.formData.licenceName.trim();
+      this.formData.bankAccName        = this.formData.bankAccName.trim();
+      this.formData.bankAccountNumber  = this.formData.bankAccountNumber.trim();
+      this.formData.billingAddr        = this.formData.billingAddr.trim();
+      this.formData.billingPhone       = this.formData.billingPhone.trim();
+      this.formData.contactPers        = this.formData.contactPers.trim();
+      this.formData.contactPersonPhone = this.formData.contactPersonPhone.trim();
+      this.formData.legalPhone         = this.formData.legalPhone.trim();
+      this.formData.legalRepresent     = this.formData.legalRepresent.trim();
+      this.formData.lessor             = this.formData.lessor.trim();
+      this.formData.registerAddr       = this.formData.registerAddr.trim();
+      this.formData.socialCreditCode   = this.formData.socialCreditCode.trim();
       this.$emit('formDataSubmit', {
         data: this.formData,
       });

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-11-04 17:00:39
+ * @LastEditTime: 2020-11-13 18:48:15
  * @LastEditors: your name
  * @Description: 退款弹框
  * @FilePath: \webcode2\src\views\verification\components\refundDialog.vue
@@ -83,7 +83,7 @@ export default {
         return callback(new Error('退款金额不能为空'));
       }
       if (!reg.test(value)) {
-        callback(new Error('退款金额格式错误'));
+        callback(new Error('只能输入数字且最多保留2位小数'));
       } else {
         callback();
       }

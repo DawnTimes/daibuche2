@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-11-12 18:41:43
+ * @LastEditTime: 2020-11-13 18:59:01
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -47,7 +47,7 @@
         ref="ruleForm"
       >
         <el-form-item label="承租人/牌照商" prop="">
-          <el-input maxlength="50" v-model="formData.name" placeholder></el-input>
+          <el-input maxlength="50" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="合同编号" prop="contractNumber">
           <el-input maxlength="50" v-model="formData.contractNumber" placeholder></el-input>

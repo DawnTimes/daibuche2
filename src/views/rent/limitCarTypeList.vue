@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-11 18:25:02
+ * @LastEditTime: 2020-11-13 09:47:47
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeList.vue
@@ -208,7 +208,7 @@ export default {
   },
   created() {
     this.getLimitCarTypeList();
-    this.getLicenceList();
+    // this.getLicenceList();
 
     // 判断权限
     this.rightArray.forEach((item, index, array) => {

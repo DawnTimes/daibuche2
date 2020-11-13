@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-11-13 09:18:14
+ * @LastEditTime: 2020-11-13 18:49:45
  * @LastEditors: your name
  * @Description: 核销弹框
  * @FilePath: \webcode2\src\views\verification\components\writeOffDialog.vue
@@ -146,6 +146,8 @@ export default {
 
     // 组件通讯
     handleEmitData() {
+      this.writeOffForm.debtIdentification = this.writeOffForm.debtIdentification.trim();
+      this.writeOffForm.remark = this.writeOffForm.remark.trim();
       this.$emit('formDataSubmit', {
         data: this.writeOffForm,
       });
