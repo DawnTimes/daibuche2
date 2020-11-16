@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-11 14:00:52
+ * @LastEditTime: 2020-11-15 14:06:47
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -24,7 +24,7 @@
           <el-input maxlength="30" v-model="formData.contractNumber" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="期数" prop="nper">
-          <el-input maxlength="30" v-model="formData.nper" clearable placeholder></el-input>
+          <el-input maxlength="5" v-model="formData.nper" placeholder></el-input>
         </el-form-item>
 
         <!-- <el-form-item label="银行单据号" prop="serialNumber">

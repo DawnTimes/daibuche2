@@ -112,7 +112,7 @@
         </el-table-column>
         <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip>
           <template slot-scope="scope">
-            <span>{{ scope.row.payStatus | paymentStatus }}</span>
+            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT'}">{{ scope.row.payStatus | paymentStatus }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="payer" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>

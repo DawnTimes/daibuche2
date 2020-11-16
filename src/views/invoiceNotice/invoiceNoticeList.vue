@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-11 18:23:33
+ * @LastEditTime: 2020-11-15 18:53:03
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -34,7 +34,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <!-- <el-form-item label="销方名称" prop="sellName">
+        <el-form-item label="销方名称" prop="sellName">
           <el-input
             maxlength="50"
             v-model="formData.sellName"
@@ -42,14 +42,16 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="开票状态" prop="sellName">
-          <el-input
-            maxlength="50"
-            v-model="formData.sellName"
-            clearable
-            placeholder
-          ></el-input>
-        </el-form-item> -->
+        <el-form-item label="开票状态" prop="isOpen">
+          <el-select v-model="formData.isOpen" clearable placeholder="请选择" style="width: 100%">
+            <el-option
+              v-for="item in this.$options.filters.flagValue([])"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input
             maxlength="200"
@@ -58,8 +60,8 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="生成时间" prop="dateTime">
-          <el-date-picker
+        <el-form-item label="生成时间" prop="applyDate">
+          <!-- <el-date-picker
             v-model="formData.dateTime"
             type="daterange"
             value-format="yyyy-MM-dd"
@@ -67,7 +69,13 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             @change="changeTime"
-          ></el-date-picker>
+          ></el-date-picker> -->
+          <el-date-picker
+            v-model="formData.applyDate"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="选择日期">
+          </el-date-picker>
         </el-form-item>
 
         <el-form-item>
@@ -179,13 +187,13 @@
           width="100"
         ></el-table-column>
         <el-table-column
-          prop="createTime"
+          prop="applyDate"
           label="生成时间"
           show-overflow-tooltip
           width="120"
         >
           <template slot-scope="scope">
-            <span>{{ scope.row.createTime | timeFormat }}</span>
+            <span>{{ scope.row.applyDate | timeFormat }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -220,12 +228,12 @@
           show-overflow-tooltip
           width="200"
         ></el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop=""
           label="销方地址电话"
           show-overflow-tooltip
           width="200"
-        ></el-table-column>
+        ></el-table-column> -->
         <el-table-column
           prop="sellBankNameNo"
           label="销方银行帐号"
@@ -315,6 +323,16 @@
           show-overflow-tooltip
           width="140"
         ></el-table-column>
+        <el-table-column
+          prop="isOpen"
+          label="开票状态"
+          show-overflow-tooltip
+          width="120"
+        >
+          <template slot-scope="scope">
+            <span :class="{ blueColor: scope.row.isOpen == 'Y' , redStatus: scope.row.isOpen == 'N' }">{{ scope.row.isOpen | flagValue }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="invoiceNumber"
           label="发票号码"
@@ -427,9 +445,11 @@ export default {
         dateTime: [],
         startCreateTime: '',
         endCreateTime: '',
+        isOpen: '',
         pageSize: 10,
         pageNum: 1,
         sellName: '',
+        applyDate: '',
       },
 
       tableData: [],
@@ -563,6 +583,9 @@ export default {
         buyCreditCode: this.formData.buyCreditCode.trim(),
         buyName: this.formData.buyName.trim(),
         remark: this.formData.remark.trim(),
+        isOpen: this.formData.isOpen,
+        applyDate: this.formData.applyDate,
+        sellName: this.formData.sellName.trim(),
         startCreateTime: this.formData.startCreateTime,
         endCreateTime: this.formData.endCreateTime,
         turnPageBeginPos: this.formData.pageNum,

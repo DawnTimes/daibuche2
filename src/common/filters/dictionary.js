@@ -146,9 +146,9 @@ const Dictionary = {
 
   // 支付状态
   paymentStatus: [
-    { label: '已发放', value: 'HAVEGRANT' },
+    { label: '已支付', value: 'HAVEGRANT' },
     // { label: '已申请', value: 'HAVEAPPLY' },
-    { label: '未发放', value: 'NOT'},
+    { label: '未支付', value: 'NOT'},
     // { label: '未申请', value: '' },
   ],
   // 支援金状态

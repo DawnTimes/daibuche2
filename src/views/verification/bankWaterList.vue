@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-13 09:20:54
+ * @LastEditTime: 2020-11-15 16:18:46
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -171,7 +171,7 @@
               type="primary"
               @click="handleContract(scope.row)"
               v-if="rightControl.writeOff"
-              :disabled="scope.row.refund == scope.row.income"
+              :disabled="scope.row.verState == 'FULL' || scope.row.refund == scope.row.income"
             >核销</el-button>
             <el-button
               size="mini"
@@ -579,7 +579,7 @@ export default {
       }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''
       }&verState=${this.formData.verState ? this.formData.verState : ''
       }&startTradeDate=${this.formData.startTradeDate ? this.formData.startTradeDate : ''
-      }&endTradeDate=${this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_parent')
+      }&endTradeDate=${this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_self')
       // .addEventListener('beforeunload', (e) => {
       //   console.log(1223333);
       //   this.exportLoading = false;

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-11-13 18:59:01
+ * @LastEditTime: 2020-11-15 09:36:10
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -50,7 +50,7 @@
           <el-input maxlength="50" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="合同编号" prop="contractNumber">
-          <el-input maxlength="50" v-model="formData.contractNumber" placeholder></el-input>
+          <el-input maxlength="50" v-model="formData.contractNumber" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="期数" prop="nper">
           <el-input maxlength="3" v-model="formData.nper" placeholder=""></el-input>

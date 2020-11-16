@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-11 14:04:29
+ * @LastEditTime: 2020-11-15 18:55:36
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\unInvoiceNoticeList.vue
@@ -77,9 +77,9 @@
           fixed
         ></el-table-column>
         <!-- <el-table-column prop="billingNo" label="单据号" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="createTime" label="生成时间" show-overflow-tooltip width="100">
+        <el-table-column prop="applyDate" label="生成时间" show-overflow-tooltip width="100">
           <template slot-scope="scope">
-          <span>{{ scope.row.createTime | timeFormat }}</span>
+          <span>{{ scope.row.applyDate | timeFormat }}</span>
         </template>
         </el-table-column>
         <el-table-column prop="buyName" label="购方名称" show-overflow-tooltip width="200"></el-table-column>
@@ -87,7 +87,7 @@
         <el-table-column prop="buyAddTel" label="购方地址电话" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="buyBankNameNo" label="购方银行帐号" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="sellName" label="销方名称" show-overflow-tooltip width="200"></el-table-column>
-        <el-table-column prop="" label="销方地址电话" show-overflow-tooltip width="200"></el-table-column>
+        <!-- <el-table-column prop="" label="销方地址电话" show-overflow-tooltip width="200"></el-table-column> -->
         <el-table-column prop="sellBankNameNo" label="销方银行帐号" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="remark" label="备注" width="300" show-overflow-tooltip></el-table-column>
         <el-table-column prop="tradeName" label="商品名称" show-overflow-tooltip width="150"></el-table-column>

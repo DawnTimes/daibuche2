@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-11-04 17:44:28
+ * @LastEditTime: 2020-11-15 15:38:04
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\editRent.vue
@@ -125,6 +125,7 @@ export default {
         newMonthlyRent: data.newMonthlyRent,
         newtotalMonthlyRent: data.newtotalMonthlyRent,
         validDate:  moment(data.validDate).format('YYYY-MM-DD'),
+        remark:  data.remark,
       };
 
       axios.post(url, params).then(res => {
