@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-11-12 18:21:08
+ * @LastEditTime: 2020-11-17 18:17:01
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -159,6 +159,15 @@
 
     <!-- // 导入催收记录 -->
     <upload-dialog ref="uploadDialog" :uploadURLStr="recordUploadURL"></upload-dialog>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
   </div>
 </template>
 
@@ -170,12 +179,14 @@ import moment from 'moment';
 import { mapState } from 'vuex';
 
 import uploadDialog from '@/components/uploadDialog';  // 上传弹框
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
   name: 'overduceCollectionList',
   props: {},
   components: {
     uploadDialog,
+    downConfirmBox,
   },
   data() {
     return {
@@ -214,6 +225,15 @@ export default {
 
       // 导入URL
       recordUploadURL: '',
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出逾期记录？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
+      exportLoading: false,
     };
   },
   computed: {
@@ -366,6 +386,21 @@ export default {
 
     // 导出
     exportButton() {
+      this.showDownBox = true;
+
+    //   const url = common.exportCollectionUrl;
+    //   const params = {
+    //     name:''
+    //   };
+    //   axios.get(url, params).then((res) => {
+    //     console.log(res);
+    //   })
+    },
+
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+      
       window.location.href = `/api${common.exportCollectionUrl}?name=${
         this.formData.name ? this.formData.name : ''
       }&beginDay=${
@@ -377,14 +412,11 @@ export default {
       }&endAmount=${
         this.formData.endAmount ? this.formData.endAmount : ''
       }`;
-
-    //   const url = common.exportCollectionUrl;
-    //   const params = {
-    //     name:''
-    //   };
-    //   axios.get(url, params).then((res) => {
-    //     console.log(res);
-    //   })
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
     },
 
     // 分页

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-11-11 18:30:58
+ * @LastEditTime: 2020-11-16 14:28:20
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -99,8 +99,8 @@
         <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip>
           <template slot-scope="scope">
             <span
-            :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '2' ,
-            skyblueColor: scope.row.approvalStatus == '3'}"
+            :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '1' ,
+            skyblueColor: scope.row.approvalStatus == '3' || scope.row.approvalStatus == '2'}"
             >{{ scope.row.approvalStatus | supportApprovalStatus }}</span>
           </template>
         </el-table-column>

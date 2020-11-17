@@ -71,6 +71,15 @@
               clearable
             ></el-input>
           </el-form-item>
+          <el-form-item label="银行账号" prop="bankAccountNumber">
+            <el-input
+              class="inputSelectClass"
+              v-model="params.bankAccountNumber"
+              placeholder="银行账号"
+              size="small"
+              clearable
+            ></el-input>
+          </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSearch">查询</el-button>
             <el-button type="primary" @click="resetForm('params')">重置</el-button>
@@ -285,6 +294,15 @@
 
     <!-- // 导入 -->
     <upload-dialog ref="uploadDialog" :uploadURLStr="rentUploadURL"></upload-dialog>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
   </div>
 </template>
 <script>
@@ -292,10 +310,12 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 import uploadDialog from '@/components/uploadDialog'; // 上传弹框
 import { mapState } from 'vuex';
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
   components: {
     uploadDialog,
+    downConfirmBox,
   },
   data() {
     return {
@@ -310,6 +330,7 @@ export default {
         status: '',
         lessor: '',
         socialCreditCode: '',
+        bankAccountNumber: '',
         turnPageBeginPos: 1, // 开始是数据的序号，后台需要
         turnPageShowNum: 10, // 每页展示的条数
       },
@@ -319,6 +340,7 @@ export default {
         status: '',
         lessor: '',
         socialCreditCode: '',
+        bankAccountNumber: '',
       },
       tableHeight: 100,
 
@@ -333,6 +355,16 @@ export default {
         import: false,
         export: false,
       },
+
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出牌照商信息？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
+      exportLoading: false,
     };
   },
 
@@ -366,6 +398,7 @@ export default {
         licenceName: this.params.licenceName.trim(),
         status: this.params.status,
         lessor: this.params.lessor.trim(),
+        bankAccountNumber: this.params.bankAccountNumber.trim(),
         socialCreditCode: this.params.socialCreditCode.trim(),
         turnPageBeginPos: this.params.turnPageBeginPos, // 开始是数据的序号，后台需要
         turnPageShowNum: this.params.turnPageShowNum, // 每页展示的条数
@@ -421,7 +454,31 @@ export default {
     },
     // 导出
     batchesDownload() {
-      // console.log('batchesDownload!');
+      // this.showDownBox = true;
+
+      // let downUrl = `/api${common.licenceExportExcelUrl}?areaCode=${
+      //   this.params.areaCode ? this.params.areaCode : ''
+      // }&licenceName=${
+      //   this.params.licenceName ? this.params.licenceName : ''
+      // }&status=${
+      //   this.params.status ? this.params.status : ''
+      // }&lessor=${
+      //   this.params.lessor ? this.params.lessor : '' 
+      // }&socialCreditCode=${
+      //   this.params.socialCreditCode ? this.params.socialCreditCode : ''
+      // }&bankAccountNumber=${
+      //   this.params.bankAccountNumber ? this.params.bankAccountNumber : ''
+      // }`;
+
+      // let net = window.open(downUrl, '_blank');
+      // net.addEventListener('beforeunload', (e) => {
+      //   console.log(e, 1234444);
+      // })
+      
+    },
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
       window.location.href = `/api${common.licenceExportExcelUrl}?areaCode=${
         this.params.areaCode ? this.params.areaCode : ''
       }&licenceName=${
@@ -429,11 +486,19 @@ export default {
       }&status=${
         this.params.status ? this.params.status : ''
       }&lessor=${
-        this.params.lessor ? this.params.lessor : ''
+        this.params.lessor ? this.params.lessor : '' 
       }&socialCreditCode=${
         this.params.socialCreditCode ? this.params.socialCreditCode : ''
+      }&bankAccountNumber=${
+        this.params.bankAccountNumber ? this.params.bankAccountNumber : ''
       }`;
     },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
+    },
+
     indexMethod(index) {
       let order = this.pageSize * (this.currentPage - 1);
       return index + order + 1;

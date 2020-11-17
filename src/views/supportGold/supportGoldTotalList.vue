@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-11-11 16:18:52
+ * @LastEditTime: 2020-11-17 18:17:43
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -159,6 +159,15 @@
       ></el-pagination>
     </div>
 
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
+
   </div>
 </template>
 
@@ -167,12 +176,13 @@ import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 import { moneyFormat } from '@/common/moneyFormat.js';
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
   name: '',
   props: {},
   components: {
-    
+    downConfirmBox,
   },
   data() {
     return {
@@ -201,6 +211,16 @@ export default {
       rightControl: {
         export: false,
       },
+
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出支援金车辆清单？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
+      exportLoading: false,
 
     };
   },
@@ -313,6 +333,14 @@ export default {
 
     // 导出
     exportButton() {
+      this.showDownBox = true;
+      
+    },
+
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+      
       window.location.href = `/api${
         common.supportOutputExcelUrl
       }?agentName=${
@@ -323,6 +351,11 @@ export default {
         this.formData.batchNumber ? this.formData.batchNumber : ''
       }&payStatus=${
         this.formData.payStatus ? this.formData.payStatus : ''}`;
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
     },
 
     // 合计

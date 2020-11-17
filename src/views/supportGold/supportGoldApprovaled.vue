@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-11-13 09:12:32
+ * @LastEditTime: 2020-11-16 15:51:07
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovaled.vue
@@ -107,6 +107,7 @@ export default {
         id: '',
         approvalOperation: '',
         approvalTime: '',
+        curStatus: '',
       },
       formReadonly: {
         hide: ['cancelBtn1'],
@@ -194,6 +195,24 @@ export default {
     handleFormDataSubmit(obj) {
       const data = obj.data;
       const url = common.supportApprovalUrl;
+      if (data.approvalOperation) {
+        data.curStatus = '5';
+      }
+
+      if (data.type == '1') {
+        if (data.approvalOperation == 'Y') {
+          data.curStatus = '3';
+        } else {
+          data.curStatus = '5';
+        }
+      } else if (data.type == '2') {
+        if (data.approvalOperation == 'Y') {
+          data.curStatus = '4';
+        } else {
+          data.curStatus = '5';
+        }
+      }
+      
       this.status.loading = true;
       axios.post(url, data).then((res) => {
         if (res.ec === '0') {

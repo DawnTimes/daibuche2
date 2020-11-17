@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 11:28:29
- * @LastEditTime: 2020-11-13 18:53:14
+ * @LastEditTime: 2020-11-16 09:45:01
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\components\invoiceRegisterDialog.vue
@@ -44,9 +44,9 @@
         <el-form-item label="发票开具时间" prop="invoiceDate">
           <el-date-picker
             v-model="registerForm.invoiceDate"
-            value-format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd HH:mm:ss"
             style="width: 100%"
-            type="date"
+            type="datetime"
             placeholder="选择日期"
           ></el-date-picker>
         </el-form-item>

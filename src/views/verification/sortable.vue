@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-11-05 13:58:19
- * @LastEditTime: 2020-11-13 10:28:58
+ * @LastEditTime: 2020-11-16 20:33:07
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\sortable.vue
@@ -78,68 +78,6 @@ export default {
   data() {
     
     return {
-      // rowCol: [
-      //   { label: '承租人/牌照商', prop: 'name' },
-      //   { label: '合同编号', prop: 'contractNumber'},
-      //   { label: '合同名称', prop: 'contractName' },
-      //   { label: '合同状态', prop: 'contractNormalStatus' },
-      //   { label: '合同类型', prop: 'contractType' },
-      //   { label: '上牌地', prop: 'cityName' },
-      //   { label: '是否限牌', prop: 'isLimitLicence' },
-      //   { label: '是否租赁公司', prop: 'isGalcCompany' },
-      //   { label: '期数', prop: 'nper' },
-      //   { label: '租赁方式', prop: 'leaseWay' },
-      //   { label: '车辆数量', prop: 'num' },
-      //   { label: '起租日', prop: 'batchStartingDate' },
-      //   { label: '支付日', prop: 'payDate' },
-      //   { label: '核销状态', prop: 'repaymentStatus' },
-      //   { label: '应收金额', prop: 'dueAmount' },
-      //   { label: '应收本金', prop: 'duePrincipal' },
-      //   { label: '应收利息', prop: 'dueinterest' },
-      //   { label: '应收管理费', prop: 'dueManagementFee' },
-      //   { label: '应收手续费', prop: 'dueCommission' },
-      //   { label: '已收金额', prop: 'receivedAmount' },
-      //   { label: '已收本金', prop: 'receivedPrincipal' },
-      //   { label: '已收利息', prop: 'receivedInterest' },
-      //   { label: '已收管理费', prop: 'receivedManagementFee' },
-      //   { label: '已收手续费', prop: 'receivedCommission' },
-      //   { label: '未收金额', prop: 'outstandingAmount' },
-      //   { label: '未收本金', prop: 'outstandingPrincipal' },
-      //   { label: '未收利息', prop: 'outstandingInterest' },
-      //   { label: '未收管理费', prop: 'outstandingManagementFee' },
-      //   { label: '未收手续费', prop: 'outstandingCommission' },
-      // ],
-      // dropCol: [
-      //   { label: '承租人/牌照商', prop: 'name' },
-      //   { label: '合同编号', prop: 'contractNumber'},
-      //   { label: '合同名称', prop: 'contractName' },
-      //   { label: '合同状态', prop: 'contractNormalStatus' },
-      //   { label: '合同类型', prop: 'contractType' },
-      //   { label: '上牌地', prop: 'cityName' },
-      //   { label: '是否限牌', prop: 'isLimitLicence' },
-      //   { label: '是否租赁公司', prop: 'isGalcCompany' },
-      //   { label: '期数', prop: 'nper' },
-      //   { label: '租赁方式', prop: 'leaseWay' },
-      //   { label: '车辆数量', prop: 'num' },
-      //   { label: '起租日', prop: 'batchStartingDate' },
-      //   { label: '支付日', prop: 'payDate' },
-      //   { label: '核销状态', prop: 'repaymentStatus' },
-      //   { label: '应收金额', prop: 'dueAmount' },
-      //   { label: '应收本金', prop: 'duePrincipal' },
-      //   { label: '应收利息', prop: 'dueinterest' },
-      //   { label: '应收管理费', prop: 'dueManagementFee' },
-      //   { label: '应收手续费', prop: 'dueCommission' },
-      //   { label: '已收金额', prop: 'receivedAmount' },
-      //   { label: '已收本金', prop: 'receivedPrincipal' },
-      //   { label: '已收利息', prop: 'receivedInterest' },
-      //   { label: '已收管理费', prop: 'receivedManagementFee' },
-      //   { label: '已收手续费', prop: 'receivedCommission' },
-      //   { label: '未收金额', prop: 'outstandingAmount' },
-      //   { label: '未收本金', prop: 'outstandingPrincipal' },
-      //   { label: '未收利息', prop: 'outstandingInterest' },
-      //   { label: '未收管理费', prop: 'outstandingManagementFee' },
-      //   { label: '未收手续费', prop: 'outstandingCommission' },
-      // ],
       baseFrom: {
         serialNumber: '',
         income: '',
@@ -187,13 +125,11 @@ export default {
   },
 
   created() {
-    console.log(this.rowCol);
-    console.log(this.dropCol);
+    // console.log(this.dropCol);
   },
 
   computed: {
     ...mapState({
-      rowCol: store => store.rowCol,
       dropCol: store => store.dropCol,
     })
   },
@@ -205,7 +141,6 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setRowCol: 'setRowCol',
       setDropCol: 'setDropCol',
     }),
 
@@ -237,9 +172,7 @@ export default {
           // localStorage.setItem('dropCol', JSON.stringify(this.dropCol))
           // 保存修改的列排序
           this.setDropCol(this.dropCol);
-          this.setRowCol(this.dropCol);
           // console.log(this.dropCol);
-          // console.log(this.rowCol);
           // console.log(localStorage.getItem('dropCol'));
         },
       });

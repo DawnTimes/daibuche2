@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-11-13 10:04:37
+ * @LastEditTime: 2020-11-16 19:20:08
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\baseInformationDetailModule.vue
@@ -33,7 +33,7 @@
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
               <div class="tempBox">
                 <span>批次：</span>
-                <span>{{ baseInfoForm.batch }}</span>
+                <span>第{{ baseInfoForm.batch }}批</span>
               </div>
             </el-col>
             <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">

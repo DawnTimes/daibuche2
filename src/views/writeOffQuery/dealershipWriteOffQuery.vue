@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-15 14:06:47
+ * @LastEditTime: 2020-11-17 18:18:41
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -211,6 +211,16 @@
         :total="total"
       ></el-pagination>
     </div>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
+
   </div>
 </template>
 
@@ -219,11 +229,14 @@ import { queryDict } from '@/api/index.js';
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
   name: 'dealershipWriteOffQuery',
   props: {},
-  components: {},
+  components: {
+    downConfirmBox,
+  },
   data() {
     return {
       pageSize: 10,
@@ -255,6 +268,16 @@ export default {
       rightControl: {
         export: false,
       },
+
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出核销的经销店信息？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
+      exportLoading: false,
     };
   },
   computed: {},
@@ -349,6 +372,14 @@ export default {
 
     // 导出经销店核销清单
     exportButton() {
+      this.showDownBox = true;
+      
+    },
+
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+      
       window.location.href = `/api${common.exportVerCarExcelUrl}?nper=${
         this.formData.nper ? this.formData.nper : ''
       }&contractNumber=${
@@ -358,6 +389,11 @@ export default {
       }&name=${
         this.formData.name ? this.formData.name : ''
       }`;
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
     },
 
     // 分页

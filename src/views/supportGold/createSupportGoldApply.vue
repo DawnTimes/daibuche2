@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-18 10:04:11
- * @LastEditTime: 2020-11-02 10:27:35
+ * @LastEditTime: 2020-11-16 14:14:24
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\createSupportGoldApply.vue
@@ -42,6 +42,7 @@ export default {
         applyDate: '',
         yearMonth: '',
         agList: [],
+        remark: '',
       },
       status: {
         loading: false,
@@ -79,8 +80,11 @@ export default {
             })
           }, 1000);
           Object.assign(this.formData, {
+            creater: this.userId,
             applyDate: '',
+            yearMonth: '',
             agList: [],
+            remark: '',
           })
         } else {
           this.status.loading = false;

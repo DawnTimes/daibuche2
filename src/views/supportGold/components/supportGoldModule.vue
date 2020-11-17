@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 18:11:48
- * @LastEditTime: 2020-11-11 16:34:33
+ * @LastEditTime: 2020-11-16 10:25:31
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldModule.vue
@@ -63,7 +63,7 @@
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
-                <el-form-item label="备注:" prop class="form-item">
+                <el-form-item label="备注:" prop="remark" class="form-item">
                   <el-input
                     type="textarea"
                     :autosize="{ minRows: 3, maxRows: 4}"

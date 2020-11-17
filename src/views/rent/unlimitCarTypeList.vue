@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-13 18:27:02
+ * @LastEditTime: 2020-11-16 09:58:51
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeList.vue
@@ -103,7 +103,7 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 
 export default {
-  name: '',
+  name: 'unlimitCarTypeList',
   props: {
 
   },

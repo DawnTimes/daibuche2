@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-11 18:47:15
+ * @LastEditTime: 2020-11-17 18:18:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -507,6 +507,15 @@
       :loading="status.loading"
       v-on:formDataSubmit="formDataSubmit"
     ></recoilModule>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
   </div>
 </template>
 
@@ -517,13 +526,15 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 
 import recoilModule from '@/components/recoilModule';
-import LogInVue from '../login/LogIn.vue';
+// import LogInVue from '../login/LogIn.vue';
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
   name: 'carWriteOffQuery',
   props: {},
   components: {
     recoilModule,
+    downConfirmBox,
   },
   data() {
     return {
@@ -563,6 +574,16 @@ export default {
         export: false,
         recoil: false,
       },
+
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出核销的车辆信息？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
+      exportLoading: false,
     };
   },
   computed: {},
@@ -671,6 +692,14 @@ export default {
 
     // 导出车辆核销清单
     exportButton() {
+      this.showDownBox = true;
+      
+    },
+
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+      
       window.location.href = `/api${common.exportVerCarExcelUrl}?nper=${
         this.formData.nper ? this.formData.nper : ''
       }&contractNumber=${
@@ -685,6 +714,11 @@ export default {
         this.formData.carModel ? this.formData.carModel : ''
       }&serialNumber=${
         this.formData.serialNumber ? this.formData.serialNumber : ''}`;
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
     },
 
     // 分页

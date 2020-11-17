@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-15 18:53:03
+ * @LastEditTime: 2020-11-17 18:16:31
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -14,7 +14,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="100px"
+        label-width="90px"
         size="small"
         ref="ruleForm"
       >
@@ -42,10 +42,10 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="开票状态" prop="isOpen">
+        <el-form-item label="是否开票" prop="isOpen">
           <el-select v-model="formData.isOpen" clearable placeholder="请选择" style="width: 100%">
             <el-option
-              v-for="item in this.$options.filters.flagValue([])"
+              v-for="item in this.$options.filters.isOpenStatus([])"
               :key="item.value"
               :label="item.label"
               :value="item.value">
@@ -284,11 +284,17 @@
           <span>{{ scope.row.amount | moneyFormat }}</span>
         </template>
         </el-table-column>
+        
         <el-table-column
           prop="tax"
           label="税率"
           show-overflow-tooltip
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.tax }}</span>
+          </template>
+        </el-table-column>
+        
         <el-table-column
           prop=""
           label="复核人"
@@ -325,12 +331,11 @@
         ></el-table-column>
         <el-table-column
           prop="isOpen"
-          label="开票状态"
+          label="是否开票"
           show-overflow-tooltip
-          width="120"
         >
           <template slot-scope="scope">
-            <span :class="{ blueColor: scope.row.isOpen == 'Y' , redStatus: scope.row.isOpen == 'N' }">{{ scope.row.isOpen | flagValue }}</span>
+            <span :class="{ greenStatus: scope.row.isOpen == 'Y' , redStatus: scope.row.isOpen == 'N' }">{{ scope.row.isOpen | isOpenStatus }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -344,7 +349,11 @@
           label="发票开具时间"
           show-overflow-tooltip
           width="150"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{ scope.row.invoiceDate | timeFormatTemp }}</span>
+          </template>
+        </el-table-column>
         <!-- <el-table-column
           prop=""
           label="收据号码"
@@ -411,6 +420,15 @@
       ref="uploadDialog"
       :uploadURLStr="invoiceUploadURL"
     ></upload-dialog>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
   </div>
 </template>
 
@@ -424,6 +442,7 @@ import { mapState } from 'vuex';
 import invoiceRegisterDialog from './components/invoiceRegisterDialog'; // 登记弹框
 import createInvoiceDialog from './components/createInvoiceDialog'; // 生成开票明细弹框
 import uploadDialog from '@/components/uploadDialog'; // 上传弹框
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
   name: 'invoiceNoticeList',
@@ -432,6 +451,7 @@ export default {
     invoiceRegisterDialog,
     createInvoiceDialog,
     uploadDialog,
+    downConfirmBox,
   },
   data() {
     return {
@@ -460,6 +480,7 @@ export default {
         contractId: '',
         invoiceDate: '',
         invoiceNumber: '',
+        payDate: '',
         payDay: '',
       },
       status: {
@@ -483,6 +504,15 @@ export default {
 
       // 导入URL
       invoiceUploadURL: '',
+
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出开票明细？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
       exportLoading: false,
     };
   },
@@ -600,6 +630,13 @@ export default {
             this.tableData = data.invoiceList;
             this.total = data.turnPageTotalNum * 1;
             this.tableLoading = false;
+            // 经租直租默认税率13%
+            if (!_.isEmpty(this.tableData)) {
+              this.tableData.forEach((item) => {
+                item.tax = 0.13
+              })
+            }
+            
           } else {
             this.tableLoading = false;
           }
@@ -611,25 +648,28 @@ export default {
 
     // 导入开票明细
     importButton() {
-      (this.invoiceUploadURL = common.importSubcarInvoiceNoticeUrl),
-        this.$refs.uploadDialog.isShow(true);
+      this.invoiceUploadURL = common.importSubcarInvoiceNoticeUrl;
+      this.$refs.uploadDialog.isShow(true);
     },
 
     // 导出明细
     exportButton() {
-      // this.exportLoading = true;
-      window.location.href = `/api${
-        common.exportSubcarInvoiceListUrl
-      }?buyName=${
-        this.formData.buyName ? this.formData.buyName : ''
-      }&buyCreditCode=${
-        this.formData.buyCreditCode ? this.formData.buyCreditCode : ''
-      }&remark=${
-        this.formData.remark ? this.formData.remark : ''
-      }&startCreateTime=${
-        this.formData.startCreateTime ? this.formData.startCreateTime : ''
-      }&endCreateTime=${
-        this.formData.endCreateTime ? this.formData.endCreateTime : ''}`;
+      this.showDownBox = true;
+
+      // window.location.href = `/api${
+      //   common.exportSubcarInvoiceListUrl
+      // }?buyName=${
+      //   this.formData.buyName ? this.formData.buyName : ''
+      // }&buyCreditCode=${
+      //   this.formData.buyCreditCode ? this.formData.buyCreditCode : ''
+      // }&remark=${
+      //   this.formData.remark ? this.formData.remark : ''
+      // }&startCreateTime=${
+      //   this.formData.startCreateTime ? this.formData.startCreateTime : ''
+      // }&endCreateTime=${
+      //   this.formData.endCreateTime ? this.formData.endCreateTime : ''}`;
+
+
 
       // setTimeout(() => {
       //   this.exportLoading = false;
@@ -643,6 +683,31 @@ export default {
       //   this.formData.buyCreditCode ? this.formData.buyCreditCode : ''
       // }&remark=${
       //   this.formData.remark ? this.formData.remark : ''}`, '_parent');
+    },
+
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+      
+      window.location.href = `/api${
+        common.exportSubcarInvoiceListUrl
+      }?buyName=${
+        this.formData.buyName ? this.formData.buyName : ''
+      }&buyCreditCode=${
+        this.formData.buyCreditCode ? this.formData.buyCreditCode : ''
+      }&remark=${
+        this.formData.remark ? this.formData.remark : ''
+      }&sellName=${
+        this.formData.sellName ? this.formData.sellName : ''
+      }&isOpen=${
+        this.formData.isOpen ? this.formData.isOpen : ''
+      }&applyDate=${
+        this.formData.applyDate ? this.formData.applyDate : ''}`;
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
     },
 
     // 分页
@@ -676,7 +741,9 @@ export default {
       // this.registerForm.currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
       // this.registerForm.userId = this.userId;
       this.registerForm.contractId = row.contractId;
-      this.registerForm.payDay = row.payDay;
+      this.registerForm.invoiceNumber = row.invoiceNumber;
+      this.registerForm.invoiceDate = moment(row.invoiceDate).format('YYYY-MM-DD HH:mm:ss');
+      this.registerForm.payDay = moment(row.payDate).format('YYYY-MM-DD');
       // this.registerForm.buyName       = row.buyName;
       // this.registerForm.buyCreditCode = row.buyCreditCode;
       // this.registerForm.remark        = row.remark;

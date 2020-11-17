@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-11-10 17:06:28
+ * @LastEditTime: 2020-11-16 14:24:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -74,9 +74,9 @@
             </el-checkbox-group>
           </div>
         </div>
-        <div class="contentBox">
-          <div class="contentItem1">
-            <span>客户名称(全称)</span>
+        <div class="contentBox2">
+          <div class="contentItem5">
+            <span> 客户名称(全称)</span>
           </div>
           <div class="contentItem4 leftAlign">
             <span>{{ formData.name }}</span>
@@ -84,8 +84,8 @@
         </div>
         <div class="contentBox2">
           <div class="contentItem5">
-            <span>（机构）纳税人识别号</span>
-            <span>（个人）身份证号码</span>
+            <span>(机构)纳税人识别号</span>
+            <span>(个人)身份证号码</span>
           </div>
           <div class="contentItem4 leftAlign">
             <span>{{ formData.creditCode }}</span>
@@ -93,24 +93,24 @@
         </div>
         <div class="contentBox2">
           <div class="contentItem5">
-            <span>（机构）地址\电话号码</span>
-            <span>（个人）手机号码</span>
+            <span>(机构)地址\电话号码</span>
+            <span>(个人)手机号码</span>
           </div>
           <div class="contentItem4 leftAlign">
             <span>{{ formData.addressTel }}</span>
           </div>
         </div>
-        <div class="contentBox">
-          <div class="contentItem1">
-            <span>（机构）开户行及账号</span>
+        <div class="contentBox2">
+          <div class="contentItem5">
+            <span>(机构)开户行及账号</span>
           </div>
           <div class="contentItem4 leftAlign">
             <span>{{ formData.bankAccount }}</span>
           </div>
         </div>
-        <div class="contentBox">
-          <div class="contentItem1">
-            <span>电子邮箱地址</span>
+        <div class="contentBox2">
+          <div class="contentItem5">
+            <span> 电子邮箱地址</span>
           </div>
           <div class="contentItem4 leftAlign">
             <span>{{ formData.email }}</span>
@@ -166,14 +166,22 @@
         </template>
         </el-table-column>
         <!-- <el-table-column prop="dueCommission" label="手续费" show-overflow-tooltip v-if="formData.leaseWay == 'OPERATING-LEASE' || formData.leaseWay == 'LEASE'"></el-table-column> -->
-        <el-table-column prop="invoiceDate" label="发票开具日期" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="invoiceDate" label="发票开具日期" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.invoiceDate | timeFormatTemp }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="invoiceNumber" label="发票号码" show-overflow-tooltip></el-table-column>
         <el-table-column prop="duePrincipal" label="本金 / 保证金  开票金额" width="118" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'">
           <template slot-scope="scope">
             <span>{{ scope.row.duePrincipal | moneyFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="invoiceDate" label="收据开具日期" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'"></el-table-column>
+        <el-table-column prop="invoiceDate" label="收据开具日期" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'">
+          <template slot-scope="scope">
+            <span>{{ scope.row.invoiceDate | timeFormatTemp }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="invoiceNumber" label="收据号码" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'"></el-table-column>
       </el-table>
       <div class="footerBox">
@@ -611,6 +619,7 @@ export default {
           justify-content: space-around;
           border-right: 1px solid #eee;
           box-sizing: border-box;
+          text-indent: 10px;
         }
       }
     }

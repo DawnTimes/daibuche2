@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-15 16:18:46
+ * @LastEditTime: 2020-11-17 18:18:12
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -219,12 +219,22 @@
       v-on:formDataSubmit="formDataSubmit"
     ></refund-dialog>
 
+    <!-- 删除 -->
     <confirmBox
       v-if="showDeleteBox"
       :msgConfirBox="deleteInfoText"
       v-on:submitForm="deleteSubmit"
       v-on:cancelbox="cancelBack"
     ></confirmBox>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
 
     <!-- // 导入银行流水单 -->
     <upload-dialog ref="uploadDialog" :uploadURLStr="bankWaterUploadURL"></upload-dialog>
@@ -240,6 +250,7 @@ import axios2 from 'axios';
 
 import refundDialog from './components/refundDialog'; // 退款弹框
 import confirmBox from '@/components/confirmBox';  // 删除弹框
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 import uploadDialog from '@/components/uploadDialog';  // 上传弹框
 
 import { mapState } from 'vuex';
@@ -255,6 +266,7 @@ export default {
     refundDialog,
     confirmBox,
     uploadDialog,
+    downConfirmBox,
   },
   data() {
     return {
@@ -333,6 +345,16 @@ export default {
 
       // 导入URL
       bankWaterUploadURL: '',
+      
+
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出银行流水？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
       exportLoading: false,
     };
   },
@@ -513,6 +535,8 @@ export default {
 
     // 数据导出下载文件
     exportButton() {
+      this.showDownBox = true;
+      
       // 后端返回的是流文件
       // const params = {
       //   companyName: '',
@@ -571,19 +595,7 @@ export default {
       // }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`;
 
       
-      // this.exportLoading = true;
-      window.open(`/api/${common.bankWaterDownUrl}?companyName=${
-      this.formData.companyName ? this.formData.companyName : ''
-      }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''
-      }&sideAccount=${this.formData.sideAccount ? this.formData.sideAccount : ''
-      }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''
-      }&verState=${this.formData.verState ? this.formData.verState : ''
-      }&startTradeDate=${this.formData.startTradeDate ? this.formData.startTradeDate : ''
-      }&endTradeDate=${this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_self')
-      // .addEventListener('beforeunload', (e) => {
-      //   console.log(1223333);
-      //   this.exportLoading = false;
-      // })
+      
 
 
       // var itime = 0;
@@ -614,6 +626,28 @@ export default {
       // const aa = JSON.stringify(arr);
       // // escape() 函数可对字符串进行编码，这样就可以在所有的计算机上读取该字符串。可以使用 unescape() 对 escape() 编码的字符串进行解码。
       // window.open(`/api/${common.bankWaterDownUrl}?${escape(aa)}`, '_parent')
+    },
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+      
+      window.open(`/api/${common.bankWaterDownUrl}?companyName=${
+      this.formData.companyName ? this.formData.companyName : ''
+      }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''
+      }&sideAccount=${this.formData.sideAccount ? this.formData.sideAccount : ''
+      }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''
+      }&verState=${this.formData.verState ? this.formData.verState : ''
+      }&startTradeDate=${this.formData.startTradeDate ? this.formData.startTradeDate : ''
+      }&endTradeDate=${this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_self')
+      // .addEventListener('beforeunload', (e) => {
+      //   console.log(1223333);
+      //   this.exportLoading = false;
+      // })
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
     },
 
     fileDownload(data, fileName) {

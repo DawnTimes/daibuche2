@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-13 09:22:51
+ * @LastEditTime: 2020-11-17 18:47:02
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -229,6 +229,15 @@
         :total="total"
       ></el-pagination>
     </div>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
   </div>
 </template>
 
@@ -237,11 +246,14 @@ import { queryDict } from '@/api/index.js';
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
   name: 'dealershipBook',
   props: {},
-  components: {},
+  components: {
+    downConfirmBox,
+  },
   data() {
     return {
       tableLoading: false,
@@ -296,6 +308,16 @@ export default {
       rightControl: {
         export: false,
       },
+
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出经销店台账？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
+      exportLoading: false,
     };
   },
   computed: {},
@@ -392,7 +414,39 @@ export default {
 
     // 导出经销店台账 isLimitLicence cityName
     exportButton() {
-      window.location.href = `/api${
+      this.showDownBox = true;
+      
+      // let itime = 0;
+      // let downUrl = `/api${
+      //   common.exportAgentSBUrl
+      // }?name=${
+      //   this.formData.name ? this.formData.name : ''
+      // }&contractNumber=${
+      //   this.formData.contractNumber ? this.formData.contractNumber : ''
+      // }&nper=${
+      //   this.formData.nper ? this.formData.nper : ''
+      // }&isLimitLicence=${
+      //   this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
+      // }&cityName=${
+      //   this.formData.cityName ? this.formData.cityName : ''}`;
+
+      // let net = window.open(downUrl);
+      // net.addEventListener('beforeunload', (e) => {
+      //   console.log(e, 1234444);
+      //   clearTimeout(downloadTimer);
+      // });
+
+      // let downloadTimer = setInterval(() => {
+      //   console.log(++itime);
+      // }, 1000);
+     
+    },
+
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+
+       window.location.href = `/api${
         common.exportAgentSBUrl
       }?name=${
         this.formData.name ? this.formData.name : ''
@@ -404,6 +458,11 @@ export default {
         this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
       }&cityName=${
         this.formData.cityName ? this.formData.cityName : ''}`;
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
     },
 
     // 分页

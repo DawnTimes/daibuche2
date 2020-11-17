@@ -92,7 +92,7 @@ const Dictionary = {
   // 支援金审批状态
   supportApprovalStatus: [
     {
-      label: '生成支援金',
+      label: '待提交',
       value: '1'
     },
     {
@@ -142,6 +142,11 @@ const Dictionary = {
   recoilStatus: [
     { label: '已反冲', value: 'Y' },
     { label: '未反冲', value: 'N' },
+  ],
+  // 开票状态
+  isOpenStatus: [
+    { label: '是', value: 'Y' },
+    { label: '否', value: 'N' },
   ],
 
   // 支付状态
