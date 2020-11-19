@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-17 18:17:15
+ * @LastEditTime: 2020-11-18 14:53:04
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -234,12 +234,14 @@
         <!-- <el-table-column prop="" label="利率" show-overflow-tooltip width="80"></el-table-column> -->
         <el-table-column prop="accountName" label="收款账户名称" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="bankNo" label="收款账号" show-overflow-tooltip width="160"></el-table-column>
-        <el-table-column prop="bankName" label="收款账户开户行" show-overflow-tooltip width="180"></el-table-column>
-        <el-table-column prop="" label="支援金" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="bankName" label="收款账户开户行" show-overflow-tooltip width="180"></el-table-column>        
         <!-- <el-table-column prop="" label="差额" show-overflow-tooltip width="100"></el-table-column> -->
+
+        <!-- <el-table-column prop="" label="支援金" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="" label="支援金批次" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="支援金申请日期" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column> -->
+        
       </el-table>
     </div>
     <div class="page-layer">
@@ -248,7 +250,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[10, 50, 100, 200, 500]"
+        :page-sizes="[10, 20, 50, 100, 200, 500, 1000]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"

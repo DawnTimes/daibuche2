@@ -454,7 +454,7 @@ export default {
     },
     // 导出
     batchesDownload() {
-      // this.showDownBox = true;
+      this.showDownBox = true;
 
       // let downUrl = `/api${common.licenceExportExcelUrl}?areaCode=${
       //   this.params.areaCode ? this.params.areaCode : ''

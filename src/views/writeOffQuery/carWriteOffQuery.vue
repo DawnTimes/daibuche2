@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-17 18:18:29
+ * @LastEditTime: 2020-11-18 09:17:28
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -312,7 +312,7 @@
           width="120"
         >
           <template slot-scope="scope">
-            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | payStatus }}</span>
+            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOTAPPLY', blueColor: scope.row.payStatus == 'HAVEAPPLY' }">{{ scope.row.payStatus | payStatus }}</span>
           </template>
         </el-table-column>
         

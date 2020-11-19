@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-11-13 17:41:09
+ * @LastEditTime: 2020-11-18 15:26:33
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -338,7 +338,8 @@
                 <el-input
                   v-model="formData.billingAddr"
                   type="textarea"
-                  maxlength="100"
+                  maxlength="300"
+                  show-word-limit
                   :autosize="{ minRows: 2, maxRows: 3}"
                   :disabled="$formAtReadonly('billingAddr', formReadonly.readonly)"
                 ></el-input>
@@ -355,7 +356,8 @@
                 <el-input
                   v-model="formData.registerAddr"
                   type="textarea"
-                  maxlength="100"
+                  maxlength="300"
+                  show-word-limit
                   :autosize="{ minRows: 2, maxRows: 3}"
                   :disabled="$formAtReadonly('registerAddr', formReadonly.readonly)"
                 ></el-input>

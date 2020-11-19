@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-12 13:53:47
+ * @LastEditTime: 2020-11-18 09:17:22
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
@@ -262,8 +262,8 @@
             <span
               :class="{
                 greenStatus: scope.row.payStatus == 'HAVEGRANT',
-                redStatus: scope.row.payStatus == 'NOT',
-                blueColor: scope.row.payStatus == '2',
+                redStatus: scope.row.payStatus == 'NOTAPPLY',
+                blueColor: scope.row.payStatus == 'HAVEAPPLY',
               }"
               >{{ scope.row.payStatus | payStatus }}</span
             >

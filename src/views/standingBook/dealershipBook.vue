@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-17 18:47:02
+ * @LastEditTime: 2020-11-18 15:10:16
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -95,7 +95,7 @@
         </el-table-column>
         <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip width="100">
           <template slot-scope="scope">
-            <span :class="{ blueColor: scope.row.isGacShop == 'Y' , redStatus: scope.row.isGacShop == 'N' }">{{ scope.row.isGacShop | flagValue}}</span>
+            <span>{{ scope.row.isGacShop | isGacShopFormat}}</span>
           </template>
         </el-table-column>
         <el-table-column prop="isGalcCompany" label="是否租赁公司" show-overflow-tooltip width="120">
@@ -223,7 +223,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[10, 20, 50, 100, 500]"
+        :page-sizes="[10, 20, 50, 100, 200, 500, 1000]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"

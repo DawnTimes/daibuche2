@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:02:13
- * @LastEditTime: 2020-11-13 19:17:40
+ * @LastEditTime: 2020-11-18 15:25:53
  * @LastEditors: your name
  * @Description: 新增电催记录
  * @FilePath: \webcode2\src\views\overdueCollection\components\addRecordModule.vue
@@ -98,6 +98,7 @@
                   v-model="formData.overdueReason"
                   type="textarea"
                   maxlength="300"
+                  show-word-limit
                   :autosize="{ minRows: 2, maxRows: 5}"
                   :disabled="$formAtReadonly('overdueReason', formReadonly.readonly)"
                 ></el-input>
@@ -114,6 +115,7 @@
                   v-model="formData.electricCatalysis"
                   type="textarea"
                   maxlength="300"
+                  show-word-limit
                   :autosize="{ minRows: 2, maxRows: 5}"
                   :disabled="$formAtReadonly('electricCatalysis', formReadonly.readonly)"
                 ></el-input>

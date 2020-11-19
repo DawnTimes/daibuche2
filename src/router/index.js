@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-11-17 14:05:12
+ * @LastEditTime: 2020-11-18 13:40:57
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\router\index.js
@@ -51,7 +51,6 @@ const contractListNper = resolve => require(['@/views/verification/contractListN
 // const nperCarList = resolve => require(['@/views/verification/nperCarList'], resolve);
 
 // const sortable = resolve => require(['@/views/verification/sortable'], resolve);
-// const dragFather = resolve => require(['@/views/verification/dragFather'], resolve);
 
 // 租金修改
 // 限牌车型列表

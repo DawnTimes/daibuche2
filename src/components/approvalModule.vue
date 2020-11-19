@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 18:11:48
- * @LastEditTime: 2020-09-23 14:20:33
+ * @LastEditTime: 2020-11-18 15:13:22
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\components\approvalModule.vue
@@ -91,7 +91,7 @@
               >
                 <el-input
                   v-model="formData.approvalOpinion"
-                  maxlength="1000"
+                  maxlength="300"
                   :autosize="{ minRows: 4, maxRows: 6}"
                   type="textarea"
                   clearable

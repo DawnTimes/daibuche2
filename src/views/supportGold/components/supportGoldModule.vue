@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 18:11:48
- * @LastEditTime: 2020-11-16 10:25:31
+ * @LastEditTime: 2020-11-18 15:22:22
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldModule.vue
@@ -68,7 +68,8 @@
                     type="textarea"
                     :autosize="{ minRows: 3, maxRows: 4}"
                     placeholder="请输入内容"
-                    maxlength="500"
+                    maxlength="300"
+                    show-word-limit
                     v-model="formData.remark"
                   ></el-input>
                 </el-form-item>
@@ -110,7 +111,7 @@
             <el-table-column prop="agentFullName" label="经销店名称" show-overflow-tooltip min-width="120"></el-table-column>
             <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip min-width="120">
               <template slot-scope="scope">
-                <span>{{ scope.row.isGacShop | flagValue }}</span>
+                <span>{{ scope.row.isGacShop | isGacShopFormat }}</span>
               </template>
             </el-table-column>
             <!-- <el-table-column prop="agentCode" label="车辆数量" show-overflow-tooltip></el-table-column> -->
@@ -172,6 +173,7 @@
                   <el-input
                     type="textarea"
                     maxlength="200"
+                    show-word-limit
                     :autosize="{ minRows: 1, maxRows: 4}"
                     size="mini"
                     placeholder="请输入内容"

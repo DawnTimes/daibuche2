@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-13 12:34:18
+ * @LastEditTime: 2020-11-18 16:16:48
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -389,7 +389,7 @@ export default {
     //   this.contractReadonly = false;
     // }
 
-    this.rentWaitingTotal();
+    // this.rentWaitingTotal();
   },
   methods: {
     ...mapMutations(['setAsideInfo', 'setAsideInfoIds', 'setRentApprovalNum']),
@@ -469,8 +469,12 @@ export default {
             message: res ? res : '生成合同失败!，请联系管理员'
           });
         }
-      }).catch(() => {
+      }).catch((err) => {
         this.createContractLoading = false;
+        this.$notify.error({
+          title: '温馨提示！',
+          message: res.em || res.error || res.message || '生成合同失败，请联系管理员！'
+        })
       })
     },
 

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-18 11:23:35
- * @LastEditTime: 2020-11-16 12:51:32
+ * @LastEditTime: 2020-11-18 14:17:43
  * @LastEditors: your name
  * @Description: 经销店弹窗
  * @FilePath: \webcode2\src\views\supportGold\components\dealerTableDialog.vue
@@ -49,7 +49,7 @@
             <el-table-column prop="agentFullName" label="经销店名称" show-overflow-tooltip></el-table-column>
             <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip>
               <template slot-scope="scope">
-                <span>{{ scope.row.isGacShop | flagValue }}</span>
+                <span>{{ scope.row.isGacShop | isGacShopFormat }}</span>
               </template>
             </el-table-column>
             <!-- <el-table-column prop="" label="车辆数量" show-overflow-tooltip></el-table-column> -->

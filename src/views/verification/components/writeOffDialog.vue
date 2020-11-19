@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-11-13 18:49:45
+ * @LastEditTime: 2020-11-18 15:24:31
  * @LastEditors: your name
  * @Description: 核销弹框
  * @FilePath: \webcode2\src\views\verification\components\writeOffDialog.vue
@@ -53,6 +53,8 @@
               <el-input
                 v-model="writeOffForm.debtIdentification"
                 type="textarea"
+                maxlength="300"
+                show-word-limit
                 :autosize="{ minRows: 2, maxRows: 3}"
               ></el-input>
             </el-form-item>
@@ -62,6 +64,8 @@
               <el-input
                 v-model="writeOffForm.remark"
                 type="textarea"
+                maxlength="300"
+                show-word-limit
                 :autosize="{ minRows: 3, maxRows: 4}"
               ></el-input>
             </el-form-item>

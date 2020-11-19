@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-11-16 14:28:41
+ * @LastEditTime: 2020-11-18 18:40:09
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldHistory.vue
@@ -67,13 +67,13 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="" label="支援金月份" show-overflow-tooltip width="100">
+        <el-table-column prop="" label="支援金月份" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.year + '-' + scope.row.month }}</span>
           </template>
         </el-table-column>
         <!-- <el-table-column prop label="期数" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="batch" label="批次" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.Batch | batchFormat }}</span>
@@ -81,12 +81,27 @@
         </el-table-column>
         <el-table-column prop="counts" label="店数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="rentCount" label="支援金" show-overflow-tooltip width="120">
+        <el-table-column prop="rentCount" label="租金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.rentCount | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="LicenceFee" label="牌照费" show-overflow-tooltip width="110">
+        <el-table-column prop="LicenceFee" label="牌照费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.LicenceFee | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="rentTotalCount" label="租金合计" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.rentTotalCount | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="rentCount" label="车型支援金" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.rentCount | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="LicenceFee" label="牌照支援金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.LicenceFee | moneyFormat}}</span>
           </template>
@@ -96,7 +111,7 @@
             <span>{{ scope.row.rentTotalCount | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip>
+        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span
             :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '1' ,
@@ -110,7 +125,7 @@
             <span>{{ scope.row.create_time | timeFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip>
+        <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT'}">{{ scope.row.payStatus | paymentStatus }}</span>
           </template>
@@ -121,7 +136,7 @@
             <span>{{ scope.row.payDate | timeFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column label="操作" align="center" width="80" fixed="right">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleDetail(scope.row)" v-show="rightControl.detail">详情</el-button>

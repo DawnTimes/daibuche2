@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-11-13 17:42:17
+ * @LastEditTime: 2020-11-18 15:23:47
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -235,6 +235,7 @@
                   v-model="formData.remark"
                   type="textarea"
                   maxlength="300"
+                  show-word-limit
                   :autosize="{ minRows: 3, maxRows: 5}"
                   :disabled="$formAtReadonly('remark', formReadonly.readonly)"
                 ></el-input>

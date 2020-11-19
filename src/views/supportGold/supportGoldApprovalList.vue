@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-11-16 14:28:20
+ * @LastEditTime: 2020-11-18 18:38:04
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -73,7 +73,7 @@
           </template>
         </el-table-column>
         <!-- <el-table-column prop="" label="期数" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="Batch" label="批次" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.Batch | batchFormat }}</span>
@@ -81,12 +81,27 @@
         </el-table-column>
         <el-table-column prop="counts" label="店数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="rentCount" label="支援金" show-overflow-tooltip>
+        <el-table-column prop="rentCount" label="租金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.rentCount | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="LicenceFee" label="牌照费" show-overflow-tooltip>
+        <el-table-column prop="LicenceFee" label="牌照费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.LicenceFee | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="rentTotalCount" label="租金合计" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.rentTotalCount | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="rentCount" label="车型支援金" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.rentCount | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="LicenceFee" label="牌照支援金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.LicenceFee | moneyFormat}}</span>
           </template>
@@ -96,7 +111,7 @@
             <span>{{ scope.row.rentTotalCount | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip>
+        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span
             :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '1' ,
@@ -104,8 +119,8 @@
             >{{ scope.row.approvalStatus | supportApprovalStatus }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="creater" label="申请人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip>
+        <el-table-column prop="creater" label="申请人" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.create_time | timeFormat }}</span>
           </template>
@@ -115,7 +130,7 @@
             <span>{{ scope.row.payStatus }}</span>
           </template>
         </el-table-column> -->
-         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+         <el-table-column prop="remark" label="备注" show-overflow-tooltip width="200"></el-table-column>
 
         <el-table-column
           align="center"

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-11-16 19:58:58
+ * @LastEditTime: 2020-11-18 18:35:43
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -94,12 +94,27 @@
         </el-table-column>
         <el-table-column prop="counts" label="店数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="rentCount" label="支援金" show-overflow-tooltip width="120">
+        <el-table-column prop="rentCount" label="租金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.rentCount | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="LicenceFee" label="牌照费" show-overflow-tooltip width="110">
+        <el-table-column prop="LicenceFee" label="牌照费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.LicenceFee | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="rentTotalCount" label="租金合计" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.rentTotalCount | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="rentCount" label="车型支援金" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.rentCount | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="LicenceFee" label="牌照支援金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.LicenceFee | moneyFormat}}</span>
           </template>
@@ -134,8 +149,8 @@
             <span>{{ scope.row.payDate | timeFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" width="260" align="center" fixed="right">
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column label="操作" width="240" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleEdit(scope.row)" v-if="rightControl.edit" :disabled="!(scope.row.approvalStatus == '1' || scope.row.approvalStatus == '2')">编辑</el-button>
             <el-button type="primary" size="mini" @click="handleRegister(scope.row)" v-if="rightControl.register" :disabled="!(scope.row.approvalStatus == '4') || scope.row.payStatus == 'HAVEGRANT'">登记</el-button>

@@ -119,6 +119,12 @@ const Dictionary = {
     { label: '回租', value: 'BACK-LEASE' },
     { label: '经租', value: 'OPERATING-LEASE' },
   ],
+  // 租赁方式
+  isGacShopFormat: [
+    { label: '商贸全资', value: 'Y' },
+    { label: '非商贸', value: 'N' },
+    { label: '商贸非全资', value: 'F' },
+  ],
 
   // 合同类型
   contractType: [

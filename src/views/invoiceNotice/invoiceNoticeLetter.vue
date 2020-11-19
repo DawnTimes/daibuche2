@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-11-16 14:24:44
+ * @LastEditTime: 2020-11-18 16:18:25
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -277,7 +277,7 @@ export default {
           margin: '保证金',
           letterContent: '*融资租赁*有形动产融资租赁服务',
         })
-        // this.formData.invoiceDetail = _.concat(this.zzLeaseList, this.formData.invoiceDetail);
+        this.formData.invoiceDetail = _.concat(this.zzLeaseList, this.formData.invoiceDetail);
       }
       if (val == 'BACK-LEASE') {
         Object.assign(this.letterForm, {
@@ -286,7 +286,7 @@ export default {
           margin: '本金/保证金',
           letterContent: '*金融服务*有形动产融资性售后回租',
         })
-        // this.formData.invoiceDetail = _.concat(this.hzLeaseList, this.formData.invoiceDetail);
+        this.formData.invoiceDetail = _.concat(this.hzLeaseList, this.formData.invoiceDetail);
       }
       if (val == 'OPERATING-LEASE') {
         Object.assign(this.letterForm, {
@@ -295,7 +295,7 @@ export default {
           margin: '违章保证金',
           letterContent: '*经营租赁*车辆租金',
         })
-        // this.formData.invoiceDetail = _.concat(this.jzLeaseList, this.formData.invoiceDetail);
+        this.formData.invoiceDetail = _.concat(this.jzLeaseList, this.formData.invoiceDetail);
       }
     } 
   },

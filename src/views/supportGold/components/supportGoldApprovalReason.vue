@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-11-12 19:33:55
+ * @LastEditTime: 2020-11-18 14:51:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -38,7 +38,7 @@
         <el-form-item label="是否商贸店:" prop="isGacShop">
           <el-select v-model="reasonForm.isGacShop" clearable placeholder="请选择" style="width: 100%">
             <el-option
-              v-for="item in isCommerce"
+              v-for="item in this.$options.filters.isGacShopFormat([])"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -85,7 +85,7 @@
           fixed
         ></el-table-column>
         <el-table-column prop="agentCode" label="经销店代码" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="carNum" label="车辆数" sortable show-overflow-tooltip width="90" :sort-method="(row1, row2) => sortMethod(row1, row2, 'carNum')">
           <template slot-scope="scope">
             <el-tooltip content="点击查询" placement="top" effect="light">
@@ -93,36 +93,36 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="supportFund" label="支援金" sortable show-overflow-tooltip width="120" :sort-method="(row1, row2) => sortMethod(row1, row2, 'supportFund')">
+        <el-table-column prop="supportFund" label="车型支援金" sortable show-overflow-tooltip width="150" :sort-method="(row1, row2) => sortMethod(row1, row2, 'supportFund')">
           <template slot-scope="scope">
             <span>{{ scope.row.supportFund | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="licenceFund" label="牌照费" sortable show-overflow-tooltip width="110" :sort-method="(row1, row2) => sortMethod(row1, row2, 'licenceFund')">
+        <el-table-column prop="licenceFund" label="牌照支援金" sortable show-overflow-tooltip width="150" :sort-method="(row1, row2) => sortMethod(row1, row2, 'licenceFund')">
           <template slot-scope="scope">
             <span>{{ scope.row.licenceFund | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="totalFund" label="支援金总额" sortable show-overflow-tooltip width="140" :sort-method="(row1, row2) => sortMethod(row1, row2, 'totalFund')">
+        <el-table-column prop="totalFund" label="支援金总额" sortable show-overflow-tooltip width="150" :sort-method="(row1, row2) => sortMethod(row1, row2, 'totalFund')">
           <template slot-scope="scope">
             <span>{{ scope.row.totalFund | moneyFormat}}</span>
           </template>
         </el-table-column>
         
-        <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip width="100">
+        <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.isGacShop | flagValue }}</span>
+            <span>{{ scope.row.isGacShop | isGacShopFormat }}</span>
           </template>
         </el-table-column>
         
         <!-- <el-table-column prop="" label="是否收齐" show-overflow-tooltip></el-table-column> --> -->
         <!-- <el-table-column prop="" label="数据来源" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop="remark" label="申请原因" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="remark" label="申请原因" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column
             prop="threeN"
             :label="setMonthTotal(2)"
             show-overflow-tooltip
-            width="150"
+            width="160"
             sortable
             :sort-method="(row1, row2) => sortMethod(row1, row2, 'threeN')"
           >
@@ -134,7 +134,7 @@
             prop="twoN"
             :label="setMonthTotal(3)"
             show-overflow-tooltip
-            width="150"
+            width="160"
             sortable
             :sort-method="(row1, row2) => sortMethod(row1, row2, 'twoN')"
           >
