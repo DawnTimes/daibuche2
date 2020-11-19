@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-11-13 12:40:40
+ * @LastEditTime: 2020-11-19 15:41:20
  * @LastEditors: your name
  * @Description: 删除弹窗
  * @FilePath: \webcode2\src\components\confirmBox.vue
@@ -88,7 +88,7 @@ export default {
   color: #3973e7;
 }
 .mshbox .msgbox_contant p.last {
-  color: #F56C6C;
+  color:#909399;
   margin-bottom: 20px;
   font-size: 14px;
 }

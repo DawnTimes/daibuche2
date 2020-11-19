@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-11-17 18:17:01
+ * @LastEditTime: 2020-11-19 09:53:49
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -84,7 +84,7 @@
           fixed
         ></el-table-column>
         <el-table-column prop="name" label="经销店名称" show-overflow-tooltip width="250"></el-table-column>
-        <el-table-column prop="payDate" label="逾期开始日期" show-overflow-tooltip width="140">
+        <el-table-column prop="payDate" label="逾期开始日期" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.payDate | timeFormat }}</span>
           </template>
@@ -107,12 +107,12 @@
         </template>
         </el-table-column>
         <el-table-column prop="wfwfday" label="未发未付对应月份" show-overflow-tooltip width="160"></el-table-column>
-        <el-table-column prop="" label="应还罚息金额" width="140">
+        <el-table-column prop="" label="应还罚息金额" show-overflow-tooltip width="140">
           <template slot-scope="scope">
           <span>{{ scope.row.amount | moneyFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="outstandingAmount" label="应还金额合计" show-overflow-tooltip width="160">
+        <el-table-column prop="outstandingAmount" label="应还金额合计" show-overflow-tooltip width="140">
           <template slot-scope="scope">
           <span>{{ scope.row.outstandingAmount | moneyFormat }}</span>
         </template>
@@ -121,12 +121,12 @@
         <el-table-column prop="storeManagerTel" label="店总联系方式" show-overflow-tooltip width="140"></el-table-column>
         <el-table-column prop="sellName" label="售后经理姓名" show-overflow-tooltip width="140"></el-table-column>
         <el-table-column prop="sellTel" label="售后经理联系方式" show-overflow-tooltip width="160"></el-table-column>
-        <el-table-column label="催收记录查询" show-overflow-tooltip width="140">
+        <el-table-column label="催收记录查询" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <el-link type="primary" @click="queryRecord(scope.row)" v-show="rightControl.check">查看催收记录</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="electricDate" label="电催日期" show-overflow-tooltip width="200">
+        <el-table-column prop="electricDate" label="电催日期" show-overflow-tooltip width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.electricDate | timeFormatTemp }}</span>
           </template>

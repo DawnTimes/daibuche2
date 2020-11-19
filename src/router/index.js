@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-11-18 13:40:57
+ * @LastEditTime: 2020-11-19 11:33:10
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\router\index.js
@@ -50,7 +50,7 @@ const contractListNper = resolve => require(['@/views/verification/contractListN
 // 车辆清单
 // const nperCarList = resolve => require(['@/views/verification/nperCarList'], resolve);
 
-// const sortable = resolve => require(['@/views/verification/sortable'], resolve);
+const spreadSheets = resolve => require(['@/views/test/spreadSheets'], resolve);
 
 // 租金修改
 // 限牌车型列表
@@ -630,6 +630,15 @@ const router = new Router({
           component: bankAccountList,
           meta: {
             title: '账户管理'
+          }
+        },
+        // 账户管理
+        {
+          path: '/spreadSheets',
+          name: 'spreadSheets',
+          component: spreadSheets,
+          meta: {
+            title: 'Excel管理'
           }
         },
 

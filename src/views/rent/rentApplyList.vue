@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-18 16:16:48
+ * @LastEditTime: 2020-11-19 15:44:13
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -260,7 +260,7 @@ export default {
       // 删除提示文本
       deleteInfoText: {
         icon: 'icon-jinggao',
-        confirst: '确认删除该租金修改任务？',
+        confirst: '确认删除该租金修改申请？',
         consecond: '警告：删除后不可恢复！'
       },
       // 删除框显示
@@ -466,14 +466,15 @@ export default {
           this.$notify({
             title: '温馨提示',
             type: 'error',
-            message: res ? res : '生成合同失败!，请联系管理员'
+            message: res ? res : '生成合同失败!，请联系管理员!'
           });
         }
       }).catch((err) => {
+        // console.log(err);
         this.createContractLoading = false;
         this.$notify.error({
           title: '温馨提示！',
-          message: res.em || res.error || res.message || '生成合同失败，请联系管理员！'
+          message: err.em || err.error || err.message || '生成合同失败，请联系管理员！'
         })
       })
     },

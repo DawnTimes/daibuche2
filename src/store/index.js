@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-11-17 09:21:05
+ * @LastEditTime: 2020-11-19 15:03:09
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\store\index.js
@@ -56,18 +56,19 @@ const store = new Vuex.Store({
     tableHeader: JSON.parse(localStorage.getItem('tableHeader')) || [
       { label: '承租人/牌照商', prop: 'name', minWidth: '200px' },
       { label: '合同编号', prop: 'contractNumber', minWidth: '160px' },
+      { label: '原合同编号', prop: 'parentContractNumber', minWidth: '160px' },
       { label: '合同名称', prop: 'contractName', minWidth: '150px' },
       { label: '合同状态', prop: 'contractNormalStatusText', minWidth: '80px' },
       { label: '合同类型', prop: 'contractTypeText', minWidth: '100px' },
+      { label: '期数', prop: 'nper', minWidth: '80px' },
+      { label: '租赁方式', prop: 'leaseWayText', minWidth: '80px' },
       { label: '上牌地', prop: 'cityName', minWidth: '80px' },
       { label: '是否限牌', prop: 'isLimitLicenceText', minWidth: '80px' },
       { label: '是否租赁公司', prop: 'isGalcCompanyText', minWidth: '100px' },
-      { label: '期数', prop: 'nper', minWidth: '80px' },
-      { label: '租赁方式', prop: 'leaseWayText', minWidth: '80px' },
       { label: '车辆数量', prop: 'num', minWidth: '80px' },
+      { label: '核销状态', prop: 'repaymentStatusText', minWidth: '80px' },
       { label: '起租日', prop: 'batchStartingDate', minWidth: '120px' },
       { label: '支付日', prop: 'payDate', minWidth: '120px' },
-      { label: '核销状态', prop: 'repaymentStatusText', minWidth: '80px' },
       { label: '应收金额', prop: 'dueAmount', minWidth: '120px' },
       { label: '应收本金', prop: 'duePrincipal', minWidth: '120px' },
       { label: '应收利息', prop: 'dueinterest', minWidth: '120px' },

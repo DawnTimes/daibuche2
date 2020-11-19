@@ -128,8 +128,8 @@ export default {
       },
       msgConfirBox: {
         icon: 'icon-jinggao',
-        confirst: '确认删除该用户',
-        consecond: '删除后不可恢复',
+        confirst: '确认删除该用户？',
+        consecond: '警告：删除后不可恢复',
       },
 
       tableHeight: 100,

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-11-18 15:24:31
+ * @LastEditTime: 2020-11-19 14:33:23
  * @LastEditors: your name
  * @Description: 核销弹框
  * @FilePath: \webcode2\src\views\verification\components\writeOffDialog.vue
@@ -188,7 +188,9 @@ export default {
   }
 }
 
-.writeOffDialog .el-form-item__label, .hearderBoxNerp .el-input__inner {
+.writeOffDialog .el-form-item__label, .writeOffDialog .el-input__inner, .writeOffDialog .el-form-item--small .el-form-item__content {
   font-size: 13px;
+  line-height: 30px;
 }
+
 </style>

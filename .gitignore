@@ -1,6 +1,7 @@
 .DS_Store
 node_modules/
 /dist
+/src/views/test
 dist.zip
 npm-debug.log*
 yarn-debug.log*

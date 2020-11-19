@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-11-18 18:35:43
+ * @LastEditTime: 2020-11-19 15:37:15
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -94,7 +94,7 @@
         </el-table-column>
         <el-table-column prop="counts" label="店数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="rentCount" label="租金" show-overflow-tooltip width="120">
+        <!-- <el-table-column prop="rentCount" label="租金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.rentCount | moneyFormat}}</span>
           </template>
@@ -108,7 +108,7 @@
           <template slot-scope="scope">
             <span>{{ scope.row.rentTotalCount | moneyFormat}}</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column prop="rentCount" label="车型支援金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.rentCount | moneyFormat}}</span>
