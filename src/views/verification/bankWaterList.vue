@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-17 18:18:12
+ * @LastEditTime: 2020-11-20 17:57:24
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -76,7 +76,7 @@
           <el-button icon="el-icon-upload2" type="primary" @click="importButton" v-show="rightControl.import">导入银行流水单</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button icon="el-icon-download" type="primary" id="exportButton"  @click="exportButton" :loading="exportLoading" v-show="rightControl.export">导出银行流水单</el-button>
+          <el-button icon="el-icon-download" type="primary" id="exportButton"  @click="exportButton" v-show="rightControl.export">导出银行流水单</el-button>
         </el-form-item>
         
       </el-form>
@@ -638,7 +638,7 @@ export default {
       }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''
       }&verState=${this.formData.verState ? this.formData.verState : ''
       }&startTradeDate=${this.formData.startTradeDate ? this.formData.startTradeDate : ''
-      }&endTradeDate=${this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_self')
+      }&endTradeDate=${this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_parent')
       // .addEventListener('beforeunload', (e) => {
       //   console.log(1223333);
       //   this.exportLoading = false;

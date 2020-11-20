@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-11-19 15:41:20
+ * @LastEditTime: 2020-11-20 18:00:19
  * @LastEditors: your name
  * @Description: 删除弹窗
  * @FilePath: \webcode2\src\components\confirmBox.vue
@@ -32,7 +32,19 @@
 <script>
 export default {
   name: 'confirmBox',
-  props: ['msgConfirBox', 'loading'],
+  // props: ['msgConfirBox', 'loading'],
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    msgConfirBox: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+  },
   data() {
     return {};
   },
