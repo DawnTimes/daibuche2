@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-11-19 15:37:35
+ * @LastEditTime: 2020-11-20 11:08:13
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldHistory.vue
@@ -119,7 +119,7 @@
             >{{ scope.row.approvalStatus | supportApprovalStatus }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="creater" label="申请人" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="creater" label="申请人" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.create_time | timeFormat }}</span>
@@ -127,7 +127,7 @@
         </el-table-column>
         <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
-            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT'}">{{ scope.row.payStatus | paymentStatus }}</span>
+            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', blueColor: scope.row.payStatus == 'HAVEAPPLY', redStatus: scope.row.payStatus == 'NOT'}">{{ scope.row.payStatus | paymentStatus }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="payer" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>

@@ -158,7 +158,7 @@ const Dictionary = {
   // 支付状态
   paymentStatus: [
     { label: '已支付', value: 'HAVEGRANT' },
-    // { label: '已申请', value: 'HAVEAPPLY' },
+    { label: '已申请', value: 'HAVEAPPLY' },
     { label: '未支付', value: 'NOT'},
     // { label: '未申请', value: '' },
   ],
@@ -189,6 +189,11 @@ const Dictionary = {
     { label: '第八批', value: '8' },
     { label: '第九批', value: '9' },
     { label: '第十批', value: '10' },
+    { label: '第十一批', value: '11' },
+    { label: '第十二批', value: '12' },
+    { label: '第十三批', value: '13' },
+    { label: '第十四批', value: '14' },
+    { label: '第十五批', value: '15' },
   ],
 
   // 保留多少位小数点

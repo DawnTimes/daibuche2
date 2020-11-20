@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-11-15 15:38:04
+ * @LastEditTime: 2020-11-19 18:43:04
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\editRent.vue
@@ -87,10 +87,10 @@ export default {
     Object.assign(this.formData, query);
     this.formData.modifier = this.userId;
     this.formData.id = query.modId;
-    this.formData.licenceCode = query.licenceName;
-    this.formData.licenceName = query.licenceCode;
-    console.log(query);
-    console.log(this.formData);
+    this.formData.licenceCode = query.licenceCode;
+    this.formData.licenceName = query.licenceName;
+    // console.log(query);
+    // console.log(this.formData);
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
