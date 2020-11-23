@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-20 17:57:24
+ * @LastEditTime: 2020-11-23 17:31:03
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -477,6 +477,7 @@ export default {
       }).catch(() => {
         this.tableLoading = false;
       })
+
     },
 
     // 新增银行流水
@@ -536,7 +537,7 @@ export default {
     // 数据导出下载文件
     exportButton() {
       this.showDownBox = true;
-      
+            
       // 后端返回的是流文件
       // const params = {
       //   companyName: '',
@@ -595,8 +596,7 @@ export default {
       // }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`;
 
       
-      
-
+  
 
       // var itime = 0;
       // var exportButton = document.getElementById('exportButton');

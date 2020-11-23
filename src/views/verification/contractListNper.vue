@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-11-13 14:25:38
- * @LastEditTime: 2020-11-17 09:34:52
+ * @LastEditTime: 2020-11-23 16:11:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -384,12 +384,14 @@ export default {
               if (item.repaymentStatus == 'FULL') {
                 item.repaymentStatusText = '已核销';
                 // item.repaymentStatusColor = ' #67C23A';
+              } else if (item.repaymentStatus == 'PART') {
+                item.repaymentStatusText = '部分核销';
+                // item.repaymentStatusColor = '#F56C6C';
               } else if (item.repaymentStatus == 'NOT') {
                 item.repaymentStatusText = '未核销';
-                // item.repaymentStatusColor = '#F56C6C';
-              } else {
-                item.repaymentStatusText = '部分核销';
                 // item.repaymentStatusColor = '#409EFF';
+              } else {
+                item.repaymentStatusText = '';
               }
 
               if (item.contractType == 'LEASE') {

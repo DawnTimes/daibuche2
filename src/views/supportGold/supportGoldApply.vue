@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-11-20 11:07:40
+ * @LastEditTime: 2020-11-23 17:32:41
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -94,19 +94,19 @@
         </el-table-column>
         <el-table-column prop="counts" label="店数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
-        <!-- <el-table-column prop="rentCount" label="租金" show-overflow-tooltip width="120">
+        <!-- <el-table-column prop="" label="租金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.rentCount | moneyFormat}}</span>
+            <span>{{ scope.row | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="LicenceFee" label="牌照费" show-overflow-tooltip width="120">
+        <el-table-column prop="" label="牌照费" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.LicenceFee | moneyFormat}}</span>
+            <span>{{ scope.row | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="rentTotalCount" label="租金合计" show-overflow-tooltip width="120">
+        <el-table-column prop="" label="租金合计" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.rentTotalCount | moneyFormat}}</span>
+            <span>{{ scope.row | moneyFormat}}</span>
           </template>
         </el-table-column> -->
         <el-table-column prop="rentCount" label="车型支援金" show-overflow-tooltip width="120">
