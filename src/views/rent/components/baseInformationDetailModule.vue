@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-10-29 17:25:42
+ * @LastEditTime: 2020-11-15 15:51:59
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\baseInformationDetailModule.vue
@@ -255,7 +255,7 @@ export default {
       ],
 
       userTemp: [
-        { value: '1', lable: '生成租金' },
+        { value: '1', lable: '发起申请' },
         { value: '2', lable: '发起申请' },
         { value: '3', lable: '会计审批通过' },
         { value: '4', lable: '财务审批通过' },
@@ -337,14 +337,14 @@ export default {
 <style lang="scss">
 .baseInformationDetailModule {
   .baseInfor {
-    padding: 10px 0 10px 10px;
+    padding: 5px 0 0px 5px;
     border-bottom: 1px solid #eee;
     .tempBox {
       position: relative;
-      height: 36px;
+      height: 30px;
       color: #000;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 13px;
       width: 100%;
 
       :nth-child(1) {
@@ -370,8 +370,8 @@ export default {
     padding: 20px 0 0 20px;
 
     h4 {
-      padding-top: 5px;
-      padding-bottom: 24px;
+      // padding-top: 5px;
+      padding-bottom: 20px;
       display: flex;
 
       span {

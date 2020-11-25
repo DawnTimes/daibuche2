@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-03 10:42:00
+ * @LastEditTime: 2020-11-18 09:17:22
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
@@ -13,11 +13,18 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="80px"
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="合同编号:" prop="contractNumber">
+        <el-form-item label="承租人/牌照商" prop="name">
+          <el-input
+            maxlength="30"
+            v-model="formData.name"
+            clearable
+            placeholder
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="合同编号" prop="contractNumber">
           <el-input
             maxlength="30"
             v-model="formData.contractNumber"
@@ -25,7 +32,7 @@
             placeholder=""
           ></el-input>
         </el-form-item>
-        <el-form-item label="期数:" prop="nper">
+        <el-form-item label="期数" prop="nper">
           <el-input
             maxlength="50"
             v-model="formData.nper"
@@ -48,7 +55,7 @@
       </el-form>
     </div>
 
-    <div class="batchBtn">
+    <!-- <div class="batchBtn">
       <el-button
         type="primary"
         size="small"
@@ -56,7 +63,7 @@
         v-show="rightControl.recoil"
         >批量反冲</el-button
       >
-    </div>
+    </div> -->
 
     <div class="table">
       <el-table
@@ -66,6 +73,8 @@
         border
         stripe
         :max-height="tableHeight"
+        show-summary
+        :summary-method="getSummaries"
         @selection-change="handleSelectionChange"
         @select="handleSelect"
         ref="table"
@@ -77,12 +86,12 @@
           color: '#fff',
         }"
       >
-        <el-table-column
+        <!-- <el-table-column
           width="50"
           align="center"
           type="selection"
           fixed
-        ></el-table-column>
+        ></el-table-column> -->
         <el-table-column
           width="50"
           align="center"
@@ -253,8 +262,8 @@
             <span
               :class="{
                 greenStatus: scope.row.payStatus == 'HAVEGRANT',
-                redStatus: scope.row.payStatus == 'NOT',
-                blueColor: scope.row.payStatus == '2',
+                redStatus: scope.row.payStatus == 'NOTAPPLY',
+                blueColor: scope.row.payStatus == 'HAVEAPPLY',
               }"
               >{{ scope.row.payStatus | payStatus }}</span
             >
@@ -414,10 +423,11 @@
         <el-table-column
           prop="remark"
           label="备注"
+          width="160"
           show-overflow-tooltip
         ></el-table-column>
 
-        <el-table-column label="操作" width="100" fixed="right">
+        <el-table-column label="操作" align="center" width="100" fixed="right">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -438,7 +448,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[10, 20, 50, 100, 200]"
+        :page-sizes="[5, 10, 20, 50, 100, 200]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -461,9 +471,10 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 
 import recoilModule from '@/components/recoilModule';
+import { moneyFormat } from '@/common/moneyFormat.js';
 
 export default {
-  name: '',
+  name: 'writeOffDetail',
   props: {},
   components: {
     recoilModule,
@@ -522,13 +533,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -579,6 +590,7 @@ export default {
 
     // 获取分页数据
     getCarWriteOffListData() {
+      this.tableData = [];
       this.tableLoading = true;
       const url = common.selectVerCarStatementUrl;
       const params = {
@@ -807,6 +819,49 @@ export default {
           
         })
         .catch(() => {});
+    },
+
+    // 合计
+    getSummaries(param) {
+      // console.log(param);
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '合计';
+          return;
+        }
+
+        // if (column.property == 'nper' || column.property == 'num') {
+        //   sums[index] = moneyFormat(sums[index]);
+        //   return
+        // }
+        
+        const values = data.map(item => Number(item[column.property]));
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+          // 千分位格式化金额
+          if (column.property == 'nper' || column.property == 'serialNumber') {
+            // sums[index] = 'N/A';
+            sums[index] = '';
+          } else {
+            sums[index] = moneyFormat(sums[index]);
+          }
+          
+        } else {
+          // sums[index] = 'N/A';
+          sums[index] = '';
+        }
+      });
+
+      return sums;
     },
   },
   filters: {

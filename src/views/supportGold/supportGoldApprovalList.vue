@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-11-02 11:03:43
+ * @LastEditTime: 2020-11-23 17:32:34
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -14,7 +14,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="90px"
+        label-width="100px"
         size="small"
         ref="ruleForm"
       >
@@ -73,7 +73,7 @@
           </template>
         </el-table-column>
         <!-- <el-table-column prop="" label="期数" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="Batch" label="批次" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.Batch | batchFormat }}</span>
@@ -81,12 +81,27 @@
         </el-table-column>
         <el-table-column prop="counts" label="店数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="rentCount" label="支援金" show-overflow-tooltip>
+        <!-- <el-table-column prop="" label="租金" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="" label="牌照费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="" label="租金合计" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row | moneyFormat}}</span>
+          </template>
+        </el-table-column> -->
+        <el-table-column prop="rentCount" label="车型支援金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.rentCount | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="LicenceFee" label="牌照费" show-overflow-tooltip>
+        <el-table-column prop="LicenceFee" label="牌照支援金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.LicenceFee | moneyFormat}}</span>
           </template>
@@ -96,16 +111,16 @@
             <span>{{ scope.row.rentTotalCount | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip>
+        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span
-            :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '2' ,
-            skyblueColor: scope.row.approvalStatus == '3'}"
+            :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '1' ,
+            skyblueColor: scope.row.approvalStatus == '3' || scope.row.approvalStatus == '2'}"
             >{{ scope.row.approvalStatus | supportApprovalStatus }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="creater" label="申请人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip>
+        <el-table-column prop="creater" label="申请人" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.create_time | timeFormat }}</span>
           </template>
@@ -115,7 +130,7 @@
             <span>{{ scope.row.payStatus }}</span>
           </template>
         </el-table-column> -->
-         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+         <el-table-column prop="remark" label="备注" show-overflow-tooltip width="200"></el-table-column>
 
         <el-table-column
           align="center"
@@ -208,12 +223,12 @@ export default {
     });
     
     this.$nextTick(function () {
-      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 110;
       
       // 监听窗口大小变化
       let self = this;
       window.onresize = function() {
-        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 120
+        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 110
       }
     })
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -260,10 +275,11 @@ export default {
       // this.userApprovalType = common.queryApprovalFlow(9632, this.asideInfoIds, '2'); // 资管部长审批
 
       this.tableLoading = true;
+      this.tableData = [];
 
       const url = common.spprotWaitListUrl;
       const params = {
-        batchNumber: this.formData.batchNumber,
+        batchNumber: this.formData.batchNumber.trim(),
         month: this.formData.month ? moment(this.formData.month).format('MM') : '',
         year: this.formData.month ? moment(this.formData.month).format('YYYY') : '',
         type: this.userApprovalType,
@@ -307,7 +323,8 @@ export default {
           year       : row.year,
           month      : row.month,
           batch      : row.Batch,
-          applyDate  : moment(row.create_time).format('YYYY-MM-DD'),
+          // applyDate  : moment(row.create_time).format('YYYY-MM-DD'),
+          applyDate  : row.year + '-' + row.month,
           type       : this.userApprovalType,
           carNum     : row.carNum,
           batchNumber: row.batchNumber,

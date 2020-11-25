@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-29 15:38:06
+ * @LastEditTime: 2020-11-19 15:44:13
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -48,22 +48,23 @@
         </el-form-item>
 
         <el-form-item label="城市" prop="cityName">
-          <el-select v-model="formData.cityName" placeholder="请选择">
+          <el-input maxlength="30" v-model="formData.cityName" clearable placeholder=""></el-input>
+          <!-- <el-select v-model="formData.cityName" placeholder="请选择">
             <el-option value label style="height:240px; overflow-y: auto; background-color:#fff; color: #606266; font-weight: normal">
               <el-tree :props="defaultProps" :load="loadNode" lazy @node-click="handleNodeClick" highlight-current accordion></el-tree>
             </el-option>
-          </el-select>
+          </el-select> -->
         </el-form-item>
-        <el-form-item label="牌照商" prop="licenceCode">
-          <!-- <el-input maxlength="50" v-model="formData.licenceCode" placeholder></el-input> -->
-          <el-select v-model="formData.licenceCode" filterable clearable  placeholder="请选择">
+        <el-form-item label="牌照商" prop="licenceName">
+          <el-input maxlength="50" v-model="formData.licenceName" clearable placeholder></el-input>
+          <!-- <el-select v-model="formData.licenceCode" filterable clearable  placeholder="请选择">
             <el-option
               v-for="item in licenceOptions"
               :key="item.licenceCode"
               :label="item.licenceName"
               :value="item.licenceCode">
             </el-option>
-          </el-select>
+          </el-select> -->
         </el-form-item>
 
         <el-form-item>
@@ -73,7 +74,8 @@
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-show="rightControl.createContract" @click="createContract" :disabled="contractReadonly">生成合同</el-button>
+          <!-- <el-button type="primary" v-show="rightControl.createContract" @click="createContract" :disabled="contractReadonly">生成合同</el-button> -->
+          <el-button type="primary" v-show="rightControl.createContract" @click="createContract">生成合同</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -103,7 +105,7 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <!-- <el-table-column prop="modId" label="任务id" show-overflow-tooltip fixed></el-table-column> -->
+        <el-table-column prop="modId" label="ID" show-overflow-tooltip fixed></el-table-column>
         <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="brandName" label="品牌" show-overflow-tooltip width="180"></el-table-column>
@@ -172,8 +174,9 @@
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
         <el-table-column
           label="操作"
-          width="220"
+          width="250"
           fixed="right"
+          align="center"
         >
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleEdit(scope.row)" v-if="rightControl.edit" :disabled="scope.row.approvalStatus == '2' || scope.row.approvalStatus == '3' || scope.row.approvalStatus == '4'">编辑</el-button>
@@ -202,6 +205,13 @@
       v-on:submitForm="deleteSubmit"
       v-on:cancelbox="cancelBack"
     ></confirmBox>
+    <confirmBoxTip
+      v-if="showCreateContractBox"
+      :msgConfirBox="createContractInfoText"
+      :loading="createContractLoading"
+      v-on:submitForm="createContractSubmit"
+      v-on:cancelbox="createCancelBack"
+    ></confirmBoxTip>
   </div>
 </template>
 
@@ -210,17 +220,19 @@ import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 import confirmBox from '@/components/confirmBox';  // 删除弹框
+import confirmBoxTip from '@/components/confirmBox';  // 生成合同弹框
 import { queryDict } from '@/api/index.js';
 import eventBus from '@/common/eventBus.js';
 import { mapState, mapMutations } from 'vuex';
 
 export default {
-  name: '',
+  name: 'rentApplyList',
   props: {
 
   },
   components: {
     confirmBox,
+    confirmBoxTip
   },
   data() {
     let _that = this;
@@ -234,6 +246,8 @@ export default {
         licenceCode: '',
         modelCode: '',
         modelName: '',
+        cityName: '',
+        licenceName: '',
         pageSize: 10,
         pageNum: 1,
       },
@@ -246,7 +260,7 @@ export default {
       // 删除提示文本
       deleteInfoText: {
         icon: 'icon-jinggao',
-        confirst: '确认删除该租金修改任务？',
+        confirst: '确认删除该租金修改申请？',
         consecond: '警告：删除后不可恢复！'
       },
       // 删除框显示
@@ -269,6 +283,14 @@ export default {
 
       // 生成合同按钮是否禁用
       contractReadonly: false,
+      showCreateContractBox: false,
+      createContractLoading: false,
+      // 生成合同提示文本
+      createContractInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认生成租金修改后的合同？',
+        consecond: '提示：请确定所有租金修改审批完成后再生成合同！'
+      },
 
       defaultProps: {
         children: 'children',
@@ -323,7 +345,7 @@ export default {
     
     this.getRentApplyListData();
 
-    this.getLicenceList();
+    // this.getLicenceList();
 
     // 判断权限
     this.rightArray.forEach((item, index, array) => {
@@ -336,12 +358,12 @@ export default {
     });
 
     this.$nextTick(function () {
-      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 110;
       
       // 监听窗口大小变化
       let self = this;
       window.onresize = function() {
-        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       }
     })
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -367,7 +389,7 @@ export default {
     //   this.contractReadonly = false;
     // }
 
-    this.rentWaitingTotal();
+    // this.rentWaitingTotal();
   },
   methods: {
     ...mapMutations(['setAsideInfo', 'setAsideInfoIds', 'setRentApprovalNum']),
@@ -412,22 +434,54 @@ export default {
 
     // 生成合同
     createContract() {
-      this.$confirm('是否生成租金修改后的合同?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$notify({
-          title: '温馨提示',
-          type: 'success',
-          message: '生成合同成功!'
-        });
-      }).catch(() => {
-        // this.$notify({
-        //   type: 'info',
-        //   message: '已取消'
-        // });          
-      });
+      this.showCreateContractBox = true;
+      
+      // this.$confirm('是否生成租金修改后的合同?', '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   type: 'warning'
+      // }).then(() => {
+        
+      // }).catch(() => {
+        
+      // });
+    },
+
+    // 生成合同确定提交
+    createContractSubmit() {
+      const url = common.changeContarctOpenSomethingUrl;
+      this.createContractLoading = true;
+      axios.get(url).then((res) => {
+        // console.log(res);
+        if (res == 'success') {
+          this.$notify({
+            title: '温馨提示',
+            type: 'success',
+            message: '生成合同成功!'
+          });
+          this.showCreateContractBox = false;
+          this.createContractLoading = false;
+        } else {
+          this.createContractLoading = false;
+          this.$notify({
+            title: '温馨提示',
+            type: 'error',
+            message: res ? res : '生成合同失败!，请联系管理员!'
+          });
+        }
+      }).catch((err) => {
+        // console.log(err);
+        this.createContractLoading = false;
+        this.$notify.error({
+          title: '温馨提示！',
+          message: err.em || err.error || err.message || '生成合同失败，请联系管理员！'
+        })
+      })
+    },
+
+    // 取消生成
+    createCancelBack() {
+      this.showCreateContractBox = false;
     },
 
     // 自定义列接口索引
@@ -438,12 +492,15 @@ export default {
 
     // 获取分页数据
     getRentApplyListData() {
+      this.tableData = [];
       const params = {
-        cityCode: this.formData.cityCode,
-        licenceCode: this.formData.licenceCode,
-        modelCode: this.formData.modelCode,
-        modelName: this.formData.modelName,
-        isLimitLicence: this.formData.isLimitLicence,
+        cityCode: this.formData.cityCode.trim(),
+        cityName: this.formData.cityName.trim(),
+        licenceName: this.formData.licenceName.trim(),
+        licenceCode: this.formData.licenceCode.trim(),
+        modelCode: this.formData.modelCode.trim(),
+        modelName: this.formData.modelName.trim(),
+        isLimitLicence: this.formData.isLimitLicence.trim(),
         state: '2',
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,

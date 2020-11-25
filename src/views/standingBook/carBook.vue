@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-10-30 18:02:20
+ * @LastEditTime: 2020-11-18 14:53:04
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -14,34 +14,34 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="106px"
+        label-width="120px"
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="承租人/牌照商:" prop="name">
+        <el-form-item label="承租人/牌照商" prop="name">
           <el-input maxlength="30" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
-        <!-- <el-form-item label="牌照商:" prop="interfaceName">
+        <!-- <el-form-item label="牌照商" prop="interfaceName">
           <el-input maxlength="30" v-model="formData.interfaceName" clearable placeholder></el-input>
         </el-form-item> -->
-        <el-form-item label="合同编号:" prop="contractNumber">
+        <el-form-item label="合同编号" prop="contractNumber">
           <el-input maxlength="30" v-model="formData.contractNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="期数:" prop="nper">
+        <el-form-item label="期数" prop="nper">
           <el-input maxlength="10" v-model="formData.nper" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="车型名称:" prop="modelName">
+        <el-form-item label="车型名称" prop="modelName">
           <el-input maxlength="30" v-model="formData.modelName" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="车架号:" prop="frameNumber">
+        <el-form-item label="车架号" prop="frameNumber">
           <el-input maxlength="30" v-model="formData.frameNumber" clearable placeholder></el-input>
         </el-form-item>
 
-        <el-form-item label="上牌地:" prop="cityName">
+        <el-form-item label="上牌地" prop="cityName">
           <el-input maxlength="10" v-model="formData.cityName" clearable placeholder></el-input>
         </el-form-item>
 
-        <el-form-item label="是否限牌:" prop="isLimitLicence">
+        <el-form-item label="是否限牌" prop="isLimitLicence">
           <el-select v-model="formData.isLimitLicence" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in this.$options.filters.flagValue([])"
@@ -133,7 +133,7 @@
         <el-table-column prop="" label="是否足额" show-overflow-tooltip width="120"></el-table-column> -->
         <el-table-column prop="payStatus" label="支援金状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <span>{{ scope.row.payStatus | payStatus }}</span>
+            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOTAPPLY', blueColor: scope.row.payStatus == 'HAVEAPPLY'}">{{ scope.row.payStatus | payStatus }}</span>
           </template>
         </el-table-column>
         <!-- <el-table-column prop="" label="反冲状态" show-overflow-tooltip width="100"></el-table-column> -->
@@ -145,7 +145,7 @@
         <!-- <el-table-column prop="" label="应收金额" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="已收金额" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="未收金额" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="totalMonthlyRent" label="应收租金" show-overflow-tooltip width="120">
+        <el-table-column prop="totalMonthlyRent" label="应收金额" show-overflow-tooltip width="120">
           <template slot-scope="scope">
           <span>{{ scope.row.totalMonthlyRent | moneyFormat}}</span>
         </template>
@@ -208,7 +208,7 @@
         </el-table-column>
         <el-table-column prop="notVerInterest" label="未收利息" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-          <span>{{ scope.row.dueAmount | moneyFormat}}</span>
+          <span>{{ scope.row.notVerInterest | moneyFormat}}</span>
         </template>
         </el-table-column>
         <el-table-column prop="not_verManagementFee" label="未收管理费" show-overflow-tooltip width="120">
@@ -223,7 +223,7 @@
         </el-table-column>
         <el-table-column prop="financing" label="融资额" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-          <span>{{ scope.row.Financing | moneyFormat}}</span>
+          <span>{{ scope.row.financing | moneyFormat}}</span>
         </template>
         </el-table-column>
         <el-table-column prop="finalPayment" label="尾款" show-overflow-tooltip width="120">
@@ -234,12 +234,14 @@
         <!-- <el-table-column prop="" label="利率" show-overflow-tooltip width="80"></el-table-column> -->
         <el-table-column prop="accountName" label="收款账户名称" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="bankNo" label="收款账号" show-overflow-tooltip width="160"></el-table-column>
-        <el-table-column prop="bankName" label="收款账户开户行" show-overflow-tooltip width="180"></el-table-column>
-        <el-table-column prop="" label="支援金" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="bankName" label="收款账户开户行" show-overflow-tooltip width="180"></el-table-column>        
         <!-- <el-table-column prop="" label="差额" show-overflow-tooltip width="100"></el-table-column> -->
+
+        <!-- <el-table-column prop="" label="支援金" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="" label="支援金批次" show-overflow-tooltip width="100"></el-table-column>
         <el-table-column prop="" label="支援金申请日期" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column> -->
+        
       </el-table>
     </div>
     <div class="page-layer">
@@ -248,12 +250,21 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[10, 50, 100, 200, 500]"
+        :page-sizes="[10, 20, 50, 100, 200, 500, 1000]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       ></el-pagination>
     </div>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
   </div>
 </template>
 
@@ -262,11 +273,14 @@ import { queryDict } from '@/api/index.js';
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
-  name: '',
+  name: 'carBook',
   props: {},
-  components: {},
+  components: {
+    downConfirmBox,
+  },
   data() {
     return {
       pageSize: 10,
@@ -325,6 +339,16 @@ export default {
       rightControl: {
         export: false,
       },
+
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出车辆台账？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
+      exportLoading: false,
     };
   },
   computed: {},
@@ -342,13 +366,13 @@ export default {
     
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -391,17 +415,18 @@ export default {
 
     // 查询分页列表
     getCarBookListData() {
+      this.tableData = [];
       this.tableLoading = true;
       const url = common.queryCarStandingBookUrl;
       const params = {
-        nper            : this.formData.nper,
-        frameNumber     : this.formData.frameNumber,
-        contractNumber  : this.formData.contractNumber,
-        name            : this.formData.name,
+        nper            : this.formData.nper.trim(),
+        frameNumber     : this.formData.frameNumber.trim(),
+        contractNumber  : this.formData.contractNumber.trim(),
+        name            : this.formData.name.trim(),
         isLimitLicence  : this.formData.isLimitLicence,
         modelCode       : this.formData.modelCode,
-        modelName       : this.formData.modelName,
-        cityName        : this.formData.cityName,
+        modelName       : this.formData.modelName.trim(),
+        cityName        : this.formData.cityName.trim(),
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum : this.formData.pageSize,
       };
@@ -420,8 +445,32 @@ export default {
       })
     },
 
-    // 导出车辆台账
+    // 导出车辆台账 
     exportButton() {
+      this.showDownBox = true;
+      
+        // window.open(`/api${
+        //   common.exportCarSBUrl
+        // }?name=${
+        //   this.formData.name ? this.formData.name : ''
+        // }&contractNumber=${
+        //   this.formData.contractNumber ? this.formData.contractNumber : ''
+        // }&nper=${
+        //   this.formData.nper ? this.formData.nper : ''
+        // }&frameNumber=${
+        //   this.formData.frameNumber ? this.formData.frameNumber : ''
+        // }&isLimitLicence=${
+        //   this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
+        // }&cityName=${
+        //   this.formData.cityName ? this.formData.cityName : ''
+        // }&modelName=${
+        //   this.formData.modelName ? this.formData.modelName : ''}`, '_parent')
+    },
+
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+      
       window.location.href = `/api${
         common.exportCarSBUrl
       }?name=${
@@ -433,7 +482,17 @@ export default {
       }&frameNumber=${
         this.formData.frameNumber ? this.formData.frameNumber : ''
       }&isLimitLicence=${
-        this.formData.isLimitLicence ? this.formData.isLimitLicence : ''}`;
+        this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
+      }&cityName=${
+        this.formData.cityName ? this.formData.cityName : ''
+      }&modelName=${
+        this.formData.modelName ? this.formData.modelName : ''}`;
+
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
     },
 
     // 分页

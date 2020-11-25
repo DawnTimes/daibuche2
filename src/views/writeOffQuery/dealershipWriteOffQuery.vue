@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-30 18:01:36
+ * @LastEditTime: 2020-11-17 18:18:41
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -13,30 +13,30 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="120px"
+        label-width=""
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="承租人/牌照商:" prop="name">
+        <el-form-item label="承租人/牌照商" prop="name">
           <el-input maxlength="30" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="合同编号:" prop="contractNumber">
+        <el-form-item label="合同编号" prop="contractNumber">
           <el-input maxlength="30" v-model="formData.contractNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="期数:" prop="nper">
-          <el-input maxlength="30" v-model="formData.nper" clearable placeholder></el-input>
+        <el-form-item label="期数" prop="nper">
+          <el-input maxlength="5" v-model="formData.nper" placeholder></el-input>
         </el-form-item>
 
-        <el-form-item label="银行单据号:" prop="serialNumber">
+        <!-- <el-form-item label="银行单据号" prop="serialNumber">
           <el-input
             maxlength="30"
             v-model="formData.serialNumber"
             clearable
             placeholder
           ></el-input>
-        </el-form-item>
+        </el-form-item> -->
 
-        <el-form-item label="是否限牌:" prop="isLimitLicence">
+        <el-form-item label="是否限牌" prop="isLimitLicence">
           <el-select v-model="formData.isLimitLicence" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in this.$options.filters.flagValue([])"
@@ -54,9 +54,9 @@
           <el-button type="primary" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
 
-        <el-form-item label="">
+        <!-- <el-form-item label="">
           <el-button icon="el-icon-download" type="primary" @click="exportButton" v-show="rightControl.export">导出核销经销店</el-button>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
     </div>
 
@@ -94,7 +94,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="num" label="车辆数量" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="num" label="核销车辆次数" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="leaseWay" label="租赁方式" show-overflow-tooltip width="100">
           <template slot-scope="scope">
               <span>{{ scope.row.leaseWay | leaseWay }}</span>
@@ -113,7 +113,8 @@
           </template>
         </el-table-column>
         <!-- <el-table-column prop="" label="核销人" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="120"></el-table-column>
+        
+        <!-- <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="120"></el-table-column> -->
         <el-table-column prop="payStatus" label="支援金状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | payStatus }}</span>
@@ -210,6 +211,16 @@
         :total="total"
       ></el-pagination>
     </div>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
+
   </div>
 </template>
 
@@ -218,11 +229,14 @@ import { queryDict } from '@/api/index.js';
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
-  name: '',
+  name: 'dealershipWriteOffQuery',
   props: {},
-  components: {},
+  components: {
+    downConfirmBox,
+  },
   data() {
     return {
       pageSize: 10,
@@ -254,6 +268,16 @@ export default {
       rightControl: {
         export: false,
       },
+
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出核销的经销店信息？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
+      exportLoading: false,
     };
   },
   computed: {},
@@ -271,13 +295,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -320,13 +344,14 @@ export default {
 
     // 获取分页数据
     getDealersShipWriteOffListData() {
+      this.tableData = [];
       const url = common.selectVerContractStementUrl;
       const params = {
-        nper            : this.formData.nper,
-        contractNumber  : this.formData.contractNumber,
+        nper            : this.formData.nper.trim(),
+        contractNumber  : this.formData.contractNumber.trim(),
         isLimitLicence  : this.formData.isLimitLicence,
-        name            : this.formData.name,
-        serialNumber    : this.formData.serialNumber,
+        name            : this.formData.name.trim(),
+        serialNumber    : this.formData.serialNumber.trim(),
         turnPageShowNum : this.formData.pageSize,
         turnPageBeginPos: this.formData.pageNum,
       };
@@ -347,6 +372,14 @@ export default {
 
     // 导出经销店核销清单
     exportButton() {
+      this.showDownBox = true;
+      
+    },
+
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+      
       window.location.href = `/api${common.exportVerCarExcelUrl}?nper=${
         this.formData.nper ? this.formData.nper : ''
       }&contractNumber=${
@@ -356,6 +389,11 @@ export default {
       }&name=${
         this.formData.name ? this.formData.name : ''
       }`;
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
     },
 
     // 分页

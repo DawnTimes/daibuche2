@@ -69,7 +69,7 @@ const Dictionary = {
 
   // 租金审批状态
   approvalStatus: [{
-      label: '生成租金',
+      label: '待提交',
       value: '1'
     },
     {
@@ -92,7 +92,7 @@ const Dictionary = {
   // 支援金审批状态
   supportApprovalStatus: [
     {
-      label: '生成支援金',
+      label: '待提交',
       value: '1'
     },
     {
@@ -119,6 +119,12 @@ const Dictionary = {
     { label: '回租', value: 'BACK-LEASE' },
     { label: '经租', value: 'OPERATING-LEASE' },
   ],
+  // 租赁方式
+  isGacShopFormat: [
+    { label: '商贸全资', value: 'Y' },
+    { label: '非商贸', value: 'N' },
+    { label: '商贸非全资', value: 'F' },
+  ],
 
   // 合同类型
   contractType: [
@@ -143,12 +149,17 @@ const Dictionary = {
     { label: '已反冲', value: 'Y' },
     { label: '未反冲', value: 'N' },
   ],
+  // 开票状态
+  isOpenStatus: [
+    { label: '是', value: 'Y' },
+    { label: '否', value: 'N' },
+  ],
 
   // 支付状态
   paymentStatus: [
-    { label: '已发放', value: 'HAVEGRANT' },
-    // { label: '已申请', value: 'HAVEAPPLY' },
-    { label: '未发放', value: 'NOT'},
+    { label: '已支付', value: 'HAVEGRANT' },
+    { label: '已申请', value: 'HAVEAPPLY' },
+    { label: '未支付', value: 'NOT'},
     // { label: '未申请', value: '' },
   ],
   // 支援金状态
@@ -178,6 +189,11 @@ const Dictionary = {
     { label: '第八批', value: '8' },
     { label: '第九批', value: '9' },
     { label: '第十批', value: '10' },
+    { label: '第十一批', value: '11' },
+    { label: '第十二批', value: '12' },
+    { label: '第十三批', value: '13' },
+    { label: '第十四批', value: '14' },
+    { label: '第十五批', value: '15' },
   ],
 
   // 保留多少位小数点

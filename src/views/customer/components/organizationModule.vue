@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-10-27 15:17:53
+ * @LastEditTime: 2020-11-23 16:55:00
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -19,6 +19,7 @@
           class="demo-ruleForm"
           :rules="rules"
           status-icon
+          size="medium"
         >
           <el-row :gutter="0">
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
@@ -138,7 +139,7 @@
               >
                 <el-input
                   v-model="formData.legalPhone"
-                  maxlength="11"
+                  maxlength="13"
                   placeholder
                   :disabled="$formAtReadonly('legalPhone', formReadonly.readonly)"
                 ></el-input>
@@ -169,7 +170,7 @@
               >
                 <el-input
                   v-model="formData.contactPersonPhone"
-                  maxlength="11"
+                  maxlength="13"
                   placeholder
                   :disabled="$formAtReadonly('contactPersonPhone', formReadonly.readonly)"
                 ></el-input>
@@ -238,7 +239,6 @@
                   style="width: 100%"
                   filterable
                   clearable
-                  allow-create
                   placeholder="请选择"
                   @change="changeCity"
                   @focus="focusCity"
@@ -307,7 +307,7 @@
               >
                 <el-input
                   v-model="formData.billingPhone"
-                  maxlength="11"
+                  maxlength="13"
                   :disabled="$formAtReadonly('billingPhone', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
@@ -338,8 +338,9 @@
                 <el-input
                   v-model="formData.billingAddr"
                   type="textarea"
-                  maxlength="100"
-                  :autosize="{ minRows: 3, maxRows: 3}"
+                  maxlength="300"
+                  show-word-limit
+                  :autosize="{ minRows: 2, maxRows: 3}"
                   :disabled="$formAtReadonly('billingAddr', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
@@ -355,8 +356,9 @@
                 <el-input
                   v-model="formData.registerAddr"
                   type="textarea"
-                  maxlength="100"
-                  :autosize="{ minRows: 3, maxRows: 3}"
+                  maxlength="300"
+                  show-word-limit
+                  :autosize="{ minRows: 2, maxRows: 3}"
                   :disabled="$formAtReadonly('registerAddr', formReadonly.readonly)"
                 ></el-input>
               </el-form-item>
@@ -384,8 +386,8 @@
     <el-row :gutter="10">
       <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="16">
         <div style="padding: 10px 0 20px 0; text-align: center">
-          <el-button @click="handleGoToBack()">取 消</el-button>
-          <el-button
+          <el-button size="medium" @click="handleGoToBack()">取 消</el-button>
+          <el-button size="medium"
             v-show="!$formAtReadonly('saveBtn', formReadonly.hide)"
             type="primary"
             @click="handleSubmit('formData')"
@@ -454,8 +456,9 @@ export default {
     const checkPhone2 = (rule, value, callback) => {
       if (value && value !== '') {
         const phoneReg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
-        if (!phoneReg.test(value)) {
-          callback(new Error('请输入正确的11位手机号码'));
+        const telReg = /^([0-9]{3,4}-)?[0-9]{5,8}$/;
+        if (!phoneReg.test(value) && !telReg.test(value)) {
+          callback(new Error('请输入正确的11位手机号码或固定电话'));
         } else {
           callback();
         }
@@ -782,6 +785,19 @@ export default {
 
     // 组件通讯
     handleEmitData() {
+      this.formData.licenCode          = this.formData.licenCode.trim();
+      this.formData.licenceName        = this.formData.licenceName.trim();
+      this.formData.bankAccName        = this.formData.bankAccName.trim();
+      this.formData.bankAccountNumber  = this.formData.bankAccountNumber.trim();
+      this.formData.billingAddr        = this.formData.billingAddr.trim();
+      this.formData.billingPhone       = this.formData.billingPhone.trim();
+      this.formData.contactPers        = this.formData.contactPers.trim();
+      this.formData.contactPersonPhone = this.formData.contactPersonPhone.trim();
+      this.formData.legalPhone         = this.formData.legalPhone.trim();
+      this.formData.legalRepresent     = this.formData.legalRepresent.trim();
+      this.formData.lessor             = this.formData.lessor.trim();
+      this.formData.registerAddr       = this.formData.registerAddr.trim();
+      this.formData.socialCreditCode   = this.formData.socialCreditCode.trim();
       this.$emit('formDataSubmit', {
         data: this.formData,
       });

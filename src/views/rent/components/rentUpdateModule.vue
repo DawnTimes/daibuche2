@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 10:31:50
- * @LastEditTime: 2020-10-23 19:24:24
+ * @LastEditTime: 2020-11-18 15:22:41
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\components\rentUpdateModule.vue
@@ -273,6 +273,7 @@
                   style="width: calc(100% - 32px)"
                   type="textarea"
                   maxlength="300"
+                  show-word-limit
                   :autosize="{ minRows: 3, maxRows: 5}"
                   :disabled="$formAtReadonly('remark', formReadonly.readonly)"
                 ></el-input>

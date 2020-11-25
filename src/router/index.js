@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-11-02 17:55:31
+ * @LastEditTime: 2020-11-20 18:46:04
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\router\index.js
@@ -49,6 +49,8 @@ const writeOffContractList = resolve => require(['@/views/verification/writeOffC
 const contractListNper = resolve => require(['@/views/verification/contractListNper'], resolve);
 // 车辆清单
 // const nperCarList = resolve => require(['@/views/verification/nperCarList'], resolve);
+
+// const spreadSheets = resolve => require(['@/views/test/spreadSheets'], resolve);
 
 // 租金修改
 // 限牌车型列表
@@ -630,6 +632,16 @@ const router = new Router({
             title: '账户管理'
           }
         },
+        // 
+        // {
+        //   path: '/spreadSheets',
+        //   name: 'spreadSheets',
+        //   component: spreadSheets,
+        //   meta: {
+        //     title: 'Excel管理'
+        //   }
+        // },
+
       ]
     }
   ]

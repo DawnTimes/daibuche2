@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-11-02 16:59:44
+ * @LastEditTime: 2020-11-19 09:53:49
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -22,13 +22,13 @@
           <el-input maxlength="50" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="逾期天数:" prop="beginDay">
-          <el-input maxlength="5" v-model="formData.beginDay" clearable placeholder="请输入整数" style="width: 130px"></el-input> -
-          <el-input maxlength="5" v-model="formData.endDay" clearable placeholder="请输入整数" style="width: 130px"></el-input> 天
+          <el-input maxlength="5" v-model="formData.beginDay" clearable placeholder="请输入整数" style="width: 120px"></el-input> -
+          <el-input maxlength="5" v-model="formData.endDay" clearable placeholder="请输入整数" style="width: 120px"></el-input> 天
         </el-form-item>
 
         <el-form-item label="逾期金额:" prop="beginAmount">
-          <el-input maxlength="10" v-model="formData.beginAmount" clearable placeholder="请输入整数" style="width: 130px"></el-input> -
-          <el-input maxlength="10" v-model="formData.endAmount" clearable placeholder="请输入整数" style="width: 130px"></el-input> 元
+          <el-input maxlength="10" v-model="formData.beginAmount" clearable placeholder="请输入整数" style="width: 120px"></el-input> -
+          <el-input maxlength="10" v-model="formData.endAmount" clearable placeholder="请输入整数" style="width: 120px"></el-input> 元
         </el-form-item>
 
         <!-- <el-form-item label="电催日期:" prop="systemName">
@@ -83,7 +83,7 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="name" label="经销店名称" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="name" label="经销店名称" show-overflow-tooltip width="250"></el-table-column>
         <el-table-column prop="payDate" label="逾期开始日期" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.payDate | timeFormat }}</span>
@@ -95,48 +95,48 @@
           <span>{{ scope.row.dueAmount | moneyFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="yfwh" label="已发支援金/未付租金" show-overflow-tooltip width="160">
+        <el-table-column prop="yfwh" label="已发支援金/未付租金" show-overflow-tooltip width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.yfwh | moneyFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="yfwfday" label="已发未付对应月份" show-overflow-tooltip width="140"></el-table-column>
-        <el-table-column prop="wfwh" label="未发支援金/未付租金" show-overflow-tooltip width="160">
+        <el-table-column prop="yfwfday" label="已发未付对应月份" show-overflow-tooltip width="160"></el-table-column>
+        <el-table-column prop="wfwh" label="未发支援金/未付租金" show-overflow-tooltip width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.wfwh | moneyFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="wfwfday" label="未发未付对应月份" show-overflow-tooltip width="140"></el-table-column>
-        <el-table-column prop="" label="应还罚息金额" width="120">
+        <el-table-column prop="wfwfday" label="未发未付对应月份" show-overflow-tooltip width="160"></el-table-column>
+        <el-table-column prop="" label="应还罚息金额" show-overflow-tooltip width="140">
           <template slot-scope="scope">
           <span>{{ scope.row.amount | moneyFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="outstandingAmount" label="应还金额合计" show-overflow-tooltip width="120">
+        <el-table-column prop="outstandingAmount" label="应还金额合计" show-overflow-tooltip width="140">
           <template slot-scope="scope">
           <span>{{ scope.row.outstandingAmount | moneyFormat }}</span>
         </template>
         </el-table-column>
         <el-table-column prop="storeManagerName" label="店总姓名" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="storeManagerTel" label="店总联系方式" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="sellName" label="售后经理姓名" show-overflow-tooltip width="120"></el-table-column>
-        <el-table-column prop="sellTel" label="售后经理联系方式" show-overflow-tooltip width="140"></el-table-column>
+        <el-table-column prop="storeManagerTel" label="店总联系方式" show-overflow-tooltip width="140"></el-table-column>
+        <el-table-column prop="sellName" label="售后经理姓名" show-overflow-tooltip width="140"></el-table-column>
+        <el-table-column prop="sellTel" label="售后经理联系方式" show-overflow-tooltip width="160"></el-table-column>
         <el-table-column label="催收记录查询" show-overflow-tooltip width="120">
           <template slot-scope="scope">
-            <el-link type="primary" @click="queryRecord(scope.row)" v-show="rightControl.entry">查看催收记录</el-link>
+            <el-link type="primary" @click="queryRecord(scope.row)" v-show="rightControl.check">查看催收记录</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="electricDate" label="电催日期" show-overflow-tooltip width="100">
+        <el-table-column prop="electricDate" label="电催日期" show-overflow-tooltip width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.electricDate | timeFormatTemp }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="overdueReason" label="逾期原因" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="electricCatalysis" label="电催情况" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column label="操作" show-overflow-tooltip fixed="right" width="100">
+        <el-table-column prop="overdueReason" label="逾期原因" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="electricCatalysis" label="电催情况" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column label="操作" align="center" show-overflow-tooltip fixed="right" width="140">
           <template slot-scope="scope">
             <!-- <el-link type="primary" @click="queryRecord(scope.row)" v-if="rightControl.entry">查看催收记录</el-link> -->
-            <el-link type="primary" @click="entryRecord(scope.row)" v-if="rightControl.entry">录入催收记录</el-link>
+            <el-button size="mini" type="primary" @click="entryRecord(scope.row)" v-if="rightControl.entry">录入催收记录</el-button>
             <!-- <el-button size="mini" @click="queryRecord(scope.row)" v-if="rightControl.entry">查看催收记录</el-button>
             <el-button size="mini" @click="entryRecord(scope.row)" v-if="rightControl.entry">录入</el-button> -->
           </template>
@@ -159,6 +159,15 @@
 
     <!-- // 导入催收记录 -->
     <upload-dialog ref="uploadDialog" :uploadURLStr="recordUploadURL"></upload-dialog>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
   </div>
 </template>
 
@@ -170,12 +179,14 @@ import moment from 'moment';
 import { mapState } from 'vuex';
 
 import uploadDialog from '@/components/uploadDialog';  // 上传弹框
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
-  name: '',
+  name: 'overduceCollectionList',
   props: {},
   components: {
     uploadDialog,
+    downConfirmBox,
   },
   data() {
     return {
@@ -204,15 +215,25 @@ export default {
       invoiceForm: {},
 
       // 按钮权限
-      rightArray: [9011, 9012, 9013],
+      rightArray: [9011, 9012, 9013, 9015],
       rightControl: {
         import: false,
         export: false,
         entry: false,
+        check: false,
       },
 
       // 导入URL
       recordUploadURL: '',
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出逾期记录？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
+      exportLoading: false,
     };
   },
   computed: {
@@ -222,6 +243,7 @@ export default {
     }),
   },
   watch: {
+    // 监听查询条件 逾期天数和逾期金额 正则匹配
     'formData.beginDay'(newVal, oldVal) {
       var reg = /^(0|[1-9][0-9]*)$/;
       if (newVal != '') {
@@ -258,6 +280,7 @@ export default {
 
     // 监听是否导入成功，成功则刷新催收记录
     successStatus(val) {
+      // console.log(val);
       if (val) {
         this.getOverduceCollectionListData();
       }
@@ -276,13 +299,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -329,9 +352,10 @@ export default {
 
     // 获取分页数据
     getOverduceCollectionListData() {
+      this.tableData = [];
       const url = common.collectionListUrl;
       const params = {
-        name            : this.formData.name,
+        name            : this.formData.name.trim(),
         beginAmount     : this.formData.beginAmount,
         endAmount       : this.formData.endAmount,
         beginDay        : this.formData.beginDay,
@@ -362,6 +386,21 @@ export default {
 
     // 导出
     exportButton() {
+      this.showDownBox = true;
+
+    //   const url = common.exportCollectionUrl;
+    //   const params = {
+    //     name:''
+    //   };
+    //   axios.get(url, params).then((res) => {
+    //     console.log(res);
+    //   })
+    },
+
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+      
       window.location.href = `/api${common.exportCollectionUrl}?name=${
         this.formData.name ? this.formData.name : ''
       }&beginDay=${
@@ -373,14 +412,11 @@ export default {
       }&endAmount=${
         this.formData.endAmount ? this.formData.endAmount : ''
       }`;
-
-    //   const url = common.exportCollectionUrl;
-    //   const params = {
-    //     name:''
-    //   };
-    //   axios.get(url, params).then((res) => {
-    //     console.log(res);
-    //   })
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
     },
 
     // 分页

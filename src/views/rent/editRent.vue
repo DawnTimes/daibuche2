@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-11-02 14:08:47
+ * @LastEditTime: 2020-11-19 18:43:04
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\editRent.vue
@@ -53,12 +53,12 @@ export default {
         cityCode: '',
         cityName: '',
         monthlyRent: '',
-        rentLicenceFee: '',
+        rentLicenceFee: '0',
         totalMonthlyRent: '',
         seriesName: '',
         num: '',
         approvalStatus: '1',
-        newLicenceFee: '',
+        newLicenceFee: '0',
         newMonthlyRent: '',
         newtotalMonthlyRent: '',
         brandName: '',
@@ -87,10 +87,10 @@ export default {
     Object.assign(this.formData, query);
     this.formData.modifier = this.userId;
     this.formData.id = query.modId;
-    this.formData.licenceCode = query.licenceName;
-    this.formData.licenceName = query.licenceCode;
-    console.log(query);
-    console.log(this.formData);
+    this.formData.licenceCode = query.licenceCode;
+    this.formData.licenceName = query.licenceName;
+    // console.log(query);
+    // console.log(this.formData);
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -125,6 +125,7 @@ export default {
         newMonthlyRent: data.newMonthlyRent,
         newtotalMonthlyRent: data.newtotalMonthlyRent,
         validDate:  moment(data.validDate).format('YYYY-MM-DD'),
+        remark:  data.remark,
       };
 
       axios.post(url, params).then(res => {
@@ -150,12 +151,12 @@ export default {
             cityCode: '',
             cityName: '',
             monthlyRent: '',
-            rentLicenceFee: '',
+            rentLicenceFee: '0',
             totalMonthlyRent: '',
             seriesName: '',
             num: '',
             approvalStatus: '1',
-            newLicenceFee: '',
+            newLicenceFee: '0',
             newMonthlyRent: '',
             newtotalMonthlyRent: '',
             brandName: '',

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-29 15:37:33
+ * @LastEditTime: 2020-11-13 09:48:35
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentAppytHistory.vue
@@ -38,22 +38,23 @@
         </el-form-item>
 
         <el-form-item label="城市:" prop="cityName">
-          <el-select v-model="formData.cityName" placeholder="请选择">
+          <el-input maxlength="30" v-model="formData.cityName" clearable placeholder=""></el-input>
+          <!-- <el-select v-model="formData.cityName" placeholder="请选择">
             <el-option value label style="height:240px; overflow-y: auto; background-color:#fff; color: #606266; font-weight: normal">
               <el-tree :props="defaultProps" :load="loadNode" lazy @node-click="handleNodeClick" highlight-current accordion></el-tree>
             </el-option>
-          </el-select>
+          </el-select> -->
         </el-form-item>
-        <el-form-item label="牌照商:" prop="licenceCode">
-          <!-- <el-input maxlength="50" v-model="formData.licenceCode" placeholder></el-input> -->
-          <el-select v-model="formData.licenceCode" filterable clearable  placeholder="请选择">
+        <el-form-item label="牌照商:" prop="licenceName">
+          <el-input maxlength="50" v-model="formData.licenceName" clearable placeholder></el-input>
+          <!-- <el-select v-model="formData.licenceCode" filterable clearable  placeholder="请选择">
             <el-option
               v-for="item in licenceOptions"
               :key="item.licenceCode"
               :label="item.licenceName"
               :value="item.licenceCode">
             </el-option>
-          </el-select>
+          </el-select> -->
         </el-form-item>
 
         <el-form-item>
@@ -90,7 +91,7 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <!-- <el-table-column prop="modId" label="任务id" show-overflow-tooltip></el-table-column> -->
+        <el-table-column prop="modId" label="ID" show-overflow-tooltip></el-table-column>
         <el-table-column prop="modelCode" label="车型代码" show-overflow-tooltip></el-table-column>
         <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip width="180"></el-table-column>
         <el-table-column prop="brandName" label="品牌" show-overflow-tooltip width="180"></el-table-column>
@@ -161,6 +162,7 @@
           label="操作"
           width="80"
           fixed="right"
+          align="center"
         >
           <template slot-scope="scope">
             <el-button size="mini" plain @click="handleDetail(scope.row)" v-show="rightControl.detail">详情</el-button>
@@ -210,6 +212,8 @@ export default {
         licenceCode: '',
         modelCode: '',
         modelName: '',
+        cityName: '',
+        licenceName: '',
         pageSize: 10,
         pageNum: 1,
       },
@@ -263,7 +267,7 @@ export default {
   },
   created() {
     this.getRentApplyListData();
-    this.getLicenceList();
+    // this.getLicenceList();
     
     // 判断权限
     this.rightArray.forEach((item, index, array) => {
@@ -276,12 +280,12 @@ export default {
     });
 
     this.$nextTick(function () {
-      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 110;
       
       // 监听窗口大小变化
       let self = this;
       window.onresize = function() {
-        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 120
+        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 110
       }
     })
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -326,12 +330,15 @@ export default {
 
     // 获取分页数据
     getRentApplyListData() {
+      this.tableData = [];
       const params = {
-        cityCode: this.formData.cityCode,
-        licenceCode: this.formData.licenceCode,
-        modelCode: this.formData.modelCode,
-        modelName: this.formData.modelName,
-        isLimitLicence: this.formData.isLimitLicence,
+        cityCode: this.formData.cityCode.trim(),
+        cityName: this.formData.cityName.trim(),
+        licenceName: this.formData.licenceName.trim(),
+        licenceCode: this.formData.licenceCode.trim(),
+        modelCode: this.formData.modelCode.trim(),
+        modelName: this.formData.modelName.trim(),
+        isLimitLicence: this.formData.isLimitLicence.trim(),
         state: '1',
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,

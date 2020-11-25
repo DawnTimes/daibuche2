@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-11-02 11:03:22
+ * @LastEditTime: 2020-11-23 17:32:41
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -14,7 +14,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="90px"
+        label-width="100px"
         size="small"
         ref="ruleForm"
       >
@@ -80,7 +80,7 @@
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="" label="支援金月份" show-overflow-tooltip width="100">
+        <el-table-column prop="" label="支援金月份" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.year + '-' + scope.row.month }}</span>
           </template>
@@ -94,12 +94,27 @@
         </el-table-column>
         <el-table-column prop="counts" label="店数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="carNum" label="车辆数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="rentCount" label="支援金" show-overflow-tooltip width="120">
+        <!-- <el-table-column prop="" label="租金" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="" label="牌照费" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row | moneyFormat}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="" label="租金合计" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row | moneyFormat}}</span>
+          </template>
+        </el-table-column> -->
+        <el-table-column prop="rentCount" label="车型支援金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.rentCount | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="LicenceFee" label="牌照费" show-overflow-tooltip width="110">
+        <el-table-column prop="LicenceFee" label="牌照支援金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.LicenceFee | moneyFormat}}</span>
           </template>
@@ -112,20 +127,20 @@
         <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span
-            :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '2' ,
-            skyblueColor: scope.row.approvalStatus == '3'}"
+            :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '1' ,
+            skyblueColor: scope.row.approvalStatus == '3' || scope.row.approvalStatus == '2'}"
             >{{ scope.row.approvalStatus | supportApprovalStatus }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="creater" label="申请人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip width="120">
+        <el-table-column prop="creater" label="申请人" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="create_time" label="申请时间" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.create_time | timeFormat }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="" label="支付状态" show-overflow-tooltip>
           <template slot-scope="scope">
-            <span>{{ scope.row.payStatus | paymentStatus }}</span>
+            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', blueColor: scope.row.payStatus == 'HAVEAPPLY', redStatus: scope.row.payStatus == 'NOT'}">{{ scope.row.payStatus | paymentStatus }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="payer" label="支付登记人" show-overflow-tooltip width="100"></el-table-column>
@@ -134,10 +149,11 @@
             <span>{{ scope.row.payDate | timeFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" width="150" fixed="right">
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column label="操作" width="240" align="center" fixed="right">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleRegister(scope.row)" v-if="rightControl.register" :disabled="!(scope.row.approvalStatus == '4')">登记</el-button>
+            <el-button type="primary" size="mini" @click="handleEdit(scope.row)" v-if="rightControl.edit" :disabled="!(scope.row.approvalStatus == '1' || scope.row.approvalStatus == '2')">编辑</el-button>
+            <el-button type="primary" size="mini" @click="handleRegister(scope.row)" v-if="rightControl.register" :disabled="!(scope.row.approvalStatus == '4') || scope.row.payStatus == 'HAVEGRANT'">登记</el-button>
             <el-button size="mini" @click="handleDetail(scope.row)" v-if="rightControl.detail">详情</el-button>
             <!-- <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button> -->
           </template>
@@ -171,6 +187,14 @@
       :loading="status.loading"
       @formDataSubmit="formDataSubmit"
     ></register-dialog>
+    
+    <!-- 编辑弹框 -->
+    <edit-dialog edit-dialog
+      ref="editDialog"
+      :editForm="editForm"
+      :loading="editStatus.loading"
+      @formDataSubmit="editFormDataSubmit"
+    ></edit-dialog>
   </div>
 </template>
 
@@ -180,16 +204,18 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 import confirmBox from '@/components/confirmBox'; // 删除弹框
 import registerDialog from './components/registerDialog'; // 登记弹框
+import editDialog from './components/editDialog'; // 编辑弹框
 
 import { mapState } from 'vuex';
 import moment from 'moment';
 
 export default {
-  name: '',
+  name: 'supportGoldApply',
   props: {},
   components: {
     confirmBox,
     registerDialog,
+    editDialog,
   },
   data() {
     return {
@@ -225,16 +251,28 @@ export default {
         id: '',
         batchNumber: '',
       },
+      editForm: {
+        // payDate: '',
+        // payer: '',
+        id: '',
+        batchNumber: '',
+        remark: '',
+        yearMonth: '',
+      },
       status: {
+        loading: false,
+      },
+      editStatus: {
         loading: false,
       },
 
       // 按钮权限
-      rightArray: [9621, 9622, 9623],
+      rightArray: [9621, 9622, 9623, 9624],
       rightControl: {
         add: false,
         register: false,
         detail: false,
+        edit: false,
       },
     };
   },
@@ -260,13 +298,13 @@ export default {
     
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -317,11 +355,12 @@ export default {
 
     // 获取分页数据
     getSupportGoldApplyListData() {
+      this.tableData = [];
       this.tableLoading = true;
       const url = common.supportApplyListUrl;
       const params = {
-        batchNumber: this.formData.batchNumber,
-        approvalStatus: this.formData.approvalStatus,
+        batchNumber: this.formData.batchNumber.trim(),
+        approvalStatus: this.formData.approvalStatus.trim(),
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
       };
@@ -363,7 +402,8 @@ export default {
           year       : row.year,
           month      : row.month,
           batch      : row.Batch,
-          applyDate  : moment(row.create_time).format('YYYY-MM-DD'),
+          // applyDate  : moment(row.create_time).format('YYYY-MM-DD'),
+          applyDate  : row.year + '-' + row.month,
           type       : this.userApprovalType,
           carNum     : row.carNum,
           batchNumber: row.batchNumber,
@@ -409,6 +449,47 @@ export default {
       this.showDeleteBox = false;
     },
 
+    // 编辑
+    handleEdit(row) {
+      // this.editForm.payDate = moment().format('YYYY-MM-DD HH:mm:ss');
+      // this.editForm.payer = this.userId;
+      this.editForm.id = row.id;
+      this.editForm.yearMonth = row.year + '-' + row.month;
+      this.editForm.batchNumber = row.batchNumber;
+      this.editForm.remark = row.remark;
+      this.$refs.editDialog.isShow(true);
+    },
+
+    // 编辑确定
+    editFormDataSubmit(obj) {
+      const url = common.updateSpportUrl;
+      const data = obj.data;
+      this.editStatus.loading = true;
+      axios.post(url, data).then((res) => {
+        if (res.ec === '0') {
+          this.editStatus.loading = true;
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '编辑成功',
+          });
+          this.$refs.editDialog.isShow(false);
+          this.getSupportGoldApplyListData();
+        } else {
+          this.editStatus.loading = false;
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '编辑失败',
+          });
+        }
+      }).catch((err) => {
+        this.editStatus.loading = false;
+        this.$notify.error({
+          title: '温馨提示！',
+          message: err ? err.em : '编辑失败'
+        });
+      })
+    },
+
     // 登记弹窗
     handleRegister(row) {
       this.registerForm.payDate = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -431,6 +512,7 @@ export default {
             message: '登记成功',
           });
           this.$refs.registerDialog.isShow(false);
+          this.getSupportGoldApplyListData();
         } else {
           this.status.loading = false;
           this.$notify.error({

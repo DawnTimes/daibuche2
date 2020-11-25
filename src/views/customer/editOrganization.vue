@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-26 09:32:16
- * @LastEditTime: 2020-10-26 17:12:31
+ * @LastEditTime: 2020-11-12 18:50:55
  * @LastEditors: your name
  * @Description: 新增牌照商
  * @FilePath: \webcode2\src\views\customer\editOrganization.vue
@@ -88,7 +88,10 @@ export default {
   watch: {},
   created() {
     // console.log(this.$route);
-    this.id = this.$route.query.id;
+    this.id = this.$route.query.licenceCode;
+    // this.formData.licenceName = this.$route.query.licenceName;
+    // this.formData.lessor = this.$route.query.lessor;
+    // this.formData.socialCreditCode = this.$route.query.socialCreditCode;
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -98,8 +101,8 @@ export default {
   },
   mounted() {
     // this.formData.createUse = this.userId;
-    this.formData.lastModifie = this.userId;
-    this.formData.lastModifiedT = moment().format('YYYY-MM-DD HH:mm:ss');
+    // this.formData.lastModifie = this.userId;
+    // this.formData.lastModifiedT = moment().format('YYYY-MM-DD HH:mm:ss');
     this.getLicenceDetail();
   },
   methods: {
@@ -120,6 +123,9 @@ export default {
     // 编辑提交
     handleFormDataSubmit(object) {
       const data = object.data;
+      data.createT = moment(data.createT).format('YYYY-MM-DD HH:mm:ss');
+      data.lastModifiedT = moment().format('YYYY-MM-DD HH:mm:ss');
+      data.lastModifie = this.userId;
       this.status.loading = true;
       const url = common.addOrUpdateLicenceUrl;
 

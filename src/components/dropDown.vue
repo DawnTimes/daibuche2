@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-09-01 15:17:24
+ * @LastEditTime: 2020-11-24 10:08:43
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\components\dropDown.vue
@@ -42,7 +42,8 @@ export default {
       setUserId: 'setUserId',
       setPersonName: 'setPersonName',
       setAsideInfoIds: 'setAsideInfoIds',
-      setAsideInfo: 'setAsideInfo'
+      setAsideInfo: 'setAsideInfo',
+      setDropCol: 'setDropCol',
     }),
     
     handleCommand(command) {
@@ -62,11 +63,16 @@ export default {
                 this.$router.push('/');
                 // 清除sessionStorage 和 vuex 的sessionStorage, 避免切换用户获取菜单失败时，依然保留上个用户的菜单数据
                   sessionStorage.clear();
+                  localStorage.removeItem('tableHeader');
+                  localStorage.removeItem('dropCol');
                   this.setRoles(null);
                   this.setUserId(null);
                   this.setPersonName(null);
                   this.setAsideInfoIds(null);
                   this.setAsideInfo(null);
+
+                  // console.log(12345);
+
               } else {
                 // this.$alert("退出失败，请联系管理员", "提示！", {
                 //   confirmButtonText: "确定"

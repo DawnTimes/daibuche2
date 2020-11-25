@@ -176,6 +176,7 @@ export default {
                 sessionStorage.removeItem('tagsArr');
 
                 this.$router.push('/common');
+
               }
             })
             .catch((err) => {

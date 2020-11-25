@@ -9,7 +9,7 @@
           :inline="true"
           :model="params"
           class="demo-form-inline"
-          label-width="130px"
+          label-width=""
           size="small"
           ref="params"
         >
@@ -38,6 +38,7 @@
               v-model="params.licenceName"
               placeholder="牌照商"
               size="small"
+              clearable
             ></el-input>
           </el-form-item>
           <el-form-item label="状态" prop="status">
@@ -58,6 +59,7 @@
               v-model="params.lessor"
               placeholder="出租方"
               size="small"
+              clearable
             ></el-input>
           </el-form-item>
           <el-form-item label="社会统一信用代码" prop="socialCreditCode">
@@ -66,6 +68,16 @@
               v-model="params.socialCreditCode"
               placeholder="社会统一信用代码"
               size="small"
+              clearable
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="银行账号" prop="bankAccountNumber">
+            <el-input
+              class="inputSelectClass"
+              v-model="params.bankAccountNumber"
+              placeholder="银行账号"
+              size="small"
+              clearable
             ></el-input>
           </el-form-item>
           <el-form-item>
@@ -164,13 +176,13 @@
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         prop="email"
         label="Email地址"
         width="200"
         :show-overflow-tooltip="true"
         resizable
-      ></el-table-column>
+      ></el-table-column> -->
 
       <el-table-column
         prop="legalRepresentative"
@@ -230,7 +242,7 @@
       ></el-table-column>
       <el-table-column prop="status" label="状态" width="80" :show-overflow-tooltip="true" resizable>
         <template slot-scope="scope">
-          <span>{{ scope.row.isLimitLicence | status }}</span>
+          <span>{{ scope.row.status | status }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -276,12 +288,21 @@
       :current-page="currentPage"
       :page-sizes="[10, 20, 50, 100, 500]"
       :page-size="pageSize"
-      layout="total, prev, pager, next, sizes, jumper"
+      layout="total, sizes, prev, pager, next, jumper"
       :total="totalCount"
     ></el-pagination>
 
     <!-- // 导入 -->
     <upload-dialog ref="uploadDialog" :uploadURLStr="rentUploadURL"></upload-dialog>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
   </div>
 </template>
 <script>
@@ -289,10 +310,12 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 import uploadDialog from '@/components/uploadDialog'; // 上传弹框
 import { mapState } from 'vuex';
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
   components: {
     uploadDialog,
+    downConfirmBox,
   },
   data() {
     return {
@@ -307,6 +330,7 @@ export default {
         status: '',
         lessor: '',
         socialCreditCode: '',
+        bankAccountNumber: '',
         turnPageBeginPos: 1, // 开始是数据的序号，后台需要
         turnPageShowNum: 10, // 每页展示的条数
       },
@@ -316,6 +340,7 @@ export default {
         status: '',
         lessor: '',
         socialCreditCode: '',
+        bankAccountNumber: '',
       },
       tableHeight: 100,
 
@@ -330,6 +355,16 @@ export default {
         import: false,
         export: false,
       },
+
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出牌照商信息？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
+      exportLoading: false,
     };
   },
 
@@ -359,11 +394,12 @@ export default {
     initData() {
       this.tableData = [];
       const params = {
-        areaCode: this.params.areaCode,
-        licenceName: this.params.licenceName,
+        areaCode: this.params.areaCode.trim(),
+        licenceName: this.params.licenceName.trim(),
         status: this.params.status,
-        lessor: this.params.lessor,
-        socialCreditCode: this.params.socialCreditCode,
+        lessor: this.params.lessor.trim(),
+        bankAccountNumber: this.params.bankAccountNumber.trim(),
+        socialCreditCode: this.params.socialCreditCode.trim(),
         turnPageBeginPos: this.params.turnPageBeginPos, // 开始是数据的序号，后台需要
         turnPageShowNum: this.params.turnPageShowNum, // 每页展示的条数
       };
@@ -418,7 +454,31 @@ export default {
     },
     // 导出
     batchesDownload() {
-      // console.log('batchesDownload!');
+      this.showDownBox = true;
+
+      // let downUrl = `/api${common.licenceExportExcelUrl}?areaCode=${
+      //   this.params.areaCode ? this.params.areaCode : ''
+      // }&licenceName=${
+      //   this.params.licenceName ? this.params.licenceName : ''
+      // }&status=${
+      //   this.params.status ? this.params.status : ''
+      // }&lessor=${
+      //   this.params.lessor ? this.params.lessor : '' 
+      // }&socialCreditCode=${
+      //   this.params.socialCreditCode ? this.params.socialCreditCode : ''
+      // }&bankAccountNumber=${
+      //   this.params.bankAccountNumber ? this.params.bankAccountNumber : ''
+      // }`;
+
+      // let net = window.open(downUrl, '_blank');
+      // net.addEventListener('beforeunload', (e) => {
+      //   console.log(e, 1234444);
+      // })
+      
+    },
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
       window.location.href = `/api${common.licenceExportExcelUrl}?areaCode=${
         this.params.areaCode ? this.params.areaCode : ''
       }&licenceName=${
@@ -426,11 +486,19 @@ export default {
       }&status=${
         this.params.status ? this.params.status : ''
       }&lessor=${
-        this.params.lessor ? this.params.lessor : ''
+        this.params.lessor ? this.params.lessor : '' 
       }&socialCreditCode=${
         this.params.socialCreditCode ? this.params.socialCreditCode : ''
+      }&bankAccountNumber=${
+        this.params.bankAccountNumber ? this.params.bankAccountNumber : ''
       }`;
     },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
+    },
+
     indexMethod(index) {
       let order = this.pageSize * (this.currentPage - 1);
       return index + order + 1;
@@ -441,7 +509,10 @@ export default {
       this.$router.push({
         path: '/editOrganization',
         query: {
-          id: row.licenceCode,
+          licenceCode: row.licenceCode,
+          // licenceName: row.licenceName,
+          // lessor: row.lessor,
+          // socialCreditCode: row.socialCreditCode,
         },
       });
     },
@@ -462,13 +533,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -502,7 +573,8 @@ export default {
 
 <style scoped>
 .paginationClass {
-  margin-top: 1%;
+  /* margin-top: 1%; */
+  padding-top: 10px;
   float: right;
 }
 .userPage {

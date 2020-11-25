@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-10-14 11:51:48
+ * @LastEditTime: 2020-11-04 18:24:05
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\unlimitCarTypeRentUpdate.vue
@@ -57,6 +57,8 @@ export default {
         modifier: '',
         remark: '',
         validDate: '',
+        rentLicenceFee: '0',
+        newLicenceFee: '0',
       },
       formReadonly: {
         hide: ['id', 'cityName', 'licenceName', 'rentLicenceFee', 'totalMonthlyRent', 'newLicenceFee', 'newtotalMonthlyRent', 'cancelBtn1', 'cancelBtn3'],
@@ -78,8 +80,10 @@ export default {
     const query = JSON.parse(this.$route.query.row);
     Object.assign(this.formData, query);
     this.formData.modifier = this.userId;
+    // 非限牌租金合计等于租金
+    this.formData.totalMonthlyRent = this.formData.monthlyRent;
     // console.log(query);
-    // console.log(this.formData);
+    console.log(this.formData);
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -126,6 +130,8 @@ export default {
             modifier: this.userId,
             remark: '',
             // validDate: '',
+            rentLicenceFee: '0',
+            newLicenceFee: '0',
           });
         } else {
           this.status.loading = false;

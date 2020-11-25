@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-11-02 11:04:43
+ * @LastEditTime: 2020-11-16 15:51:07
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovaled.vue
@@ -15,7 +15,7 @@
         <el-tab-pane class="title" name="first" label="支援金复核表">
           <supportGoldApproval-reason></supportGoldApproval-reason>
 
-          <div style="padding: 20px 0 20px 0; text-align: center">
+          <div style="padding: 10px 0 10px 0; text-align: center">
             <el-button @click="handleGoToBack()" size="medium">返 回</el-button>
             <el-button type="primary" size="medium" @click="nextStep()">下一步</el-button>
           </div>
@@ -28,7 +28,7 @@
 
           <el-row :gutter="10">
             <el-col :xs="24" :sm="22" :md="20" :lg="18" :xl="14">
-              <div style="padding: 20px 0 20px 0; text-align: center">
+              <div style="padding: 10px 0 10px 0; text-align: center">
                 <el-button @click="handleGoToBack()" size="medium">取 消</el-button>
                 <el-button type="primary" plain size="medium" @click="prevToStep()">上一步</el-button>
                 <el-button type="primary" size="medium" @click="handleGoToApproval()">下一步</el-button>
@@ -91,6 +91,7 @@ export default {
       baseInfoForm: {
         suApprovalList: [],
         month: '',
+        year: '',
         batchNumber: '',
         batch: '',
         carNum: '',
@@ -106,6 +107,7 @@ export default {
         id: '',
         approvalOperation: '',
         approvalTime: '',
+        curStatus: '',
       },
       formReadonly: {
         hide: ['cancelBtn1'],
@@ -178,14 +180,39 @@ export default {
               }
             });
           }
+
+          this.baseInfoForm.suApprovalList.sort(this.sortFunc);
         }
       })
+    },
+
+    // 按审批时间排序
+    sortFunc(a, b) {
+      return a.approvalTime > b.approvalTime ? 1 : -1
     },
 
     // 审批提交
     handleFormDataSubmit(obj) {
       const data = obj.data;
       const url = common.supportApprovalUrl;
+      if (data.approvalOperation) {
+        data.curStatus = '5';
+      }
+
+      if (data.type == '1') {
+        if (data.approvalOperation == 'Y') {
+          data.curStatus = '3';
+        } else {
+          data.curStatus = '5';
+        }
+      } else if (data.type == '2') {
+        if (data.approvalOperation == 'Y') {
+          data.curStatus = '4';
+        } else {
+          data.curStatus = '5';
+        }
+      }
+      
       this.status.loading = true;
       axios.post(url, data).then((res) => {
         if (res.ec === '0') {

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-03 11:48:17
+ * @LastEditTime: 2020-11-18 15:10:16
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -18,23 +18,23 @@
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="承租人/牌照商:" prop="name">
+        <el-form-item label="承租人/牌照商" prop="name">
           <el-input maxlength="30" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
-        <!-- <el-form-item label="牌照商:" prop="interfaceName">
+        <!-- <el-form-item label="牌照商" prop="interfaceName">
           <el-input maxlength="30" v-model="formData.interfaceName" placeholder></el-input>
         </el-form-item> -->
-        <el-form-item label="合同编号:" prop="contractNumber">
+        <el-form-item label="合同编号" prop="contractNumber">
           <el-input maxlength="30" v-model="formData.contractNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="期数:" prop="nper">
+        <el-form-item label="期数" prop="nper">
           <el-input maxlength="10" v-model="formData.nper" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="上牌地:" prop="cityName">
+        <el-form-item label="上牌地" prop="cityName">
           <el-input maxlength="10" v-model="formData.cityName" clearable placeholder></el-input>
         </el-form-item>
 
-        <el-form-item label="是否限牌:" prop="isLimitLicence">
+        <el-form-item label="是否限牌" prop="isLimitLicence">
           <el-select v-model="formData.isLimitLicence" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in this.$options.filters.flagValue([])"
@@ -76,7 +76,7 @@
       }"
       >
         <el-table-column
-          width="80"
+          width="70"
           align="center"
           label="序号"
           type="index"
@@ -95,7 +95,7 @@
         </el-table-column>
         <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip width="100">
           <template slot-scope="scope">
-            <span :class="{ blueColor: scope.row.isGacShop == 'Y' , redStatus: scope.row.isGacShop == 'N' }">{{ scope.row.isGacShop | flagValue}}</span>
+            <span>{{ scope.row.isGacShop | isGacShopFormat}}</span>
           </template>
         </el-table-column>
         <el-table-column prop="isGalcCompany" label="是否租赁公司" show-overflow-tooltip width="120">
@@ -223,12 +223,21 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[10, 20, 50, 100, 500]"
+        :page-sizes="[10, 20, 50, 100, 200, 500, 1000]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       ></el-pagination>
     </div>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
   </div>
 </template>
 
@@ -237,11 +246,14 @@ import { queryDict } from '@/api/index.js';
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
-  name: '',
+  name: 'dealershipBook',
   props: {},
-  components: {},
+  components: {
+    downConfirmBox,
+  },
   data() {
     return {
       tableLoading: false,
@@ -249,7 +261,7 @@ export default {
       pageNum: 1,
       total: 0,
       formData: {
-        cityCode: '',
+        // cityCode: '',
         cityName: '',
         contractNumber: '',
         name: '',
@@ -296,6 +308,16 @@ export default {
       rightControl: {
         export: false,
       },
+
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出经销店台账？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
+      exportLoading: false,
     };
   },
   computed: {},
@@ -313,13 +335,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -362,15 +384,16 @@ export default {
 
     // 查询分页列表
     getDealerBookListData() {
+      this.tableData = [];
       this.tableLoading = true;
       const url = common.queryAgentStandingBookUrl;
       const params = {
-        nper            : this.formData.nper,
-        cityCode        : this.formData.cityCode,
-        contractNumber  : this.formData.contractNumber,
-        name            : this.formData.name,
+        nper            : this.formData.nper.trim(),
+        // cityCode        : this.formData.cityCode,
+        contractNumber  : this.formData.contractNumber.trim(),
+        name            : this.formData.name.trim(),
         isLimitLicence  : this.formData.isLimitLicence,
-        cityName        : this.formData.cityName,
+        cityName        : this.formData.cityName.trim(),
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum : this.formData.pageSize,
       };
@@ -391,7 +414,39 @@ export default {
 
     // 导出经销店台账 isLimitLicence cityName
     exportButton() {
-      window.location.href = `/api${
+      this.showDownBox = true;
+      
+      // let itime = 0;
+      // let downUrl = `/api${
+      //   common.exportAgentSBUrl
+      // }?name=${
+      //   this.formData.name ? this.formData.name : ''
+      // }&contractNumber=${
+      //   this.formData.contractNumber ? this.formData.contractNumber : ''
+      // }&nper=${
+      //   this.formData.nper ? this.formData.nper : ''
+      // }&isLimitLicence=${
+      //   this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
+      // }&cityName=${
+      //   this.formData.cityName ? this.formData.cityName : ''}`;
+
+      // let net = window.open(downUrl);
+      // net.addEventListener('beforeunload', (e) => {
+      //   console.log(e, 1234444);
+      //   clearTimeout(downloadTimer);
+      // });
+
+      // let downloadTimer = setInterval(() => {
+      //   console.log(++itime);
+      // }, 1000);
+     
+    },
+
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+
+       window.location.href = `/api${
         common.exportAgentSBUrl
       }?name=${
         this.formData.name ? this.formData.name : ''
@@ -403,6 +458,11 @@ export default {
         this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
       }&cityName=${
         this.formData.cityName ? this.formData.cityName : ''}`;
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
     },
 
     // 分页

@@ -13,7 +13,11 @@
 }
 
 .hearderBox .el-form-item--mini.el-form-item, .hearderBox .el-form-item--small.el-form-item {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+}
+
+.hearderBox .el-form-item__label, .hearderBox .el-input__inner {
+  font-size: 13px;;
 }
 
 .greenStatus {
@@ -49,9 +53,29 @@
   font-size: 14px;
   color: #666;
   font-weight: bold;
-  padding: 10px 0 0 20px;
+  padding: 10px 0 0 10px;
+}
+
+.el-table .cell {
+  font-size: 12px;
+}
+
+.el-table th>.cell {
+  font-size: 13px;
 }
 
 .invoiceNoticeLetter .gutter {
   background: #fff !important;
+}
+
+.el-table__footer-wrapper .cell {
+  font-size: 12px !important;
+}
+
+.el-table td {
+  padding: 8px 0;
+}
+
+.el-table th {
+  padding: 10px 0;
 }

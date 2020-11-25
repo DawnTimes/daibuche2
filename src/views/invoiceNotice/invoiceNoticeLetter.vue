@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-10-30 18:01:06
+ * @LastEditTime: 2020-11-18 16:18:25
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -53,7 +53,7 @@
             <span>合同编号</span>
           </div>
           <div class="speciesItem6">
-            <span>{{ formData.contractNumber }}</span>
+            <span>{{ formData.parentContractNumber }}</span>
           </div>
         </div>
         <div class="contentBox">
@@ -74,9 +74,9 @@
             </el-checkbox-group>
           </div>
         </div>
-        <div class="contentBox">
-          <div class="contentItem1">
-            <span>客户名称(全称)</span>
+        <div class="contentBox2">
+          <div class="contentItem5">
+            <span> 客户名称(全称)</span>
           </div>
           <div class="contentItem4 leftAlign">
             <span>{{ formData.name }}</span>
@@ -84,8 +84,8 @@
         </div>
         <div class="contentBox2">
           <div class="contentItem5">
-            <span>（机构）纳税人识别号</span>
-            <span>（个人）身份证号码</span>
+            <span>(机构)纳税人识别号</span>
+            <span>(个人)身份证号码</span>
           </div>
           <div class="contentItem4 leftAlign">
             <span>{{ formData.creditCode }}</span>
@@ -93,24 +93,24 @@
         </div>
         <div class="contentBox2">
           <div class="contentItem5">
-            <span>（机构）地址\电话号码</span>
-            <span>（个人）手机号码</span>
+            <span>(机构)地址\电话号码</span>
+            <span>(个人)手机号码</span>
           </div>
           <div class="contentItem4 leftAlign">
             <span>{{ formData.addressTel }}</span>
           </div>
         </div>
-        <div class="contentBox">
-          <div class="contentItem1">
-            <span>（机构）开户行及账号</span>
+        <div class="contentBox2">
+          <div class="contentItem5">
+            <span>(机构)开户行及账号</span>
           </div>
           <div class="contentItem4 leftAlign">
             <span>{{ formData.bankAccount }}</span>
           </div>
         </div>
-        <div class="contentBox">
-          <div class="contentItem1">
-            <span>电子邮箱地址</span>
+        <div class="contentBox2">
+          <div class="contentItem5">
+            <span> 电子邮箱地址</span>
           </div>
           <div class="contentItem4 leftAlign">
             <span>{{ formData.email }}</span>
@@ -166,14 +166,22 @@
         </template>
         </el-table-column>
         <!-- <el-table-column prop="dueCommission" label="手续费" show-overflow-tooltip v-if="formData.leaseWay == 'OPERATING-LEASE' || formData.leaseWay == 'LEASE'"></el-table-column> -->
-        <el-table-column prop="invoiceDate" label="发票开具日期" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="invoiceDate" label="发票开具日期" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.invoiceDate | timeFormatTemp }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="invoiceNumber" label="发票号码" show-overflow-tooltip></el-table-column>
         <el-table-column prop="duePrincipal" label="本金 / 保证金  开票金额" width="118" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'">
           <template slot-scope="scope">
             <span>{{ scope.row.duePrincipal | moneyFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="invoiceDate" label="收据开具日期" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'"></el-table-column>
+        <el-table-column prop="invoiceDate" label="收据开具日期" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'">
+          <template slot-scope="scope">
+            <span>{{ scope.row.invoiceDate | timeFormatTemp }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="invoiceNumber" label="收据号码" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'"></el-table-column>
       </el-table>
       <div class="footerBox">
@@ -187,7 +195,7 @@
 
       <div class="footerBtn">
         <el-button size="medium" @click="handleBack()">返回</el-button>
-        <el-button type="primary" size="medium" @click="exportButton">导出通知单</el-button>
+        <el-button type="primary" size="medium" v-show="rightControl.exportBtn" @click="exportButton">导出通知单</el-button>
       </div>
     </div>
   </div>
@@ -210,7 +218,7 @@ export default {
     return {
       contractId: '',
       formData: {
-        checkList: [1],
+        checkList: [],
         addressTel: '',
         bankAccount: '',
         contractNumber: '',
@@ -247,6 +255,12 @@ export default {
         { nper: '0' },
       ],
 
+      // 按钮权限
+      rightArray: [9916],
+      rightControl: {
+        exportBtn: false,
+      },
+
     };
   },
   computed: {
@@ -255,43 +269,53 @@ export default {
     })
   },
   watch: {
-    // 'formData.leaseWay'(val) {
-    //   if (val == 'LEASE') {
-    //     Object.assign(this.letterForm, {
-    //       rate: '13%',
-    //       incoiceType: '利息/本金/管理费',
-    //       margin: '保证金',
-    //       letterContent: '*融资租赁*有形动产融资租赁服务',
-    //     })
-    //     this.formData.invoiceDetail = _.concat(this.zzLeaseList, this.formData.invoiceDetail);
-    //   }
-    //   if (val == 'BACK-LEASE') {
-    //     Object.assign(this.letterForm, {
-    //       rate: '6%',
-    //       incoiceType: '利息/手续费',
-    //       margin: '本金/保证金',
-    //       letterContent: '*金融服务*有形动产融资性售后回租',
-    //     })
-    //     this.formData.invoiceDetail = _.concat(this.hzLeaseList, this.formData.invoiceDetail);
-    //   }
-    //   if (val == 'OPERATING-LEASE') {
-    //     Object.assign(this.letterForm, {
-    //       rate: '13%',
-    //       incoiceType: '车辆租金',
-    //       margin: '违章保证金',
-    //       letterContent: '*经营租赁*车辆租金',
-    //     })
-    //     this.formData.invoiceDetail = _.concat(this.jzLeaseList, this.formData.invoiceDetail);
-    //   }
-    // } 
+    'formData.leaseWay'(val) {
+      if (val == 'LEASE') {
+        Object.assign(this.letterForm, {
+          rate: '13%',
+          incoiceType: '利息/本金/管理费',
+          margin: '保证金',
+          letterContent: '*融资租赁*有形动产融资租赁服务',
+        })
+        this.formData.invoiceDetail = _.concat(this.zzLeaseList, this.formData.invoiceDetail);
+      }
+      if (val == 'BACK-LEASE') {
+        Object.assign(this.letterForm, {
+          rate: '6%',
+          incoiceType: '利息/手续费',
+          margin: '本金/保证金',
+          letterContent: '*金融服务*有形动产融资性售后回租',
+        })
+        this.formData.invoiceDetail = _.concat(this.hzLeaseList, this.formData.invoiceDetail);
+      }
+      if (val == 'OPERATING-LEASE') {
+        Object.assign(this.letterForm, {
+          rate: '13%',
+          incoiceType: '车辆租金',
+          margin: '违章保证金',
+          letterContent: '*经营租赁*车辆租金',
+        })
+        this.formData.invoiceDetail = _.concat(this.jzLeaseList, this.formData.invoiceDetail);
+      }
+    } 
   },
   created() {
+
+    // 判断权限
+    this.rightArray.forEach((item, index, array) => {
+      common.checkRolePermission(
+        item,
+        this.$store.state.asideInfoIds,
+        Object.keys(this.rightControl)[index],
+        this.rightControl
+      );
+    });
     
     this.letterForm.currentDate = moment().format('YYYY-MM-DD');
-    this.contractId = this.$route.query.contractId;
     // console.log(this.contractId);
   },
   mounted() {
+    this.contractId = this.$route.query.contractId;
     this.queryNoticeLetterDetail();
   },
   methods: {
@@ -299,8 +323,8 @@ export default {
     queryNoticeLetterDetail() {
       const url = common.queryInvoiceByContractIdUrl;
       const params = {
-        // contractId: this.contractId,  // bug：多次切换tabs标签时，会返回第一次打开页面时的数据
-        contractId: this.letterContractId,
+        contractId: this.contractId,  // bug：多次切换tabs标签时，会返回第一次打开页面时的数据
+        // contractId: this.letterContractId,
       };
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
@@ -308,6 +332,12 @@ export default {
           Object.assign(this.formData, data);
           // this.formData.leaseWay = 'BACK-LEASE';
           // this.formData.leaseWay = 'LEASE';
+          // if (!_.isEmpty(this.formData.invoiceDetail)) {
+          //   this.formData.invoiceDetail.forEach((item) => {
+          //     item.carRents = '';
+          //     item.carRents = item.dueInterest * 1 + item.duePrincipal * 1;
+          //   })
+          // }
           
         } else {
 
@@ -589,6 +619,7 @@ export default {
           justify-content: space-around;
           border-right: 1px solid #eee;
           box-sizing: border-box;
+          text-indent: 10px;
         }
       }
     }

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-10-27 14:01:04
+ * @LastEditTime: 2020-11-16 10:00:54
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\unInvoiceNoticeList.vue
@@ -14,7 +14,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="120px"
+        label-width="90px"
         size="small"
         ref="ruleForm"
       >
@@ -28,13 +28,13 @@
             end-placeholder="结束日期"
           ></el-date-picker>
         </el-form-item> -->
-        <el-form-item label="购方名称:" prop="buyName">
+        <el-form-item label="购方名称" prop="buyName">
           <el-input maxlength="50" v-model="formData.buyName" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="购方税号:" prop="buyCreditCode">
+        <el-form-item label="购方税号" prop="buyCreditCode">
           <el-input maxlength="30" v-model="formData.buyCreditCode" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="备注:" prop="remark">
+        <el-form-item label="备注" prop="remark">
           <el-input maxlength="200" v-model="formData.remark" clearable placeholder></el-input>
         </el-form-item>
 
@@ -77,9 +77,9 @@
           fixed
         ></el-table-column>
         <!-- <el-table-column prop="billingNo" label="单据号" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="createTime" label="生成时间" show-overflow-tooltip width="100">
+        <el-table-column prop="applyDate" label="生成时间" show-overflow-tooltip width="100">
           <template slot-scope="scope">
-          <span>{{ scope.row.createTime | timeFormat }}</span>
+          <span>{{ scope.row.applyDate | timeFormat }}</span>
         </template>
         </el-table-column>
         <el-table-column prop="buyName" label="购方名称" show-overflow-tooltip width="200"></el-table-column>
@@ -87,7 +87,7 @@
         <el-table-column prop="buyAddTel" label="购方地址电话" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="buyBankNameNo" label="购方银行帐号" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="sellName" label="销方名称" show-overflow-tooltip width="200"></el-table-column>
-        <el-table-column prop="" label="销方地址电话" show-overflow-tooltip width="200"></el-table-column>
+        <!-- <el-table-column prop="" label="销方地址电话" show-overflow-tooltip width="200"></el-table-column> -->
         <el-table-column prop="sellBankNameNo" label="销方银行帐号" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="remark" label="备注" width="300" show-overflow-tooltip></el-table-column>
         <el-table-column prop="tradeName" label="商品名称" show-overflow-tooltip width="150"></el-table-column>
@@ -177,13 +177,13 @@ export default {
   created() {
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -226,11 +226,12 @@ export default {
 
     // 获取分页数据
     getUninvoiceNoticeListData() {
+      this.tableData = [];
       const url = common.queryNotInvoiceNoticeDetailUrl;
       const params = {
-        buyCreditCode   : this.formData.buyCreditCode,
-        buyName         : this.formData.buyName,
-        remark          : this.formData.remark,
+        buyCreditCode   : this.formData.buyCreditCode.trim(),
+        buyName         : this.formData.buyName.trim(),
+        remark          : this.formData.remark.trim(),
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum : this.formData.pageSize,
       };

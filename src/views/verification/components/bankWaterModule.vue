@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-10-28 13:50:42
+ * @LastEditTime: 2020-11-18 15:23:47
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -17,6 +17,7 @@
           class="demo-ruleForm"
           :rules="rules"
           status-icon
+          size="medium"
         >
           <el-row :gutter="0">
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
@@ -234,6 +235,7 @@
                   v-model="formData.remark"
                   type="textarea"
                   maxlength="300"
+                  show-word-limit
                   :autosize="{ minRows: 3, maxRows: 5}"
                   :disabled="$formAtReadonly('remark', formReadonly.readonly)"
                 ></el-input>
@@ -243,11 +245,11 @@
         </el-form>
       </el-col>
     </el-row>
-    <el-row :gutter="10">
+    <el-row :gutter="0">
       <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="16">
-        <div style="padding: 20px 0 20px 0; text-align: center">
-          <el-button @click="handleGoToBack()">取 消</el-button>
-          <el-button
+        <div style="padding: 10px 0 10px 0; text-align: center">
+          <el-button size="medium" @click="handleGoToBack()">取 消</el-button>
+          <el-button size="medium"
             v-show="!$formAtReadonly('saveBtn', formReadonly.hide)"
             type="primary"
             @click="handleSubmit('formData')"
@@ -388,6 +390,13 @@ export default {
             trigger: 'blur',
           }
         ],
+        projectCategory: [
+          { 
+            required: true,
+            message: '请输入项目类别',
+            trigger: 'blur',
+          }
+        ],
       },
     };
   },
@@ -453,6 +462,17 @@ export default {
 
     // 组件通讯
     handleEmitData() {
+      this.formData.serialNumber    = this.formData.serialNumber.trim();
+      this.formData.bankAccountName = this.formData.bankAccountName.trim();
+      this.formData.bankAccountNo   = this.formData.bankAccountNo.trim();
+      this.formData.companyName     = this.formData.companyName.trim();
+      this.formData.sideAccount     = this.formData.sideAccount.trim();
+      this.formData.sideAccountName = this.formData.sideAccountName.trim();
+      this.formData.projectCategory = this.formData.projectCategory.trim();
+      this.formData.paidLogo        = this.formData.paidLogo.trim();
+      this.formData.newLedgerLogo   = this.formData.newLedgerLogo.trim();
+      this.formData.digest          = this.formData.digest.trim();
+      this.formData.remark          = this.formData.remark.trim();
       this.$emit('formDataSubmit', {
         data: this.formData,
       });

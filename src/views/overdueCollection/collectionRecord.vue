@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 14:25:10
- * @LastEditTime: 2020-10-30 18:02:07
+ * @LastEditTime: 2020-11-12 18:27:20
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\collectionRecord.vue
@@ -20,10 +20,10 @@
     </div>
 
     <el-row :gutter="0">
-      <el-col :xs="24" :sm="24" :md="24" :lg="20" :xl="18">
+      <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="20">
         <div class="exportBtn">
-          <el-button icon="el-icon-upload2" type="primary" size="medium" @click="importButton">导入催收记录</el-button>
-          <el-button icon="el-icon-download" type="primary" size="medium" plain @click="exportButton">导出催收记录</el-button>
+          <el-button icon="el-icon-upload2" type="primary" size="small" @click="importButton" v-show="rightControl.import">导入催收记录</el-button>
+          <el-button icon="el-icon-download" type="primary" size="small" plain @click="exportButton" v-show="rightControl.export">导出催收记录</el-button>
         </div>
         <div class="table">
           <el-table
@@ -128,6 +128,13 @@ export default {
         pageNum: 1,
         pageSize: 5,
       },
+
+      // 按钮权限
+      rightArray: [9011, 9014],
+      rightControl: {
+        import: false,
+        export: false,
+      },
     };
   },
   computed: {
@@ -139,12 +146,24 @@ export default {
   watch: {
     // 监听是否导入成功，成功则刷新催收记录
     successStatus(val) {
+      // console.log(val);
       if (val) {
         this.getCollectionRecordListData();
       }
     }
   },
   created() {
+    // 判断权限
+    this.rightArray.forEach((item, index, array) => {
+      common.checkRolePermission(
+        item,
+        this.$store.state.asideInfoIds,
+        Object.keys(this.rightControl)[index],
+        this.rightControl
+      );
+    });
+
+
     this.soldId = this.$route.query.soldId;
     this.formData.soldId = this.$route.query.soldId;
 
@@ -162,6 +181,7 @@ export default {
   methods: {
     // 获取分页数据
     getCollectionRecordListData() {
+      this.tableData = [];
       const url = common.collectionQueryListUrl;
       const params = {
         soldId            : this.soldId,
@@ -256,8 +276,8 @@ export default {
 <style scoped lang="scss">
 .collectionRecord {
   .addBox {
-    padding-top: 30px;
-    padding-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
 
 }
 

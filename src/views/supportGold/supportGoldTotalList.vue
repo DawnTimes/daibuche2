@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-11-02 14:58:43
+ * @LastEditTime: 2020-11-20 11:06:01
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -26,19 +26,19 @@
             placeholder="选择日期"
           ></el-date-picker>
         </el-form-item> -->
-        <el-form-item label="经销店名称:" prop="agentName">
+        <el-form-item label="经销店名称" prop="agentName">
           <el-input maxlength="50" v-model="formData.agentName" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="车架号:" prop="frameNumber">
+        <el-form-item label="车架号" prop="frameNumber">
           <el-input maxlength="50" v-model="formData.frameNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="批次号:" prop="batchNumber">
+        <el-form-item label="批次号" prop="batchNumber">
           <el-input maxlength="50" v-model="formData.batchNumber" clearable placeholder></el-input>
         </el-form-item>
-        <!-- <el-form-item label="期数:" prop="systemName">
+        <!-- <el-form-item label="期数" prop="systemName">
           <el-input maxlength="30" v-model="formData.systemName" clearable placeholder></el-input>
         </el-form-item> -->
-        <el-form-item label="支付状态:" prop="payStatus">
+        <el-form-item label="支付状态" prop="payStatus">
           <el-select v-model="formData.payStatus" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in this.$options.filters.paymentStatus([])"
@@ -69,6 +69,8 @@
         border
         stripe
         :max-height="tableHeight"
+        show-summary
+        :summary-method="getSummaries"
         ref="table"
         style="width: 100%"
         :header-cell-style="{
@@ -79,7 +81,7 @@
       }"
       >
         <el-table-column
-          width="50"
+          width="80"
           align="center"
           label="序号"
           type="index"
@@ -88,52 +90,52 @@
         ></el-table-column>
         <el-table-column prop="agentCode" label="经销店编码" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="agentName" label="经销店名称" show-overflow-tooltip width="200"></el-table-column>
-        <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="frameNumber" label="车架号" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="plateNumber" label="车牌号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="modelName" label="车型" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip width="100"></el-table-column>
+        <el-table-column prop="batchNumber" label="批次号" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="batch" label="批次" show-overflow-tooltip>
           <template slot-scope="scope">
             <span>{{ scope.row.batch | batchFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="120">
+        <el-table-column prop="payStatus" label="支付状态" show-overflow-tooltip width="100">
           <template slot-scope="scope">
-            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | paymentStatus }}</span>
+            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', blueColor: scope.row.payStatus == 'HAVEAPPLY', redStatus: scope.row.payStatus == 'NOT'}">{{ scope.row.payStatus | paymentStatus }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="monthlyRent" label="租金" show-overflow-tooltip>
+        <el-table-column prop="monthlyRent" label="租金" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.monthlyRent | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="rentCardFee" label="牌照费" show-overflow-tooltip>
+        <el-table-column prop="rentCardFee" label="牌照费" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.rentCardFee | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip width="120">
+        <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip width="140">
           <template slot-scope="scope">
             <span>{{ scope.row.totalMonthlyRent | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="supportFund" label="车型支援金" show-overflow-tooltip width="120">
+        <el-table-column prop="supportFund" label="车型支援金" show-overflow-tooltip width="140">
           <template slot-scope="scope">
             <span>{{ scope.row.supportFund | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="licenceFund" label="牌照支援金" show-overflow-tooltip width="120">
+        <el-table-column prop="licenceFund" label="牌照支援金" show-overflow-tooltip width="140">
           <template slot-scope="scope">
             <span>{{ scope.row.licenceFund | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip width="120">
+        <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip width="140">
           <template slot-scope="scope">
             <span>{{ scope.row.totalFund | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="currentTotal" label="当期/总期数" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="currentTotal" label="当期/总期数" show-overflow-tooltip width="130"></el-table-column>
         <el-table-column prop="surplus" label="剩余期数" show-overflow-tooltip></el-table-column>
         <el-table-column prop="payer" label="支付登记人" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="payDate" label="支付时间" show-overflow-tooltip width="120">
@@ -150,12 +152,21 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[10, 20, 50, 100, 200]"
+        :page-sizes="[10, 20, 50, 100, 500, 1000]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       ></el-pagination>
     </div>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
 
   </div>
 </template>
@@ -164,13 +175,14 @@
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
-
+import { moneyFormat } from '@/common/moneyFormat.js';
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
   name: '',
   props: {},
   components: {
-    
+    downConfirmBox,
   },
   data() {
     return {
@@ -200,6 +212,16 @@ export default {
         export: false,
       },
 
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出支援金车辆清单？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
+      exportLoading: false,
+
     };
   },
   computed: {
@@ -219,13 +241,13 @@ export default {
     
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -270,12 +292,13 @@ export default {
 
     // 获取分页数据
     getSupportGoldTotalListData() {
+      this.tableData = [];
       this.tableLoading = true;
       const url = common.supportCarListUrl;
       const params = {
-        agentName: this.formData.agentName,
-        batchNumber: this.formData.batchNumber,
-        frameNumber: this.formData.frameNumber,
+        agentName: this.formData.agentName.trim(),
+        batchNumber: this.formData.batchNumber.trim(),
+        frameNumber: this.formData.frameNumber.trim(),
         payStatus: this.formData.payStatus,
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
@@ -310,6 +333,14 @@ export default {
 
     // 导出
     exportButton() {
+      this.showDownBox = true;
+      
+    },
+
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+      
       window.location.href = `/api${
         common.supportOutputExcelUrl
       }?agentName=${
@@ -320,6 +351,53 @@ export default {
         this.formData.batchNumber ? this.formData.batchNumber : ''
       }&payStatus=${
         this.formData.payStatus ? this.formData.payStatus : ''}`;
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
+    },
+
+    // 合计
+    getSummaries(param) {
+      // console.log(param);
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '合计';
+          return;
+        }
+
+        // if (column.property == 'nper' || column.property == 'num') {
+        //   sums[index] = moneyFormat(sums[index]);
+        //   return
+        // }
+        
+        const values = data.map(item => Number(item[column.property]));
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+          // 千分位格式化金额
+          if (index >= 10 && index <= 15) {
+            sums[index] = moneyFormat(sums[index]);
+          } else {
+            sums[index] = '';
+          }
+          
+        } else {
+          // sums[index] = 'N/A';
+          sums[index] = '';
+        }
+      });
+
+      return sums;
     },
 
   },

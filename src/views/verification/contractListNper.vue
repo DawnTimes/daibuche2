@@ -1,59 +1,68 @@
 <!--
  * @Author: 廖亿晓
- * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-11-02 13:52:29
+ * @Date: 2020-11-13 14:25:38
+ * @LastEditTime: 2020-11-23 16:11:52
  * @LastEditors: your name
- * @Description: 查询合同下所有期数
+ * @Description: 
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
 -->
+
+
 <template>
   <div class="contractListNper">
     <div class="baseInfo">
       <el-row :gutter="0">
-        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
+        <el-col :xs="12" :sm="12" :md="12" :lg="8" :xl="4">
           <span>银行单据号：</span>
           <span>{{ baseFrom.serialNumber }}</span>
+        </el-col>
+        <el-col :xs="12" :sm="12" :md="12" :lg="10" :xl="6">
+          <span>收款账户：</span>
+          <span>{{ baseFrom.companyName }}</span>
         </el-col>
         <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
           <span>收款金额：</span>
           <span>{{ baseFrom.income | moneyFormat }}</span>
         </el-col>
-        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
+        <el-col :xs="12" :sm="12" :md="6" :lg="8" :xl="4">
           <span>已核金额：</span>
           <span>{{ baseFrom.haveVerLines | moneyFormat }}</span>
         </el-col>
-        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
+        <el-col :xs="12" :sm="12" :md="6" :lg="10" :xl="3">
           <span>未核金额：</span>
           <span>{{ baseFrom.notVerLines | moneyFormat }}</span>
         </el-col>
-        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="4">
+        <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="3">
           <span>退款金额：</span>
           <span>{{ baseFrom.refund | moneyFormat }}</span>
         </el-col>
       </el-row>
     </div>
 
-    <div class="hearderBox">
+    <div class="hearderBox hearderBoxNerp">
       <el-form
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="106px"
+        label-width=""
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="承租人/牌照商:" prop="">
-          <el-input maxlength="30" clearable v-model="formData.name" placeholder></el-input>
+        <el-form-item label="承租人/牌照商" prop="">
+          <el-input maxlength="50" v-model="formData.name" clearable placeholder></el-input>
         </el-form-item>
-        <!-- <el-form-item label="牌照商名称:" prop="systemName">
-          <el-input maxlength="30" clearable v-model="formData.systemName" placeholder=""></el-input>
-        </el-form-item>-->
-
-        <el-form-item label="上牌地:" prop="cityName">
-          <el-input maxlength="10" v-model="formData.cityName" clearable placeholder></el-input>
+        <el-form-item label="合同编号" prop="contractNumber">
+          <el-input maxlength="50" v-model="formData.contractNumber" clearable placeholder></el-input>
+        </el-form-item>
+        <el-form-item label="期数" prop="nper">
+          <el-input maxlength="3" v-model="formData.nper" placeholder=""></el-input>
         </el-form-item>
 
-        <el-form-item label="核销状态:" prop="repaymentStatus">
+        <el-form-item label="上牌地" prop="cityName">
+          <el-input maxlength="30" v-model="formData.cityName" placeholder></el-input>
+        </el-form-item>
+
+        <el-form-item label="核销状态" prop="repaymentStatus">
           <el-select v-model="formData.repaymentStatus" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in this.$options.filters.verState([])"
@@ -75,170 +84,18 @@
         </el-form-item>
       </el-form>
     </div>
-
-    <div class="table">
-      <el-table
-        :data="tableData"
-        v-loading="tableLoading" 
-        element-loading-text="拼命加载中"
-        border
-        stripe
-        ref="table"
-        style="width: 100%"
-        :max-height="tableHeight"
-        :header-cell-style="{
-        'text-align':'center',
-        'font-weight':'bold',  
-        'background':'#627CAF',    
-        'color': '#fff',
-      }"
-      >
-        <el-table-column width="50" align="center" label="序号" type="index" :index="indexMethod" fixed></el-table-column>
-        <el-table-column prop="name" label="承租人/牌照商" show-overflow-tooltip width="200"></el-table-column>
-        <el-table-column prop="contractNumber" label="合同编号" show-overflow-tooltip width="180"></el-table-column>
-        <el-table-column prop="contractName" label="合同名称" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="contractNormalStatus" label="合同状态" show-overflow-tooltip>
-          <template slot-scope="scope">
-            <span
-              :class="{greenStatus: scope.row.contractNormalStatus == 'Y', redStatus: scope.row.contractNormalStatus == 'N'}"
-            >{{ scope.row.contractNormalStatus | contractStatus }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="contractType" label="合同类型" show-overflow-tooltip width="100">
-          <template slot-scope="scope">
-            <span
-              :class="{greenStatus: scope.row.contractType == '', redStatus: scope.row.contractType == '', blueColor: scope.row.contractType == '',
-            yellowColor: scope.row.contractType == ''}"
-            >{{ scope.row.contractType | contractType }}</span>
-          </template>
-        </el-table-column>
-        
-        <!-- <el-table-column prop="id"  label="牌照商名称" show-overflow-tooltip width="120"></el-table-column> -->
-        <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="isLimitLicence" label="是否限牌" show-overflow-tooltip>
-          <template slot-scope="scope">
-            <span :class="{ greenStatus: scope.row.isLimitLicence == 'Y' , redStatus: scope.row.isLimitLicence == 'N' }">{{ scope.row.isLimitLicence | flagValue }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="isGalcCompany" label="是否租赁公司" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span :class="{ greenStatus: scope.row.isGalcCompany == 'Y' , redStatus: scope.row.isGalcCompany == 'N' }">{{ scope.row.isGalcCompany | flagValue }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="nper" label="期数" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="leaseWay" label="租赁方式" show-overflow-tooltip>
-          <template slot-scope="scope">
-            <span>{{ scope.row.leaseWay | leaseWay }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="num" label="车辆数量" show-overflow-tooltip>
-          <template slot-scope="scope">
-            <el-tooltip content="点击查询" placement="top" effect="light">
-              <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.num }}</el-link>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column prop="batchStartingDate" label="起租日" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.batchStartingDate | timeFormat }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="payDate" label="支付日" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.payDate | timeFormat }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="repaymentStatus" label="核销状态" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span :class="{greenStatus: scope.row.repaymentStatus == 'FULL', blueColor: scope.row.repaymentStatus == 'PART', redStatus: scope.row.repaymentStatus == 'NOT'}">{{ scope.row.repaymentStatus | verState }}</span>
-          </template>
-        </el-table-column>
-        
-        
-        <el-table-column prop="dueAmount" label="应收金额" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.dueAmount | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="duePrincipal" label="应收本金" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.duePrincipal | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="dueinterest" label="应收利息" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.dueinterest | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="dueManagementFee" label="应收管理费" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.dueManagementFee | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="dueCommission" label="应收手续费" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.dueCommission | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="receivedAmount" label="已收金额" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.receivedAmount | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="receivedPrincipal" label="已收本金" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.receivedPrincipal | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="receivedInterest" label="已收利息" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.receivedInterest | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="receivedManagementFee" label="已收管理费" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.receivedManagementFee | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="receivedCommission" label="已收手续费" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.receivedCommission | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="outstandingAmount" label="未收金额" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.outstandingAmount | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="outstandingPrincipal" label="未收本金" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.outstandingPrincipal | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="outstandingInterest" label="未收利息" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.outstandingInterest | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="outstandingManagementFee" label="未收管理费" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.outstandingManagementFee | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="outstandingCommission" label="未收手续费" show-overflow-tooltip width="120">
-          <template slot-scope="scope">
-            <span>{{ scope.row.outstandingCommission | moneyFormat}}</span>
-          </template>
-        </el-table-column>
-        <!-- <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column> -->
-        <el-table-column label="操作" width="100" fixed="right">
-          <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="handleWriteOff(scope.row)" :disabled="scope.row.repaymentStatus == 'FULL'">核销</el-button>
-            <!-- <el-button size="mini" plain @click="queryCar(scope.row)">车辆清单</el-button> -->
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
+    
+    <wTable :data="tableData" :header="tableHeader" :option="tableOption" :tableLoading="tableLoading" ref="table">
+      <el-table-column slot="fixed" fixed="left" align="center" label="序号" type="index" :index="indexMethod" width="50">
+      </el-table-column>
+      <el-table-column slot="fixed" fixed="right" align="center" label="操作" width="100">
+        <template slot-scope="scope">
+          <!-- 未核金额未0时禁用按钮 -->
+          <el-button size="mini" type="primary" @click="handleWriteOff(scope.row)" :disabled="scope.row.repaymentStatus == 'FULL'|| baseFrom.notVerLines == '0'">核销</el-button>
+          <!-- <el-button size="mini" type="primary" @click="handleWriteOff(scope.row)" :disabled="scope.row.repaymentStatus == 'FULL'">核销</el-button> -->
+        </template>
+      </el-table-column>
+    </wTable>
 
     <div class="page-layer">
       <el-pagination
@@ -246,7 +103,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[10, 20, 50, 100, 500]"
+        :page-sizes="[5, 10, 20, 50, 100, 500]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -260,12 +117,12 @@
       v-on:formDataSubmit="formDataSubmit"
     ></writeOff-dialog>
     
-    <nperCarList ref="nperCarListDialog" :carTableData="carTableData" :tableLoading="carTableLoading"></nperCarList>
+    
   </div>
 </template>
 
 <script>
-import { queryDict } from '@/api/index.js';
+import wTable from './dragNer.vue';
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
@@ -273,22 +130,61 @@ import common from '@/common/common.js';
 import writeOffDialog from './components/writeOffDialog';
 import nperCarList from './components/nperCarList';
 
-import { mapState, Store } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
+import { moneyFormat } from '@/common/moneyFormat.js';
+
+import moment from 'moment';
 
 export default {
-  name: '',
-  props: {},
+  name: 'contractListNper',
   components: {
+    wTable,
     writeOffDialog,
     nperCarList,
   },
   data() {
     return {
+      tableOption: {
+        border: true,
+        maxHeight: 500,
+      },
+    //   tableHeader: [
+    //   { label: '承租人/牌照商', prop: 'name', minWidth: '200px' },
+    //   { label: '合同编号', prop: 'contractNumber', minWidth: '160px' },
+    //   { label: '合同名称', prop: 'contractName', minWidth: '150px' },
+    //   { label: '合同状态', prop: 'contractNormalStatusText', minWidth: '80px' },
+    //   { label: '合同类型', prop: 'contractTypeText', minWidth: '100px' },
+    //   { label: '上牌地', prop: 'cityName', minWidth: '80px' },
+    //   { label: '是否限牌', prop: 'isLimitLicenceText', minWidth: '80px' },
+    //   { label: '是否租赁公司', prop: 'isGalcCompanyText', minWidth: '100px' },
+    //   { label: '期数', prop: 'nper', minWidth: '80px' },
+    //   { label: '租赁方式', prop: 'leaseWayText', minWidth: '80px' },
+    //   { label: '车辆数量', prop: 'num', minWidth: '80px' },
+    //   { label: '起租日', prop: 'batchStartingDate', minWidth: '120px' },
+    //   { label: '支付日', prop: 'payDate', minWidth: '120px' },
+    //   { label: '核销状态', prop: 'repaymentStatusText', minWidth: '80px' },
+    //   { label: '应收金额', prop: 'dueAmount', minWidth: '160px' },
+    //   { label: '应收本金', prop: 'duePrincipal', minWidth: '160px' },
+    //   { label: '应收利息', prop: 'dueinterest', minWidth: '160px' },
+    //   { label: '应收管理费', prop: 'dueManagementFee', minWidth: '160px' },
+    //   { label: '应收手续费', prop: 'dueCommission', minWidth: '160px' },
+    //   { label: '已收金额', prop: 'receivedAmount', minWidth: '160px' },
+    //   { label: '已收本金', prop: 'receivedPrincipal', minWidth: '160px' },
+    //   { label: '已收利息', prop: 'receivedInterest', minWidth: '160px' },
+    //   { label: '已收管理费', prop: 'receivedManagementFee', minWidth: '160px' },
+    //   { label: '已收手续费', prop: 'receivedCommission', minWidth: '160px' },
+    //   { label: '未收金额', prop: 'outstandingAmount', minWidth: '160px' },
+    //   { label: '未收本金', prop: 'outstandingPrincipal', minWidth: '160px' },
+    //   { label: '未收利息', prop: 'outstandingInterest', minWidth: '160px' },
+    //   { label: '未收管理费', prop: 'outstandingManagementFee', minWidth: '160px' },
+    //   { label: '未收手续费', prop: 'outstandingCommission', minWidth: '160px' },
+    // ],
       baseFrom: {
         serialNumber: '',
         income: '',
         notVerLines: '',
         haveVerLines: '',
+        companyName: '',
         refund: '',
       },
       pageSize: 10,
@@ -297,6 +193,8 @@ export default {
       formData: {
         name: '',
         cityName: '',
+        nper: '',
+        contractNumber: '',
         repaymentStatus: '',
         pageSize: 10,
         pageNum: 1,
@@ -329,27 +227,31 @@ export default {
       carTableLoading: false,
     };
   },
+
   computed: {
     ...mapState({
-      userId: store => store.userId
-    })
+      userId: store => store.userId,
+      tableHeader: store => store.tableHeader,
+    }),
   },
-  watch: {},
+
   created() {
     this.formData.name = this.$route.query.name;
     this.baseFrom.serialNumber = this.$route.query.serialNumber;
+    this.baseFrom.companyName = this.$route.query.companyName;
     
     this.$nextTick(function () {
-      this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+      this.tableOption.maxHeight =
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
-        self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+        self.tableOption.maxHeight =
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
+
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
     //50表示你想要调整的表格距离底部的高度（你可以自己随意调整），因为我们一般都有放分页组件的，所以需要给它留一个高度
   },
@@ -364,11 +266,18 @@ export default {
     };
     next();
   },
+
   mounted() {
     this.getBySerialNumberData();
     this.getContractRepayListData();
   },
+
   methods: {
+    ...mapMutations({
+      setRowCol: 'setRowCol',
+      setDropCol: 'setDropCol',
+    }),
+
     // 查询
     queryForm() {
       // 重置当前页
@@ -414,9 +323,14 @@ export default {
     // 查询分页列表
     getContractRepayListData() {
       const url = common.queryContractRepayUrl;
+      this.tableData = [];
       const params = {
-        name: this.formData.name,
-        cityName: this.formData.cityName,
+        name: this.formData.name.trim(),
+        // name: '佛山市南海狮山申联汽车销售服务有限公司',
+        // name: '重庆广汽长冠汽车销售有限公司',
+        cityName: this.formData.cityName.trim(),
+        nper: this.formData.nper.trim(),
+        contractNumber: this.formData.contractNumber.trim(),
         repaymentStatus: this.formData.repaymentStatus,
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
@@ -429,36 +343,110 @@ export default {
           this.tableData = data.contRepayList;
           this.total = data.turnPageTotalNum * 1;
           this.tableLoading = false;
+
+          if (!_.isEmpty(this.tableData)) {
+            this.tableData.forEach((item, index) => {
+              // 文本转义
+              item.isGalcCompanyText = '';  // 是否广汽租赁
+              item.isLimitLicenceText = ''; // 是否限牌
+              item.leaseWayText = ''; // 租赁方式
+              item.contractTypeText = ''; // 合同类型
+              item.repaymentStatusText = ''; // 核销状态
+              // item.repaymentStatusColor = ''; // 核销状态
+              item.contractNormalStatusText = ''; // 合同状态
+
+              if (item.isGalcCompany == 'Y') {
+                item.isGalcCompanyText = '是';
+              } else {
+                item.isGalcCompanyText = '否';
+              }
+
+              if (item.isLimitLicence == 'Y') {
+                item.isLimitLicenceText = '是';
+              } else {
+                item.isLimitLicenceText = '否';
+              }
+              
+              if (item.contractNormalStatus == 'Y') {
+                item.contractNormalStatusText = '正常';
+              } else {
+                item.contractNormalStatusText = '异常';
+              }
+
+              if (item.leaseWay == 'LEASE') {
+                item.leaseWayText = '直租';
+              } else if (item.leaseWay == 'BACK-LEASE') {
+                item.leaseWayText = '回租';
+              } else {
+                item.leaseWayText = '经租';
+              }
+
+              if (item.repaymentStatus == 'FULL') {
+                item.repaymentStatusText = '已核销';
+                // item.repaymentStatusColor = ' #67C23A';
+              } else if (item.repaymentStatus == 'PART') {
+                item.repaymentStatusText = '部分核销';
+                // item.repaymentStatusColor = '#F56C6C';
+              } else if (item.repaymentStatus == 'NOT') {
+                item.repaymentStatusText = '未核销';
+                // item.repaymentStatusColor = '#409EFF';
+              } else {
+                item.repaymentStatusText = '';
+              }
+
+              if (item.contractType == 'LEASE') {
+                item.contractTypeText = '直租合同';
+              } else if (item.contractType == 'BACK-LEASE') {
+                item.contractTypeText = '回租合同';
+              } else if (item.contractType == 'OPERATING-LEASE') {
+                item.contractTypeText = '经租合同';
+              } else if (item.contractType == 'LEASE-CHANGE') {
+                item.contractTypeText = '直租变更协议';
+              } else if (item.contractType == 'BACK-LEASE-CHANGE') {
+                item.contractTypeText = '回租变更协议';
+              } else if (item.contractType == 'OPERATING-LEASE-CHANGE') {
+                item.contractTypeText = '经租变更协议';
+              } else if (item.contractType == 'END_CHANGE') {
+                item.contractTypeText = '终止协议';
+              } else if (item.contractType == 'BUY_OUT') {
+                item.contractTypeText = '买断';
+              } else {
+                item.contractTypeText = ''
+              }
+
+              // item.batchStartingDate
+              item.batchStartingDate = moment(item.batchStartingDate).format('YYYY-MM-DD');
+              item.payDate           = moment(item.payDate).format('YYYY-MM-DD');
+
+              // item.dueAmount                = moneyFormat(item.dueAmount);
+              // item.duePrincipal             = moneyFormat(item.duePrincipal);
+              // item.dueinterest              = moneyFormat(item.dueinterest);
+              // item.dueManagementFee         = moneyFormat(item.dueManagementFee);
+              // item.dueCommission            = moneyFormat(item.dueCommission);
+              // item.receivedAmount           = moneyFormat(item.receivedAmount);
+              // item.receivedPrincipal        = moneyFormat(item.receivedPrincipal);
+              // item.receivedInterest         = moneyFormat(item.receivedInterest);
+              // item.receivedManagementFee    = moneyFormat(item.receivedManagementFee);
+              // item.receivedCommission       = moneyFormat(item.receivedCommission);
+              // item.outstandingAmount        = moneyFormat(item.outstandingAmount);
+              // item.outstandingPrincipal     = moneyFormat(item.outstandingPrincipal);
+              // item.outstandingInterest      = moneyFormat(item.outstandingInterest);
+              // item.outstandingManagementFee = moneyFormat(item.outstandingManagementFee);
+              // item.outstandingCommission    = moneyFormat(item.outstandingCommission);
+
+
+            })
+          }
         } else {
           this.tableLoading = false;
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '承租人或牌照商不能为空！'
+          });
         }
       }).catch(() => {
         this.tableLoading = false;
       })
-    },
-
-    // 获取状态数据字典
-    getDictStatus(columnName, tabName) {
-      const data = {
-        columnName: columnName,
-        tabName: tabName,
-      };
-      queryDict(data).then((res) => {
-        if (res.code === '0') {
-          const arrData = res.data.dictList;
-        }
-      });
-    },
-
-    // 格式化状态
-    formatStatus(type, dictTemp = []) {
-      let columnValueDesc = '';
-      dictTemp.forEach((v) => {
-        if (type === v.columnValueCode) {
-          return (columnValueDesc = v.columnValueDesc);
-        }
-      });
-      return columnValueDesc;
     },
 
     // 分页
@@ -474,46 +462,17 @@ export default {
       this.getContractRepayListData();
     },
 
-    // 返回
-    handleBack() {
-      this.$router.push({
-        path: '/writeOffContractList',
-      });
-    },
-
     // 核销弹框
     handleWriteOff(row) {
       this.writeOffForm.replanId = row.replanId;
-        this.writeOffForm.contractId = row.contractId;
-        this.writeOffForm.oldContractId = row.oldContractId;
-        this.writeOffForm.nper = row.nper;
-        this.writeOffForm.serialNumber = this.baseFrom.serialNumber;
-        this.writeOffForm.userId = this.userId;
-        this.writeOffForm.contractNumber = row.contractNumber;
-        this.writeOffForm.name = row.name;
+      this.writeOffForm.contractId = row.contractId;
+      this.writeOffForm.oldContractId = row.oldContractId;
+      this.writeOffForm.nper = row.nper;
+      this.writeOffForm.serialNumber = this.baseFrom.serialNumber;
+      this.writeOffForm.userId = this.userId;
+      this.writeOffForm.contractNumber = row.contractNumber;
+      this.writeOffForm.name = row.name;
       this.$refs.writeOffDialog.isShow(true);
-    },
-
-    // 车辆清单
-    queryCar(row) {
-      this.carTableLoading = true;
-      this.carTableData = [];
-      const url = common.selectCarRepayListUrl;
-      const params = {
-        nper: row.nper,
-        oldContractId: row.contractId,
-      };
-      axios.post(url, params).then((res) => {
-        if (res.ec === '0') {
-          this.carTableData = res.data.carRepList;
-          this.carTableLoading = false;
-        } else {
-          this.carTableLoading = false;
-        }
-      }).catch(() => {
-        this.carTableLoading = false;
-      })
-      this.$refs.nperCarListDialog.isShow(true);
     },
 
     // 核销确定
@@ -549,9 +508,7 @@ export default {
       
     },
   },
-  filters: {
-    function() {},
-  },
+  
 };
 </script>
 
@@ -562,13 +519,26 @@ export default {
   }
 
   .baseInfo {
-    padding: 10px 0 10px 20px;
+    padding: 5px 0 5px 10px;
     border-bottom: 1px solid #eee;
+    font-size: 13px;
 
     span {
-      line-height: 40px;
+      line-height: 30px;
       font-weight: bold;
     }
   }
+}
+</style>
+
+<style lang="scss">
+.hearderBoxNerp .el-form-item__label, .hearderBoxNerp .el-input__inner {
+  font-size: 12px;
+}
+.contractListNper .el-table .cell {
+  font-size: 12px;
+}
+.contractListNper .el-table th>.cell {
+  font-size: 13px;
 }
 </style>

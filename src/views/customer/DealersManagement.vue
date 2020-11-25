@@ -96,7 +96,7 @@
         fixed
         prop="agentCode"
         label="经销商代码"
-        width="150"
+        width="120"
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
@@ -108,7 +108,6 @@
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
-      <el-table-column fixed prop="isGacShop" label="商贸店" width="80"></el-table-column>
       <el-table-column
         prop="agentFullName"
         label="经销店名称"
@@ -116,6 +115,7 @@
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
+      <el-table-column prop="isGacShop" label="商贸店" width="80"></el-table-column>
       <el-table-column
         prop="socialCreditCode"
         label="社会统一信用代码"
@@ -473,6 +473,13 @@
               </el-col>
               <el-col :span="24">
                 <div class="grid-content bg-purple">
+                  <el-form-item label="Email地址">
+                    <el-input v-model="divParams.Email"></el-input>
+                  </el-form-item>
+                </div>
+              </el-col>
+              <el-col :span="24">
+                <div class="grid-content bg-purple">
                   <el-form-item label="邮寄地址">
                     <el-input v-model="divParams.mailingAddress"></el-input>
                   </el-form-item>
@@ -575,7 +582,7 @@
     <div v-if="showEditAgent" class="showEditAgentInfo">
       <div class="msgbody">
         <header>
-          编辑经销商
+          编辑经销商222
           <i class="el-icon-close icon-right" @click="closeWindow" style="cursor:pointer;"></i>
         </header>
         <div class="main-body controlDivClass">
@@ -778,6 +785,13 @@
               </el-col>
               <el-col :span="24">
                 <div class="grid-content bg-purple">
+                  <el-form-item label="Email地址">
+                    <el-input v-model="divEditParams.Email"></el-input>
+                  </el-form-item>
+                </div>
+              </el-col>
+              <el-col :span="24">
+                <div class="grid-content bg-purple">
                   <el-form-item label="邮寄地址">
                     <el-input v-model="divEditParams.mailingAddress"></el-input>
                   </el-form-item>
@@ -919,6 +933,7 @@ export default {
         areaCode: '',
         provinceCode: '',
         cityCode: '',
+        Email: '',
       },
       divEditParams: {
         agentId: '',
@@ -948,6 +963,7 @@ export default {
         areaCode: '',
         provinceCode: '',
         cityCode: '',
+        Email: '',
       },
       showAddAgent: false,
       showEditAgent: false,

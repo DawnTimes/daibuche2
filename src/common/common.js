@@ -86,7 +86,7 @@ export default {
 
 
   // 二期
-  // queryDictUrl                  : '/carmanage-admin/dataDict/queryDict.do',                                    // 数据字典
+  queryDictUrl                  : '/carmanage-admin/dataDict/queryDict.do',                                    // 数据字典
   bankWaterDownUrl              : '/carmanage-admin/bankStatemntExcel/exportBankStatement.do',                 // 导出银行流水单
   queryLimitCarListUrl          : '/carmanage-admin/queryLimitCarList.do',                                     // 限牌车型分页
   queryNotLimitCarListUrl       : '/carmanage-admin/queryNotLimitCarList.do',                                  // 非限牌车型分页
@@ -145,8 +145,11 @@ export default {
   importBankStatementUrl        : '/carmanage-admin/bankStatemntExcel/importBankStatement.do',                 // 银行流水导入
   supportApprovalSumUrl         : '/carmanage-admin/supportApprovalSum.do',                                    // 支援金审批待办统计
   InvoiceSumUrl                 : '/carmanage-admin/InvoiceSum.do',                                            // 开票明细待办统计
-  exportCollectionByAgentIdUrl  : '/carmanage-admin/CollectionExport/exportCollectionByAgentId',               // 导出催收记录
+  exportCollectionByAgentIdUrl  : '/carmanage-admin/CollectionExport/exportCollectionByAgentId.do',            // 导出催收记录
   deleteRentModificationUrl     : '/carmanage-admin/deleteRentModification.do',                                // 租金修改删除
+  changeContarctOpenSomethingUrl: '/carmanage-admin/changeContarct/open/something.do',                         // 生成合同
+  updateSpportUrl               : '/carmanage-admin/updateSpport.do',                                          // 支援金编辑
+  importSubcarInvoiceNoticeUrl  : '/carmanage-admin/SubcarInvoiceNotice/importSubcarInvoiceNotice',            // 开票明细导入
 
 
   // 二期
@@ -209,8 +212,13 @@ export default {
   // importBankStatementUrl        : '/bankStatemntExcel/importBankStatement.do',                 // 银行流水导入
   // supportApprovalSumUrl         : '/supportApprovalSum.do',                                    // 支援金审批待办统计
   // InvoiceSumUrl                 : '/InvoiceSum.do',                                            // 开票明细待办统计
-  // exportCollectionByAgentIdUrl  : '/CollectionExport/exportCollectionByAgentId',               // 导出催收记录
+  // exportCollectionByAgentIdUrl  : '/CollectionExport/exportCollectionByAgentId.do',            // 导出催收记录
   // deleteRentModificationUrl     : '/deleteRentModification.do',                                // 租金修改删除
+  // changeContarctOpenSomethingUrl: '/changeContarct/open/something.do',                         // 生成合同
+  // updateSpportUrl               : '/updateSpport.do',                                          // 支援金编辑
+  // importSubcarInvoiceNoticeUrl  : '/SubcarInvoiceNotice/importSubcarInvoiceNotice',            // 开票明细导入
+
+
 
   // 验证码
   guid() {
@@ -266,7 +274,7 @@ export default {
       if (array[index] == flowId) {
         if (FlowArray.indexOf(id) < 0) {
           FlowArray.push(id);
-          console.log(FlowArray)
+          // console.log(FlowArray)
         }
       }
     })

@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 18:11:48
- * @LastEditTime: 2020-11-03 18:31:26
+ * @LastEditTime: 2020-11-18 15:22:22
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldModule.vue
@@ -24,7 +24,7 @@
             size="medium"
           >
             <el-row :gutter="0">
-              <!-- <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
                 <el-form-item label="申请日期:" prop="applyDate" class="form-item">
                   <el-date-picker
                     v-model="formData.applyDate"
@@ -35,8 +35,8 @@
                     @change="changeDate"
                   ></el-date-picker>
                 </el-form-item>
-              </el-col> -->
-              <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+              </el-col>
+              <!-- <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
                 <el-form-item label="申请日期:" prop="applyDate" class="form-item">
                   <el-date-picker
                     v-model="formData.applyDate"
@@ -48,11 +48,11 @@
                     @change="changeDate"
                   ></el-date-picker>
                 </el-form-item>
-              </el-col>
+              </el-col> -->
               <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
                 <el-form-item label="支援金月份:" prop="yearMonth" class="form-item">
                   <el-date-picker
-                    v-model="formData.monthTime"
+                    v-model="formData.yearMonth"
                     value-format="yyyy-MM"
                     type="month"
                     placeholder="选择月份"
@@ -62,13 +62,14 @@
                   ></el-date-picker>
                 </el-form-item>
               </el-col>
-              <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-                <el-form-item label="备注:" prop class="form-item">
+              <el-col :xs="24" :sm="20" :md="24" :lg="24" :xl="24">
+                <el-form-item label="备注:" prop="remark" class="form-item">
                   <el-input
                     type="textarea"
                     :autosize="{ minRows: 3, maxRows: 4}"
                     placeholder="请输入内容"
-                    maxlength="500"
+                    maxlength="300"
+                    show-word-limit
                     v-model="formData.remark"
                   ></el-input>
                 </el-form-item>
@@ -81,7 +82,7 @@
 
     <div class="tableBox">
       <div class="choiceBtn">
-        <el-button type="primary" size="medium" @click="handleChoose">选择经销店</el-button>
+        <el-button type="primary" size="mini" @click="handleChoose">选择经销店</el-button>
       </div>
       <div class="table dealerFrom">
         <el-form :rules="rules" :model="formData" ref="formData1" status-icon>
@@ -103,13 +104,14 @@
               prop="agentCode"
               label="经销店代码"
               show-overflow-tooltip
+              min-width="120"
             ></el-table-column>
             <!-- <el-table-column prop="agId" label="经销店id" show-overflow-tooltip></el-table-column> -->
-            <el-table-column prop="agentShortName" label="经销店简称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="agentFullName" label="经销店名称" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip>
+            <!-- <el-table-column prop="agentShortName" label="经销店简称" show-overflow-tooltip min-width="120"></el-table-column> -->
+            <el-table-column prop="agentFullName" label="经销店名称" show-overflow-tooltip min-width="120"></el-table-column>
+            <el-table-column prop="isGacShop" label="是否商贸店" show-overflow-tooltip min-width="120">
               <template slot-scope="scope">
-                <span>{{ scope.row.isGacShop | flagValue }}</span>
+                <span>{{ scope.row.isGacShop | isGacShopFormat }}</span>
               </template>
             </el-table-column>
             <!-- <el-table-column prop="agentCode" label="车辆数量" show-overflow-tooltip></el-table-column> -->
@@ -160,7 +162,7 @@
               prop="reason"
               label="申请原因"
               show-overflow-tooltip
-              width="400"
+              min-width="400"
             >
               <template slot-scope="scope">
                 <el-form-item
@@ -171,6 +173,7 @@
                   <el-input
                     type="textarea"
                     maxlength="200"
+                    show-word-limit
                     :autosize="{ minRows: 1, maxRows: 4}"
                     size="mini"
                     placeholder="请输入内容"
@@ -187,21 +190,21 @@
           </el-table>
         </el-form>
       </div>
-      <p class="tipText">提示：申请支援金时经销店不是必选的；在特殊情况下申请支援金时才需要选经销店。</p>
+      <p class="tipText">提示：申请支援金时经销店不是必选的；存在特殊情况下申请支援金时才需要选经销店。</p>
     </div>
 
-    <el-row :gutter="10">
+    <el-row :gutter="0">
       <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
         <div style="padding: 20px 0 20px 0; text-align: center">
-          <el-button size="medium" @click="handleGoToBack()">取 消</el-button>
+          <el-button size="small" @click="handleGoToBack()">取 消</el-button>
           <!-- <el-button
-            size="medium"
+            size="small"
             type="primary"
             plain
             @click="handleSave('formData', 'formData1')"
           >保存</el-button>-->
           <el-button
-            size="medium"
+            size="small"
             type="primary"
             @click="handleSubmit('formData', 'formData1')"
             :loading="loading"
@@ -492,10 +495,10 @@ export default {
   }
 
   .tableBox {
-    padding: 20px 0 0 20px;
+    padding: 10px 0 0 20px;
 
     .choiceBtn {
-      padding-bottom: 20px;
+      padding-bottom: 10px;
     }
   }
 }

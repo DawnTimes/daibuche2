@@ -4,10 +4,10 @@
       <!-- <header class="car-management-header">用 户 管 理</header> -->
       <el-form :inline="true" :model="params" label-width="80px" class="demo-form-inline" size="small">
         <el-form-item label="登录名">
-          <el-input v-model="params.username" placeholder="登录名"></el-input>
+          <el-input v-model="params.username" clearable placeholder="登录名"></el-input>
         </el-form-item>
         <el-form-item label="姓名">
-          <el-input v-model="params.label" placeholder="姓名"></el-input>
+          <el-input v-model="params.label" clearable placeholder="姓名"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -128,8 +128,8 @@ export default {
       },
       msgConfirBox: {
         icon: 'icon-jinggao',
-        confirst: '确认删除该用户',
-        consecond: '删除后不可恢复',
+        confirst: '确认删除该用户？',
+        consecond: '警告：删除后不可恢复',
       },
 
       tableHeight: 100,
@@ -140,13 +140,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -183,6 +183,8 @@ export default {
     },
     initData() {
       let url = common.userPageUrl;
+      this.params.username = this.params.username.trim();
+      this.params.label = this.params.label.trim();
       axios.get(url, this.params).then((res) => {
         let temp = res.records;
         // 对数据进行改造
@@ -221,6 +223,8 @@ export default {
     initData2() {
       this.realParams.turnPageBeginPos = this.params.turnPageBeginPos;
       this.realParams.turnPageShowNum = this.params.turnPageShowNum;
+      this.realParams.username = this.realParams.username.trim();
+      this.realParams.label = this.realParams.label.trim();
       let url = common.userPageUrl;
       axios.get(url, this.realParams).then((res) => {
         let temp = res.records;

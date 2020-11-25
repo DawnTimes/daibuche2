@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 11:13:20
- * @LastEditTime: 2020-10-29 17:43:35
+ * @LastEditTime: 2020-11-13 09:57:18
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\baseInformationDetail.vue
@@ -115,12 +115,16 @@ export default {
               //   val.icon = 'el-icon-close';
               // }
               if (
-                val.curStatus === '1' ||
-                val.curStatus === '2' 
+                val.curStatus === '1'
                 // val.curStatus === '3'
               ) {
                 val.color = '#409EFF';
                 val.icon = 'el-icon-more';
+                val.approvalOpinion = val.approvalPerson + '生成租金修改';
+              } else if (val.curStatus === '2') {
+                val.color = '#409EFF';
+                val.icon = 'el-icon-more';
+                val.approvalOpinion = val.approvalPerson + '发起租金修改申请';
               } else if (val.curStatus === '3' || val.curStatus === '4') {
                 val.color = '#0bbd87';
                 val.icon = 'el-icon-check';
@@ -131,8 +135,8 @@ export default {
               }
             });
           }
-          // this.baseInfoForm.rentApprovalList.splice(0, 1);
-          // 判断是否限牌
+          this.baseInfoForm.rentApprovalList.sort(this.sortFunc);
+          // 判断是否限牌 隐藏字段
           if (this.baseInfoForm.isLimitLicence === 'N') {
             this.formReadonly.hide.push(
               'cityName',
@@ -144,6 +148,7 @@ export default {
               'totalMonthlyRent'
             );
           } else {
+            // 计算原月租金合计
             this.baseInfoForm.totalMonthlyRent =
               this.baseInfoForm.monthlyRent * 1 +
               this.baseInfoForm.rentLicenceFee * 1 +
@@ -151,6 +156,11 @@ export default {
           }
         }
       });
+    },
+    
+    // 按审批时间排序
+    sortFunc(a, b) {
+      return a.approvalTime > b.approvalTime ? 1 : -1
     },
 
     // 返回

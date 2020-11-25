@@ -4,10 +4,10 @@
       <!-- <header class="car-management-header">角 色 管 理</header> -->
       <el-form :inline="true" label-width="80px" :model="params" class="demo-form-inline fl" size="small">
         <el-form-item label="角色名称">
-          <el-input v-model="params.roleName" placeholder="角色名称"></el-input>
+          <el-input v-model="params.roleName" clearable placeholder="角色名称"></el-input>
         </el-form-item>
         <el-form-item label="角色代码">
-          <el-input v-model="params.roleCode" placeholder="角色代码"></el-input>
+          <el-input v-model="params.roleCode" clearable placeholder="角色代码"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -125,8 +125,8 @@ export default {
       },
       msgConfirBox: {
         icon: 'icon-jinggao',
-        confirst: '确认删除该角色',
-        consecond: '删除后不可恢复',
+        confirst: '确认删除该角色？',
+        consecond: '警告：删除后不可恢复',
       },
 
       tableHeight: 100,
@@ -137,13 +137,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度

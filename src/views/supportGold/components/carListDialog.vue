@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-20 10:23:26
- * @LastEditTime: 2020-10-22 17:26:49
+ * @LastEditTime: 2020-11-11 15:40:35
  * @LastEditors: your name
  * @Description: 车辆支援金清单
  * @FilePath: \webcode2\src\views\supportGold\components\carListDialog.vue
@@ -51,22 +51,22 @@
             <span>{{ scope.row.rentCardFee | moneyFormat}}</span>
           </template>
           </el-table-column>
-          <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip>
+          <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip width="120">
             <template slot-scope="scope">
             <span>{{ scope.row.totalMonthlyRent | moneyFormat}}</span>
           </template>
           </el-table-column>
-          <el-table-column prop="supportFund" label="车型支援金" show-overflow-tooltip width="100">
+          <el-table-column prop="supportFund" label="车型支援金" show-overflow-tooltip width="120">
             <template slot-scope="scope">
             <span>{{ scope.row.supportFund | moneyFormat}}</span>
           </template>
           </el-table-column>
-          <el-table-column prop="licenceFund" label="牌照支援金" show-overflow-tooltip>
+          <el-table-column prop="licenceFund" label="牌照支援金" show-overflow-tooltip width="120">
             <template slot-scope="scope">
             <span>{{ scope.row.licenceFund | moneyFormat}}</span>
           </template>
           </el-table-column>
-          <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip>
+          <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip width="120">
             <template slot-scope="scope">
             <span>{{ scope.row.totalFund | moneyFormat}}</span>
           </template>
@@ -202,7 +202,7 @@ export default {
   }
 
   .el-dialog__body {
-    padding: 10px 20px 10px 10px;
+    padding: 5px 10px 5px 10px;
   }
 
   .el-dialog__title {

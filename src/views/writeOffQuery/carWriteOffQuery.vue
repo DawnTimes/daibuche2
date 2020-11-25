@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-03 10:32:26
+ * @LastEditTime: 2020-11-18 09:17:28
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -13,11 +13,11 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="110px"
+        label-width="120px"
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="承租人/牌照商:" prop="name">
+        <el-form-item label="承租人/牌照商" prop="name">
           <el-input
             maxlength="30"
             v-model="formData.name"
@@ -25,7 +25,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <!-- <el-form-item label="牌照商:" prop="licenceName">
+        <!-- <el-form-item label="牌照商" prop="licenceName">
           <el-input
             maxlength="50"
             v-model="formData.licenceName"
@@ -33,7 +33,7 @@
             placeholder
           ></el-input>
         </el-form-item> -->
-        <el-form-item label="合同编号:" prop="contractNumber">
+        <el-form-item label="合同编号" prop="contractNumber">
           <el-input
             maxlength="30"
             v-model="formData.contractNumber"
@@ -41,7 +41,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="期数:" prop="nper">
+        <el-form-item label="期数" prop="nper">
           <el-input
             maxlength="30"
             v-model="formData.nper"
@@ -50,7 +50,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item label="是否限牌:" prop="isLimitLicence">
+        <el-form-item label="是否限牌" prop="isLimitLicence">
           <el-select
             v-model="formData.isLimitLicence"
             clearable
@@ -67,7 +67,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="车型名称:" prop="carModel">
+        <el-form-item label="车型名称" prop="carModel">
           <el-input
             maxlength="30"
             v-model="formData.carModel"
@@ -75,7 +75,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="车架号:" prop="frameNumber">
+        <el-form-item label="车架号" prop="frameNumber">
           <el-input
             maxlength="30"
             v-model="formData.frameNumber"
@@ -83,7 +83,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="银行单据号:" prop="serialNumber">
+        <el-form-item label="银行单据号" prop="serialNumber">
           <el-input
             maxlength="30"
             v-model="formData.serialNumber"
@@ -116,7 +116,7 @@
     <div class="batchBtn">
       <el-button
         type="primary"
-        size="small"
+        size="mini"
         @click="batchRecoil"
         v-show="rightControl.recoil"
         >批量反冲</el-button
@@ -144,7 +144,7 @@
         }"
       >
         <el-table-column
-          width="50"
+          width="40"
           align="center"
           type="selection"
           fixed
@@ -312,7 +312,7 @@
           width="120"
         >
           <template slot-scope="scope">
-            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOT', blueColor: scope.row.payStatus == '2' }">{{ scope.row.payStatus | payStatus }}</span>
+            <span :class="{greenStatus: scope.row.payStatus == 'HAVEGRANT', redStatus: scope.row.payStatus == 'NOTAPPLY', blueColor: scope.row.payStatus == 'HAVEAPPLY' }">{{ scope.row.payStatus | payStatus }}</span>
           </template>
         </el-table-column>
         
@@ -470,10 +470,11 @@
         <el-table-column
           prop="remark"
           label="备注"
+          width="160"
           show-overflow-tooltip
         ></el-table-column>
 
-        <el-table-column label="操作" width="80" fixed="right">
+        <el-table-column label="操作" align="center" width="100" fixed="right">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -506,6 +507,15 @@
       :loading="status.loading"
       v-on:formDataSubmit="formDataSubmit"
     ></recoilModule>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
   </div>
 </template>
 
@@ -516,13 +526,15 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 
 import recoilModule from '@/components/recoilModule';
-import LogInVue from '../login/LogIn.vue';
+// import LogInVue from '../login/LogIn.vue';
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 
 export default {
-  name: '',
+  name: 'carWriteOffQuery',
   props: {},
   components: {
     recoilModule,
+    downConfirmBox,
   },
   data() {
     return {
@@ -562,6 +574,16 @@ export default {
         export: false,
         recoil: false,
       },
+
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出核销的车辆信息？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
+      exportLoading: false,
     };
   },
   computed: {},
@@ -588,13 +610,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -637,16 +659,17 @@ export default {
 
     // 获取分页数据
     getCarWriteOffListData() {
+      this.tableData = [];
       this.tableLoading = true;
       const url = common.selectVerCarStatementUrl;
       const params = {
-        nper: this.formData.nper,
-        contractNumber: this.formData.contractNumber,
+        nper: this.formData.nper.trim(),
+        contractNumber: this.formData.contractNumber.trim(),
         isLimitLicence: this.formData.isLimitLicence,
-        name: this.formData.name,
-        frameNumber: this.formData.frameNumber,
-        serialNumber: this.formData.serialNumber,
-        carModel: this.formData.carModel,
+        name: this.formData.name.trim(),
+        frameNumber: this.formData.frameNumber.trim(),
+        serialNumber: this.formData.serialNumber.trim(),
+        carModel: this.formData.carModel.trim(),
         turnPageShowNum: this.formData.pageSize,
         turnPageBeginPos: this.formData.pageNum,
       };
@@ -669,6 +692,14 @@ export default {
 
     // 导出车辆核销清单
     exportButton() {
+      this.showDownBox = true;
+      
+    },
+
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+      
       window.location.href = `/api${common.exportVerCarExcelUrl}?nper=${
         this.formData.nper ? this.formData.nper : ''
       }&contractNumber=${
@@ -683,6 +714,11 @@ export default {
         this.formData.carModel ? this.formData.carModel : ''
       }&serialNumber=${
         this.formData.serialNumber ? this.formData.serialNumber : ''}`;
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
     },
 
     // 分页

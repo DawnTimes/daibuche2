@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-10-30 10:03:22
+ * @LastEditTime: 2020-11-16 09:58:23
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\limitCarTypeList.vue
@@ -21,32 +21,27 @@
           <el-input maxlength="30" v-model="formData.modelCode" placeholder></el-input>
         </el-form-item> -->
         <el-form-item label="车型名称:" prop="modelName">
-          <el-input maxlength="30" v-model="formData.modelName" clearable placeholder></el-input>
+          <el-input maxlength="50" v-model="formData.modelName" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item label="城市:" prop="cityName">
-          <!-- <el-input maxlength="50" v-model="formData.cityCode" placeholder=""></el-input> -->
-          <!-- <el-cascader
-            v-model="formData.cityCode"
-            :props="cityProps"
-            @change="changeCity"
-          ></el-cascader>-->
+          <el-input maxlength="30" v-model="formData.cityName" clearable placeholder=""></el-input>
 
-          <el-select v-model="formData.cityName" placeholder="请选择">
+          <!-- <el-select v-model="formData.cityName" placeholder="请选择">
             <el-option value label style="height:240px; overflow-y: auto; background-color:#fff; color: #606266; font-weight: normal">
               <el-tree :props="defaultProps" :load="loadNode" lazy @node-click="handleNodeClick" highlight-current accordion></el-tree>
             </el-option>
-          </el-select>
+          </el-select> -->
         </el-form-item>
-        <el-form-item label="牌照商:" prop="licenceCode">
-          <!-- <el-input maxlength="50" v-model="formData.licenceCode" placeholder></el-input> -->
-          <el-select v-model="formData.licenceCode" filterable clearable  placeholder="请选择">
+        <el-form-item label="牌照商:" prop="licenceName">
+          <el-input maxlength="50" v-model="formData.licenceName" clearable placeholder></el-input>
+          <!-- <el-select v-model="formData.licenceCode" filterable clearable  placeholder="请选择">
             <el-option
               v-for="item in licenceOptions"
               :key="item.licenceCode"
               :label="item.licenceName"
               :value="item.licenceCode">
             </el-option>
-          </el-select>
+          </el-select> -->
         </el-form-item>
 
         <el-form-item>
@@ -114,7 +109,7 @@
           </template>
         </el-table-column>
         <!-- <el-table-column prop="" label="尾款" show-overflow-tooltip></el-table-column> -->
-        <el-table-column label="操作" width="110" fixed="right">
+        <el-table-column label="操作" align="center" width="110" fixed="right">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -147,7 +142,7 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 
 export default {
-  name: '',
+  name: 'limitCarTypeList',
   props: {},
   components: {},
   data() {
@@ -161,6 +156,8 @@ export default {
         licenceCode: '',
         modelCode: '',
         modelName: '',
+        cityName: '',
+        licenceName: '',
         pageSize: 10,
         pageNum: 1,
         cityName: '',
@@ -211,7 +208,7 @@ export default {
   },
   created() {
     this.getLimitCarTypeList();
-    this.getLicenceList();
+    // this.getLicenceList();
 
     // 判断权限
     this.rightArray.forEach((item, index, array) => {
@@ -225,13 +222,13 @@ export default {
 
     this.$nextTick(function () {
       this.tableHeight =
-        window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+        window.innerHeight - this.$refs.table.$el.offsetTop - 110;
 
       // 监听窗口大小变化
       let self = this;
       window.onresize = function () {
         self.tableHeight =
-          window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+          window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -251,66 +248,6 @@ export default {
 
   mounted() {},
   methods: {
-    // 获取城市数据 三级（地区-省份-城市）
-    // getCascaderCityData(node, resolve) {
-    //   if (node.level === 0) {
-    //     // 先获取地区
-    //     const url = common.findAreaInfoUrl;
-    //     axios.post(url).then((res) => {
-    //       if (res.em === 'Success!') {
-    //         const data1 = res.data.areaList;
-    //         const listData1 = data1.map((item) => {
-    //           this.$set(item, 'name', item.areaName);
-    //           this.$set(item, 'code', item.areaCode);
-    //           this.$set(item, 'children', []);
-    //           return item;
-    //         });
-    //         resolve(listData1);
-    //       }
-    //     });
-    //   } else if (node.level === 1) {
-    //     // 先获取省份
-    //     const url = common.findProviInfoUrl;
-    //     const params = {
-    //       areaCode: node.data.areaCode,
-    //     };
-    //     axios.post(url, params).then((res) => {
-    //       if (res.em === 'Success!') {
-    //         const data2 = res.data.provinceList;
-    //         const listData2 = data2.map((item) => {
-    //           this.$set(item, 'name', item.provinceName);
-    //           this.$set(item, 'code', item.provinceCode);
-    //           this.$set(item, 'children', []);
-    //           return item;
-    //         });
-    //         resolve(listData2);
-    //       }
-    //     });
-    //   } else if (node.level === 2) {
-    //     // 先获取城市
-    //     const url = common.findCityInfoUrl;
-    //     const params = {
-    //       provinceCode: node.data.provinceCode,
-    //     };
-    //     axios.post(url, params).then((res) => {
-    //       if (res.em === 'Success!') {
-    //         const data3 = res.data.cityList;
-    //         const listData3 = data3.map((item) => {
-    //           this.$set(item, 'name', item.cityName);
-    //           this.$set(item, 'code', item.cityCode);
-    //           // this.$set(item, 'children', []);
-    //           return item;
-    //         });
-
-    //         listData3.forEach((val) => {
-    //           // 去掉最后一级（城市）的箭头
-    //           val.leaf = node.level >= 2;
-    //         });
-    //         resolve(listData3);
-    //       }
-    //     });
-    //   }
-    // },
 
     // 获取城市数据 二级（省份-城市）
     getCascaderCityData(node, resolve) {
@@ -490,12 +427,15 @@ export default {
 
     // 获取限牌车型列表
     getLimitCarTypeList() {
+      this.tableData = [];
       const params = {
         // cityCode: this.formData.cityCode.pop() || '',
-        cityCode: this.formData.cityCode,
-        licenceCode: this.formData.licenceCode,
-        modelCode: this.formData.modelCode,
-        modelName: this.formData.modelName,
+        cityCode: this.formData.cityCode.trim(),
+        cityName: this.formData.cityName.trim(),
+        licenceName: this.formData.licenceName.trim(),
+        licenceCode: this.formData.licenceCode.trim(),
+        modelCode: this.formData.modelCode.trim(),
+        modelName: this.formData.modelName.trim(),
         turnPageBeginPos: this.formData.pageNum,
         turnPageShowNum: this.formData.pageSize,
       };

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-13 17:42:12
- * @LastEditTime: 2020-11-02 14:47:13
+ * @LastEditTime: 2020-11-19 15:38:27
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\baseInformationDetailModule.vue
@@ -10,57 +10,75 @@
   <div class="baseInformationDetailModule">
     <div class="baseInfor">
       <el-row :gutter="0">
-        <el-col :xs="24" :sm="24" :md="20" :lg="20" :xl="16">
+        <el-col :xs="24" :sm="24" :md="24" :lg="20" :xl="20">
           <el-row :gutter="0">
-            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
               <div class="tempBox">
                 <span>支援金月份：</span>
-                <span>{{ baseInfoForm.month }}</span>
+                <span>{{ baseInfoForm.year + '-' + baseInfoForm.month }}</span>
               </div>
             </el-col>
-            <!-- <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+            <!-- <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
               <div class="tempBox">
                 <span>期数：</span>
                 <span></span>
               </div>
             </el-col> -->
-            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
               <div class="tempBox">
                 <span>批次号：</span>
                 <span>{{ baseInfoForm.batchNumber }}</span>
               </div>
             </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
               <div class="tempBox">
                 <span>批次：</span>
-                <span>{{ baseInfoForm.batch }}</span>
+                <span>第{{ baseInfoForm.batch }}批</span>
               </div>
             </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
               <div class="tempBox">
                 <span>店数：</span>
                 <span>{{ baseInfoForm.counts }}</span>
               </div>
             </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
               <div class="tempBox">
                 <span>车辆数量：</span>
                 <span>{{ baseInfoForm.carNum }}</span>
               </div>
             </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+            <!-- <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
               <div class="tempBox">
-                <span>支援金：</span>
+                <span>租金：</span>
                 <span>{{ baseInfoForm.rentCount | moneyFormat }}</span>
               </div>
             </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
               <div class="tempBox">
                 <span>牌照费：</span>
                 <span>{{ baseInfoForm.LicenceFee | moneyFormat }}</span>
               </div>
             </el-col>
-            <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
+              <div class="tempBox">
+                <span>租金合计：</span>
+                <span>{{ baseInfoForm.rentTotalCount | moneyFormat }}</span>
+              </div>
+            </el-col> -->
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
+              <div class="tempBox">
+                <span>车型支援金：</span>
+                <span>{{ baseInfoForm.rentCount | moneyFormat }}</span>
+              </div>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
+              <div class="tempBox">
+                <span>牌照支援金：</span>
+                <span>{{ baseInfoForm.LicenceFee | moneyFormat }}</span>
+              </div>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6">
               <div class="tempBox">
                 <span>总支援金：</span>
                 <span>{{ baseInfoForm.rentTotalCount | moneyFormat }}</span>
@@ -300,13 +318,13 @@ export default {
 <style lang="scss">
 .baseInformationDetailModule {
   .baseInfor {
-    padding: 10px 0 10px 10px;
+    padding: 0px 0 10px 0px;
     border-bottom: 1px solid #eee;
     .tempBox {
-      height: 36px;
+      height: 30px;
       color: #000;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 13px;
 
       :nth-child(1) {
         display: inline-block;
@@ -322,8 +340,8 @@ export default {
     padding: 20px 0 0 20px;
 
     h4 {
-      padding-top: 5px;
-      padding-bottom: 24px;
+      // padding-top: 5px;
+      padding-bottom: 20px;
       display: flex;
 
       span {

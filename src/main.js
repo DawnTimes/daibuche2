@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-11-02 18:33:46
+ * @LastEditTime: 2020-11-25 11:42:56
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\main.js
@@ -22,12 +22,12 @@ import store from './store'
 import global_ from './common/media' //引用文件
 import "babel-polyfill"
 import Common from '@/common/index.js';
-import AFTableColumn from 'af-table-column';
+// import AFTableColumn from 'af-table-column';
 
 Vue.prototype.GLOBAL = global_ //挂载到Vue实例上面
 Vue.config.productionTip = false
 Vue.use(ElementUI);
-Vue.use(AFTableColumn);
+// Vue.use(AFTableColumn);
 
 //拦截器
 axios.interceptors.response.use(

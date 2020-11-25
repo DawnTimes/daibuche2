@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 13:38:39
- * @LastEditTime: 2020-10-23 13:03:44
+ * @LastEditTime: 2020-11-19 14:33:23
  * @LastEditors: your name
  * @Description: 核销弹框
  * @FilePath: \webcode2\src\views\verification\components\writeOffDialog.vue
@@ -15,7 +15,7 @@
       :visible.sync="writeOffFormVisible"
       :destroy-on-close="true"
     >
-      <el-form :model="writeOffForm" ref="writeOffForm" :rules="rules" label-width="110px" size="medium">
+      <el-form :model="writeOffForm" ref="writeOffForm" :rules="rules" label-width="120px" size="small">
         <el-row :gutter="0">
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
             <el-form-item label="银行单据号">
@@ -27,11 +27,6 @@
               <el-input v-model="writeOffForm.name" disabled></el-input>
             </el-form-item>
           </el-col>
-          <!-- <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-            <el-form-item label="牌照商">
-              <el-input v-model="writeOffForm.name" disabled></el-input>
-            </el-form-item>
-          </el-col> -->
           <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
             <el-form-item label="合同编号">
               <el-input v-model="writeOffForm.contractNumber" disabled></el-input>
@@ -54,10 +49,12 @@
             <!-- <el-form-item label="车辆数量">
           <el-input v-model="writeOffForm.name" disabled></el-input>
             </el-form-item>-->
-            <el-form-item label="代付标志" v-show="writeOffForm.isDebt == 'Y'">
+            <el-form-item label="代付标志" prop="debtIdentification" v-if="writeOffForm.isDebt == 'Y'">
               <el-input
                 v-model="writeOffForm.debtIdentification"
                 type="textarea"
+                maxlength="300"
+                show-word-limit
                 :autosize="{ minRows: 2, maxRows: 3}"
               ></el-input>
             </el-form-item>
@@ -67,6 +64,8 @@
               <el-input
                 v-model="writeOffForm.remark"
                 type="textarea"
+                maxlength="300"
+                show-word-limit
                 :autosize="{ minRows: 3, maxRows: 4}"
               ></el-input>
             </el-form-item>
@@ -74,8 +73,8 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="writeOffFormVisible = false" size="medium" plain>取 消</el-button>
-        <el-button type="primary" @click="writeOffSubmit('writeOffForm')" :loading="loading" size="medium">确定核销</el-button>
+        <el-button @click="writeOffFormVisible = false" size="small" plain>取 消</el-button>
+        <el-button type="primary" @click="writeOffSubmit('writeOffForm')" :loading="loading" size="small">确定核销</el-button>
       </div>
     </el-dialog>
   </div>
@@ -119,6 +118,13 @@ export default {
             trigger: ['blur', 'change'],
           },
         ],
+        debtIdentification: [
+          {
+            required: true,
+            message: '请输入代付标志',
+            trigger: 'blur',
+          },
+        ],
       },
     };
   },
@@ -144,6 +150,8 @@ export default {
 
     // 组件通讯
     handleEmitData() {
+      this.writeOffForm.debtIdentification = this.writeOffForm.debtIdentification.trim();
+      this.writeOffForm.remark = this.writeOffForm.remark.trim();
       this.$emit('formDataSubmit', {
         data: this.writeOffForm,
       });
@@ -172,11 +180,17 @@ export default {
   }
 
   .el-dialog__body {
-    padding: 20px 20px 10px 10px;
+    padding: 10px;
   }
 
   .el-dialog__title {
     font-weight: bold;
   }
 }
+
+.writeOffDialog .el-form-item__label, .writeOffDialog .el-input__inner, .writeOffDialog .el-form-item--small .el-form-item__content {
+  font-size: 13px;
+  line-height: 30px;
+}
+
 </style>

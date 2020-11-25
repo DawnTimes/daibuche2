@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-10-28 17:04:59
+ * @LastEditTime: 2020-11-24 16:56:45
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -13,28 +13,28 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="100px"
+        label-width="110px"
         size="small"
         ref="ruleForm"
       >
-        <el-form-item label="银行单据号:" prop="serialNumber">
+        <el-form-item label="银行单据号" prop="serialNumber">
           <el-input maxlength="30" v-model="formData.serialNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="收款账户名称:" prop="companyName">
+        <el-form-item label="收款账户名称" prop="companyName">
           <el-input maxlength="30" v-model="formData.companyName" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="汇款账户名称:" prop="sideAccountName">
+        <el-form-item label="汇款账户名称" prop="sideAccountName">
           <el-input maxlength="50" v-model="formData.sideAccountName" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="汇款账号:" prop="sideAccount">
+        <el-form-item label="汇款账号" prop="sideAccount">
           <el-input maxlength="30" v-model="formData.sideAccount" clearable placeholder></el-input>
         </el-form-item>
         
-        <!-- <el-form-item label="收款账号:" prop="companyName">
+        <!-- <el-form-item label="收款账号" prop="companyName">
           <el-input maxlength="30" v-model="formData.companyName" clearable placeholder></el-input>
         </el-form-item> -->
 
-        <el-form-item label="核销状态:" prop="verState">
+        <el-form-item label="核销状态" prop="verState">
           <el-select v-model="formData.verState" clearable placeholder="请选择" style="width: 100%">
             <el-option
               v-for="item in this.$options.filters.verState([])"
@@ -45,7 +45,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="交易日期:" prop="dateTime">
+        <el-form-item label="交易日期" prop="dateTime">
           <el-date-picker
             v-model="formData.dateTime"
             type="daterange"
@@ -76,7 +76,7 @@
           <el-button icon="el-icon-upload2" type="primary" @click="importButton" v-show="rightControl.import">导入银行流水单</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button icon="el-icon-download" type="primary" id="exportButton"  @click="exportButton" :loading="exportLoading" v-show="rightControl.export">导出银行流水单</el-button>
+          <el-button icon="el-icon-download" type="primary" id="exportButton"  @click="exportButton" v-show="rightControl.export">导出银行流水单</el-button>
         </el-form-item>
         
       </el-form>
@@ -98,30 +98,34 @@
         'font-weight':'bold',  
         'background':'#627CAF',    
         'color': '#fff',
+        'font-size': '12px'
       }"
+        :cell-style="{
+          'font-size': '12px'
+        }"
       >
         <el-table-column
-          width="50"
+          width="70"
           align="center"
           label="序号"
           type="index"
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <el-table-column prop="tradeDate" label="交易时间" show-overflow-tooltip width="120">
+        <el-table-column prop="tradeDate" label="交易时间" show-overflow-tooltip width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.tradeDate | timeFormat }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="150"></el-table-column>
-        <el-table-column prop="income" label="收款金额" show-overflow-tooltip width="140">
+        <el-table-column prop="income" label="收款金额" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.income | moneyFormat }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="companyName" label="收款账户名称" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="bankAccountNo" label="收款账号" show-overflow-tooltip width="150"></el-table-column>
-        <el-table-column prop="bankAccountName" label="收款账户开户行" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="bankAccountName" label="收款账户开户行" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="sideAccountName" label="汇款账户名称" show-overflow-tooltip width="200"></el-table-column>
         <el-table-column prop="sideAccount" label="汇款账号" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="verState" label="核销状态" show-overflow-tooltip>
@@ -139,8 +143,8 @@
             >{{ formatStatus(scope.row.status, paidTemp) }}</span>
           </template>
         </el-table-column> -->
-        <el-table-column prop="paidLogo" label="代付标志" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="projectCategory" label="项目类别" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="paidLogo" label="代付标志" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="projectCategory" label="项目类别" show-overflow-tooltip width="100"></el-table-column>
         <!-- <el-table-column prop="" label="是否虚拟收款" show-overflow-tooltip width="150"></el-table-column> -->
         
         <el-table-column prop="haveVerLines" label="已核销金额" show-overflow-tooltip width="150">
@@ -160,7 +164,7 @@
         </el-table-column>
         <el-table-column prop="newLedgerLogo" label="台账标志" show-overflow-tooltip width="120"></el-table-column>
         <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作" width="320" fixed="right">
+        <el-table-column label="操作" align="center" width="350" fixed="right">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -215,12 +219,22 @@
       v-on:formDataSubmit="formDataSubmit"
     ></refund-dialog>
 
+    <!-- 删除 -->
     <confirmBox
       v-if="showDeleteBox"
       :msgConfirBox="deleteInfoText"
       v-on:submitForm="deleteSubmit"
       v-on:cancelbox="cancelBack"
     ></confirmBox>
+
+    <!-- 导出提示 -->
+    <downConfirmBox
+      v-if="showDownBox"
+      :msgConfirBox="downInfoText"
+      v-on:submitForm="downSubmit"
+      :loading="exportLoading"
+      v-on:cancelbox="downCancelBack"
+    ></downConfirmBox>
 
     <!-- // 导入银行流水单 -->
     <upload-dialog ref="uploadDialog" :uploadURLStr="bankWaterUploadURL"></upload-dialog>
@@ -236,6 +250,7 @@ import axios2 from 'axios';
 
 import refundDialog from './components/refundDialog'; // 退款弹框
 import confirmBox from '@/components/confirmBox';  // 删除弹框
+import downConfirmBox from '@/components/confirmBox';  // 导出弹框
 import uploadDialog from '@/components/uploadDialog';  // 上传弹框
 
 import { mapState } from 'vuex';
@@ -243,7 +258,7 @@ import { mapState } from 'vuex';
 import { moneyFormat } from '@/common/moneyFormat.js';
 
 export default {
-  name: '',
+  name: 'bankWaterList',
   props: {
 
   },
@@ -251,6 +266,7 @@ export default {
     refundDialog,
     confirmBox,
     uploadDialog,
+    downConfirmBox,
   },
   data() {
     return {
@@ -295,6 +311,7 @@ export default {
         sideAccountName: '',
         sideAccount: '',
         refund: '',
+        notVerLines: '',
         remark: '',
       },
       // 未核销额
@@ -328,6 +345,16 @@ export default {
 
       // 导入URL
       bankWaterUploadURL: '',
+      
+
+      // 导出提示文本
+      downInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认要导出银行流水？',
+        // consecond: '警告：导出后不可恢复！'
+      },
+      // 导出框显示
+      showDownBox: false,
       exportLoading: false,
     };
   },
@@ -360,12 +387,12 @@ export default {
     });
 
     this.$nextTick(function () {
-      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
+      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 110;
       
       // 监听窗口大小变化
       let self = this;
       window.onresize = function() {
-        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 120;
+        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       }
     })
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -423,12 +450,13 @@ export default {
 
     // 查询分页列表
     getBankWaterListData() {
+      this.tableData = [];
       const url = common.queryBankStatementUrl;
       const params = {
-        companyName: this.formData.companyName,
-        serialNumber: this.formData.serialNumber,
-        sideAccount: this.formData.sideAccount,
-        sideAccountName: this.formData.sideAccountName,
+        companyName: this.formData.companyName.trim(),
+        serialNumber: this.formData.serialNumber.trim(),
+        sideAccount: this.formData.sideAccount.trim(),
+        sideAccountName: this.formData.sideAccountName.trim(),
         startTradeDate: this.formData.startTradeDate,
         endTradeDate: this.formData.endTradeDate,
         verState: this.formData.verState,
@@ -449,6 +477,7 @@ export default {
       }).catch(() => {
         this.tableLoading = false;
       })
+
     },
 
     // 新增银行流水
@@ -507,6 +536,8 @@ export default {
 
     // 数据导出下载文件
     exportButton() {
+      this.showDownBox = true;
+            
       // 后端返回的是流文件
       // const params = {
       //   companyName: '',
@@ -565,20 +596,7 @@ export default {
       // }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`;
 
       
-      // this.exportLoading = true;
-      window.open(`/api/${common.bankWaterDownUrl}?companyName=${
-      this.formData.companyName ? this.formData.companyName : ''
-      }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''
-      }&sideAccount=${this.formData.sideAccount ? this.formData.sideAccount : ''
-      }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''
-      }&verState=${this.formData.verState ? this.formData.verState : ''
-      }&startTradeDate=${this.formData.startTradeDate ? this.formData.startTradeDate : ''
-      }&endTradeDate=${this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_parent')
-      // .addEventListener('beforeunload', (e) => {
-      //   console.log(e);
-      //   this.exportLoading = false;
-      // })
-
+  
 
       // var itime = 0;
       // var exportButton = document.getElementById('exportButton');
@@ -590,14 +608,15 @@ export default {
       //   this.formData.sideAccount ? this.formData.sideAccount : ''
       // }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`;
       // window.open(hurl, '_parent').addEventListener("beforeunload", (e) => {
-      //   console.log(e);
-      //     clearTimeout(downloadTimer);
+      //   console.log(12345,e);
+      //     clearTimeout(downloadTimer); // 清除定时器
       //     exportButton.innerHTML = '导出银行流水单';
       //     exportButton.removeAttribute("disabled");
       // });
       // var downloadTimer = setInterval(() => {
       //     exportButton.children[0].innerText = ++itime;
       // }, 1000);
+
 
       // const arr = [
       //   {id: '123'},
@@ -607,6 +626,28 @@ export default {
       // const aa = JSON.stringify(arr);
       // // escape() 函数可对字符串进行编码，这样就可以在所有的计算机上读取该字符串。可以使用 unescape() 对 escape() 编码的字符串进行解码。
       // window.open(`/api/${common.bankWaterDownUrl}?${escape(aa)}`, '_parent')
+    },
+    // 确定下载
+    downSubmit() {
+      this.exportLoading = true;
+      
+      window.open(`/api/${common.bankWaterDownUrl}?companyName=${
+      this.formData.companyName ? this.formData.companyName : ''
+      }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''
+      }&sideAccount=${this.formData.sideAccount ? this.formData.sideAccount : ''
+      }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''
+      }&verState=${this.formData.verState ? this.formData.verState : ''
+      }&startTradeDate=${this.formData.startTradeDate ? this.formData.startTradeDate : ''
+      }&endTradeDate=${this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_parent')
+      // .addEventListener('beforeunload', (e) => {
+      //   console.log(1223333);
+      //   this.exportLoading = false;
+      // })
+    },
+    // 取消下载
+    downCancelBack() {
+      this.showDownBox = false;
+      this.exportLoading = false;
     },
 
     fileDownload(data, fileName) {
@@ -640,6 +681,7 @@ export default {
         path: '/contractListNper',
         query: {
           serialNumber: row.serialNumber,
+          companyName: row.companyName,
           name: row.sideAccountName.trim(),
         },
       })
@@ -693,6 +735,7 @@ export default {
       this.refundForm.serialNumber = row.serialNumber;
       this.refundForm.sideAccountName = row.sideAccountName;
       this.refundForm.sideAccount = row.sideAccount;
+      this.refundForm.notVerLines = row.notVerLines || 0;
       // this.refundForm.refund = row.refund;
       // this.refundForm.remark = row.remark;
       this.notVerLines = row.notVerLines * 1 || 0;

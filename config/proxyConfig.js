@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 17:04:44
- * @LastEditTime: 2020-11-03 15:42:51
+ * @LastEditTime: 2020-11-25 09:40:57
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\config\proxyConfig.js
@@ -11,7 +11,7 @@
 // let yun = 'http://192.166.87.124'
 // let yun = 'http://192.166.80.9:8888'
 //测试环境
-// let yun = 'http://192.166.20.13'
+// let yun = 'https://192.166.20.12'
 //生产环境
 // let yun = 'http://192.166.10.49'
 // 
