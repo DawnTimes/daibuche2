@@ -69,7 +69,7 @@ const Dictionary = {
 
   // 租金审批状态
   approvalStatus: [{
-      label: '生成租金',
+      label: '待提交',
       value: '1'
     },
     {

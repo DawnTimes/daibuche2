@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-11-19 15:03:09
+ * @LastEditTime: 2020-11-24 09:33:12
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\store\index.js
@@ -64,7 +64,7 @@ const store = new Vuex.Store({
       { label: '租赁方式', prop: 'leaseWayText', minWidth: '80px' },
       { label: '上牌地', prop: 'cityName', minWidth: '80px' },
       { label: '是否限牌', prop: 'isLimitLicenceText', minWidth: '80px' },
-      { label: '是否租赁公司', prop: 'isGalcCompanyText', minWidth: '100px' },
+      { label: '是否租赁公司', prop: 'isGalcCompanyText', minWidth: '120px' },
       { label: '车辆数量', prop: 'num', minWidth: '80px' },
       { label: '核销状态', prop: 'repaymentStatusText', minWidth: '80px' },
       { label: '起租日', prop: 'batchStartingDate', minWidth: '120px' },

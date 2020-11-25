@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 11:25:57
- * @LastEditTime: 2020-11-12 18:17:35
+ * @LastEditTime: 2020-11-24 16:58:57
  * @LastEditors: your name
  * @Description: 文件上传弹窗
  * @FilePath: \webcode2\src\components\uploadDialog.vue
@@ -76,9 +76,9 @@ export default {
     };
   },
   computed: {
-    // ...mapState({
-    //   successStatus: store => store.successStatus
-    // }),
+    ...mapState({
+      successStatus: store => store.successStatus
+    }),
     
   },
   watch: {
@@ -107,6 +107,8 @@ export default {
     },
     // 立即上传
     submitUpload() {
+      // 每次上传前设置状态为false，避免多次上传时，上传成功后不更新数据;否则只有第一次上传成功时会更新数据
+      this.setSuccessStatus(false);
       // console.log(this.fileList);
       if (this.fileList.length === 0){
           this.$message.warning('请先上传文件');
@@ -191,6 +193,8 @@ export default {
 
     // 覆盖默认的上传行为，可以自定义上传的实现
     uploadSectionFile(params) {
+      // console.log(this.successStatus);
+      // this.setSuccessStatus(false);
       // console.log(params);
       const file = params.file;
         // fileType = file.type,
@@ -238,7 +242,7 @@ export default {
         .catch((err) => {
           this.loading = false;
           // this.fileList = [];
-          console.log(err);
+          // console.log(err);
           this.$notify.error({
             title: '温馨提示！',
             message: err.em || err.message || err.error || '上传错误，请重试!'
