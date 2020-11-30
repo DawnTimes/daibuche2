@@ -480,17 +480,17 @@ export default {
     downSubmit() {
       this.exportLoading = true;
       window.location.href = `/api${common.licenceExportExcelUrl}?areaCode=${
-        this.params.areaCode ? this.params.areaCode : ''
+        this.params.areaCode ? this.params.areaCode.trim() : ''
       }&licenceName=${
-        this.params.licenceName ? this.params.licenceName : ''
+        this.params.licenceName ? this.params.licenceName.trim() : ''
       }&status=${
         this.params.status ? this.params.status : ''
       }&lessor=${
-        this.params.lessor ? this.params.lessor : '' 
+        this.params.lessor ? this.params.lessor.trim() : '' 
       }&socialCreditCode=${
-        this.params.socialCreditCode ? this.params.socialCreditCode : ''
+        this.params.socialCreditCode ? this.params.socialCreditCode.trim() : ''
       }&bankAccountNumber=${
-        this.params.bankAccountNumber ? this.params.bankAccountNumber : ''
+        this.params.bankAccountNumber ? this.params.bankAccountNumber.trim() : ''
       }`;
     },
     // 取消下载

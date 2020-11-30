@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-17 18:18:41
+ * @LastEditTime: 2020-11-25 13:43:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -78,7 +78,7 @@
         }"
       >
         <el-table-column
-          width="50"
+          width="60"
           align="center"
           label="序号"
           type="index"

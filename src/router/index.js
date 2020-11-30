@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-11-20 18:46:04
+ * @LastEditTime: 2020-11-26 18:00:53
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\router\index.js
@@ -109,6 +109,8 @@ const invoiceNoticeList = resolve => require(['@/views/invoiceNotice/invoiceNoti
 const invoiceNoticeLetter = resolve => require(['@/views/invoiceNotice/invoiceNoticeLetter'], resolve);
 // 不开票通明细
 const unInvoiceNoticeList = resolve => require(['@/views/invoiceNotice/unInvoiceNoticeList'], resolve);
+// 开票合同变更
+const invoiceContractChange = resolve => require(['@/views/invoiceNotice/invoiceContractChange'], resolve);
 
 // 逾期催收
 // 逾期记录
@@ -583,6 +585,14 @@ const router = new Router({
           component: unInvoiceNoticeList,
           meta: {
             title: '无需开票明细'
+          }
+        },
+        {
+          path: '/invoiceContractChange',
+          name: 'invoiceContractChange',
+          component: invoiceContractChange,
+          meta: {
+            title: '开票合同变更'
           }
         },
 

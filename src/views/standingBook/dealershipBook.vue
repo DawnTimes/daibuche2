@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-18 15:10:16
+ * @LastEditTime: 2020-11-26 18:27:08
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -24,6 +24,9 @@
         <!-- <el-form-item label="牌照商" prop="interfaceName">
           <el-input maxlength="30" v-model="formData.interfaceName" placeholder></el-input>
         </el-form-item> -->
+        <el-form-item label="主合同编号" prop="parentContractNumber">
+          <el-input maxlength="30" v-model="formData.parentContractNumber" clearable placeholder></el-input>
+        </el-form-item>
         <el-form-item label="合同编号" prop="contractNumber">
           <el-input maxlength="30" v-model="formData.contractNumber" clearable placeholder></el-input>
         </el-form-item>
@@ -264,6 +267,7 @@ export default {
         // cityCode: '',
         cityName: '',
         contractNumber: '',
+        parentContractNumber: '',
         name: '',
         nper: '',
         isLimitLicence: '',
@@ -388,14 +392,14 @@ export default {
       this.tableLoading = true;
       const url = common.queryAgentStandingBookUrl;
       const params = {
-        nper            : this.formData.nper.trim(),
-        // cityCode        : this.formData.cityCode,
-        contractNumber  : this.formData.contractNumber.trim(),
-        name            : this.formData.name.trim(),
-        isLimitLicence  : this.formData.isLimitLicence,
-        cityName        : this.formData.cityName.trim(),
-        turnPageBeginPos: this.formData.pageNum,
-        turnPageShowNum : this.formData.pageSize,
+        nper                : this.formData.nper.trim(),
+        contractNumber      : this.formData.contractNumber.trim(),
+        parentContractNumber: this.formData.parentContractNumber.trim(),
+        name                : this.formData.name.trim(),
+        isLimitLicence      : this.formData.isLimitLicence,
+        cityName            : this.formData.cityName.trim(),
+        turnPageBeginPos    : this.formData.pageNum,
+        turnPageShowNum     : this.formData.pageSize,
       };
 
       axios.post(url, params).then((res) => {
@@ -449,15 +453,17 @@ export default {
        window.location.href = `/api${
         common.exportAgentSBUrl
       }?name=${
-        this.formData.name ? this.formData.name : ''
+        this.formData.name ? this.formData.name.trim() : ''
       }&contractNumber=${
-        this.formData.contractNumber ? this.formData.contractNumber : ''
+        this.formData.contractNumber ? this.formData.contractNumber.trim() : ''
       }&nper=${
-        this.formData.nper ? this.formData.nper : ''
+        this.formData.nper ? this.formData.nper.trim() : ''
       }&isLimitLicence=${
         this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
       }&cityName=${
-        this.formData.cityName ? this.formData.cityName : ''}`;
+        this.formData.cityName ? this.formData.cityName.trim() : ''
+      }&parentContractNumber=${
+        this.formData.parentContractNumber ? this.formData.parentContractNumber.trim() : ''}`;
     },
     // 取消下载
     downCancelBack() {

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-11-13 09:11:37
+ * @LastEditTime: 2020-11-27 09:22:08
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldDetail.vue
@@ -185,7 +185,9 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.baseInformationDetail {
+<style lang="scss">
+.supportGoldDetail .el-tabs__item {
+  height: 30px;
+  line-height: 30px;
 }
 </style>

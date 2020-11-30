@@ -471,13 +471,13 @@
                   </el-form-item>
                 </div>
               </el-col>
-              <el-col :span="24">
+              <!-- <el-col :span="24">
                 <div class="grid-content bg-purple">
                   <el-form-item label="Email地址">
                     <el-input v-model="divParams.Email"></el-input>
                   </el-form-item>
                 </div>
-              </el-col>
+              </el-col> -->
               <el-col :span="24">
                 <div class="grid-content bg-purple">
                   <el-form-item label="邮寄地址">
@@ -783,13 +783,13 @@
                   </el-form-item>
                 </div>
               </el-col>
-              <el-col :span="24">
+              <!-- <el-col :span="24">
                 <div class="grid-content bg-purple">
                   <el-form-item label="Email地址">
                     <el-input v-model="divEditParams.Email"></el-input>
                   </el-form-item>
                 </div>
-              </el-col>
+              </el-col> -->
               <el-col :span="24">
                 <div class="grid-content bg-purple">
                   <el-form-item label="邮寄地址">

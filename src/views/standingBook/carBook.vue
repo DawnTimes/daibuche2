@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-18 14:53:04
+ * @LastEditTime: 2020-11-26 18:28:55
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\carBook.vue
@@ -24,6 +24,9 @@
         <!-- <el-form-item label="牌照商" prop="interfaceName">
           <el-input maxlength="30" v-model="formData.interfaceName" clearable placeholder></el-input>
         </el-form-item> -->
+        <el-form-item label="主合同编号" prop="parentContractNumber">
+          <el-input maxlength="30" v-model="formData.parentContractNumber" clearable placeholder></el-input>
+        </el-form-item>
         <el-form-item label="合同编号" prop="contractNumber">
           <el-input maxlength="30" v-model="formData.contractNumber" clearable placeholder></el-input>
         </el-form-item>
@@ -289,6 +292,7 @@ export default {
       tableLoading: false,
       formData: {
         frameNumber: '',
+        parentContractNumber: '',
         contractNumber: '',
         isLimitLicence: '',
         modelCode: '',
@@ -419,16 +423,17 @@ export default {
       this.tableLoading = true;
       const url = common.queryCarStandingBookUrl;
       const params = {
-        nper            : this.formData.nper.trim(),
-        frameNumber     : this.formData.frameNumber.trim(),
-        contractNumber  : this.formData.contractNumber.trim(),
-        name            : this.formData.name.trim(),
-        isLimitLicence  : this.formData.isLimitLicence,
-        modelCode       : this.formData.modelCode,
-        modelName       : this.formData.modelName.trim(),
-        cityName        : this.formData.cityName.trim(),
-        turnPageBeginPos: this.formData.pageNum,
-        turnPageShowNum : this.formData.pageSize,
+        nper                : this.formData.nper.trim(),
+        frameNumber         : this.formData.frameNumber.trim(),
+        contractNumber      : this.formData.contractNumber.trim(),
+        parentContractNumber: this.formData.parentContractNumber.trim(),
+        name                : this.formData.name.trim(),
+        isLimitLicence      : this.formData.isLimitLicence,
+        modelCode           : this.formData.modelCode,
+        modelName           : this.formData.modelName.trim(),
+        cityName            : this.formData.cityName.trim(),
+        turnPageBeginPos    : this.formData.pageNum,
+        turnPageShowNum     : this.formData.pageSize,
       };
 
       axios.post(url, params).then((res) => {
@@ -474,19 +479,21 @@ export default {
       window.location.href = `/api${
         common.exportCarSBUrl
       }?name=${
-        this.formData.name ? this.formData.name : ''
+        this.formData.name ? this.formData.name.trim() : ''
       }&contractNumber=${
-        this.formData.contractNumber ? this.formData.contractNumber : ''
+        this.formData.contractNumber ? this.formData.contractNumber.trim() : ''
       }&nper=${
-        this.formData.nper ? this.formData.nper : ''
+        this.formData.nper ? this.formData.nper.trim() : ''
       }&frameNumber=${
-        this.formData.frameNumber ? this.formData.frameNumber : ''
+        this.formData.frameNumber ? this.formData.frameNumber.trim() : ''
       }&isLimitLicence=${
         this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
       }&cityName=${
-        this.formData.cityName ? this.formData.cityName : ''
+        this.formData.cityName ? this.formData.cityName.trim() : ''
       }&modelName=${
-        this.formData.modelName ? this.formData.modelName : ''}`;
+        this.formData.modelName ? this.formData.modelName.trim() : ''
+      }&parentContractNumber=${
+        this.formData.parentContractNumber ? this.formData.parentContractNumber.trim() : ''}`;
 
     },
     // 取消下载

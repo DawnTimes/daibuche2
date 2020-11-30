@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-20 10:23:26
- * @LastEditTime: 2020-11-11 15:40:35
+ * @LastEditTime: 2020-11-26 15:08:44
  * @LastEditors: your name
  * @Description: 车辆支援金清单
  * @FilePath: \webcode2\src\views\supportGold\components\carListDialog.vue
@@ -37,9 +37,13 @@
             </template>
           </el-table-column>
           <el-table-column prop="plateNumber" label="车牌号" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="modelCode" label="车型" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="batch" label="批次" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="modelName" label="车型名称" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="cityName" label="上牌地" show-overflow-tooltip width="80"></el-table-column>
+          <el-table-column prop="batch" label="批次" show-overflow-tooltip width="80">
+            <template slot-scope="scope">
+            <span>{{ scope.row.batch | batchFormat }}</span>
+          </template>
+          </el-table-column>
 
           <el-table-column prop="monthlyRent" label="租金" show-overflow-tooltip>
             <template slot-scope="scope">
@@ -51,7 +55,7 @@
             <span>{{ scope.row.rentCardFee | moneyFormat}}</span>
           </template>
           </el-table-column>
-          <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip width="120">
+          <el-table-column prop="totalMonthlyRent" label="租金合计" show-overflow-tooltip width="140">
             <template slot-scope="scope">
             <span>{{ scope.row.totalMonthlyRent | moneyFormat}}</span>
           </template>
@@ -66,12 +70,12 @@
             <span>{{ scope.row.licenceFund | moneyFormat}}</span>
           </template>
           </el-table-column>
-          <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip width="120">
+          <el-table-column prop="totalFund" label="总支援金" show-overflow-tooltip width="140">
             <template slot-scope="scope">
             <span>{{ scope.row.totalFund | moneyFormat}}</span>
           </template>
           </el-table-column>
-          <el-table-column prop="currentTotal" label="当期/总期数" show-overflow-tooltip width="120"></el-table-column>
+          <el-table-column prop="currentTotal" label="当期/总期数" show-overflow-tooltip width="140"></el-table-column>
           <el-table-column prop="surplus" label="剩余期数" show-overflow-tooltip></el-table-column>
         </el-table>
       </div>

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-11-19 09:53:49
+ * @LastEditTime: 2020-11-26 18:34:56
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -402,15 +402,15 @@ export default {
       this.exportLoading = true;
       
       window.location.href = `/api${common.exportCollectionUrl}?name=${
-        this.formData.name ? this.formData.name : ''
+        this.formData.name ? this.formData.name.trim() : ''
       }&beginDay=${
-        this.formData.beginDay ? this.formData.beginDay : ''
+        this.formData.beginDay ? this.formData.beginDay.trim() : ''
       }&endDay=${
-        this.formData.endDay ? this.formData.endDay : ''
+        this.formData.endDay ? this.formData.endDay.trim() : ''
       }&beginAmount=${
-        this.formData.beginAmount ? this.formData.beginAmount : ''
+        this.formData.beginAmount ? this.formData.beginAmount.trim() : ''
       }&endAmount=${
-        this.formData.endAmount ? this.formData.endAmount : ''
+        this.formData.endAmount ? this.formData.endAmount.trim() : ''
       }`;
     },
     // 取消下载

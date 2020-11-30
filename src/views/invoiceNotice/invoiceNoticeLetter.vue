@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-11-18 16:18:25
+ * @LastEditTime: 2020-11-25 14:33:21
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -166,23 +166,23 @@
         </template>
         </el-table-column>
         <!-- <el-table-column prop="dueCommission" label="手续费" show-overflow-tooltip v-if="formData.leaseWay == 'OPERATING-LEASE' || formData.leaseWay == 'LEASE'"></el-table-column> -->
-        <el-table-column prop="invoiceDate" label="发票开具日期" show-overflow-tooltip>
+        <el-table-column prop="invoiceDate" label="发票开具日期" show-overflow-tooltip width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.invoiceDate | timeFormatTemp }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="invoiceNumber" label="发票号码" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="invoiceNumber" label="发票号码" show-overflow-tooltip width="150"></el-table-column>
         <el-table-column prop="duePrincipal" label="本金 / 保证金  开票金额" width="118" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'">
           <template slot-scope="scope">
             <span>{{ scope.row.duePrincipal | moneyFormat }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="invoiceDate" label="收据开具日期" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'">
+        <!-- <el-table-column prop="invoiceDate" label="收据开具日期" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'">
           <template slot-scope="scope">
             <span>{{ scope.row.invoiceDate | timeFormatTemp }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="invoiceNumber" label="收据号码" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'"></el-table-column>
+        <el-table-column prop="invoiceNumber" label="收据号码" show-overflow-tooltip v-if="formData.leaseWay == 'BACK-LEASE'"></el-table-column> -->
       </el-table>
       <div class="footerBox">
         <div class="agentBox">

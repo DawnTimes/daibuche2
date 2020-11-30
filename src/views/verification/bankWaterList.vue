@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-24 16:56:45
+ * @LastEditTime: 2020-11-26 18:36:32
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -632,13 +632,19 @@ export default {
       this.exportLoading = true;
       
       window.open(`/api/${common.bankWaterDownUrl}?companyName=${
-      this.formData.companyName ? this.formData.companyName : ''
-      }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''
-      }&sideAccount=${this.formData.sideAccount ? this.formData.sideAccount : ''
-      }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''
-      }&verState=${this.formData.verState ? this.formData.verState : ''
-      }&startTradeDate=${this.formData.startTradeDate ? this.formData.startTradeDate : ''
-      }&endTradeDate=${this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_parent')
+      this.formData.companyName ? this.formData.companyName.trim() : ''
+      }&serialNumber=${
+        this.formData.serialNumber ? this.formData.serialNumber.trim() : ''
+      }&sideAccount=${
+        this.formData.sideAccount ? this.formData.sideAccount.trim() : ''
+      }&sideAccountName=${
+        this.formData.sideAccountName ? this.formData.sideAccountName.trim() : ''
+      }&verState=${
+        this.formData.verState ? this.formData.verState : ''
+      }&startTradeDate=${
+        this.formData.startTradeDate ? this.formData.startTradeDate : ''
+      }&endTradeDate=${
+        this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_parent')
       // .addEventListener('beforeunload', (e) => {
       //   console.log(1223333);
       //   this.exportLoading = false;

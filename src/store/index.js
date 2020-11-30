@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-11-24 09:33:12
+ * @LastEditTime: 2020-11-27 17:11:17
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\store\index.js
@@ -56,7 +56,7 @@ const store = new Vuex.Store({
     tableHeader: JSON.parse(localStorage.getItem('tableHeader')) || [
       { label: '承租人/牌照商', prop: 'name', minWidth: '200px' },
       { label: '合同编号', prop: 'contractNumber', minWidth: '160px' },
-      { label: '原合同编号', prop: 'parentContractNumber', minWidth: '160px' },
+      { label: '主合同编号', prop: 'parentContractNumber', minWidth: '160px' },
       { label: '合同名称', prop: 'contractName', minWidth: '150px' },
       { label: '合同状态', prop: 'contractNormalStatusText', minWidth: '80px' },
       { label: '合同类型', prop: 'contractTypeText', minWidth: '100px' },

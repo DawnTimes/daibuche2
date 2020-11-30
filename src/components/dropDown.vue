@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-11-24 10:08:43
+ * @LastEditTime: 2020-11-25 16:27:36
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\components\dropDown.vue
@@ -63,7 +63,7 @@ export default {
                 this.$router.push('/');
                 // 清除sessionStorage 和 vuex 的sessionStorage, 避免切换用户获取菜单失败时，依然保留上个用户的菜单数据
                   sessionStorage.clear();
-                  localStorage.removeItem('tableHeader');
+                  // localStorage.removeItem('tableHeader');
                   localStorage.removeItem('dropCol');
                   this.setRoles(null);
                   this.setUserId(null);

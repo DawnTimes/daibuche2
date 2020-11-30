@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-17 18:16:31
+ * @LastEditTime: 2020-11-27 14:49:16
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -173,7 +173,7 @@
           fixed
         ></el-table-column> -->
         <el-table-column
-          width="80"
+          width="70"
           align="center"
           label="序号"
           type="index"
@@ -243,7 +243,7 @@
         <el-table-column
           prop="remark"
           label="备注"
-          width="400"
+          width="380"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
@@ -382,6 +382,13 @@
               v-show="rightControl.register"
               >登记</el-button
             >
+            <!-- <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.row)"
+              v-show="rightControl.register"
+              >删除</el-button
+            > -->
           </template>
         </el-table-column>
       </el-table>
@@ -429,6 +436,14 @@
       :loading="exportLoading"
       v-on:cancelbox="downCancelBack"
     ></downConfirmBox>
+
+    <!-- 删除提示 -->
+    <deleteConfirmBox
+      v-if="showDeleteBox"
+      :msgConfirBox="deleteInfoText"
+      v-on:submitForm="deleteSubmit"
+      v-on:cancelbox="cancelBack"
+    ></deleteConfirmBox>
   </div>
 </template>
 
@@ -443,6 +458,7 @@ import invoiceRegisterDialog from './components/invoiceRegisterDialog'; // 登�
 import createInvoiceDialog from './components/createInvoiceDialog'; // 生成开票明细弹框
 import uploadDialog from '@/components/uploadDialog'; // 上传弹框
 import downConfirmBox from '@/components/confirmBox';  // 导出弹框
+import deleteConfirmBox from '@/components/confirmBox';  // 删除弹框
 
 export default {
   name: 'invoiceNoticeList',
@@ -452,6 +468,7 @@ export default {
     createInvoiceDialog,
     uploadDialog,
     downConfirmBox,
+    deleteConfirmBox,
   },
   data() {
     return {
@@ -514,6 +531,17 @@ export default {
       // 导出框显示
       showDownBox: false,
       exportLoading: false,
+
+      // 删除提示文本
+      deleteInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认删除该银行流水？',
+        consecond: '警告：删除后不可恢复！'
+      },
+      // 删除框显示
+      showDeleteBox: false,
+      // 删除的系统ID
+      deleteId: null,
     };
   },
   computed: {
@@ -692,13 +720,13 @@ export default {
       window.location.href = `/api${
         common.exportSubcarInvoiceListUrl
       }?buyName=${
-        this.formData.buyName ? this.formData.buyName : ''
+        this.formData.buyName ? this.formData.buyName.trim() : ''
       }&buyCreditCode=${
-        this.formData.buyCreditCode ? this.formData.buyCreditCode : ''
+        this.formData.buyCreditCode ? this.formData.buyCreditCode.trim() : ''
       }&remark=${
-        this.formData.remark ? this.formData.remark : ''
+        this.formData.remark ? this.formData.remark.trim() : ''
       }&sellName=${
-        this.formData.sellName ? this.formData.sellName : ''
+        this.formData.sellName ? this.formData.sellName.trim() : ''
       }&isOpen=${
         this.formData.isOpen ? this.formData.isOpen : ''
       }&applyDate=${
@@ -822,6 +850,41 @@ export default {
           });
         });
     },
+
+    // 删除弹框
+    handleDelete(row) {
+      this.showDeleteBox = true;
+      this.deleteId = row.contractId;
+    },
+
+    // 确定删除
+    deleteSubmit() {
+      const url = common.deleteBankStatementUrl;
+      const data = {
+        serialNumber: this.deleteId
+      };
+      axios.post(url, data).then(res => {
+        if (res.ec === '0') {
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '删除成功！'
+          });
+          this.showDeleteBox = false;
+          this.getInvoiceNoticeListData();
+        } else {
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '删除失败！'
+          });
+        }
+      });
+    },
+
+    // 取消删除
+    cancelBack() {
+      this.showDeleteBox = false;
+    },
+
   },
   filters: {
     function() {},

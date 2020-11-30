@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-11-18 14:51:29
+ * @LastEditTime: 2020-11-27 09:20:56
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -524,7 +524,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 10px 0 20px 0;
+      padding: 5px 0 15px 0;
       border-bottom: 1px solid #eee;
       span {
         color: #000;
@@ -532,6 +532,8 @@ export default {
         font-size: 20px;
       }
     }
+
+    
 
     
   }

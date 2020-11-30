@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-18 11:23:35
- * @LastEditTime: 2020-11-18 14:17:43
+ * @LastEditTime: 2020-11-27 09:37:03
  * @LastEditors: your name
  * @Description: 经销店弹窗
  * @FilePath: \webcode2\src\views\supportGold\components\dealerTableDialog.vue
@@ -12,6 +12,9 @@
   <div class="dealerTableDialog">
     <el-dialog width="80%" destroy-on-close :close-on-click-modal="false" title :visible.sync="dealerFormVisible">
       <el-form :model="paramForm" :inline="true" size="small">
+        <el-form-item label="经销店代码">
+          <el-input v-model="paramForm.agentCode2" clearable placeholder></el-input>
+        </el-form-item>
         <el-form-item label="经销店名称">
           <el-input v-model="paramForm.agentName" clearable placeholder></el-input>
         </el-form-item>
@@ -315,4 +318,12 @@ export default {
 .dealerTableDialog .el-dialog__footer {
   padding: 0px 0px 20px;
 }
+
+// .dealerTableDialog .el-table td {
+//   padding: 6px 0;
+// }
+
+// .dealerTableDialog .el-table .cell {
+//   font-size: 10px;
+// }
 </style>

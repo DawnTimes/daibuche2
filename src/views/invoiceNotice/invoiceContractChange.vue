@@ -1,20 +1,20 @@
 <!--
  * @Author: 廖亿晓
- * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-25 14:59:48
+ * @Date: 2020-11-26 10:33:44
+ * @LastEditTime: 2020-11-27 18:32:56
  * @LastEditors: your name
  * @Description: 
- * @FilePath: \webcode2\src\views\invoiceNotice\unInvoiceNoticeList.vue
+ * @FilePath: \webcode2\src\views\invoiceNotice\invoiCecontractChange.vue
 -->
 
+
 <template>
-  <div class="unInvoiceNoticeList">
+  <div class="invoiceContractChange">
     <div class="hearderBox">
       <el-form
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="90px"
         size="small"
         ref="ruleForm"
       >
@@ -28,22 +28,11 @@
             end-placeholder="结束日期"
           ></el-date-picker>
         </el-form-item> -->
-        <el-form-item label="购方名称" prop="buyName">
-          <el-input maxlength="50" v-model="formData.buyName" clearable placeholder></el-input>
+        <el-form-item label="原合同编号" prop="oldContractNumber">
+          <el-input maxlength="50" v-model="formData.oldContractNumber" clearable placeholder></el-input>
         </el-form-item>
-        <el-form-item label="购方税号" prop="buyCreditCode">
-          <el-input maxlength="30" v-model="formData.buyCreditCode" clearable placeholder></el-input>
-        </el-form-item>
-        <el-form-item label="销方名称" prop="sellName">
-          <el-input
-            maxlength="50"
-            v-model="formData.sellName"
-            clearable
-            placeholder
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input maxlength="200" v-model="formData.remark" clearable placeholder></el-input>
+        <el-form-item label="新合同编号" prop="newContractNumber">
+          <el-input maxlength="50" v-model="formData.newContractNumber" clearable placeholder></el-input>
         </el-form-item>
 
         <el-form-item>
@@ -77,47 +66,57 @@
       }"
       >
         <el-table-column
-          width="70"
+          width="50"
           align="center"
           label="序号"
           type="index"
           :index="indexMethod"
           fixed
         ></el-table-column>
-        <!-- <el-table-column prop="billingNo" label="单据号" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="applyDate" label="生成时间" show-overflow-tooltip width="100">
+        <el-table-column prop="oldContractNumber" label="原合同编号" show-overflow-tooltip min-width="160"></el-table-column>
+        <el-table-column prop="oldParentNumber" label="原主合同编号" show-overflow-tooltip min-width="160"></el-table-column>
+        <el-table-column prop="newContractNumber" label="新合同编号" show-overflow-tooltip min-width="160"></el-table-column>
+        <el-table-column prop="newParentNumber" label="新主合同编号" show-overflow-tooltip min-width="160"></el-table-column>
+        <!-- <el-table-column prop="buyCreditCode" label="合同名称" show-overflow-tooltip min-width="160"></el-table-column> -->
+        <el-table-column prop="validDate" label="生效日期" show-overflow-tooltip min-width="120">
           <template slot-scope="scope">
-          <span>{{ scope.row.applyDate | timeFormat }}</span>
+            <span>{{ scope.row.validDate | timeFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="counts" label="开票明细数量" show-overflow-tooltip min-width="120">
+          <template slot-scope="scope">
+            <el-tooltip content="点击查询" placement="top" effect="light">
+              <el-link type="primary" @click="queryCounts(scope.row)">{{ scope.row.counts }}</el-link>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <!-- <el-table-column prop="isDis" label="是否已删" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.isDis | flagValue }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="isRead" label="是否已读" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span>{{ scope.row.isRead | flagValue }}</span>
+          </template>
+        </el-table-column> -->
+        
+        <el-table-column prop="oldDueamount" label="变更前金额" show-overflow-tooltip min-width="160">
+          <template slot-scope="scope">
+          <span>{{ scope.row.oldDueamount | moneyFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="buyName" label="购方名称" show-overflow-tooltip width="200"></el-table-column>
-        <el-table-column prop="buyCreditCode" label="购方税号" show-overflow-tooltip width="200"></el-table-column>
-        <el-table-column prop="buyAddTel" label="购方地址电话" show-overflow-tooltip width="200"></el-table-column>
-        <el-table-column prop="buyBankNameNo" label="购方银行帐号" show-overflow-tooltip width="200"></el-table-column>
-        <el-table-column prop="sellName" label="销方名称" show-overflow-tooltip width="200"></el-table-column>
-        <!-- <el-table-column prop="" label="销方地址电话" show-overflow-tooltip width="200"></el-table-column> -->
-        <el-table-column prop="sellBankNameNo" label="销方银行帐号" show-overflow-tooltip width="200"></el-table-column>
-        <el-table-column prop="remark" label="备注" width="380" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="tradeName" label="商品名称" show-overflow-tooltip width="150"></el-table-column>
-        <!-- <el-table-column prop="" label="规格" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="商品编码" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="计量单位" show-overflow-tooltip></el-table-column> -->
-        <el-table-column prop="num" label="数量" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="amount" label="金额" show-overflow-tooltip width="120">
+        <el-table-column prop="newDueamount" label="变更后金额" show-overflow-tooltip min-width="160">
           <template slot-scope="scope">
-          <span>{{ scope.row.amount | moneyFormat }}</span>
+          <span>{{ scope.row.newDueamount | moneyFormat }}</span>
         </template>
         </el-table-column>
-        <el-table-column prop="tax" label="税率" show-overflow-tooltip></el-table-column>
-        <!-- <el-table-column prop="" label="复核人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" label="收款人" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="" label="折扣金额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="扣除额" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="" label="特殊票种" show-overflow-tooltip width="100"></el-table-column> -->
-
-        <el-table-column prop="receiverAddr" label="接收人邮件" show-overflow-tooltip width="160"></el-table-column>
-        <!-- <el-table-column prop="invoiceNumber" label="发票号码" show-overflow-tooltip width="100"></el-table-column>
-        <el-table-column prop="invoiceDate" label="开票时间" show-overflow-tooltip width="100"></el-table-column> -->
+        
+        <el-table-column prop="createTime" label="创建时间" show-overflow-tooltip min-width="160">
+          <template slot-scope="scope">
+            <span>{{ scope.row.createTime | timeFormat }}</span>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
     <div class="page-layer">
@@ -132,7 +131,9 @@
         :total="total"
       ></el-pagination>
     </div>
-
+    
+    <!-- <invoiceInfoDialog ref="invoiceInfoDialog" :oldContractId="oldContractId" :incioceTableData="incioceTableData" :tableLoading="invioceTableLoading"></invoiceInfoDialog> -->
+    <invoiceInfoDialog ref="invoiceInfoDialog" :oldContractId="oldContractId"></invoiceInfoDialog>
   </div>
 </template>
 
@@ -142,13 +143,14 @@ import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 import moment from 'moment';
 import { mapState } from 'vuex';
+import invoiceInfoDialog from './components/invoiceContractInfo';
 
 
 export default {
-  name: '',
+  name: 'invoiceContractChange',
   props: {},
   components: {
-
+    invoiceInfoDialog,
   },
   data() {
     return {
@@ -156,10 +158,8 @@ export default {
       pageNum: 1,
       total: 0,
       formData: {
-        buyCreditCode: '',
-        buyName: '',
-        remark: '',
-        sellName: '',
+        newContractNumber: '',
+        oldContractNumber: '',
         pageSize: 10,
         pageNum: 1,
       },
@@ -174,6 +174,10 @@ export default {
         createLoading: false,
       },
       invoiceForm: {},
+
+      oldContractId: '',
+      incioceTableData: [],
+      invioceTableLoading: false,
 
     };
   },
@@ -195,6 +199,7 @@ export default {
           window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       };
     });
+
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
     //50表示你想要调整的表格距离底部的高度（你可以自己随意调整），因为我们一般都有放分页组件的，所以需要给它留一个高度
   },
@@ -211,20 +216,20 @@ export default {
   },
 
   mounted() {
-    this.getUninvoiceNoticeListData();
+    this.getInvoiceContractChangeData();
   },
   methods: {
     // 查询
     queryForm() {
       this.pageNum = 1;
       this.formData.pageNum = 1;
-      this.getUninvoiceNoticeListData();
+      this.getInvoiceContractChangeData();
     },
 
     // 重置
     resetForm(formName) {
       this.$refs[formName].resetFields();
-      this.getUninvoiceNoticeListData();
+      this.getInvoiceContractChangeData();
     },
 
     // 自定义列接口索引
@@ -234,30 +239,22 @@ export default {
     },
 
     // 获取分页数据
-    getUninvoiceNoticeListData() {
+    getInvoiceContractChangeData() {
       this.tableData = [];
-      const url = common.queryNotInvoiceNoticeDetailUrl;
+      const url = common.queryHaveInvoceContractUrl;
       const params = {
-        buyCreditCode   : this.formData.buyCreditCode.trim(),
-        buyName         : this.formData.buyName.trim(),
-        sellName         : this.formData.sellName.trim(),
-        remark          : this.formData.remark.trim(),
-        turnPageBeginPos: this.formData.pageNum,
-        turnPageShowNum : this.formData.pageSize,
+        newContractNumber: this.formData.newContractNumber.trim(),
+        oldContractNumber: this.formData.oldContractNumber.trim(),
+        turnPageBeginPos : this.formData.pageNum,
+        turnPageShowNum  : this.formData.pageSize,
       };
       this.tableLoading = true;
       axios.post(url, params).then((res) => {
         if (res.ec === '0') {
           const data = res.data;
-          this.tableData = data.invoiceList;
+          this.tableData = data.changeContract;
           this.total = data.turnPageTotalNum * 1;
           this.tableLoading = false;
-          // 经租直租默认税率13%
-          if (!_.isEmpty(this.tableData)) {
-            this.tableData.forEach((item) => {
-              item.tax = 0.13
-            })
-          }
         } else {
           this.tableLoading = false;
         }
@@ -273,12 +270,18 @@ export default {
       this.formData.pageNum = 1;
       this.pageSize = val;
       this.formData.pageSize = val;
-      this.getUninvoiceNoticeListData();
+      this.getInvoiceContractChangeData();
     },
     handleCurrentChange(val) {
       this.pageNum = val;
       this.formData.pageNum = (val - 1) * this.pageSize + 1;
-      this.getUninvoiceNoticeListData();
+      this.getInvoiceContractChangeData();
+    },
+
+    // 查询开票数量
+    queryCounts(row) {
+      this.oldContractId = row.oldContractId;
+      this.$refs.invoiceInfoDialog.isShow(true);
     },
 
   },
@@ -289,11 +292,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.unInvoiceNoticeList {
+.invoiceContractChange {
   .batchBtn {
     padding-bottom: 10px;
     padding-top: 10px;
   }
 }
 </style>
-

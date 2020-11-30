@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:16:09
- * @LastEditTime: 2020-11-20 11:06:01
+ * @LastEditTime: 2020-11-26 18:35:18
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldTotalList.vue
@@ -344,11 +344,11 @@ export default {
       window.location.href = `/api${
         common.supportOutputExcelUrl
       }?agentName=${
-        this.formData.agentName ? this.formData.agentName : ''
+        this.formData.agentName ? this.formData.agentName.trim() : ''
       }&frameNumber=${
-        this.formData.frameNumber ? this.formData.frameNumber : ''
+        this.formData.frameNumber ? this.formData.frameNumber.trim() : ''
       }&batchNumber=${
-        this.formData.batchNumber ? this.formData.batchNumber : ''
+        this.formData.batchNumber ? this.formData.batchNumber.trim() : ''
       }&payStatus=${
         this.formData.payStatus ? this.formData.payStatus : ''}`;
     },

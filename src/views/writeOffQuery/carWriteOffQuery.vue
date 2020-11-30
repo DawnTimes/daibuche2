@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-18 09:17:28
+ * @LastEditTime: 2020-11-26 18:37:18
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\carWriteOffQuery.vue
@@ -150,7 +150,7 @@
           fixed
         ></el-table-column>
         <el-table-column
-          width="50"
+          width="70"
           align="center"
           label="序号"
           type="index"
@@ -701,19 +701,19 @@ export default {
       this.exportLoading = true;
       
       window.location.href = `/api${common.exportVerCarExcelUrl}?nper=${
-        this.formData.nper ? this.formData.nper : ''
+        this.formData.nper ? this.formData.nper.trim() : ''
       }&contractNumber=${
-        this.formData.contractNumber ? this.formData.contractNumber : ''
+        this.formData.contractNumber ? this.formData.contractNumber.trim() : ''
       }&isLimitLicence=${
         this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
       }&name=${
-        this.formData.name ? this.formData.name : ''
+        this.formData.name ? this.formData.name.trim() : ''
       }&frameNumber=${
-        this.formData.frameNumber ? this.formData.frameNumber : ''
+        this.formData.frameNumber ? this.formData.frameNumber.trim() : ''
       }&carModel=${
-        this.formData.carModel ? this.formData.carModel : ''
+        this.formData.carModel ? this.formData.carModel.trim() : ''
       }&serialNumber=${
-        this.formData.serialNumber ? this.formData.serialNumber : ''}`;
+        this.formData.serialNumber ? this.formData.serialNumber.trim() : ''}`;
     },
     // 取消下载
     downCancelBack() {
