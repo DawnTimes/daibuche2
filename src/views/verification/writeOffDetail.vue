@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-18 09:17:22
+ * @LastEditTime: 2020-11-30 13:56:30
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\writeOffDetail.vue
@@ -13,7 +13,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        size="small"
+        size="mini"
         ref="ruleForm"
       >
         <el-form-item label="承租人/牌照商" prop="name">

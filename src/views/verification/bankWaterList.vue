@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-26 18:36:32
+ * @LastEditTime: 2020-11-30 13:56:53
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -14,7 +14,7 @@
         :model="formData"
         class="demo-form-inline"
         label-width="110px"
-        size="small"
+        size="mini"
         ref="ruleForm"
       >
         <el-form-item label="银行单据号" prop="serialNumber">

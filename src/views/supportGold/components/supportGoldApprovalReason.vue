@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:08:12
- * @LastEditTime: 2020-11-27 09:20:56
+ * @LastEditTime: 2020-11-30 13:58:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldApprovalReason.vue
@@ -19,7 +19,7 @@
         :model="reasonForm"
         class="demo-form-inline"
         label-width="100px"
-        size="small"
+        size="mini"
         ref="ruleForm"
       >
         <el-form-item label="经销店名称:" prop="agentName">

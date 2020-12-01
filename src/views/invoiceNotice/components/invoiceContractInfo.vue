@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-11-26 17:59:31
- * @LastEditTime: 2020-11-27 18:31:15
+ * @LastEditTime: 2020-11-30 14:04:28
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\components\invoiceContractInfo.vue
@@ -10,12 +10,12 @@
 <template>
   <div class="invoiceContractInfo">
     <el-dialog width="90%" destroy-on-close :close-on-click-modal="false" title :visible.sync="invoiceFormVisible">
-      <el-form :model="paramForm" :inline="true" size="small">
+      <el-form :model="paramForm" :inline="true" size="mini">
         <el-form-item label="备注" prop="remark">
           <el-input maxlength="200" v-model="paramForm.remark" clearable placeholder></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="queryForm" size="small">查 询</el-button>
+          <el-button type="primary" @click="queryForm">查 询</el-button>
         </el-form-item>
       </el-form>
       <div class="table">
@@ -372,7 +372,7 @@ export default {
   
 }
 
-.invoiceContractInfo .el-form-item--small.el-form-item {
+.invoiceContractInfo .el-form-item--mini.el-form-item {
     margin-bottom: 10px;
 }
 

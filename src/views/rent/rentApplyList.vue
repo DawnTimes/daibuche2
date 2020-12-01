@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 10:36:55
- * @LastEditTime: 2020-11-19 15:44:13
+ * @LastEditTime: 2020-11-30 14:02:23
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\rent\rentApplyList.vue
@@ -14,7 +14,7 @@
         :model="formData"
         class="demo-form-inline"
         label-width=""
-        size="small"
+        size="mini"
         ref="ruleForm"
       >
         <!-- <el-form-item label="任务编号:" prop="systemName">

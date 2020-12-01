@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:54:14
- * @LastEditTime: 2020-11-26 18:34:56
+ * @LastEditTime: 2020-11-30 14:02:45
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\overdueCollection\overduceCollectionList.vue
@@ -14,7 +14,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        size="small"
+        size="mini"
         label-width="90px"
         ref="ruleForm"
       >

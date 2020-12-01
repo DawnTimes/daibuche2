@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-11-13 14:25:38
- * @LastEditTime: 2020-11-23 16:11:52
+ * @LastEditTime: 2020-11-30 13:49:46
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -45,7 +45,7 @@
         :model="formData"
         class="demo-form-inline"
         label-width=""
-        size="small"
+        size="mini"
         ref="ruleForm"
       >
         <el-form-item label="承租人/牌照商" prop="">
@@ -103,7 +103,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[5, 10, 20, 50, 100, 500]"
+        :page-sizes="[5, 10, 20, 50, 100, 200]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"

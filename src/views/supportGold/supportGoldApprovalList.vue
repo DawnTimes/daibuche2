@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 16:47:59
- * @LastEditTime: 2020-11-23 17:32:34
+ * @LastEditTime: 2020-11-30 13:57:54
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovalList.vue
@@ -15,7 +15,7 @@
         :model="formData"
         class="demo-form-inline"
         label-width="100px"
-        size="small"
+        size="mini"
         ref="ruleForm"
       >
         <el-form-item label="支援金月份:" prop="month">

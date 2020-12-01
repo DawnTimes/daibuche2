@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-11-26 10:33:44
- * @LastEditTime: 2020-11-27 18:32:56
+ * @LastEditTime: 2020-11-30 14:03:20
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiCecontractChange.vue
@@ -15,7 +15,7 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        size="small"
+        size="mini"
         ref="ruleForm"
       >
         <!-- <el-form-item label="生成时间:" prop="systemName">

@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-11-02 18:39:23
+ * @LastEditTime: 2020-11-30 16:38:51
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\config\index.js
@@ -22,7 +22,8 @@ module.exports = {
     proxyTable: proxyConfig.proxy,
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: 'localhost', // can be overwritten by process.env.HOST  // localhost 192.166.88.18
+    // disableHostCheck: true,
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

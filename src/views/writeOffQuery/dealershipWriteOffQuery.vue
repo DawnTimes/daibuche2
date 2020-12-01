@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-11-25 13:43:44
+ * @LastEditTime: 2020-11-30 13:56:09
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\writeOffQuery\dealershipWriteOffQuery.vue
@@ -14,7 +14,7 @@
         :model="formData"
         class="demo-form-inline"
         label-width=""
-        size="small"
+        size="mini"
         ref="ruleForm"
       >
         <el-form-item label="承租人/牌照商" prop="name">

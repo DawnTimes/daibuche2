@@ -317,11 +317,11 @@ export default {
   },
   methods: {
     downLoad(contractPath) {
-      console.log(contractPath);
+      // console.log(contractPath);
       //  window.location.href = `http://192.166.87.119:8899/api/carmanage-admin/contract/downloadContract?fileName=${contractNumber}.pdf`
       //  window.location.href = `/api/carmanage-admin/contract/downloadContract?fileName=${contractNumber}.pdf`
       //  window.location.href = contractPath
-      window.open(contractPath);
+      // window.open(contractPath);
     },
     contractNumberCick(index, row) {
       this.handleOperation(index, row, 'viewApprovalProcess');
@@ -343,7 +343,20 @@ export default {
     },
     initData() {
       let url = common.findCarContractInfoUrl;
-      axios.post(url, this.params).then((res) => {
+      const params = {
+        licenceName: this.params.licenceName.trim(),
+        leaseWay: this.params.leaseWay,
+        agentShortName: this.params.agentShortName.trim(),
+        cityName: this.params.cityName.trim(),
+        contractFlowStatus: this.params.contractFlowStatus,
+        contractNumber: this.params.contractNumber.trim(),
+        isLimitLicence: this.params.isLimitLicence,
+        isSend: this.params.isSend,
+        manageNumber: this.params.manageNumber.trim(),
+        turnPageBeginPos: this.params.turnPageBeginPos, // 开始是数据的序号，后台需要
+        turnPageShowNum: this.params.turnPageShowNum,
+      };
+      axios.post(url, params).then((res) => {
         if (res.em === 'Success!') {
           this.tableData = res.data.contractInfoList;
           this.totalCount = parseInt(res.data.turnPageTotalNum);
@@ -440,7 +453,20 @@ export default {
       this.realParams.turnPageBeginPos = this.params.turnPageBeginPos;
       this.realParams.turnPageShowNum = this.params.turnPageShowNum;
       let url = common.findCarContractInfoUrl;
-      axios.post(url, this.realParams).then((res) => {
+      const params = {
+        licenceName: this.realParams.licenceName.trim(),
+        leaseWay: this.realParams.leaseWay,
+        agentShortName: this.realParams.agentShortName.trim(),
+        cityName: this.realParams.cityName.trim(),
+        contractFlowStatus: this.realParams.contractFlowStatus,
+        contractNumber: this.realParams.contractNumber.trim(),
+        isLimitLicence: this.realParams.isLimitLicence,
+        isSend: this.realParams.isSend,
+        manageNumber: this.realParams.manageNumber.trim(),
+        turnPageBeginPos: this.realParams.turnPageBeginPos, // 开始是数据的序号，后台需要
+        turnPageShowNum: this.realParams.turnPageShowNum,
+      };
+      axios.post(url, params).then((res) => {
         if (res.em === 'Success!') {
           this.tableData = res.data.contractInfoList;
           this.totalCount = parseInt(res.data.turnPageTotalNum);
@@ -549,7 +575,7 @@ export default {
       this.params.turnPageBeginPos = 1;
       this.currentPage = 1;
       this.initData();
-      Object.assign(this.realParams, this.params);
+      // Object.assign(this.realParams, this.params);
     },
   },
 };

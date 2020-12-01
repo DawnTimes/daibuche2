@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-25 14:59:48
+ * @LastEditTime: 2020-11-30 14:11:49
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\unInvoiceNoticeList.vue
@@ -14,8 +14,8 @@
         :inline="true"
         :model="formData"
         class="demo-form-inline"
-        label-width="90px"
-        size="small"
+        label-width=""
+        size="mini"
         ref="ruleForm"
       >
         <!-- <el-form-item label="生成时间:" prop="systemName">
