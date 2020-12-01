@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import _ from 'Lodash';
+import _ from 'lodash';
 
 export default {
   name: 'tags',
