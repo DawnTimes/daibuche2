@@ -63,7 +63,7 @@ export default {
       rentShow: false,
       goldShow: false,
       invoiceShow: false,
-      contractChangeShow: true,
+      contractChangeShow: false,
       params: {
         turnPageBeginPos: '0',
         turnPageShowNum: '10',

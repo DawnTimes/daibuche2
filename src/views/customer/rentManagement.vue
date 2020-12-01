@@ -30,6 +30,8 @@
               <el-option label="西部" value="009"></el-option>
               <el-option label="香港" value="008"></el-option>
               <el-option label="澳门" value="001"></el-option>
+              <el-option label="西南" value="010"></el-option>
+              <el-option label="西北" value="011"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="牌照商名称" prop="licenceName">
@@ -176,13 +178,13 @@
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
-      <!-- <el-table-column
+      <el-table-column
         prop="email"
-        label="Email地址"
+        label="email地址"
         width="200"
         :show-overflow-tooltip="true"
         resizable
-      ></el-table-column> -->
+      ></el-table-column>
 
       <el-table-column
         prop="legalRepresentative"
