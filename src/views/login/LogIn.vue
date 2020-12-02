@@ -140,7 +140,7 @@ export default {
                 this.loginLoading = false;
                 this.$notify.error({
                   title: '温馨提示',
-                  message: '登录失败，请重新登录！',
+                  message: res.em || '登录失败，请重新登录！',
                   duration: 3000,
                 });
                 // 错误之后刷新一下验证码
@@ -149,7 +149,7 @@ export default {
                 this.loginLoading = false;
                 this.$notify.error({
                   title: '温馨提示',
-                  message: '登录失败，用户名或密码错误，请重新登录！',
+                  message: res.em || '登录失败，用户名或密码错误，请重新登录！',
                   duration: 3000,
                 });
               } else {
@@ -183,7 +183,7 @@ export default {
               this.loginLoading = false;
               this.$notify.error({
                 title: '温馨提示',
-                message: '登录失败，请重新登录！',
+                message: err.em || err.error || '登录失败，请重新登录！',
                 duration: 3000,
               });
             });

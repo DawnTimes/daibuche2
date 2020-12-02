@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-12-01 16:24:34
+ * @LastEditTime: 2020-12-02 15:48:37
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -789,18 +789,18 @@ export default {
     handleEmitData() {
       this.formData.licenCode          = this.formData.licenCode.trim();
       this.formData.licenceName        = this.formData.licenceName.trim();
-      this.formData.bankAccName        = this.formData.bankAccName.trim();
-      this.formData.bankAccountNumber  = this.formData.bankAccountNumber.trim();
-      this.formData.billingAddr        = this.formData.billingAddr.trim();
-      this.formData.billingPhone       = this.formData.billingPhone.trim();
-      this.formData.contactPers        = this.formData.contactPers.trim();
-      this.formData.contactPersonPhone = this.formData.contactPersonPhone.trim();
-      this.formData.legalPhone         = this.formData.legalPhone.trim();
-      this.formData.legalRepresent     = this.formData.legalRepresent.trim();
+      this.formData.bankAccName        = this.formData.bankAccName ? this.formData.bankAccName.trim() : '';
+      this.formData.bankAccountNumber  = this.formData.bankAccountNumber ? this.formData.bankAccountNumber.trim() : '';
+      this.formData.billingAddr        = this.formData.billingAddr ? this.formData.billingAddr.trim() : '';
+      this.formData.billingPhone       = this.formData.billingPhone ? this.formData.billingPhone.trim() : '';
+      this.formData.contactPers        = this.formData.contactPers ? this.formData.contactPers.trim() : '';
+      this.formData.contactPersonPhone = this.formData.contactPersonPhone ? this.formData.contactPersonPhone.trim() : '';
+      this.formData.legalPhone         = this.formData.legalPhone ? this.formData.legalPhone.trim() : '';
+      this.formData.legalRepresent     = this.formData.legalRepresent ? this.formData.legalRepresent.trim() : '';
       this.formData.lessor             = this.formData.lessor.trim();
-      this.formData.registerAddr       = this.formData.registerAddr.trim();
+      this.formData.registerAddr       = this.formData.registerAddr ? this.formData.registerAddr.trim() : '';
       this.formData.socialCreditCode   = this.formData.socialCreditCode.trim();
-      this.formData.email              = this.formData.email.trim();
+      this.formData.email              = this.formData.email ? this.formData.email.trim() : '';
       this.$emit('formDataSubmit', {
         data: this.formData,
       });

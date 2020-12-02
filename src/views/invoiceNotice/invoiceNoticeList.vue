@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-30 14:03:09
+ * @LastEditTime: 2020-12-02 14:45:19
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -60,7 +60,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="生成时间" prop="applyDate">
+        <el-form-item label="申请时间" prop="applyDate">
           <!-- <el-date-picker
             v-model="formData.dateTime"
             type="daterange"
@@ -72,8 +72,8 @@
           ></el-date-picker> -->
           <el-date-picker
             v-model="formData.applyDate"
-            type="date"
-            value-format="yyyy-MM-dd"
+            type="month"
+            value-format="yyyy-MM"
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
@@ -188,7 +188,7 @@
         ></el-table-column>
         <el-table-column
           prop="applyDate"
-          label="生成时间"
+          label="申请时间"
           show-overflow-tooltip
           width="120"
         >
@@ -497,7 +497,7 @@ export default {
         contractId: '',
         invoiceDate: '',
         invoiceNumber: '',
-        payDate: '',
+        // payDate: '',
         payDay: '',
       },
       status: {
@@ -766,11 +766,12 @@ export default {
 
     // 登记弹窗
     handleRegister(row) {
+      console.log(row);
       // this.registerForm.currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
       // this.registerForm.userId = this.userId;
       this.registerForm.contractId = row.contractId;
       this.registerForm.invoiceNumber = row.invoiceNumber;
-      this.registerForm.invoiceDate = moment(row.invoiceDate).format('YYYY-MM-DD HH:mm:ss');
+      this.registerForm.invoiceDate = row.invoiceDate ? moment(row.invoiceDate).format('YYYY-MM-DD HH:mm:ss') : '';
       this.registerForm.payDay = moment(row.payDate).format('YYYY-MM-DD');
       // this.registerForm.buyName       = row.buyName;
       // this.registerForm.buyCreditCode = row.buyCreditCode;

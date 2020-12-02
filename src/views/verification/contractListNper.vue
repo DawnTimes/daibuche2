@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-11-13 14:25:38
- * @LastEditTime: 2020-11-30 13:49:46
+ * @LastEditTime: 2020-12-02 16:57:03
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -417,23 +417,6 @@ export default {
               // item.batchStartingDate
               item.batchStartingDate = moment(item.batchStartingDate).format('YYYY-MM-DD');
               item.payDate           = moment(item.payDate).format('YYYY-MM-DD');
-
-              // item.dueAmount                = moneyFormat(item.dueAmount);
-              // item.duePrincipal             = moneyFormat(item.duePrincipal);
-              // item.dueinterest              = moneyFormat(item.dueinterest);
-              // item.dueManagementFee         = moneyFormat(item.dueManagementFee);
-              // item.dueCommission            = moneyFormat(item.dueCommission);
-              // item.receivedAmount           = moneyFormat(item.receivedAmount);
-              // item.receivedPrincipal        = moneyFormat(item.receivedPrincipal);
-              // item.receivedInterest         = moneyFormat(item.receivedInterest);
-              // item.receivedManagementFee    = moneyFormat(item.receivedManagementFee);
-              // item.receivedCommission       = moneyFormat(item.receivedCommission);
-              // item.outstandingAmount        = moneyFormat(item.outstandingAmount);
-              // item.outstandingPrincipal     = moneyFormat(item.outstandingPrincipal);
-              // item.outstandingInterest      = moneyFormat(item.outstandingInterest);
-              // item.outstandingManagementFee = moneyFormat(item.outstandingManagementFee);
-              // item.outstandingCommission    = moneyFormat(item.outstandingCommission);
-
 
             })
           }

@@ -1,10 +1,10 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-11-13 14:23:32
- * @LastEditTime: 2020-12-02 16:41:36
+ * @LastEditTime: 2020-12-02 17:05:00
  * @LastEditors: your name
  * @Description: 
- * @FilePath: \webcode2\src\views\verification\dragNer.vue
+ * @FilePath: \webcode2\src\views\verification\bankWaterDrag.vue
 -->
 
 <template>
@@ -26,12 +26,10 @@
           'color': '#fff !important',
           'font-size': '13px',
         }"
-        show-summary
-        :summary-method="getSummaries"
       >
         <slot name="fixed"></slot>
         <el-table-column
-          v-for="(col, index) in tableHeader"
+          v-for="(col, index) in bankWaterHeader"
           :key="index"
           :prop="col.prop"
           :label="col.label"
@@ -44,20 +42,15 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <!-- 字段不是车辆数并且不是金额时显示原值 -->
-            <span v-if="col.prop != 'num' && !formatMoney(col.prop)" :style="styleFunc(col.prop, scope.row)">{{ scope.row[col.prop] }}</span>
-            <!-- 字段不是车辆数并且是金额时显示，格式化金额 -->
-            <span v-if="col.prop != 'num' && formatMoney(col.prop)" :style="styleFunc(col.prop, scope.row)">{{ scope.row[col.prop] | moneyFormat }}</span>
-            <!-- 字段是车辆数是显示 -->
-            <el-tooltip content="点击查询" placement="top" effect="light" v-if="col.prop == 'num'">
-              <el-link type="primary" @click="queryCar(scope.row)">{{ scope.row.num }}</el-link>
-            </el-tooltip>
+            <!-- 不是金额时显示原值 -->
+            <span v-if="!formatMoney(col.prop)" :style="styleFunc(col.prop, scope.row)">{{ scope.row[col.prop] }}</span>
+            <!-- 是金额时显示，格式化金额 -->
+            <span v-if="formatMoney(col.prop)" :style="styleFunc(col.prop, scope.row)">{{ scope.row[col.prop] | moneyFormat }}</span>
           </template>
         </el-table-column>
       </el-table>
     </div>
 
-    <nperCarList ref="nperCarListDialog" :carTableData="carTableData" :tableLoading="carTableLoading"></nperCarList>
   </div>
 </template>
 
@@ -67,17 +60,13 @@ import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 
-import nperCarList from './components/nperCarList';
-
 import { mapState, mapMutations } from 'vuex';
 
 import { moneyFormat } from '@/common/moneyFormat.js';
 
 export default {
   name: '',
-  components: {
-    nperCarList,
-  },
+  components: {},
   props: {
     data: {
       default: function () {
@@ -104,7 +93,7 @@ export default {
   },
   data() {
     return {
-      tableHeader: this.header,
+      bankWaterHeader: this.header,
 
       // 拖动过程中需要记录几个关键参数：
       dragState: {
@@ -114,21 +103,17 @@ export default {
         direction: undefined, // 拖动方向
       },
 
-      carTableData: [],
-      carTableLoading: false,
       // 列表金额字段名称数组
-      moneyArray: ['dueAmount', 'duePrincipal', 'dueinterest', 'dueManagementFee', 'dueCommission',
-      'receivedAmount', 'receivedPrincipal', 'receivedInterest', 'receivedManagementFee', 'receivedCommission',
-      'outstandingAmount', 'outstandingPrincipal', 'outstandingInterest', 'outstandingManagementFee', 'outstandingCommission'],
+      moneyArray: ['income', 'haveVerLines', 'notVerLines', 'refund'],
     };
   },
   computed: {},
   watch: {
     // 另外父元素传入了一个表头数据 header，但拖动完成后会修改这个数据
-    // 在子组件中直接修改父元素的数据是不推荐的，所以这里初始化了一个 tableHeader 用于托管表头数据 header
-    // 但为了让 header 修改时，tableHeader 也能响应修改，就得添加一个监视器 watch
+    // 在子组件中直接修改父元素的数据是不推荐的，所以这里初始化了一个 bankWaterHeader 用于托管表头数据 header
+    // 但为了让 header 修改时，bankWaterHeader 也能响应修改，就得添加一个监视器 watch
     header(val, oldVal) {
-      this.tableHeader = val;
+      this.bankWaterHeader = val;
     },
   },
   created() {},
@@ -137,7 +122,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setTableHeader: 'setTableHeader',
+      setBankWaterHeader: 'setBankWaterHeader',
     }),
     
     // Element-UI 的 Table 组件为了实现【拖拽边框以修改列宽】的功能，没有将 mousemove、mouseup、mousedown 这三个事件暴露出来
@@ -222,19 +207,19 @@ export default {
       let left = direction === 'left';
       let min = left ? end : start - 1;
       let max = left ? start + 1 : end;
-      for (let i = 0; i < this.tableHeader.length; i++) {
+      for (let i = 0; i < this.bankWaterHeader.length; i++) {
         if (i === end) {
-          tempData.push(this.tableHeader[start]);
+          tempData.push(this.bankWaterHeader[start]);
         } else if (i > min && i < max) {
-          tempData.push(this.tableHeader[left ? i - 1 : i + 1]);
+          tempData.push(this.bankWaterHeader[left ? i - 1 : i + 1]);
         } else {
-          tempData.push(this.tableHeader[i]);
+          tempData.push(this.bankWaterHeader[i]);
         }
       }
-      this.tableHeader = tempData;
+      this.bankWaterHeader = tempData;
       // 存储在store中，保证刷新不变；退出登录时删除localStorage
-      this.setTableHeader(this.tableHeader);
-      // console.log(this.tableHeader);
+      this.setBankWaterHeader(this.bankWaterHeader);
+      // console.log(this.bankWaterHeader);
     },
 
     // 在拖动过程中，通过 mousemove 事件，改变当前列的表头状态
@@ -253,107 +238,21 @@ export default {
       return columnIndex - 1 === this.dragState.start ? `darg_start` : '';
     },
 
-    // 车辆清单
-    queryCar(row) {
-      // this.carTableLoading = true;
-      this.carTableData = [];
-      const url = common.selectCarRepayListUrl;
-      const params = {
-        nper: row.nper,
-        oldContractId: row.oldContractId,
-      };
-      axios.post(url, params).then((res) => {
-        if (res.ec === '0') {
-          this.carTableData = res.data.carRepList;
-          this.carTableLoading = false;
-        } else {
-          this.carTableLoading = false;
-        }
-      }).catch(() => {
-        this.carTableLoading = false;
-      })
-      this.$refs.nperCarListDialog.isShow(true);
-    },
-
-    // 合计
-    getSummaries(param) {
-      // console.log(param);
-      const { columns, data } = param;
-      const sums = [];
-      columns.forEach((column, index) => {
-        if (index === 0) {
-          sums[index] = '合计';
-          return;
-        }
-        
-        const values = data.map(item => Number(item[column.property]));
-        if (!values.every(value => isNaN(value))) {
-          sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr);
-            if (!isNaN(value)) {
-              return prev + curr;
-            } else {
-              return prev;
-            }
-          }, 0);
-          // 千分位格式化金额
-          if (column.property == 'num') {
-            sums[index] = moneyFormat(sums[index], 0);
-          } else if (column.property == 'nper') {
-            // sums[index] = 'N/A';
-            sums[index] = '';
-          } else {
-            sums[index] = moneyFormat(sums[index]);
-          }
-          
-        } else {
-          // sums[index] = 'N/A';
-          sums[index] = '';
-        }
-      });
-
-      return sums;
-    },
 
     // 字段颜色赋值
     styleFunc(prop, row) {
       // console.log(prop, row);
       // 核销状态颜色
-      if (prop == 'repaymentStatusText') {
-        if (row.repaymentStatus == 'FULL') {
+      if (prop == 'verStateText') {
+        if (row.verState == 'FULL') {
           return 'color: #67C23A'
-        } else if (row.repaymentStatus == 'NOT') {
-          return 'color: #F56C6C'
+        } else if (row.verState == 'PART') {
+          return 'color: #409EFF'
         } else {
-          return 'color:  #409EFF'
+          return 'color:  #F56C6C'
         }
       }
       
-      // 合同状态颜色
-      if (prop == 'contractNormalStatusText') {
-        if (row.contractNormalStatus == 'Y') {
-          return 'color: #67C23A'
-        } else {
-          return 'color: #F56C6C'
-        }
-      }
-      // 是否限牌
-      if (prop == 'isLimitLicenceText') {
-        if (row.isLimitLicence == 'Y') {
-          return 'color: #67C23A'
-        } else {
-          return 'color: #F56C6C'
-        }
-      }
-
-      // 是否广汽租赁
-      if (prop == 'isGalcCompanyText') {
-        if (row.isGalcCompany == 'Y') {
-          return 'color: #67C23A'
-        } else {
-          return 'color: #F56C6C'
-        }
-      }
     },
 
     // 格式化金额--千分位

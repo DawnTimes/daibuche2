@@ -321,7 +321,7 @@ export default {
       //  window.location.href = `http://192.166.87.119:8899/api/carmanage-admin/contract/downloadContract?fileName=${contractNumber}.pdf`
       //  window.location.href = `/api/carmanage-admin/contract/downloadContract?fileName=${contractNumber}.pdf`
       //  window.location.href = contractPath
-      // window.open(contractPath);
+      window.open(contractPath);
     },
     contractNumberCick(index, row) {
       this.handleOperation(index, row, 'viewApprovalProcess');

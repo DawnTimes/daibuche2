@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-11-27 14:53:56
+ * @LastEditTime: 2020-12-02 15:01:46
  * @LastEditors: your name
  * @Description: 删除弹窗
  * @FilePath: \webcode2\src\components\confirmBox.vue
@@ -65,7 +65,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9999;
+  z-index: 999;
   background: rgba(0, 0, 0, 0.5);
 }
 .mshbox .msgbox_contant {

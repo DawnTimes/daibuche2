@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-11-26 17:59:31
- * @LastEditTime: 2020-11-30 14:04:28
+ * @LastEditTime: 2020-12-02 15:02:34
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\components\invoiceContractInfo.vue
@@ -91,7 +91,7 @@
             <span>{{ scope.row.invoiceDate | timeFormatTemp }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="100" align="center" fixed="right">
+        <!-- <el-table-column label="操作" width="100" align="center" fixed="right">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -102,7 +102,7 @@
               >删除</el-button
             >
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </div>
       <div class="page-layer">

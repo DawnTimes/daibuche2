@@ -1,10 +1,10 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-12 10:02:45
- * @LastEditTime: 2020-11-17 09:43:28
+ * @LastEditTime: 2020-12-02 09:47:02
  * @LastEditors: your name
  * @Description: 查询合同下所有期数
- * @FilePath: \webcode2\src\views\verification\contractListNper.vue
+ * @FilePath: \webcode2\src\views\verification\contractListNper1.vue
 -->
 <template>
   <div class="contractListNper">
@@ -303,7 +303,7 @@ import nperCarList from './components/nperCarList';
 
 import { mapState, mapMutations } from 'vuex';
 import { moneyFormat } from '@/common/moneyFormat.js';
-import Sortable from 'sortablejs';
+// import Sortable from 'sortablejs';  npm install vuedraggable/ npm install sortablejs
 
 export default {
   name: 'contractListNper',
@@ -497,34 +497,34 @@ export default {
     },
 
     //行拖拽
-    rowDrop() {
-      const tbody = document.querySelector('.el-table__body-wrapper tbody');
-      const _this = this;
-      Sortable.create(tbody, {
-        onEnd({ newIndex, oldIndex }) {
-          const currRow = _this.tableData.splice(oldIndex, 1)[0];
-          _this.tableData.splice(newIndex, 0, currRow);
-        },
-      });
-    },
-    //列拖拽
-    columnDrop() {
-      const wrapperTr = document.querySelector('.el-table__header-wrapper tr');
-      this.sortable = Sortable.create(wrapperTr, {
-        animation: 180,
-        delay: 0,
-        onEnd: (evt) => {
-          const oldItem = this.dropCol[evt.oldIndex];
-          this.dropCol.splice(evt.oldIndex, 1);
-          this.dropCol.splice(evt.newIndex, 0, oldItem);
-          // localStorage.setItem('dropCol', JSON.stringify(this.dropCol))
-          // 保存修改的列排序
-          this.setDropCol(this.dropCol);
+    // rowDrop() {
+    //   const tbody = document.querySelector('.el-table__body-wrapper tbody');
+    //   const _this = this;
+    //   Sortable.create(tbody, {
+    //     onEnd({ newIndex, oldIndex }) {
+    //       const currRow = _this.tableData.splice(oldIndex, 1)[0];
+    //       _this.tableData.splice(newIndex, 0, currRow);
+    //     },
+    //   });
+    // },
+    // //列拖拽
+    // columnDrop() {
+    //   const wrapperTr = document.querySelector('.el-table__header-wrapper tr');
+    //   this.sortable = Sortable.create(wrapperTr, {
+    //     animation: 180,
+    //     delay: 0,
+    //     onEnd: (evt) => {
+    //       const oldItem = this.dropCol[evt.oldIndex];
+    //       this.dropCol.splice(evt.oldIndex, 1);
+    //       this.dropCol.splice(evt.newIndex, 0, oldItem);
+    //       // localStorage.setItem('dropCol', JSON.stringify(this.dropCol))
+    //       // 保存修改的列排序
+    //       this.setDropCol(this.dropCol);
 
-        },
-      });
+    //     },
+    //   });
       
-    },
+    // },
 
     // 获取状态数据字典
     getDictStatus(columnName, tabName) {

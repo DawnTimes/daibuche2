@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-12-02 20:41:30
+ * @LastEditTime: 2020-11-30 13:56:53
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -77,49 +77,126 @@
         </el-form-item>
         <el-form-item>
           <el-button icon="el-icon-download" type="primary" id="exportButton"  @click="exportButton" v-show="rightControl.export">导出银行流水单</el-button>
-          <!-- <el-button icon="el-icon-download" type="primary" id="exportButton"  @click="download" v-show="rightControl.export">导出银行流水单</el-button> -->
         </el-form-item>
         
       </el-form>
     </div>
 
     <div class="table">
-      <wTable :data="tableData" :header="bankWaterHeader" :option="tableOption" :tableLoading="tableLoading" ref="table">
-        <el-table-column slot="fixed" fixed="left" align="center" label="序号" type="index" :index="indexMethod" width="50">
-        </el-table-column>
-        <el-table-column slot="fixed" fixed="right" align="center" label="操作" width="350">
+      <el-table
+        :data="tableData"
+        v-loading="tableLoading"
+        element-loading-text="拼命加载中"
+        border
+        stripe
+        :max-height="tableHeight"
+        :default-sort = "{prop: 'tradeDate', order: 'descending'}"
+        ref="table"
+        style="width: 100%"
+        :header-cell-style="{
+        'text-align':'center',
+        'font-weight':'bold',  
+        'background':'#627CAF',    
+        'color': '#fff',
+        'font-size': '12px'
+      }"
+        :cell-style="{
+          'font-size': '12px'
+        }"
+      >
+        <el-table-column
+          width="70"
+          align="center"
+          label="序号"
+          type="index"
+          :index="indexMethod"
+          fixed
+        ></el-table-column>
+        <el-table-column prop="tradeDate" label="交易时间" show-overflow-tooltip width="100">
           <template slot-scope="scope">
-              <el-button
-                size="mini"
-                type="primary"
-                @click="handleContract(scope.row)"
-                v-if="rightControl.writeOff"
-                :disabled="scope.row.verState == 'FULL' || scope.row.refund == scope.row.income"
-              >核销</el-button>
-              <el-button
-                size="mini"
-                plain
-                @click="handleDetail(scope.row)"
-                v-if="rightControl.detail"
-                :disabled="scope.row.verState == 'NOT'"
-              >核销详情</el-button>
-              <el-button
-                size="mini"
-                type="warning"
-                @click="handleRefund(scope.row)"
-                v-if="rightControl.refund"
-                :disabled="scope.row.verState == 'FULL' || scope.row.refund == scope.row.income"
-              >退款</el-button>
-              <el-button
-                size="mini"
-                type="danger"
-                @click="handleDelete(scope.row)"
-                v-if="rightControl.delete"
-                :disabled="scope.row.verState == 'FULL' || scope.row.verState == 'PART' || scope.row.refund != '0'"
-              >删除</el-button>
-            </template>
+            <span>{{ scope.row.tradeDate | timeFormat }}</span>
+          </template>
         </el-table-column>
-      </wTable>
+        <el-table-column prop="serialNumber" label="银行单据号" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="income" label="收款金额" show-overflow-tooltip width="120">
+          <template slot-scope="scope">
+            <span>{{ scope.row.income | moneyFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="companyName" label="收款账户名称" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="bankAccountNo" label="收款账号" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="bankAccountName" label="收款账户开户行" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="sideAccountName" label="汇款账户名称" show-overflow-tooltip width="200"></el-table-column>
+        <el-table-column prop="sideAccount" label="汇款账号" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="verState" label="核销状态" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span
+            :class="{greenStatus: scope.row.verState == 'FULL', blueColor: scope.row.verState == 'PART', redStatus: scope.row.verState == 'NOT'}"
+            >{{ scope.row.verState | verState }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="digest" label="摘要" show-overflow-tooltip width="150"></el-table-column>
+        <!-- <el-table-column prop="" label="是否代付" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span
+              :class="[scope.row.status == 'Y' ? 'greenStatus' : 'redStatus']"
+            >{{ formatStatus(scope.row.status, paidTemp) }}</span>
+          </template>
+        </el-table-column> -->
+        <el-table-column prop="paidLogo" label="代付标志" show-overflow-tooltip width="150"></el-table-column>
+        <el-table-column prop="projectCategory" label="项目类别" show-overflow-tooltip width="100"></el-table-column>
+        <!-- <el-table-column prop="" label="是否虚拟收款" show-overflow-tooltip width="150"></el-table-column> -->
+        
+        <el-table-column prop="haveVerLines" label="已核销金额" show-overflow-tooltip width="150">
+          <template slot-scope="scope">
+            <span>{{ scope.row.haveVerLines | moneyFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="notVerLines" label="未核销金额" show-overflow-tooltip width="150">
+          <template slot-scope="scope">
+            <span>{{ scope.row.notVerLines | moneyFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="refund" label="退款金额" show-overflow-tooltip width="150">
+          <template slot-scope="scope">
+            <span>{{ scope.row.refund | moneyFormat }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="newLedgerLogo" label="台账标志" show-overflow-tooltip width="120"></el-table-column>
+        <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+        <el-table-column label="操作" align="center" width="350" fixed="right">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="primary"
+              @click="handleContract(scope.row)"
+              v-if="rightControl.writeOff"
+              :disabled="scope.row.verState == 'FULL' || scope.row.refund == scope.row.income"
+            >核销</el-button>
+            <el-button
+              size="mini"
+              plain
+              @click="handleDetail(scope.row)"
+              v-if="rightControl.detail"
+              :disabled="scope.row.verState == 'NOT'"
+            >核销详情</el-button>
+            <el-button
+              size="mini"
+              type="warning"
+              @click="handleRefund(scope.row)"
+              v-if="rightControl.refund"
+              :disabled="scope.row.verState == 'FULL' || scope.row.refund == scope.row.income"
+            >退款</el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.row)"
+              v-if="rightControl.delete"
+              :disabled="scope.row.verState == 'FULL' || scope.row.verState == 'PART' || scope.row.refund != '0'"
+            >删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
     <div class="page-layer">
       <el-pagination
@@ -179,7 +256,6 @@ import uploadDialog from '@/components/uploadDialog';  // 上传弹框
 import { mapState } from 'vuex';
 
 import { moneyFormat } from '@/common/moneyFormat.js';
-import wTable from './bankWaterDrag';
 
 export default {
   name: 'bankWaterList',
@@ -191,14 +267,9 @@ export default {
     confirmBox,
     uploadDialog,
     downConfirmBox,
-    wTable,
   },
   data() {
     return {
-      tableOption: {
-        border: true,
-        maxHeight: 500,
-      },
       pageSize: 10,
       pageNum: 1,
       total: 0,
@@ -291,7 +362,6 @@ export default {
     ...mapState({
       userId: (store) => store.userId,
       successStatus: (store) => store.successStatus,
-      bankWaterHeader: store => store.bankWaterHeader,
     }),
   },
   watch: {
@@ -317,12 +387,12 @@ export default {
     });
 
     this.$nextTick(function () {
-      this.tableOption.maxHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 110;
+      this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 110;
       
       // 监听窗口大小变化
       let self = this;
       window.onresize = function() {
-        self.tableOption.maxHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 110;
+        self.tableHeight = window.innerHeight - self.$refs.table.$el.offsetTop - 110;
       }
     })
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
@@ -401,26 +471,6 @@ export default {
           this.tableData = data.bankStatementList;
           this.total = data.turnPageTotalNum * 1;
           this.tableLoading = false;
-          if (!_.isEmpty(this.tableData)) {
-            this.tableData.forEach((item, index) => {
-              // 文本转义
-              item.verStateText = ''; // 核销状态
-
-              if (item.verState == 'FULL') {
-                item.verStateText = '已核销';
-              } else if (item.verState == 'PART') {
-                item.verStateText = '部分核销';
-              } else if (item.verState == 'NOT') {
-                item.verStateText = '未核销';
-              } else {
-                item.verStateText = '';
-              }
-
-              // item.batchStartingDate
-              item.tradeDate           = moment(item.tradeDate).format('YYYY-MM-DD');
-
-            })
-          }
         } else {
           this.tableLoading = false;
         }
@@ -484,70 +534,9 @@ export default {
           
     },
 
-    download() {
-      let _that = this;
-      let url = `/api/${common.bankWaterDownUrl}?companyName=${
-      this.formData.companyName ? this.formData.companyName.trim() : ''
-      }&serialNumber=${
-        this.formData.serialNumber ? this.formData.serialNumber.trim() : ''
-      }&sideAccount=${
-        this.formData.sideAccount ? this.formData.sideAccount.trim() : ''
-      }&sideAccountName=${
-        this.formData.sideAccountName ? this.formData.sideAccountName.trim() : ''
-      }&verState=${
-        this.formData.verState ? this.formData.verState : ''
-      }&startTradeDate=${
-        this.formData.startTradeDate ? this.formData.startTradeDate : ''
-      }&endTradeDate=${
-        this.formData.endTradeDate ? this.formData.endTradeDate : ''}`;
-
-      // 原生ajax下载
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', url, true);    // 也可以使用POST方式，根据接口
-      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); // 设置请求头类型
-      xhr.responseType = "blob";  // 返回类型blob
-      // 定义请求完成的处理函数，请求前也可以增加加载框/禁用下载按钮逻辑
-      xhr.onload = function () {
-        // console.log(xhr);
-        // console.log(xhr.getAllResponseHeaders()); //返回全部头信息,string
-          // 请求完成
-          if (xhr.readyState == 4) {
-            if (xhr.status === 200) {
-              // _that.exportLoading = false;
-              // _that.showDownBox = false;
-                // 返回200
-                let blob = xhr.response;
-                let reader = new FileReader(); // 调用FileReader对象的方法
-                reader.readAsDataURL(blob);  // 该方法将文件读取为一段以 data: 开头的字符串，这段字符串的实质就是 Data URL，Data URL是一种将小文件直接嵌入文档的方案。这里的小文件通常是指图像与 html 等格式的文件。 转换为base64，可以直接放入a表情href
-                reader.onload = function (e) {
-                  // console.log(e);
-                    // 转换完成，创建一个a标签用于下载
-                    let Ee = document.createElement('a');
-                    let currentTime = moment().format('YYYYMMDD'); // 当前时间
-                    Ee.download = '银行流水单' + currentTime +  '.xlsx';
-                    Ee.href = e.target.result;
-                    // $("body").append(a);  // 修复firefox中无法触发click
-                    Ee.click();
-                    Ee.remove();
-                    // $(a).remove();
-                }
-            }
-          }
-          
-      };
-      
-      // 进程结束
-      xhr.onloadend = function () {
-        _that.exportLoading = false;
-        _that.showDownBox = false;
-      }
-      // 发送ajax请求
-      xhr.send()
-  },
-
     // 数据导出下载文件
     exportButton() {
-      // this.showDownBox = true;
+      this.showDownBox = true;
             
       // 后端返回的是流文件
       // const params = {
@@ -558,11 +547,11 @@ export default {
       // };
       // const url = common.bankWaterDownUrl;
       // axios2.get(url, params, {
-      //   responseType: 'blob'
+      //   responseType: 'arraybuffer'
       // })
       //   .then(res => {
-      //     // res为后台返回的流数据信息
-      //     const filename = res.filename ||  '银行流水单.xlsx';
+      //       // res为后台返回的流数据信息
+      //     const filename = res.filename || '银行流水单.xlsx';
       //     this.fileDownload(res, filename);
       //   })
       //   .catch(() => {
@@ -606,6 +595,28 @@ export default {
       //   this.formData.sideAccount ? this.formData.sideAccount : ''
       // }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`;
 
+      
+  
+
+      // var itime = 0;
+      // var exportButton = document.getElementById('exportButton');
+      // exportButton.setAttribute("disabled", "disabled");
+      // exportButton.innerHTML = `正在下载<i style="color:blueviolet;">${itime}</i>`;
+      // var hurl = `/api/${common.bankWaterDownUrl}?companyName=${
+      // this.formData.companyName ? this.formData.companyName : ''
+      // }&serialNumber=${this.formData.serialNumber ? this.formData.serialNumber : ''}&sideAccount=${
+      //   this.formData.sideAccount ? this.formData.sideAccount : ''
+      // }&sideAccountName=${this.formData.sideAccountName ? this.formData.sideAccountName : ''}`;
+      // window.open(hurl, '_parent').addEventListener("beforeunload", (e) => {
+      //   console.log(12345,e);
+      //     clearTimeout(downloadTimer); // 清除定时器
+      //     exportButton.innerHTML = '导出银行流水单';
+      //     exportButton.removeAttribute("disabled");
+      // });
+      // var downloadTimer = setInterval(() => {
+      //     exportButton.children[0].innerText = ++itime;
+      // }, 1000);
+
 
       // const arr = [
       //   {id: '123'},
@@ -620,26 +631,24 @@ export default {
     downSubmit() {
       this.exportLoading = true;
       
-      // window.open(`/api/${common.bankWaterDownUrl}?companyName=${
-      // this.formData.companyName ? this.formData.companyName.trim() : ''
-      // }&serialNumber=${
-      //   this.formData.serialNumber ? this.formData.serialNumber.trim() : ''
-      // }&sideAccount=${
-      //   this.formData.sideAccount ? this.formData.sideAccount.trim() : ''
-      // }&sideAccountName=${
-      //   this.formData.sideAccountName ? this.formData.sideAccountName.trim() : ''
-      // }&verState=${
-      //   this.formData.verState ? this.formData.verState : ''
-      // }&startTradeDate=${
-      //   this.formData.startTradeDate ? this.formData.startTradeDate : ''
-      // }&endTradeDate=${
-      //   this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_parent')
-      // // .addEventListener('beforeunload', (e) => {
-      // //   console.log(1223333);
-      // //   this.exportLoading = false;
-      // // })
-
-      this.download();
+      window.open(`/api/${common.bankWaterDownUrl}?companyName=${
+      this.formData.companyName ? this.formData.companyName.trim() : ''
+      }&serialNumber=${
+        this.formData.serialNumber ? this.formData.serialNumber.trim() : ''
+      }&sideAccount=${
+        this.formData.sideAccount ? this.formData.sideAccount.trim() : ''
+      }&sideAccountName=${
+        this.formData.sideAccountName ? this.formData.sideAccountName.trim() : ''
+      }&verState=${
+        this.formData.verState ? this.formData.verState : ''
+      }&startTradeDate=${
+        this.formData.startTradeDate ? this.formData.startTradeDate : ''
+      }&endTradeDate=${
+        this.formData.endTradeDate ? this.formData.endTradeDate : ''}`, '_parent')
+      // .addEventListener('beforeunload', (e) => {
+      //   console.log(1223333);
+      //   this.exportLoading = false;
+      // })
     },
     // 取消下载
     downCancelBack() {

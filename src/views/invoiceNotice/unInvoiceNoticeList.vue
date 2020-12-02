@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-30 14:11:49
+ * @LastEditTime: 2020-12-02 13:07:41
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\unInvoiceNoticeList.vue
@@ -85,7 +85,7 @@
           fixed
         ></el-table-column>
         <!-- <el-table-column prop="billingNo" label="单据号" show-overflow-tooltip width="100"></el-table-column> -->
-        <el-table-column prop="applyDate" label="生成时间" show-overflow-tooltip width="100">
+        <el-table-column prop="applyDate" label="申请时间" show-overflow-tooltip width="100">
           <template slot-scope="scope">
           <span>{{ scope.row.applyDate | timeFormat }}</span>
         </template>
