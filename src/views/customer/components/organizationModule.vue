@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-12-02 15:48:37
+ * @LastEditTime: 2020-12-03 14:25:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -675,7 +675,7 @@ export default {
       this.formData.cityCode = '';
       this.provinceArr = [];
       this.cityArr = [];
-      this.areaCode = val;
+      // this.areaCode = this.formData.areaCode;
       const params = {
         areaCode: val,
       };
@@ -696,7 +696,7 @@ export default {
       if (this.formData.areaCode) {
         this.formData.cityCode = '';
         this.cityArr = [];
-        this.provinceCode = val;
+        // this.provinceCode = val;
         const params = {
           provinceCode: val,
         };
@@ -722,7 +722,7 @@ export default {
 
     // 选择城市
     changeCity(val) {
-      console.log(val);
+      // console.log(val);
       if (!this.formData.provinceCode) {
         this.$notify.warning({
           title: '温馨提示',
@@ -743,7 +743,7 @@ export default {
         });
         
         return false
-      };
+      }
     },
 
     // 聚焦城市
@@ -764,7 +764,7 @@ export default {
         });
         
         return false
-      }
+      };
     },
 
     // 确定

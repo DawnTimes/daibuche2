@@ -112,7 +112,7 @@ export default {
     document.removeEventListener('keydown', this.whenKeyDown);
   },
   methods: {
-    ...mapMutations(['changeLogin', 'setRoles', 'setUserId', 'setPersonName']),
+    ...mapMutations(['changeLogin', 'setRoles', 'setUserId', 'setPersonName', 'setAsideInfo', 'setAsideInfoIds']),
     whenKeyDown(event) {
       if (event.keyCode === 13) {
         this.loginSubmit();
@@ -175,8 +175,9 @@ export default {
                 // 登录成功是清除掉原有的tabs导航标签
                 sessionStorage.removeItem('tagsArr');
 
-                this.$router.push('/common');
+                // this.getUserMenuList();
 
+                this.$router.push('/common');
               }
             })
             .catch((err) => {
@@ -228,11 +229,12 @@ export default {
         }
         // console.log(this.menuList);
 
-        this.$store.commit('setAsideInfo', this.menuList);
-        this.$store.commit('setAsideInfoIds', res.ids);
+        // this.$store.commit('setAsideInfo', this.menuList);
+        // this.$store.commit('setAsideInfoIds', res.ids);
 
-        // this.setAsideInfo(this.menuList);
-        // this.setAsideInfoIds(res.ids);
+        this.setAsideInfo(this.menuList);
+        this.setAsideInfoIds(res.ids);
+        // console.log(123333);
 
         // sessionStorage.setItem('asideInfo', JSON.stringify(res.data.menus));
         // sessionStorage.setItem('asideInfoIds', JSON.stringify(res.data.ids));

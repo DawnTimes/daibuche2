@@ -1,10 +1,10 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-11-13 14:23:32
- * @LastEditTime: 2020-12-02 16:41:36
+ * @LastEditTime: 2020-12-03 15:53:33
  * @LastEditors: your name
  * @Description: 
- * @FilePath: \webcode2\src\views\verification\dragNer.vue
+ * @FilePath: \webcode2\src\views\verification\components\dragNer.vue
 -->
 
 <template>
@@ -67,7 +67,7 @@ import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 
-import nperCarList from './components/nperCarList';
+import nperCarList from './nperCarList';
 
 import { mapState, mapMutations } from 'vuex';
 

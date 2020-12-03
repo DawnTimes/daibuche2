@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-11-26 18:00:53
+ * @LastEditTime: 2020-12-03 16:12:23
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\router\index.js
@@ -43,14 +43,9 @@ const bankWaterList = resolve => require(['@/views/verification/bankWaterList'],
 const writeOffDetail = resolve => require(['@/views/verification/writeOffDetail'], resolve);
 // 新增流水单
 const addBankWater = resolve => require(['@/views/verification/addBankWater'], resolve);
-// 核销合同列表
-const writeOffContractList = resolve => require(['@/views/verification/writeOffContractList'], resolve);
-// 合同下期数列表
+// 合同期数列表
 const contractListNper = resolve => require(['@/views/verification/contractListNper'], resolve);
-// 车辆清单
-// const nperCarList = resolve => require(['@/views/verification/nperCarList'], resolve);
 
-// const spreadSheets = resolve => require(['@/views/test/spreadSheets'], resolve);
 
 // 租金修改
 // 限牌车型列表
@@ -362,14 +357,6 @@ const router = new Router({
           }
         },
         {
-          path: '/writeOffContractList',
-          name: 'writeOffContractList',
-          component: writeOffContractList,
-          meta: {
-            title: '核销合同列表',
-          }
-        },
-        {
           path: '/contractListNper',
           name: 'contractListNper',
           component: contractListNper,
@@ -639,18 +626,9 @@ const router = new Router({
           name: 'bankAccountList',
           component: bankAccountList,
           meta: {
-            title: '账户管理'
+            title: '银行账户管理'
           }
         },
-        // 
-        // {
-        //   path: '/spreadSheets',
-        //   name: 'spreadSheets',
-        //   component: spreadSheets,
-        //   meta: {
-        //     title: 'Excel管理'
-        //   }
-        // },
 
       ]
     }

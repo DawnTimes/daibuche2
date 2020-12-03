@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 17:31:53
- * @LastEditTime: 2020-12-03 10:49:15
+ * @LastEditTime: 2020-12-03 16:09:49
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeLetter.vue
@@ -269,7 +269,7 @@ export default {
   },
   computed: {
     ...mapState({
-      letterContractId: (store) => store.letterContractId,
+      // letterContractId: (store) => store.letterContractId,
     })
   },
   watch: {
@@ -328,7 +328,7 @@ export default {
       this.tableLoading = true;
       const url = common.queryInvoiceByContractIdUrl;
       const params = {
-        contractId: this.contractId,  // bug：多次切换tabs标签时，会返回第一次打开页面时的数据
+        contractId: this.contractId,  
         // contractId: this.letterContractId,
       };
       axios.post(url, params).then((res) => {

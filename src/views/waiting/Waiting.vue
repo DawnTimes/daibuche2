@@ -51,6 +51,8 @@
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
 import { mapState, mapMutations } from 'vuex';
+import _ from 'lodash';
+
 export default {
   data() {
     return {
@@ -76,50 +78,80 @@ export default {
     ...mapState(['roles', 'userId', 'asideInfoIds']),
   },
   created() {
-    var that = this;
+    // var that = this;
 
-    let url = '';
-    if (this.userId === 'admin') {
-      url = common.allTreeUrl;
-    } else {
-      url = common.userMenuUrl;
-    }
-    axios.get(url, { roles: this.roles }).then((res) => {
-      // console.log(res.ids);
-      res.ids.forEach(function (val, index) {
-        // 判断是否有合同审批的菜单权限
-        if (val == 161) {
-          that.haveTodo = true;
-          that.initData(res.ids);
-        }
-        // 判断是否有租金修改审批的菜单权限
-        if (val == 954) {
-          that.rentShow = true;
-          that.rentWaitingTotal(res.ids);
-        }
-        // 判断是否有支援金审批的菜单权限
-        if (val == 963) {
-          that.goldShow = true;
-          that.supportGoldWaitingTotal(res.ids);
-        }
-        // 判断是否有开票明细的菜单权限
-        if (val == 991) {
-          that.invoiceShow = true;
-          that.InvoiceWaitingTotal();
-        }
-        // 判断是否有开票合同变更的菜单权限
-        if (val == 993) {
-          that.contractChangeShow = true;
-          // that.InvoiceWaitingTotal();
-        }
-      });
-    });
+    // let url = '';
+    // if (this.userId === 'admin') {
+    //   url = common.allTreeUrl;
+    // } else {
+    //   url = common.userMenuUrl;
+    // }
+    // axios.get(url, { roles: this.roles }).then((res) => {
+    //   // console.log(res.ids);
+    //   res.ids.forEach(function (val, index) {
+    //     // 判断是否有合同审批的菜单权限
+    //     if (val == 161) {
+    //       that.haveTodo = true;
+    //       that.initData(res.ids);
+    //     }
+    //     // 判断是否有租金修改审批的菜单权限
+    //     if (val == 954) {
+    //       that.rentShow = true;
+    //       that.rentWaitingTotal(res.ids);
+    //     }
+    //     // 判断是否有支援金审批的菜单权限
+    //     if (val == 963) {
+    //       that.goldShow = true;
+    //       that.supportGoldWaitingTotal(res.ids);
+    //     }
+    //     // 判断是否有开票明细的菜单权限
+    //     if (val == 991) {
+    //       that.invoiceShow = true;
+    //       that.InvoiceWaitingTotal();
+    //     }
+    //     // 判断是否有开票合同变更的菜单权限
+    //     if (val == 993) {
+    //       that.contractChangeShow = true;
+    //       // that.InvoiceWaitingTotal();
+    //     }
+    //   });
+    // });
 
-    
   },
 
   mounted() {
-    
+    // console.log(this.asideInfoIds);
+    setTimeout(() => {
+      if (!_.isEmpty(this.asideInfoIds)) {
+      this.asideInfoIds.forEach((val, index) => {
+        // 判断是否有合同审批的菜单权限
+        if (val == 161) {
+          this.haveTodo = true;
+          this.initData(this.asideInfoIds);
+        }
+        // 判断是否有租金修改审批的菜单权限
+        if (val == 954) {
+          this.rentShow = true;
+          this.rentWaitingTotal(this.asideInfoIds);
+        }
+        // 判断是否有支援金审批的菜单权限
+        if (val == 963) {
+          this.goldShow = true;
+          this.supportGoldWaitingTotal(this.asideInfoIds);
+        }
+        // 判断是否有开票明细的菜单权限
+        if (val == 991) {
+          this.invoiceShow = true;
+          this.InvoiceWaitingTotal();
+        }
+        // 判断是否有开票合同变更的菜单权限
+        if (val == 993) {
+          this.contractChangeShow = true;
+          // this.InvoiceWaitingTotal();
+        }
+      });
+    }
+    }, 1000);
   },
 
   methods: {

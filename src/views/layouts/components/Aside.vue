@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-12-03 09:27:44
+ * @LastEditTime: 2020-12-03 19:34:50
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\layouts\components\Aside.vue
@@ -42,6 +42,8 @@ import axios from '@/common/axios.js';
 import { mapState, mapMutations } from 'vuex';
 import bus from '@/common/eventBus.js';
 import common from '@/common/common.js';
+import _ from 'lodash';
+
 export default {
   name: 'Aside',
   data() {
@@ -126,9 +128,11 @@ export default {
             }
           })
         }        
-        
-        this.$store.commit('setAsideInfo', menusList);
-        this.$store.commit('setAsideInfoIds', res.ids);
+        // this.$store.commit('setAsideInfo', menusList);
+        // this.$store.commit('setAsideInfoIds', res.ids);
+
+        this.setAsideInfo(menusList);
+        this.setAsideInfoIds(res.ids);
 
       });
     },

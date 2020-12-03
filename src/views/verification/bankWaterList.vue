@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-12-03 10:01:29
+ * @LastEditTime: 2020-12-03 15:52:22
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -179,7 +179,7 @@ import uploadDialog from '@/components/uploadDialog';  // 上传弹框
 import { mapState } from 'vuex';
 
 import { moneyFormat } from '@/common/moneyFormat.js';
-import wTable from './bankWaterDrag';
+import wTable from './components/bankWaterDrag';
 
 export default {
   name: 'bankWaterList',
