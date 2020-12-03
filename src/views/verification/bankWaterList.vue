@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-10 15:57:36
- * @LastEditTime: 2020-12-02 20:41:30
+ * @LastEditTime: 2020-12-03 10:01:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\bankWaterList.vue
@@ -513,8 +513,8 @@ export default {
           // 请求完成
           if (xhr.readyState == 4) {
             if (xhr.status === 200) {
-              // _that.exportLoading = false;
-              // _that.showDownBox = false;
+              _that.exportLoading = false;
+              _that.showDownBox = false;
                 // 返回200
                 let blob = xhr.response;
                 let reader = new FileReader(); // 调用FileReader对象的方法
@@ -531,6 +531,12 @@ export default {
                     Ee.remove();
                     // $(a).remove();
                 }
+            } else {
+              _that.exportLoading = false;
+              _that.$notify.error({
+                title: '温馨提示！',
+                message: xhr.statusText || '导出失败，请联系管理员！'
+              })
             }
           }
           
@@ -538,16 +544,16 @@ export default {
       
       // 进程结束
       xhr.onloadend = function () {
-        _that.exportLoading = false;
-        _that.showDownBox = false;
+        // _that.exportLoading = false;
+        // _that.showDownBox = false;
       }
       // 发送ajax请求
       xhr.send()
-  },
+    },
 
     // 数据导出下载文件
     exportButton() {
-      // this.showDownBox = true;
+      this.showDownBox = true;
             
       // 后端返回的是流文件
       // const params = {

@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 15:04:15
- * @LastEditTime: 2020-11-30 14:01:22
+ * @LastEditTime: 2020-12-03 10:18:42
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\standingBook\dealershipBook.vue
@@ -416,6 +416,73 @@ export default {
       })
     },
 
+    download() {
+      let _that = this;
+      let url = `/api${
+        common.exportAgentSBUrl
+      }?name=${
+        this.formData.name ? this.formData.name.trim() : ''
+      }&contractNumber=${
+        this.formData.contractNumber ? this.formData.contractNumber.trim() : ''
+      }&nper=${
+        this.formData.nper ? this.formData.nper.trim() : ''
+      }&isLimitLicence=${
+        this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
+      }&cityName=${
+        this.formData.cityName ? this.formData.cityName.trim() : ''
+      }&parentContractNumber=${
+        this.formData.parentContractNumber ? this.formData.parentContractNumber.trim() : ''}`;
+
+      // 原生ajax下载
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);    // 也可以使用POST方式，根据接口
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); // 设置请求头类型
+      xhr.responseType = "blob";  // 返回类型blob
+      // 定义请求完成的处理函数，请求前也可以增加加载框/禁用下载按钮逻辑
+      xhr.onload = function () {
+        // console.log(xhr);
+        // console.log(xhr.getAllResponseHeaders()); //返回全部头信息,string
+          // 请求完成
+          if (xhr.readyState == 4) {
+            if (xhr.status === 200) {
+              _that.exportLoading = false;
+              _that.showDownBox = false;
+                // 返回200
+                let blob = xhr.response;
+                let reader = new FileReader(); // 调用FileReader对象的方法
+                reader.readAsDataURL(blob);  // 该方法将文件读取为一段以 data: 开头的字符串，这段字符串的实质就是 Data URL，Data URL是一种将小文件直接嵌入文档的方案。这里的小文件通常是指图像与 html 等格式的文件。 转换为base64，可以直接放入a表情href
+                reader.onload = function (e) {
+                  // console.log(e);
+                    // 转换完成，创建一个a标签用于下载
+                    let Ee = document.createElement('a');
+                    let currentTime = moment().format('YYYYMMDD'); // 当前时间
+                    Ee.download = '经销店台账信息' + currentTime +  '.xlsx';
+                    Ee.href = e.target.result;
+                    // $("body").append(a);  // 修复firefox中无法触发click
+                    Ee.click();
+                    Ee.remove();
+                    // $(a).remove();
+                }
+            } else {
+              _that.exportLoading = false;
+              _that.$notify.error({
+                title: '温馨提示！',
+                message: xhr.statusText || '导出失败，请联系管理员！'
+              })
+            }
+          }
+          
+      };
+      
+      // 进程结束
+      xhr.onloadend = function () {
+        // _that.exportLoading = false;
+        // _that.showDownBox = false;
+      }
+      // 发送ajax请求
+      xhr.send()
+    },
+
     // 导出经销店台账 isLimitLicence cityName
     exportButton() {
       this.showDownBox = true;
@@ -449,21 +516,22 @@ export default {
     // 确定下载
     downSubmit() {
       this.exportLoading = true;
+      this.download();
 
-       window.location.href = `/api${
-        common.exportAgentSBUrl
-      }?name=${
-        this.formData.name ? this.formData.name.trim() : ''
-      }&contractNumber=${
-        this.formData.contractNumber ? this.formData.contractNumber.trim() : ''
-      }&nper=${
-        this.formData.nper ? this.formData.nper.trim() : ''
-      }&isLimitLicence=${
-        this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
-      }&cityName=${
-        this.formData.cityName ? this.formData.cityName.trim() : ''
-      }&parentContractNumber=${
-        this.formData.parentContractNumber ? this.formData.parentContractNumber.trim() : ''}`;
+      //  window.location.href = `/api${
+      //   common.exportAgentSBUrl
+      // }?name=${
+      //   this.formData.name ? this.formData.name.trim() : ''
+      // }&contractNumber=${
+      //   this.formData.contractNumber ? this.formData.contractNumber.trim() : ''
+      // }&nper=${
+      //   this.formData.nper ? this.formData.nper.trim() : ''
+      // }&isLimitLicence=${
+      //   this.formData.isLimitLicence ? this.formData.isLimitLicence : ''
+      // }&cityName=${
+      //   this.formData.cityName ? this.formData.cityName.trim() : ''
+      // }&parentContractNumber=${
+      //   this.formData.parentContractNumber ? this.formData.parentContractNumber.trim() : ''}`;
     },
     // 取消下载
     downCancelBack() {

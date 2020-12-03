@@ -243,7 +243,7 @@ export default {
 
     // 升序排序
     sortUp(x, y) {
-      return x.id - y.id;
+      return x.sort - y.sort;
     }
   },
   mounted() {

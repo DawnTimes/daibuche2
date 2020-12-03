@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:47
- * @LastEditTime: 2020-10-29 15:30:14
+ * @LastEditTime: 2020-12-03 09:27:44
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\layouts\components\Aside.vue
@@ -132,6 +132,11 @@ export default {
 
       });
     },
+
+    // 升序排序
+    sortUp(x, y) {
+      return x.sort - y.sort;
+    }
   },
   created() {
     this.getUserMenuList();

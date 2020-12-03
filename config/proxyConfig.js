@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 17:04:44
- * @LastEditTime: 2020-12-02 19:54:05
+ * @LastEditTime: 2020-12-03 10:52:34
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\config\proxyConfig.js
@@ -17,8 +17,8 @@
 // 
 // let yun = 'http://192.166.87.121:8888'; // 通过网关访问 开发
 // let yun = 'http://192.166.87.119:8888'; // 通过网关访问 开发
-// let yun = 'http://192.166.87.131:8083'; // 开发环境
-let yun = 'http://192.166.87.132:8083'; // 开发环境
+let yun = 'http://192.166.87.131:8083'; // 开发环境
+// let yun = 'http://192.166.87.132:8083'; // 开发环境
 // let yun = 'http://192.166.80.2:8083'; // 
 // let yun = 'http://192.166.88.2:8083'; // 
 // let yun = 'http://192.166.14.155:8083'; // 测试
