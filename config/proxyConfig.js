@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 17:04:44
- * @LastEditTime: 2020-12-04 12:25:20
+ * @LastEditTime: 2020-12-04 12:35:01
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\config\proxyConfig.js
