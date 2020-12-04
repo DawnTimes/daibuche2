@@ -135,7 +135,7 @@ export default {
       let params = { roleCode: this.$route.query.roleCode };
       let url = common.roleMenuTreeUrl;
       axios.get(url, params).then((res) => {
-        this.data4 = res;
+        this.data4 = res.sort(this.sortUp);
         // 这个时候再去更改css
         this.$nextTick(function () {
           this.changeCss();
@@ -144,6 +144,11 @@ export default {
         this.setSelectData();
       });
     },
+
+    // 升序排序
+    sortUp(x, y) {
+      return x.sort - y.sort;
+    }
   },
 };
 </script>

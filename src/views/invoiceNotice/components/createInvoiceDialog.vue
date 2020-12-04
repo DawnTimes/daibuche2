@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 15:15:46
- * @LastEditTime: 2020-10-23 19:11:38
+ * @LastEditTime: 2020-12-02 12:55:16
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\components\createInvoiceDialog.vue
@@ -27,7 +27,7 @@
         <!-- <el-form-item label="登记人">
           <el-input v-model="invoiceForm.userId" disabled></el-input>
         </el-form-item>-->
-        <el-form-item label="生成日期" prop="applyDate">
+        <el-form-item label="申请日期" prop="applyDate">
           <el-date-picker
             v-model="invoiceForm.applyDate"
             value-format="yyyy-MM-dd"

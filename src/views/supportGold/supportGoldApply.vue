@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 16:49:12
- * @LastEditTime: 2020-11-23 17:32:41
+ * @LastEditTime: 2020-12-01 17:37:40
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApply.vue
@@ -15,7 +15,7 @@
         :model="formData"
         class="demo-form-inline"
         label-width="100px"
-        size="small"
+        size="mini"
         ref="ruleForm"
       >
         <!-- <el-form-item label="支援金月份:" prop="systemName">
@@ -124,7 +124,7 @@
             <span>{{ scope.row.rentTotalCount | moneyFormat}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip width="100">
+        <el-table-column prop="approvalStatus" label="审批状态" show-overflow-tooltip width="120">
           <template slot-scope="scope">
             <span
             :class="{greenStatus: scope.row.approvalStatus == '4', redStatus: scope.row.approvalStatus == '5', blueColor: scope.row.approvalStatus == '1' ,

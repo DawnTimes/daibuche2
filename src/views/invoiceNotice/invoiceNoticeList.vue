@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-21 10:58:18
- * @LastEditTime: 2020-11-17 18:16:31
+ * @LastEditTime: 2020-12-03 10:25:43
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\invoiceNotice\invoiceNoticeList.vue
@@ -15,7 +15,7 @@
         :model="formData"
         class="demo-form-inline"
         label-width="90px"
-        size="small"
+        size="mini"
         ref="ruleForm"
       >
         <el-form-item label="购方名称" prop="buyName">
@@ -60,7 +60,7 @@
             placeholder
           ></el-input>
         </el-form-item>
-        <el-form-item label="生成时间" prop="applyDate">
+        <el-form-item label="申请时间" prop="applyDate">
           <!-- <el-date-picker
             v-model="formData.dateTime"
             type="daterange"
@@ -72,8 +72,8 @@
           ></el-date-picker> -->
           <el-date-picker
             v-model="formData.applyDate"
-            type="date"
-            value-format="yyyy-MM-dd"
+            type="month"
+            value-format="yyyy-MM"
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
@@ -173,7 +173,7 @@
           fixed
         ></el-table-column> -->
         <el-table-column
-          width="80"
+          width="70"
           align="center"
           label="序号"
           type="index"
@@ -188,7 +188,7 @@
         ></el-table-column>
         <el-table-column
           prop="applyDate"
-          label="生成时间"
+          label="申请时间"
           show-overflow-tooltip
           width="120"
         >
@@ -243,7 +243,7 @@
         <el-table-column
           prop="remark"
           label="备注"
-          width="400"
+          width="380"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
@@ -382,6 +382,13 @@
               v-show="rightControl.register"
               >登记</el-button
             >
+            <!-- <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.row)"
+              v-show="rightControl.register"
+              >删除</el-button
+            > -->
           </template>
         </el-table-column>
       </el-table>
@@ -429,6 +436,14 @@
       :loading="exportLoading"
       v-on:cancelbox="downCancelBack"
     ></downConfirmBox>
+
+    <!-- 删除提示 -->
+    <deleteConfirmBox
+      v-if="showDeleteBox"
+      :msgConfirBox="deleteInfoText"
+      v-on:submitForm="deleteSubmit"
+      v-on:cancelbox="cancelBack"
+    ></deleteConfirmBox>
   </div>
 </template>
 
@@ -443,6 +458,7 @@ import invoiceRegisterDialog from './components/invoiceRegisterDialog'; // 登�
 import createInvoiceDialog from './components/createInvoiceDialog'; // 生成开票明细弹框
 import uploadDialog from '@/components/uploadDialog'; // 上传弹框
 import downConfirmBox from '@/components/confirmBox';  // 导出弹框
+import deleteConfirmBox from '@/components/confirmBox';  // 删除弹框
 
 export default {
   name: 'invoiceNoticeList',
@@ -452,6 +468,7 @@ export default {
     createInvoiceDialog,
     uploadDialog,
     downConfirmBox,
+    deleteConfirmBox,
   },
   data() {
     return {
@@ -480,7 +497,7 @@ export default {
         contractId: '',
         invoiceDate: '',
         invoiceNumber: '',
-        payDate: '',
+        // payDate: '',
         payDay: '',
       },
       status: {
@@ -514,6 +531,17 @@ export default {
       // 导出框显示
       showDownBox: false,
       exportLoading: false,
+
+      // 删除提示文本
+      deleteInfoText: {
+        icon: 'icon-jinggao',
+        confirst: '确认删除该银行流水？',
+        consecond: '警告：删除后不可恢复！'
+      },
+      // 删除框显示
+      showDeleteBox: false,
+      // 删除的系统ID
+      deleteId: null,
     };
   },
   computed: {
@@ -652,10 +680,78 @@ export default {
       this.$refs.uploadDialog.isShow(true);
     },
 
+
+    download() {
+      let _that = this;
+      let url = `/api${
+        common.exportSubcarInvoiceListUrl
+      }?buyName=${
+        this.formData.buyName ? this.formData.buyName.trim() : ''
+      }&buyCreditCode=${
+        this.formData.buyCreditCode ? this.formData.buyCreditCode.trim() : ''
+      }&remark=${
+        this.formData.remark ? this.formData.remark.trim() : ''
+      }&sellName=${
+        this.formData.sellName ? this.formData.sellName.trim() : ''
+      }&isOpen=${
+        this.formData.isOpen ? this.formData.isOpen : ''
+      }&applyDate=${
+        this.formData.applyDate ? this.formData.applyDate : ''}`;
+
+      // 原生ajax下载
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);    // 也可以使用POST方式，根据接口
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); // 设置请求头类型
+      xhr.responseType = "blob";  // 返回类型blob
+      // 定义请求完成的处理函数，请求前也可以增加加载框/禁用下载按钮逻辑
+      xhr.onload = function () {
+        // console.log(xhr);
+        // console.log(xhr.getAllResponseHeaders()); //返回全部头信息,string
+          // 请求完成
+          if (xhr.readyState == 4) {
+            if (xhr.status === 200) {
+              _that.exportLoading = false;
+              _that.showDownBox = false;
+                // 返回200
+                let blob = xhr.response;
+                let reader = new FileReader(); // 调用FileReader对象的方法
+                reader.readAsDataURL(blob);  // 该方法将文件读取为一段以 data: 开头的字符串，这段字符串的实质就是 Data URL，Data URL是一种将小文件直接嵌入文档的方案。这里的小文件通常是指图像与 html 等格式的文件。 转换为base64，可以直接放入a表情href
+                reader.onload = function (e) {
+                  // console.log(e);
+                    // 转换完成，创建一个a标签用于下载
+                    let Ee = document.createElement('a');
+                    let currentTime = moment().format('YYYYMMDD'); // 当前时间
+                    Ee.download = '开票明细' + currentTime +  '.xlsx';
+                    Ee.href = e.target.result;
+                    // $("body").append(a);  // 修复firefox中无法触发click
+                    Ee.click();
+                    Ee.remove();
+                    // $(a).remove();
+                }
+            } else {
+              _that.exportLoading = false;
+              _that.$notify.error({
+                title: '温馨提示！',
+                message: xhr.statusText || '导出失败，请联系管理员！'
+              })
+            }
+          }
+          
+      };
+      
+      // 进程结束
+      xhr.onloadend = function () {
+        // _that.exportLoading = false;
+        // _that.showDownBox = false;
+      }
+      // 发送ajax请求
+      xhr.send()
+    },
+
     // 导出明细
     exportButton() {
       this.showDownBox = true;
-
+      
       // window.location.href = `/api${
       //   common.exportSubcarInvoiceListUrl
       // }?buyName=${
@@ -688,21 +784,22 @@ export default {
     // 确定下载
     downSubmit() {
       this.exportLoading = true;
-      
-      window.location.href = `/api${
-        common.exportSubcarInvoiceListUrl
-      }?buyName=${
-        this.formData.buyName ? this.formData.buyName : ''
-      }&buyCreditCode=${
-        this.formData.buyCreditCode ? this.formData.buyCreditCode : ''
-      }&remark=${
-        this.formData.remark ? this.formData.remark : ''
-      }&sellName=${
-        this.formData.sellName ? this.formData.sellName : ''
-      }&isOpen=${
-        this.formData.isOpen ? this.formData.isOpen : ''
-      }&applyDate=${
-        this.formData.applyDate ? this.formData.applyDate : ''}`;
+      this.download();
+
+      // window.location.href = `/api${
+      //   common.exportSubcarInvoiceListUrl
+      // }?buyName=${
+      //   this.formData.buyName ? this.formData.buyName.trim() : ''
+      // }&buyCreditCode=${
+      //   this.formData.buyCreditCode ? this.formData.buyCreditCode.trim() : ''
+      // }&remark=${
+      //   this.formData.remark ? this.formData.remark.trim() : ''
+      // }&sellName=${
+      //   this.formData.sellName ? this.formData.sellName.trim() : ''
+      // }&isOpen=${
+      //   this.formData.isOpen ? this.formData.isOpen : ''
+      // }&applyDate=${
+      //   this.formData.applyDate ? this.formData.applyDate : ''}`;
     },
     // 取消下载
     downCancelBack() {
@@ -738,11 +835,12 @@ export default {
 
     // 登记弹窗
     handleRegister(row) {
+      console.log(row);
       // this.registerForm.currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
       // this.registerForm.userId = this.userId;
       this.registerForm.contractId = row.contractId;
       this.registerForm.invoiceNumber = row.invoiceNumber;
-      this.registerForm.invoiceDate = moment(row.invoiceDate).format('YYYY-MM-DD HH:mm:ss');
+      this.registerForm.invoiceDate = row.invoiceDate ? moment(row.invoiceDate).format('YYYY-MM-DD HH:mm:ss') : '';
       this.registerForm.payDay = moment(row.payDate).format('YYYY-MM-DD');
       // this.registerForm.buyName       = row.buyName;
       // this.registerForm.buyCreditCode = row.buyCreditCode;
@@ -822,6 +920,41 @@ export default {
           });
         });
     },
+
+    // 删除弹框
+    handleDelete(row) {
+      this.showDeleteBox = true;
+      this.deleteId = row.contractId;
+    },
+
+    // 确定删除
+    deleteSubmit() {
+      const url = common.deleteBankStatementUrl;
+      const data = {
+        serialNumber: this.deleteId
+      };
+      axios.post(url, data).then(res => {
+        if (res.ec === '0') {
+          this.$notify.success({
+            title: '温馨提示！',
+            message: '删除成功！'
+          });
+          this.showDeleteBox = false;
+          this.getInvoiceNoticeListData();
+        } else {
+          this.$notify.error({
+            title: '温馨提示！',
+            message: res.em || '删除失败！'
+          });
+        }
+      });
+    },
+
+    // 取消删除
+    cancelBack() {
+      this.showDeleteBox = false;
+    },
+
   },
   filters: {
     function() {},

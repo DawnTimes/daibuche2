@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-11-24 09:33:12
+ * @LastEditTime: 2020-12-04 09:55:14
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\store\index.js
@@ -22,41 +22,11 @@ const store = new Vuex.Store({
     successStatus: false,
     rentApprovalNum: 0,
     letterContractId: '',
-    dropCol: JSON.parse(localStorage.getItem('dropCol')) || [
-      { label: '承租人/牌照商', prop: 'name', width: '200px' },
-      { label: '合同编号', prop: 'contractNumber', width: '160px' },
-      { label: '合同名称', prop: 'contractName', width: '150px' },
-      { label: '合同状态', prop: 'contractNormalStatus', width: '80px' },
-      { label: '合同类型', prop: 'contractType', width: '100px' },
-      { label: '上牌地', prop: 'cityName', width: '' },
-      { label: '是否限牌', prop: 'isLimitLicence', width: '80px' },
-      { label: '是否租赁公司', prop: 'isGalcCompany', width: '100px' },
-      { label: '期数', prop: 'nper', width: '' },
-      { label: '租赁方式', prop: 'leaseWay', width: '80px' },
-      { label: '车辆数量', prop: 'num', width: '80px' },
-      { label: '起租日', prop: 'batchStartingDate', width: '150px' },
-      { label: '支付日', prop: 'payDate', width: '150px' },
-      { label: '核销状态', prop: 'repaymentStatus', width: '80px' },
-      { label: '应收金额', prop: 'dueAmount', width: '160px' },
-      { label: '应收本金', prop: 'duePrincipal', width: '160px' },
-      { label: '应收利息', prop: 'dueinterest', width: '160px' },
-      { label: '应收管理费', prop: 'dueManagementFee', width: '160px' },
-      { label: '应收手续费', prop: 'dueCommission', width: '160px' },
-      { label: '已收金额', prop: 'receivedAmount', width: '160px' },
-      { label: '已收本金', prop: 'receivedPrincipal', width: '160px' },
-      { label: '已收利息', prop: 'receivedInterest', width: '160px' },
-      { label: '已收管理费', prop: 'receivedManagementFee', width: '160px' },
-      { label: '已收手续费', prop: 'receivedCommission', width: '160px' },
-      { label: '未收金额', prop: 'outstandingAmount', width: '160px' },
-      { label: '未收本金', prop: 'outstandingPrincipal', width: '160px' },
-      { label: '未收利息', prop: 'outstandingInterest', width: '160px' },
-      { label: '未收管理费', prop: 'outstandingManagementFee', width: '160px' },
-      { label: '未收手续费', prop: 'outstandingCommission', width: '160px' },
-    ],
+    // dropCol: [],
     tableHeader: JSON.parse(localStorage.getItem('tableHeader')) || [
       { label: '承租人/牌照商', prop: 'name', minWidth: '200px' },
       { label: '合同编号', prop: 'contractNumber', minWidth: '160px' },
-      { label: '原合同编号', prop: 'parentContractNumber', minWidth: '160px' },
+      { label: '主合同编号', prop: 'parentContractNumber', minWidth: '160px' },
       { label: '合同名称', prop: 'contractName', minWidth: '150px' },
       { label: '合同状态', prop: 'contractNormalStatusText', minWidth: '80px' },
       { label: '合同类型', prop: 'contractTypeText', minWidth: '100px' },
@@ -84,6 +54,25 @@ const store = new Vuex.Store({
       { label: '未收利息', prop: 'outstandingInterest', minWidth: '120px' },
       { label: '未收管理费', prop: 'outstandingManagementFee', minWidth: '120px' },
       { label: '未收手续费', prop: 'outstandingCommission', minWidth: '120px' },
+    ],
+    bankWaterHeader: JSON.parse(localStorage.getItem('bankWaterHeader')) || [
+      { label: '交易时间', prop: 'tradeDate', minWidth: '110px', sortable: true },
+      { label: '银行单据号', prop: 'serialNumber', minWidth: '160px', sortable: true },
+      { label: '收款金额', prop: 'income', minWidth: '120px' },
+      { label: '收款账户名称', prop: 'companyName', minWidth: '200px' },
+      { label: '收款账号', prop: 'bankAccountNo', minWidth: '150px' },
+      { label: '收款账户开户行', prop: 'bankAccountName', minWidth: '150px' },
+      { label: '汇款账户名称', prop: 'sideAccountName', minWidth: '200px' },
+      { label: '汇款账号', prop: 'sideAccount', minWidth: '150px' },
+      { label: '核销状态', prop: 'verStateText', minWidth: '80px' },
+      { label: '摘要', prop: 'digest', minWidth: '150px' },
+      { label: '代付标志', prop: 'paidLogo', minWidth: '150px' },
+      { label: '项目类别', prop: 'projectCategory', minWidth: '100px' },
+      { label: '已核销金额', prop: 'haveVerLines', minWidth: '150px' },
+      { label: '未核销金额', prop: 'notVerLines', minWidth: '150px' },
+      { label: '退款金额', prop: 'refund', minWidth: '150px' },
+      { label: '台账标志', prop: 'newLedgerLogo', minWidth: '120px' },
+      { label: '备注', prop: 'remark', minWidth: '100px' },
     ],
 
 
@@ -126,13 +115,17 @@ const store = new Vuex.Store({
       state.letterContractId = contractId
     },
 
-    setDropCol(state, dropCol) {
-      state.dropCol = dropCol;
-      localStorage.setItem('dropCol', JSON.stringify(dropCol))
-    },
+    // setDropCol(state, dropCol) {
+    //   state.dropCol = dropCol;
+    //   localStorage.setItem('dropCol', JSON.stringify(dropCol))
+    // },
     setTableHeader(state, tableHeader) {
       state.tableHeader = tableHeader;
       localStorage.setItem('tableHeader', JSON.stringify(tableHeader))
+    },
+    setBankWaterHeader(state, bankWaterHeader) {
+      state.bankWaterHeader = bankWaterHeader;
+      localStorage.setItem('bankWaterHeader', JSON.stringify(bankWaterHeader))
     },
 
   },

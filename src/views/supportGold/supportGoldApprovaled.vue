@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-19 17:31:49
- * @LastEditTime: 2020-11-16 15:51:07
+ * @LastEditTime: 2020-11-27 09:21:30
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\supportGoldApprovaled.vue
@@ -276,7 +276,10 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.baseInformationDetail {
+
+<style lang="scss">
+.supportGoldApprovaled .el-tabs__item {
+  height: 30px;
+  line-height: 30px;
 }
 </style>

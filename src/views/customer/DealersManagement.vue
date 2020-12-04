@@ -46,8 +46,9 @@
             size="small"
             clearable
           >
-            <el-option label="是" value="Y"></el-option>
-            <el-option label="否" value="N"></el-option>
+            <el-option label="商贸全资" value="Y"></el-option>
+            <el-option label="非商贸" value="N"></el-option>
+            <el-option label="商贸非全资" value="F"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -101,7 +102,6 @@
         resizable
       ></el-table-column>
       <el-table-column
-        fixed
         prop="agentShortName"
         label="经销商简称"
         width="150"
@@ -115,7 +115,11 @@
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
-      <el-table-column prop="isGacShop" label="商贸店" width="80"></el-table-column>
+      <el-table-column prop="isGacShop" label="是否商贸店" width="100">
+        <template slot-scope="scope">
+            <span>{{ scope.row.isGacShop | isGacShopFormat }}</span>
+          </template>
+      </el-table-column>
       <el-table-column
         prop="socialCreditCode"
         label="社会统一信用代码"
@@ -148,6 +152,17 @@
       <el-table-column
         prop="taxPayerType"
         label="纳税人类型"
+        width="120"
+        :show-overflow-tooltip="true"
+        resizable
+      >
+        <template slot-scope="scope">
+          <span>{{ scope.row.taxPayerType | taxPayerType }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="email"
+        label="email地址"
         width="120"
         :show-overflow-tooltip="true"
         resizable
@@ -229,7 +244,11 @@
         :show-overflow-tooltip="true"
         resizable
       ></el-table-column>
-      <el-table-column prop="status" label="状态" width="50" :show-overflow-tooltip="true" resizable></el-table-column>
+      <el-table-column prop="status" label="状态" width="50" :show-overflow-tooltip="true" resizable>
+        <template slot-scope="scope">
+          <span>{{ scope.row.status | status }}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="mailingAddress"
         label="邮寄地址"
@@ -274,7 +293,7 @@
           <i class="el-icon-close icon-right" @click="closeWindow" style="cursor:pointer;"></i>
         </header>
         <div class="main-body controlDivClass">
-          <el-form ref="divParams" :model="divParams" label-width="140px">
+          <el-form ref="divParams" :model="divParams" label-width="140px" :rules="rules">
             <el-row>
               <el-col :span="24">
                 <div class="grid-content bg-purple">
@@ -339,8 +358,9 @@
                   >
                     <el-select v-model="divParams.isGacShop" style="width:100%" clearable>
                       <!-- AT--自动/MT--手动 -->
-                      <el-option label="是" value="Y"></el-option>
-                      <el-option label="否" value="N"></el-option>
+                      <el-option label="商贸全资" value="Y"></el-option>
+                      <el-option label="非商贸" value="N"></el-option>
+                      <el-option label="商贸非全资" value="F"></el-option>
                     </el-select>
                   </el-form-item>
                 </div>
@@ -419,6 +439,8 @@
                       <el-option label="西部" value="009"></el-option>
                       <el-option label="香港" value="008"></el-option>
                       <el-option label="澳门" value="001"></el-option>
+                      <el-option label="西南" value="010"></el-option>
+                      <el-option label="西北" value="011"></el-option>
                     </el-select>
                   </el-form-item>
                 </div>
@@ -473,8 +495,8 @@
               </el-col>
               <el-col :span="24">
                 <div class="grid-content bg-purple">
-                  <el-form-item label="Email地址">
-                    <el-input v-model="divParams.Email"></el-input>
+                  <el-form-item label="email地址" prop="email">
+                    <el-input v-model="divParams.email"></el-input>
                   </el-form-item>
                 </div>
               </el-col>
@@ -582,11 +604,11 @@
     <div v-if="showEditAgent" class="showEditAgentInfo">
       <div class="msgbody">
         <header>
-          编辑经销商222
+          编辑经销商
           <i class="el-icon-close icon-right" @click="closeWindow" style="cursor:pointer;"></i>
         </header>
         <div class="main-body controlDivClass">
-          <el-form ref="divEditParams" :model="divEditParams" label-width="140px">
+          <el-form ref="divEditParams" :model="divEditParams" label-width="140px" :rules="rules">
             <el-row>
               <el-col :span="24">
                 <div class="grid-content bg-purple">
@@ -651,8 +673,9 @@
                   >
                     <el-select v-model="divEditParams.isGacShop" style="width:100%" clearable>
                       <!-- AT--自动/MT--手动 -->
-                      <el-option label="是" value="Y"></el-option>
-                      <el-option label="否" value="N"></el-option>
+                      <el-option label="商贸全资" value="Y"></el-option>
+                      <el-option label="非商贸" value="N"></el-option>
+                      <el-option label="商贸非全资" value="F"></el-option>
                     </el-select>
                   </el-form-item>
                 </div>
@@ -731,6 +754,8 @@
                       <el-option label="西部" value="009"></el-option>
                       <el-option label="香港" value="008"></el-option>
                       <el-option label="澳门" value="001"></el-option>
+                      <el-option label="西南" value="010"></el-option>
+                      <el-option label="西北" value="011"></el-option>
                     </el-select>
                   </el-form-item>
                 </div>
@@ -785,8 +810,8 @@
               </el-col>
               <el-col :span="24">
                 <div class="grid-content bg-purple">
-                  <el-form-item label="Email地址">
-                    <el-input v-model="divEditParams.Email"></el-input>
+                  <el-form-item label="email地址" prop="email">
+                    <el-input v-model="divEditParams.email"></el-input>
                   </el-form-item>
                 </div>
               </el-col>
@@ -898,6 +923,21 @@ import common from '@/common/common.js';
 import { mapState, mapMutations } from 'vuex';
 export default {
   data() {
+    // 邮箱验证
+    const validateEmail = (rule, value, callback) => {
+      if (value) {
+        if (value !== '') {
+          // const reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/; // 名称允许汉字、字母、数字，域名只允许英文域名
+          const reg = /^[A-Za-z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/; // 只允许英文字母、数字、下划线、英文句号、以及中划线组成
+          if (!reg.test(value)) {
+            callback(new Error('请输入正确的邮箱地址,只允许英文字母、数字、下划线、英文句号、以及中划线组成'));
+          }
+        }
+        callback();
+      } else {
+        callback();
+      }
+    };
     return {
       rolePermission: {
         agentAdd: false,
@@ -933,7 +973,7 @@ export default {
         areaCode: '',
         provinceCode: '',
         cityCode: '',
-        Email: '',
+        email: '',
       },
       divEditParams: {
         agentId: '',
@@ -963,7 +1003,7 @@ export default {
         areaCode: '',
         provinceCode: '',
         cityCode: '',
-        Email: '',
+        email: '',
       },
       showAddAgent: false,
       showEditAgent: false,
@@ -985,10 +1025,44 @@ export default {
         socialCreditCode: '',
         status: '',
       },
+
+      areaForm: {
+        areaCode: '',
+        cityCode: '',
+        provinceCode: '',
+      },
+
+      rules: {
+        email: [
+          {
+            required: false,
+            validator: validateEmail,
+            trigger: 'blur',
+          },
+        ],
+      },
     };
   },
   computed: {
     ...mapState(['userId']),
+  },
+
+  watch: {
+    // 'divEditParams.areaCode'(newVal) {
+    //   if (newVal) {
+    //     this.areaForm.areaCode = newVal
+    //   }
+    // },
+    // 'divEditParams.provinceCode'(newVal) {
+    //   if (newVal) {
+    //     this.areaForm.provinceCode = newVal
+    //   }
+    // },
+    // 'divEditParams.cityCode'(newVal) {
+    //   if (newVal) {
+    //     this.areaForm.cityCode = newVal
+    //   }
+    // },
   },
 
   methods: {
@@ -1040,6 +1114,17 @@ export default {
           }
         });
     },
+    getCity(provinceCode) {
+      this.divEditParams.cityCode = '';
+      let url = common.findCityInfoUrl;
+      axios
+        .post(url, { provinceCode: provinceCode })
+        .then((res) => {
+          if (res.em === 'Success!') {
+            this.cityList = res.data.cityList;
+          }
+        });
+    },
     initData() {
       this.divParams.operationUser = this.userId;
       let url = common.agentListUrl;
@@ -1047,42 +1132,42 @@ export default {
         if (res.em === 'Success!') {
           this.tableData = res.data.agentList;
           this.tableData.forEach((obj, index) => {
-            if (obj.isGacShop) {
-              if (obj.isGacShop === 'Y') {
-                obj.isGacShop = '是';
-              }
-              if (obj.isGacShop === 'N') {
-                obj.isGacShop = '否';
-              }
-            }
-            if (obj.status) {
-              if (obj.status === 'Y') {
-                obj.status = '有效';
-              }
-              if (obj.status === 'N') {
-                obj.status = '无效';
-              }
-            }
+            // if (obj.isGacShop) {
+            //   if (obj.isGacShop === 'Y') {
+            //     obj.isGacShop = '是';
+            //   }
+            //   if (obj.isGacShop === 'N') {
+            //     obj.isGacShop = '否';
+            //   }
+            // }
+            // if (obj.status) {
+            //   if (obj.status === 'Y') {
+            //     obj.status = '有效';
+            //   }
+            //   if (obj.status === 'N') {
+            //     obj.status = '无效';
+            //   }
+            // }
 
             // 0一般纳税人/1小规模纳税人/2个人
-            if (obj.taxPayerType) {
-              if (obj.taxPayerType === '0') {
-                obj.taxPayerType = '一般纳税人';
-              }
-              if (obj.taxPayerType === '1') {
-                obj.taxPayerType = '小规模纳税人';
-              }
-              if (obj.taxPayerType === '2') {
-                obj.taxPayerType = '个人';
-              }
-            }
+            // if (obj.taxPayerType) {
+            //   if (obj.taxPayerType === '0') {
+            //     obj.taxPayerType = '一般纳税人';
+            //   }
+            //   if (obj.taxPayerType === '1') {
+            //     obj.taxPayerType = '小规模纳税人';
+            //   }
+            //   if (obj.taxPayerType === '2') {
+            //     obj.taxPayerType = '个人';
+            //   }
+            // }
           });
           this.totalCount = parseInt(res.data.turnPageTotalNum);
         }
       });
     },
     initData2() {
-      console.log(this.realParams);
+      // console.log(this.realParams);
       let url = common.agentListUrl;
       this.realParams.turnPageBeginPos = this.params.turnPageBeginPos;
       this.realParams.turnPageShowNum = this.params.turnPageShowNum;
@@ -1091,35 +1176,35 @@ export default {
         if (res.em === 'Success!') {
           this.tableData = res.data.agentList;
           this.tableData.forEach((obj, index) => {
-            if (obj.isGacShop) {
-              if (obj.isGacShop === 'Y') {
-                obj.isGacShop = '是';
-              }
-              if (obj.isGacShop === 'N') {
-                obj.isGacShop = '否';
-              }
-            }
-            if (obj.status) {
-              if (obj.status === 'Y') {
-                obj.status = '有效';
-              }
-              if (obj.status === 'N') {
-                obj.status = '无效';
-              }
-            }
+            // if (obj.isGacShop) {
+            //   if (obj.isGacShop === 'Y') {
+            //     obj.isGacShop = '是';
+            //   }
+            //   if (obj.isGacShop === 'N') {
+            //     obj.isGacShop = '否';
+            //   }
+            // }
+            // if (obj.status) {
+            //   if (obj.status === 'Y') {
+            //     obj.status = '有效';
+            //   }
+            //   if (obj.status === 'N') {
+            //     obj.status = '无效';
+            //   }
+            // }
 
             // 0一般纳税人/1小规模纳税人/2个人
-            if (obj.taxPayerType) {
-              if (obj.taxPayerType === '0') {
-                obj.taxPayerType = '一般纳税人';
-              }
-              if (obj.taxPayerType === '1') {
-                obj.taxPayerType = '小规模纳税人';
-              }
-              if (obj.taxPayerType === '2') {
-                obj.taxPayerType = '个人';
-              }
-            }
+            // if (obj.taxPayerType) {
+            //   if (obj.taxPayerType === '0') {
+            //     obj.taxPayerType = '一般纳税人';
+            //   }
+            //   if (obj.taxPayerType === '1') {
+            //     obj.taxPayerType = '小规模纳税人';
+            //   }
+            //   if (obj.taxPayerType === '2') {
+            //     obj.taxPayerType = '个人';
+            //   }
+            // }
           });
           this.totalCount = parseInt(res.data.turnPageTotalNum);
         }
@@ -1132,35 +1217,35 @@ export default {
         this.selectDisposeCode();
       }
 
-      if (this.divEditParams.isGacShop) {
-        if (this.divEditParams.isGacShop === '是') {
-          this.divEditParams.isGacShop = 'Y';
-        }
-        if (this.divEditParams.isGacShop === '否') {
-          this.divEditParams.isGacShop = 'N';
-        }
-      }
-      if (this.divEditParams.status) {
-        if (this.divEditParams.status === '有效') {
-          this.divEditParams.status = 'Y';
-        }
-        if (this.divEditParams.status === '无效') {
-          this.divEditParams.status = 'N';
-        }
-      }
+      // if (this.divEditParams.isGacShop) {
+      //   if (this.divEditParams.isGacShop === '是') {
+      //     this.divEditParams.isGacShop = 'Y';
+      //   }
+      //   if (this.divEditParams.isGacShop === '否') {
+      //     this.divEditParams.isGacShop = 'N';
+      //   }
+      // }
+      // if (this.divEditParams.status) {
+      //   if (this.divEditParams.status === '有效') {
+      //     this.divEditParams.status = 'Y';
+      //   }
+      //   if (this.divEditParams.status === '无效') {
+      //     this.divEditParams.status = 'N';
+      //   }
+      // }
 
       // 0一般纳税人/1小规模纳税人/2个人
-      if (this.divEditParams.taxPayerType) {
-        if (this.divEditParams.taxPayerType === '一般纳税人') {
-          this.divEditParams.taxPayerType = '0';
-        }
-        if (this.divEditParams.taxPayerType === '小规模纳税人') {
-          this.divEditParams.taxPayerType = '1';
-        }
-        if (this.divEditParams.taxPayerType === '个人') {
-          this.divEditParams.taxPayerType = '2';
-        }
-      }
+      // if (this.divEditParams.taxPayerType) {
+      //   if (this.divEditParams.taxPayerType === '一般纳税人') {
+      //     this.divEditParams.taxPayerType = '0';
+      //   }
+      //   if (this.divEditParams.taxPayerType === '小规模纳税人') {
+      //     this.divEditParams.taxPayerType = '1';
+      //   }
+      //   if (this.divEditParams.taxPayerType === '个人') {
+      //     this.divEditParams.taxPayerType = '2';
+      //   }
+      // }
     },
     handleSizeChange(pageSize) {
       this.currentPage = 1;
@@ -1185,7 +1270,16 @@ export default {
       this.showAddAgent = true;
     },
     editInfo(row) {
+      console.log(row);
+      // this.areaForm.areaCode = row.areaCode;
+      // this.areaForm.provinceCode = row.provinceCode;
+      //  this.areaForm.cityCode = row.cityCode;
+
+       this.areaChange(row.areaCode);
+       this.getCity(row.provinceCode);
+
       this.showEditAgent = true;
+
       this.divEditParams.agentId = row.agentId;
       this.divEditParams.agentCode2 = row.agentCode;
       this.divEditParams.agentShortName = row.agentShortName;
@@ -1205,22 +1299,21 @@ export default {
       this.divEditParams.responsiblePerson = row.responsiblePerson;
       this.divEditParams.responsibleTelephone = row.responsibleTelephone;
       this.divEditParams.customerManager = row.customerManager;
-      this.divEditParams.customerManagerTelephone =
-        row.customerManagerTelephone;
+      this.divEditParams.customerManagerTelephone = row.customerManagerTelephone;
       this.divEditParams.serviceManager = row.serviceManager;
       this.divEditParams.serviceManagerTelephone = row.serviceManagerTelephone;
       this.divEditParams.status = row.status;
       this.divEditParams.registerAddress = row.registerAddress;
-      this.divEditParams.areaCode = row.areaName;
-      // this.divEditParams.areaCode = item.provinceCode;
-      this.divEditParams.provinceCode = row.provinceName;
-      this.divEditParams.cityCode = row.cityName;
+      this.divEditParams.areaCode = row.areaCode;
+      this.divEditParams.provinceCode = row.provinceCode;
+      this.divEditParams.cityCode = row.cityCode;
+      this.divEditParams.email = row.email;
     },
     batchesimport() {
-      console.log('batchesimport!');
+      // console.log('batchesimport!');
     },
     batchesDownload() {
-      console.log('batchesDownload!');
+      // console.log('batchesDownload!');
     },
     closeWindow() {
       this.showAddAgent = false;
@@ -1256,7 +1349,8 @@ export default {
       this.$refs['divEditParams'].validate((valid) => {
         if (valid) {
           let url = common.addOrUpdateAgentUrl2;
-          //this.initData3()
+          // console.log(this.divEditParams);
+          // this.initData3()
           axios.post(url, this.divEditParams).then((res) => {
             if (res.em === 'Success!') {
               this.$message({
@@ -1264,7 +1358,7 @@ export default {
                 type: 'success',
                 duration: 1500,
               });
-              this.showAddAgent = false;
+              this.showEditAgent = false;
             } else {
               this.$alert('编辑失败，请联系管理员!', '提示', {
                 confirmButtonText: '确定',

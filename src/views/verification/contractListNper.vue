@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-11-13 14:25:38
- * @LastEditTime: 2020-11-23 16:11:52
+ * @LastEditTime: 2020-12-03 19:35:30
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\contractListNper.vue
@@ -45,7 +45,7 @@
         :model="formData"
         class="demo-form-inline"
         label-width=""
-        size="small"
+        size="mini"
         ref="ruleForm"
       >
         <el-form-item label="承租人/牌照商" prop="">
@@ -103,7 +103,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[5, 10, 20, 50, 100, 500]"
+        :page-sizes="[5, 10, 20, 50, 100, 200]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -122,7 +122,7 @@
 </template>
 
 <script>
-import wTable from './dragNer.vue';
+import wTable from './components/dragNer.vue';
 import _ from 'lodash';
 import axios from '@/common/axios.js';
 import common from '@/common/common.js';
@@ -148,37 +148,6 @@ export default {
         border: true,
         maxHeight: 500,
       },
-    //   tableHeader: [
-    //   { label: '承租人/牌照商', prop: 'name', minWidth: '200px' },
-    //   { label: '合同编号', prop: 'contractNumber', minWidth: '160px' },
-    //   { label: '合同名称', prop: 'contractName', minWidth: '150px' },
-    //   { label: '合同状态', prop: 'contractNormalStatusText', minWidth: '80px' },
-    //   { label: '合同类型', prop: 'contractTypeText', minWidth: '100px' },
-    //   { label: '上牌地', prop: 'cityName', minWidth: '80px' },
-    //   { label: '是否限牌', prop: 'isLimitLicenceText', minWidth: '80px' },
-    //   { label: '是否租赁公司', prop: 'isGalcCompanyText', minWidth: '100px' },
-    //   { label: '期数', prop: 'nper', minWidth: '80px' },
-    //   { label: '租赁方式', prop: 'leaseWayText', minWidth: '80px' },
-    //   { label: '车辆数量', prop: 'num', minWidth: '80px' },
-    //   { label: '起租日', prop: 'batchStartingDate', minWidth: '120px' },
-    //   { label: '支付日', prop: 'payDate', minWidth: '120px' },
-    //   { label: '核销状态', prop: 'repaymentStatusText', minWidth: '80px' },
-    //   { label: '应收金额', prop: 'dueAmount', minWidth: '160px' },
-    //   { label: '应收本金', prop: 'duePrincipal', minWidth: '160px' },
-    //   { label: '应收利息', prop: 'dueinterest', minWidth: '160px' },
-    //   { label: '应收管理费', prop: 'dueManagementFee', minWidth: '160px' },
-    //   { label: '应收手续费', prop: 'dueCommission', minWidth: '160px' },
-    //   { label: '已收金额', prop: 'receivedAmount', minWidth: '160px' },
-    //   { label: '已收本金', prop: 'receivedPrincipal', minWidth: '160px' },
-    //   { label: '已收利息', prop: 'receivedInterest', minWidth: '160px' },
-    //   { label: '已收管理费', prop: 'receivedManagementFee', minWidth: '160px' },
-    //   { label: '已收手续费', prop: 'receivedCommission', minWidth: '160px' },
-    //   { label: '未收金额', prop: 'outstandingAmount', minWidth: '160px' },
-    //   { label: '未收本金', prop: 'outstandingPrincipal', minWidth: '160px' },
-    //   { label: '未收利息', prop: 'outstandingInterest', minWidth: '160px' },
-    //   { label: '未收管理费', prop: 'outstandingManagementFee', minWidth: '160px' },
-    //   { label: '未收手续费', prop: 'outstandingCommission', minWidth: '160px' },
-    // ],
       baseFrom: {
         serialNumber: '',
         income: '',
@@ -275,7 +244,7 @@ export default {
   methods: {
     ...mapMutations({
       setRowCol: 'setRowCol',
-      setDropCol: 'setDropCol',
+      // setDropCol: 'setDropCol',
     }),
 
     // 查询
@@ -417,23 +386,6 @@ export default {
               // item.batchStartingDate
               item.batchStartingDate = moment(item.batchStartingDate).format('YYYY-MM-DD');
               item.payDate           = moment(item.payDate).format('YYYY-MM-DD');
-
-              // item.dueAmount                = moneyFormat(item.dueAmount);
-              // item.duePrincipal             = moneyFormat(item.duePrincipal);
-              // item.dueinterest              = moneyFormat(item.dueinterest);
-              // item.dueManagementFee         = moneyFormat(item.dueManagementFee);
-              // item.dueCommission            = moneyFormat(item.dueCommission);
-              // item.receivedAmount           = moneyFormat(item.receivedAmount);
-              // item.receivedPrincipal        = moneyFormat(item.receivedPrincipal);
-              // item.receivedInterest         = moneyFormat(item.receivedInterest);
-              // item.receivedManagementFee    = moneyFormat(item.receivedManagementFee);
-              // item.receivedCommission       = moneyFormat(item.receivedCommission);
-              // item.outstandingAmount        = moneyFormat(item.outstandingAmount);
-              // item.outstandingPrincipal     = moneyFormat(item.outstandingPrincipal);
-              // item.outstandingInterest      = moneyFormat(item.outstandingInterest);
-              // item.outstandingManagementFee = moneyFormat(item.outstandingManagementFee);
-              // item.outstandingCommission    = moneyFormat(item.outstandingCommission);
-
 
             })
           }

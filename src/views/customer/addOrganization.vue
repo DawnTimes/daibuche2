@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-26 09:32:16
- * @LastEditTime: 2020-10-27 14:49:13
+ * @LastEditTime: 2020-12-01 13:56:12
  * @LastEditors: your name
  * @Description: 新增牌照商
  * @FilePath: \webcode2\src\views\customer\addOrganization.vue
@@ -67,6 +67,7 @@ export default {
         registerAddr: '',
         socialCreditCode: '',
         status: 'Y',
+        email: '',
         type: '1', // 1 新增； 2 编辑
       },
       formReadonly: {
@@ -134,6 +135,7 @@ export default {
             registerAddr: '',
             socialCreditCode: '',
             status: 'Y',
+            email: '',
             type: '1', // 1 新增； 2 编辑
           });
 

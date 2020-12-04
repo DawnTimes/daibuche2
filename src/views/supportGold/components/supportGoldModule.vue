@@ -2,7 +2,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-17 18:11:48
- * @LastEditTime: 2020-11-18 15:22:22
+ * @LastEditTime: 2020-12-03 10:03:46
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\supportGold\components\supportGoldModule.vue
@@ -316,7 +316,7 @@ export default {
   methods: {
     // 选择日期
     changeDate(val) {
-      console.log(val);
+      // console.log(val);
     },
 
     // 选择月份

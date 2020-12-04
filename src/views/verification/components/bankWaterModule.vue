@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-11 16:33:36
- * @LastEditTime: 2020-11-18 15:23:47
+ * @LastEditTime: 2020-12-02 15:54:25
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\verification\components\bankWaterModule.vue
@@ -404,7 +404,7 @@ export default {
   watch: {
     'formData.bankAccountNo'(newVal) {
       if (newVal) {
-        console.log(newVal);
+        // console.log(newVal);
         this.queryBankAccountData(newVal);
       }
     }

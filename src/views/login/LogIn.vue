@@ -112,7 +112,7 @@ export default {
     document.removeEventListener('keydown', this.whenKeyDown);
   },
   methods: {
-    ...mapMutations(['changeLogin', 'setRoles', 'setUserId', 'setPersonName']),
+    ...mapMutations(['changeLogin', 'setRoles', 'setUserId', 'setPersonName', 'setAsideInfo', 'setAsideInfoIds']),
     whenKeyDown(event) {
       if (event.keyCode === 13) {
         this.loginSubmit();
@@ -140,7 +140,7 @@ export default {
                 this.loginLoading = false;
                 this.$notify.error({
                   title: '温馨提示',
-                  message: '登录失败，请重新登录！',
+                  message: res.em || '登录失败，请重新登录！',
                   duration: 3000,
                 });
                 // 错误之后刷新一下验证码
@@ -175,15 +175,16 @@ export default {
                 // 登录成功是清除掉原有的tabs导航标签
                 sessionStorage.removeItem('tagsArr');
 
-                this.$router.push('/common');
+                // this.getUserMenuList();
 
+                this.$router.push('/common');
               }
             })
             .catch((err) => {
               this.loginLoading = false;
               this.$notify.error({
                 title: '温馨提示',
-                message: '登录失败，请重新登录！',
+                message: err.em || err.error || '登录失败，请重新登录！',
                 duration: 3000,
               });
             });
@@ -228,11 +229,12 @@ export default {
         }
         // console.log(this.menuList);
 
-        this.$store.commit('setAsideInfo', this.menuList);
-        this.$store.commit('setAsideInfoIds', res.ids);
+        // this.$store.commit('setAsideInfo', this.menuList);
+        // this.$store.commit('setAsideInfoIds', res.ids);
 
-        // this.setAsideInfo(this.menuList);
-        // this.setAsideInfoIds(res.ids);
+        this.setAsideInfo(this.menuList);
+        this.setAsideInfoIds(res.ids);
+        // console.log(123333);
 
         // sessionStorage.setItem('asideInfo', JSON.stringify(res.data.menus));
         // sessionStorage.setItem('asideInfoIds', JSON.stringify(res.data.ids));
@@ -243,7 +245,7 @@ export default {
 
     // 升序排序
     sortUp(x, y) {
-      return x.id - y.id;
+      return x.sort - y.sort;
     }
   },
   mounted() {

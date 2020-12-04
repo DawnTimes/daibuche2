@@ -1,7 +1,7 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-08-25 16:55:26
- * @LastEditTime: 2020-11-23 16:55:00
+ * @LastEditTime: 2020-12-03 14:25:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\views\customer\components\organizationModule.vue
@@ -255,7 +255,7 @@
             </el-col>
             <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
               <el-form-item
-                label="Email地址"
+                label="email地址"
                 prop="email"
                 v-show="!$formAtReadonly('email', formReadonly.hide)"
                 class="form-item"
@@ -468,20 +468,20 @@ export default {
     };
 
     // 邮箱验证
-      const validateEmail = (rule, value, callback) => {
-        if (value) {
-          if (value !== '') {
-            // const reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/; // 名称允许汉字、字母、数字，域名只允许英文域名
-            const reg = /^[A-Za-z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/; // 只允许英文字母、数字、下划线、英文句号、以及中划线组成
-            if (!reg.test(value)) {
-              callback(new Error('请输入正确的邮箱地址'));
-            }
+    const validateEmail = (rule, value, callback) => {
+      if (value) {
+        if (value !== '') {
+          // const reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/; // 名称允许汉字、字母、数字，域名只允许英文域名
+          const reg = /^[A-Za-z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/; // 只允许英文字母、数字、下划线、英文句号、以及中划线组成
+          if (!reg.test(value)) {
+            callback(new Error('请输入正确的邮箱地址,只允许英文字母、数字、下划线、英文句号、以及中划线组成'));
           }
-          callback();
-        } else {
-          callback();
         }
-      };
+        callback();
+      } else {
+        callback();
+      }
+    };
 
     return {
       areaArr: [
@@ -494,6 +494,8 @@ export default {
         { label: '台湾', value: '007' },
         { label: '香港', value: '008' },
         { label: '西部', value: '009' },
+        { label: '西南', value: '010' },
+        { label: '西北', value: '011' },
       ],
       areaCode: '',
       provinceArr: [],
@@ -673,7 +675,7 @@ export default {
       this.formData.cityCode = '';
       this.provinceArr = [];
       this.cityArr = [];
-      this.areaCode = val;
+      // this.areaCode = this.formData.areaCode;
       const params = {
         areaCode: val,
       };
@@ -694,7 +696,7 @@ export default {
       if (this.formData.areaCode) {
         this.formData.cityCode = '';
         this.cityArr = [];
-        this.provinceCode = val;
+        // this.provinceCode = val;
         const params = {
           provinceCode: val,
         };
@@ -720,7 +722,7 @@ export default {
 
     // 选择城市
     changeCity(val) {
-      console.log(val);
+      // console.log(val);
       if (!this.formData.provinceCode) {
         this.$notify.warning({
           title: '温馨提示',
@@ -741,7 +743,7 @@ export default {
         });
         
         return false
-      };
+      }
     },
 
     // 聚焦城市
@@ -762,7 +764,7 @@ export default {
         });
         
         return false
-      }
+      };
     },
 
     // 确定
@@ -787,17 +789,18 @@ export default {
     handleEmitData() {
       this.formData.licenCode          = this.formData.licenCode.trim();
       this.formData.licenceName        = this.formData.licenceName.trim();
-      this.formData.bankAccName        = this.formData.bankAccName.trim();
-      this.formData.bankAccountNumber  = this.formData.bankAccountNumber.trim();
-      this.formData.billingAddr        = this.formData.billingAddr.trim();
-      this.formData.billingPhone       = this.formData.billingPhone.trim();
-      this.formData.contactPers        = this.formData.contactPers.trim();
-      this.formData.contactPersonPhone = this.formData.contactPersonPhone.trim();
-      this.formData.legalPhone         = this.formData.legalPhone.trim();
-      this.formData.legalRepresent     = this.formData.legalRepresent.trim();
+      this.formData.bankAccName        = this.formData.bankAccName ? this.formData.bankAccName.trim() : '';
+      this.formData.bankAccountNumber  = this.formData.bankAccountNumber ? this.formData.bankAccountNumber.trim() : '';
+      this.formData.billingAddr        = this.formData.billingAddr ? this.formData.billingAddr.trim() : '';
+      this.formData.billingPhone       = this.formData.billingPhone ? this.formData.billingPhone.trim() : '';
+      this.formData.contactPers        = this.formData.contactPers ? this.formData.contactPers.trim() : '';
+      this.formData.contactPersonPhone = this.formData.contactPersonPhone ? this.formData.contactPersonPhone.trim() : '';
+      this.formData.legalPhone         = this.formData.legalPhone ? this.formData.legalPhone.trim() : '';
+      this.formData.legalRepresent     = this.formData.legalRepresent ? this.formData.legalRepresent.trim() : '';
       this.formData.lessor             = this.formData.lessor.trim();
-      this.formData.registerAddr       = this.formData.registerAddr.trim();
+      this.formData.registerAddr       = this.formData.registerAddr ? this.formData.registerAddr.trim() : '';
       this.formData.socialCreditCode   = this.formData.socialCreditCode.trim();
+      this.formData.email              = this.formData.email ? this.formData.email.trim() : '';
       this.$emit('formDataSubmit', {
         data: this.formData,
       });

@@ -150,6 +150,9 @@ export default {
   changeContarctOpenSomethingUrl: '/carmanage-admin/changeContarct/open/something.do',                         // 生成合同
   updateSpportUrl               : '/carmanage-admin/updateSpport.do',                                          // 支援金编辑
   importSubcarInvoiceNoticeUrl  : '/carmanage-admin/SubcarInvoiceNotice/importSubcarInvoiceNotice',            // 开票明细导入
+  queryHaveInvoceContractUrl    : '/carmanage-admin/queryHaveInvoceContract.do',                               // 已开票合同
+  queryDeleteInvoicetUrl        : '/carmanage-admin/queryDeleteInvoice.do',                                    // 查询变更合同的开票
+  invoceDeleteUrl               : '/carmanage-admin/invoceDelete.do',                                          // 删除已开票
 
 
   // 二期
@@ -217,6 +220,9 @@ export default {
   // changeContarctOpenSomethingUrl: '/changeContarct/open/something.do',                         // 生成合同
   // updateSpportUrl               : '/updateSpport.do',                                          // 支援金编辑
   // importSubcarInvoiceNoticeUrl  : '/SubcarInvoiceNotice/importSubcarInvoiceNotice',            // 开票明细导入
+  // queryHaveInvoceContractUrl    : '/queryHaveInvoceContract.do',                               // 已开票合同
+  // queryDeleteInvoicetUrl        : '/queryDeleteInvoice.do',                                    // 查询变更合同的开票
+  // invoceDeleteUrl               : '/invoceDelete.do',                                          // 删除已开票
 
 
 

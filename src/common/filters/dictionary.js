@@ -125,6 +125,12 @@ const Dictionary = {
     { label: '非商贸', value: 'N' },
     { label: '商贸非全资', value: 'F' },
   ],
+  // 纳税人类型
+  taxPayerType: [
+    { label: '一般纳税人', value: '0' },
+    { label: '小规模纳税人', value: '1' },
+    { label: '个人', value: '2' },
+  ],
 
   // 合同类型
   contractType: [
