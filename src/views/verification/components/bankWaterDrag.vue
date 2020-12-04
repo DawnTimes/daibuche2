@@ -1,10 +1,10 @@
 <!--
  * @Author: 廖亿晓
  * @Date: 2020-11-13 14:23:32
- * @LastEditTime: 2020-12-02 17:05:00
+ * @LastEditTime: 2020-12-04 09:47:25
  * @LastEditors: your name
  * @Description: 
- * @FilePath: \webcode2\src\views\verification\bankWaterDrag.vue
+ * @FilePath: \webcode2\src\views\verification\components\bankWaterDrag.vue
 -->
 
 <template>
@@ -34,6 +34,7 @@
           :prop="col.prop"
           :label="col.label"
           :width="col.width"
+          :sortable="col.sortable || false"
           :min-width="col.minWidth"
           :type="col.type"
           :header-align="col.headerAlign"

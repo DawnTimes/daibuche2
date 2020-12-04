@@ -1,7 +1,7 @@
 /*
  * @Author: 廖亿晓
  * @Date: 2020-07-14 16:16:48
- * @LastEditTime: 2020-12-03 15:56:07
+ * @LastEditTime: 2020-12-04 09:55:14
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \webcode2\src\store\index.js
@@ -56,8 +56,8 @@ const store = new Vuex.Store({
       { label: '未收手续费', prop: 'outstandingCommission', minWidth: '120px' },
     ],
     bankWaterHeader: JSON.parse(localStorage.getItem('bankWaterHeader')) || [
-      { label: '交易时间', prop: 'tradeDate', minWidth: '100px' },
-      { label: '银行单据号', prop: 'serialNumber', minWidth: '150px' },
+      { label: '交易时间', prop: 'tradeDate', minWidth: '110px', sortable: true },
+      { label: '银行单据号', prop: 'serialNumber', minWidth: '160px', sortable: true },
       { label: '收款金额', prop: 'income', minWidth: '120px' },
       { label: '收款账户名称', prop: 'companyName', minWidth: '200px' },
       { label: '收款账号', prop: 'bankAccountNo', minWidth: '150px' },
